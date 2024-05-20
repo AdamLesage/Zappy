@@ -50,3 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+
+# Local files
+
+zappy_server
+zappy_ai
+zappy_gui
