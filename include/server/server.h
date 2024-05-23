@@ -43,6 +43,7 @@ void init_core(const int argc, const char **argv, core_t *core);
 void get_arguments(arguments_t *arguments, const int argc, const char **argv);
 int get_port(const char **argv, int *index);
 int get_width(const char **argv, int *index);
+int get_height(const char **argv, int *index);
 void init_server(core_t *core);
 void close_server(core_t *core);
 void lunch_server(core_t *core);

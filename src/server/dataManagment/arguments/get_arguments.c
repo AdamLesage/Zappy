@@ -17,6 +17,23 @@ static void init_arguments(arguments_t *arguments)
     arguments->name_teams = NULL;
 }
 
+static bool get_flag(arguments_t *arguments, const char **argv, int *index)
+{
+    if (strcmp(argv[*index], "-p") == 0) {
+        arguments->port = get_port(argv, index);
+        return (true);
+    }
+    if (strcmp(argv[*index], "-x") == 0) {
+        arguments->width = get_width(argv, index);
+        return (true);
+    }
+    if (strcmp(argv[*index], "-y") == 0) {
+        arguments->height = get_height(argv, index);
+        return (true);
+    }
+    return (false);
+}
+
 void get_arguments(arguments_t *arguments, const int argc, const char **argv)
 {
     bool is_valid = false;
@@ -25,15 +42,7 @@ void get_arguments(arguments_t *arguments, const int argc, const char **argv)
     if (argc <= 1)
         exit(84);
     for (int i = 1; argv[i] != NULL; i++) {
-        is_valid = false;
-        if (strcmp(argv[i], "-p") == 0) {
-            arguments->port = get_port(argv, &i);
-            is_valid = true;
-        }
-        if (strcmp(argv[i], "-x") == 0) {
-            arguments->width = get_width(argv, &i);
-            is_valid = true;
-        }
+        is_valid = get_flag(arguments, argv, &i);
         if (is_valid == false)
             exit(84);
     }
