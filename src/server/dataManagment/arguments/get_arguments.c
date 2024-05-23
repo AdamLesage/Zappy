@@ -18,6 +18,19 @@ static void init_arguments(arguments_t *arguments)
     arguments->name_teams = NULL;
 }
 
+static bool get_flag2(arguments_t *arguments, const char **argv, int *index)
+{
+    if (strcmp(argv[*index], "-n") == 0) {
+        get_teams_name(arguments, argv, index);
+        return (true);
+    }
+    if (strcmp(argv[*index], "-c") == 0) {
+        arguments->nb_client = get_number_client_by_teams(argv, index);
+        return (true);
+    }
+    return (false);
+}
+
 static bool get_flag(arguments_t *arguments, const char **argv, int *index)
 {
     if (strcmp(argv[*index], "-p") == 0) {
@@ -32,11 +45,7 @@ static bool get_flag(arguments_t *arguments, const char **argv, int *index)
         arguments->height = get_height(argv, index);
         return (true);
     }
-    if (strcmp(argv[*index], "-n") == 0) {
-        get_teams_name(arguments, argv, index);
-        return (true);
-    }
-    return (false);
+    return get_flag2(arguments, argv, index);
 }
 
 static void print_arguments_server(arguments_t *arguments)
@@ -49,6 +58,7 @@ static void print_arguments_server(arguments_t *arguments)
     for (int i = 0; arguments->name_teams[i] != NULL; i++) {
         printf("\tteam [%d]: name = %s\n", i, arguments->name_teams[i]);
     }
+    printf("nb_by_teams:\t%d\n", arguments->nb_client);
 }
 
 void get_arguments(arguments_t *arguments, const int argc, const char **argv)

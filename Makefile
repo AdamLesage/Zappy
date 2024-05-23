@@ -5,19 +5,20 @@
 ## Makefile
 ##
 
-SRC_SEVER			=	src/server/main.c									\
-						src/server/close_server.c							\
-						src/server/connect_client.c							\
-						src/server/get_client_command.c						\
-						src/server/init_core.c								\
-						src/server/init_server.c							\
-						src/server/lunch_server.c							\
-						src/server/dataManagment/arguments/get_arguments.c	\
-						src/server/dataManagment/arguments/get_port.c		\
-						src/server/dataManagment/arguments/get_width.c		\
-						src/server/dataManagment/arguments/get_height.c		\
-						src/server/dataManagment/arguments/get_teams_name.c	\
-						src/server/utils/str_is_num.c						\
+SRC_SEVER			=	src/server/main.c													\
+						src/server/close_server.c											\
+						src/server/connect_client.c											\
+						src/server/get_client_command.c										\
+						src/server/init_core.c												\
+						src/server/init_server.c											\
+						src/server/lunch_server.c											\
+						src/server/dataManagment/arguments/get_arguments.c					\
+						src/server/dataManagment/arguments/get_port.c						\
+						src/server/dataManagment/arguments/get_width.c						\
+						src/server/dataManagment/arguments/get_height.c						\
+						src/server/dataManagment/arguments/get_teams_name.c					\
+						src/server/dataManagment/arguments/get_number_client_by_teams.c	\
+						src/server/utils/str_is_num.c										\
 
 SRC_GUI				=	src/gui/main.cpp							   		  \
 
