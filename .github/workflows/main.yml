@@ -35,6 +35,7 @@ jobs:
                   description="C-$error_code"
                   echo "::error title=\"$title\":: $description"
                   errors_found=true
+                  echo "$description"
                   if [[ "$description" == "C-01" ]]; then
                     error_found=false
                   fi
