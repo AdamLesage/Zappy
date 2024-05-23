@@ -7,11 +7,15 @@
 
 SRC_SEVER			=	src/server/main.c												\
 
+SRC_GUI				=	src/gui/main.cpp												\
+
 TEST 		=	\
 
 Name		=	zappy
 
 NAME_BINARY_SERVER	=	zappy_server
+
+NAME_BINARY_GUI		=	zappy_gui
 
 NAMETEST 	=	unit_tests
 
@@ -24,6 +28,8 @@ $(Name): server
 server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS)
 
+zappy_gui:
+	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS)
 clean:
 	rm -f unit*
 	rm -f *.o
