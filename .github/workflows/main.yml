@@ -31,7 +31,7 @@ jobs:
                   filename=$(echo "$line" | cut -d ':' -f 1)
                   line_number=$(echo "$line" | cut -d ':' -f 2)
                   error_code=$(echo "$line" | cut -d '-' -f 2)
-                  if [[ "$error_code" != "01" ]]; then
+                  if [[ "$error_code" != "C-01" ]]; then
                     title="$error_type coding style error: #$filename##L$line_number"
                     description="C-$error_code"
                     echo "::error title=\"$title\":: $description"
