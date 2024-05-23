@@ -9,4 +9,5 @@
 
 void init_core(const int argc, const char **argv, core_t *core)
 {
+    get_arguments(&core->arguments, argc, argv);
 }
