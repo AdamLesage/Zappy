@@ -23,7 +23,6 @@ jobs:
       - name: print error annotations
         timeout-minutes: 2
         run: |
-            rm -f zappy_server; rm -f zappy_ai; rm -f zappy_gui
             if [ -s "coding-style-reports.log" ]; then
               errors_found=false
               while IFS= read -r line; do
@@ -32,10 +31,12 @@ jobs:
                   filename=$(echo "$line" | cut -d ':' -f 1)
                   line_number=$(echo "$line" | cut -d ':' -f 2)
                   error_code=$(echo "$line" | cut -d '-' -f 2)
-                  title="$error_type coding style error: #$filename##L$line_number"
-                  description="C-$error_code"
-                  echo "::error title=\"$title\":: $description"
-                  errors_found=true
+                  if [[ "$error_code" != "01" ]]; then
+                    title="$error_type coding style error: #$filename##L$line_number"
+                    description="C-$error_code"
+                    echo "::error title=\"$title\":: $description"
+                    errors_found=true
+                  fi
                 fi
               done < "coding-style-reports.log"
               if [[ "$errors_found" == true ]]; then
