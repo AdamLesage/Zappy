@@ -41,6 +41,7 @@ typedef struct core_s {
 
 void init_core(const int argc, const char **argv, core_t *core);
 void get_arguments(arguments_t *arguments, const int argc, const char **argv);
+void print_usage(char *error);
 int get_port(const char **argv, int *index);
 int get_width(const char **argv, int *index);
 int get_height(const char **argv, int *index);

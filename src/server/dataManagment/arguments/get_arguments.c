@@ -68,24 +68,33 @@ static void print_arguments_server(arguments_t *arguments)
     printf("frequency:\t%d\n", arguments->frequency);
 }
 
+void print_usage(char *error)
+{
+    dprintf(2 ,"Error: %s\n", error);
+    dprintf(2, "USAGE: ./zappy_server -p port -x width -y height"
+        " -n name1 name2 ... -c clientsNb -f freq\n");
+    exit(84);
+}
+
 void get_arguments(arguments_t *arguments, const int argc, const char **argv)
 {
     bool is_valid = false;
 
     init_arguments(arguments);
-    if (argc <= 1)
-        exit(84);
+    if (argc <= 1) {
+        print_usage("not enough arguments");
+    }
     for (int i = 1; argv[i] != NULL; i++) {
         is_valid = get_flag(arguments, argv, &i);
         if (is_valid == false)
-            exit(84);
+            print_usage("unknow flag");
     }
     if (arguments->height == -1 || arguments->width == -1 ||
         arguments->port == -1) {
-        exit(84);
+        print_usage("missing mandatory flag");
     }
     if (arguments->nb_teams == -1 || arguments->nb_client == -1) {
-        exit(84);
+        print_usage("missing mandatory flag");
     }
     print_arguments_server(arguments);
 }

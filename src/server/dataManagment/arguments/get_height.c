@@ -12,15 +12,15 @@ int get_height(const char **argv, int *index)
     int height = 0;
 
     if (argv[*index + 1] == NULL) {
-        exit(84);
+        print_usage("height missing number");
     }
     (*index)++;
     if (str_isnum((char *) argv[*index]) == false) {
-        exit(84);
+        print_usage("height must be a number");
     }
     height = atoi(argv[*index]);
     if (height <= 1) {
-        exit(84);
+        print_usage("height must be > 1");
     }
     return (height);
 }

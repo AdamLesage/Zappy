@@ -15,7 +15,7 @@ void get_teams_name(arguments_t *arguments, const char **argv, int *index)
         arguments->nb_teams++;
     }
     if (arguments->nb_teams == 0) {
-        exit(84);
+        print_usage("number of teams must be > 0");
     }
     arguments->name_teams = malloc(sizeof(char *) * (arguments->nb_teams + 1));
     for (int i = 0; argv[(*index)] != NULL && argv[(*index)][0] != '-';
