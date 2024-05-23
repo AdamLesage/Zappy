@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
       - name: execute coding style . .
         run: |
-          check.sh $(pwd) $(pwd)
+          check.sh $(pwd)/src/ $(pwd)
       - name: print error annotations
         timeout-minutes: 2
         run: |
