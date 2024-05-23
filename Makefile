@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-SRC_SEVER			=	src/server/main.c												\
+SRC_SEVER			=	src/server/main.c									\
 
 TEST 		=	\
 
