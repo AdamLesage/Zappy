@@ -9,15 +9,15 @@
 
 static struct sockaddr_in init_socket(int port)
 {
-    struct sockaddr_in my_sockaddr_in;
+    struct sockaddr_in server_socket;
 
-    my_sockaddr_in.sin_family = AF_INET;
-    my_sockaddr_in.sin_port = htons(port);
-    my_sockaddr_in.sin_addr.s_addr = INADDR_ANY;
-    return (my_sockaddr_in);
+    server_socket.sin_family = AF_INET;
+    server_socket.sin_port = htons(port);
+    server_socket.sin_addr.s_addr = INADDR_ANY;
+    return (server_socket);
 }
 
-static int bind_socket(struct sockaddr_in *my_sockaddr_in)
+static int bind_socket(struct sockaddr_in *server_socket)
 {
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -25,8 +25,8 @@ static int bind_socket(struct sockaddr_in *my_sockaddr_in)
         write(2, "error sockets\n", strlen("error sockets\n"));
         exit(84);
     }
-    if (bind(sockfd, (struct sockaddr *) &(*my_sockaddr_in),
-        sizeof(*my_sockaddr_in))) {
+    if (bind(sockfd, (struct sockaddr *) &(*server_socket),
+        sizeof(*server_socket))) {
         perror("bind");
         exit(84);
     }
@@ -39,7 +39,7 @@ static int bind_socket(struct sockaddr_in *my_sockaddr_in)
 
 void init_server(core_t *core)
 {
-    core->socket_config.my_sockaddr_in = init_socket(4000);
+    core->socket_config.server_socket = init_socket(4000);
     core->socket_config.sockfd = 
-        bind_socket(&core->socket_config.my_sockaddr_in);
+        bind_socket(&core->socket_config.server_socket);
 }

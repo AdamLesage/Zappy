@@ -23,7 +23,7 @@
     } select_info_t;
 
     typedef struct socket_config_s {
-        struct sockaddr_in my_sockaddr_in;
+        struct sockaddr_in server_socket;
         int sockfd;
     } socket_config_t;
 
@@ -36,7 +36,8 @@ void init_core(const int argc, const char **argv, core_t *core);
 void init_server(core_t *core);
 void close_server(core_t *core);
 void lunch_server(core_t *core);
-void connect_client(select_info_t *select_info);
+void connect_client(select_info_t *select_info,
+    struct sockaddr_in *server_socket);
 void get_client_command(core_t *core);
 
 #endif /* !SERVER_H_ */

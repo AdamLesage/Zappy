@@ -51,7 +51,7 @@ void lunch_server(core_t *core)
             perror("error select");
             exit(84);
         }
-        connect_client(&core->select_info);
+        connect_client(&core->select_info, &core->socket_config.server_socket);
         get_client_command(core);
         // if (1) { /*the select is not declanched by a client*/
         //     execute_client_command();
