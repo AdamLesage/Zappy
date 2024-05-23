@@ -14,6 +14,6 @@ int main(const int argc, const char **argv)
     init_core(argc, argv, &core);
     init_server(&core);
     lunch_server(&core);
-    // close_server(&core);
-    return(0);
+    close_server(&core);
+    return (0);
 }

@@ -10,7 +10,7 @@
 void connect_client(select_info_t *select_info,
     struct sockaddr_in *server_socket)
 {
-    int len = 0;
+    unsigned int len = 0;
     int fd_new_client = 0;
 
     if (FD_ISSET(select_info->fd_socket_control, &select_info->temp_fds)) {
@@ -27,5 +27,4 @@ void connect_client(select_info_t *select_info,
         write(fd_new_client, "WELCOME\n", 9);
     }
 }
-
 // send_to_client("WELCOME\n");

@@ -40,6 +40,6 @@ static int bind_socket(struct sockaddr_in *server_socket)
 void init_server(core_t *core)
 {
     core->socket_config.server_socket = init_socket(4000);
-    core->socket_config.sockfd = 
+    core->socket_config.sockfd =
         bind_socket(&core->socket_config.server_socket);
 }

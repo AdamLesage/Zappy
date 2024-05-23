@@ -5,7 +5,13 @@
 ## Makefile
 ##
 
-SRC_SEVER			=	src/server/main.c												\
+SRC_SEVER			=	src/server/main.c									\
+						src/server/close_server.c							\
+						src/server/connect_client.c							\
+						src/server/get_client_command.c						\
+						src/server/init_core.c								\
+						src/server/init_server.c							\
+						src/server/lunch_server.c							\
 
 TEST 		=	\
 
