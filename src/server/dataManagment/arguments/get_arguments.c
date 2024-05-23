@@ -59,8 +59,10 @@ static void print_arguments_server(arguments_t *arguments)
     printf("width:\t%d\n", arguments->width);
     printf("nb_teams:\t%d\n", arguments->nb_teams);
     printf("teams:\n");
-    for (int i = 0; arguments->name_teams[i] != NULL; i++) {
-        printf("\tteam [%d]: name = %s\n", i, arguments->name_teams[i]);
+    if (arguments->name_teams != NULL) {
+        for (int i = 0; arguments->name_teams[i] != NULL; i++) {
+            printf("\tteam [%d]: name = %s\n", i, arguments->name_teams[i]);
+        }
     }
     printf("nb_by_teams:\t%d\n", arguments->nb_client);
     printf("frequency:\t%d\n", arguments->frequency);
@@ -77,6 +79,13 @@ void get_arguments(arguments_t *arguments, const int argc, const char **argv)
         is_valid = get_flag(arguments, argv, &i);
         if (is_valid == false)
             exit(84);
+    }
+    if (arguments->height == -1 || arguments->width == -1 ||
+        arguments->port == -1) {
+        exit(84);
+    }
+    if (arguments->nb_teams == -1 || arguments->nb_client == -1) {
+        exit(84);
     }
     print_arguments_server(arguments);
 }
