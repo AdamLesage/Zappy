@@ -9,7 +9,7 @@
 
 static void init_arguments(arguments_t *arguments)
 {
-    arguments->frequence = 100;
+    arguments->frequency = 100;
     arguments->height = -1;
     arguments->width = -1;
     arguments->nb_client = -1;
@@ -26,6 +26,10 @@ static bool get_flag2(arguments_t *arguments, const char **argv, int *index)
     }
     if (strcmp(argv[*index], "-c") == 0) {
         arguments->nb_client = get_number_client_by_teams(argv, index);
+        return (true);
+    }
+    if (strcmp(argv[*index], "-f") == 0) {
+        arguments->frequency = get_frequency(argv, index);
         return (true);
     }
     return (false);
@@ -59,6 +63,7 @@ static void print_arguments_server(arguments_t *arguments)
         printf("\tteam [%d]: name = %s\n", i, arguments->name_teams[i]);
     }
     printf("nb_by_teams:\t%d\n", arguments->nb_client);
+    printf("frequency:\t%d\n", arguments->frequency);
 }
 
 void get_arguments(arguments_t *arguments, const int argc, const char **argv)

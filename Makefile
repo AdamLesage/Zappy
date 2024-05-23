@@ -17,7 +17,8 @@ SRC_SEVER			=	src/server/main.c													\
 						src/server/dataManagment/arguments/get_width.c						\
 						src/server/dataManagment/arguments/get_height.c						\
 						src/server/dataManagment/arguments/get_teams_name.c					\
-						src/server/dataManagment/arguments/get_number_client_by_teams.c	\
+						src/server/dataManagment/arguments/get_number_client_by_teams.c		\
+						src/server/dataManagment/arguments/get_frequency.c					\
 						src/server/utils/str_is_num.c										\
 
 SRC_GUI				=	src/gui/main.cpp							   		  \

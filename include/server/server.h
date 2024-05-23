@@ -46,6 +46,7 @@ int get_width(const char **argv, int *index);
 int get_height(const char **argv, int *index);
 void get_teams_name(arguments_t *arguments, const char **argv, int *index);
 int get_number_client_by_teams(const char **argv, int *index);
+int get_frequency(const char **argv, int *index);
 void init_server(core_t *core);
 void close_server(core_t *core);
 void lunch_server(core_t *core);

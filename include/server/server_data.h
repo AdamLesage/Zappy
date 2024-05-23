@@ -15,7 +15,7 @@ typedef struct arguments_s {
     char **name_teams;
     int nb_teams;
     int nb_client;
-    int frequence;
+    int frequency;
 } arguments_t;
 
 #endif /* !SERVER_DATA_H_ */
