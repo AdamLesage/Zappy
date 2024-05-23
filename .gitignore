@@ -56,3 +56,5 @@ dkms.conf
 zappy_server
 zappy_ai
 zappy_gui
+
+*.log

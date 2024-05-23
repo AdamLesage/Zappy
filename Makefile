@@ -16,9 +16,10 @@ SRC_SEVER			=	src/server/main.c									\
 						src/server/dataManagment/arguments/get_port.c		\
 						src/server/dataManagment/arguments/get_width.c		\
 						src/server/dataManagment/arguments/get_height.c		\
+						src/server/dataManagment/arguments/get_teams_name.c	\
 						src/server/utils/str_is_num.c						\
 
-SRC_GUI				=	src/gui/main.cpp												\
+SRC_GUI				=	src/gui/main.cpp							   		  \
 
 TEST 		=	\
 

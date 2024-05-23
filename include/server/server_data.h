@@ -13,6 +13,7 @@ typedef struct arguments_s {
     int width;
     int height;
     char **name_teams;
+    int nb_teams;
     int nb_client;
     int frequence;
 } arguments_t;

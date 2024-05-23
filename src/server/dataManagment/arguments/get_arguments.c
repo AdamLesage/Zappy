@@ -14,6 +14,7 @@ static void init_arguments(arguments_t *arguments)
     arguments->width = -1;
     arguments->nb_client = -1;
     arguments->port = -1;
+    arguments->nb_teams = -1;
     arguments->name_teams = NULL;
 }
 
@@ -31,7 +32,23 @@ static bool get_flag(arguments_t *arguments, const char **argv, int *index)
         arguments->height = get_height(argv, index);
         return (true);
     }
+    if (strcmp(argv[*index], "-n") == 0) {
+        get_teams_name(arguments, argv, index);
+        return (true);
+    }
     return (false);
+}
+
+static void print_arguments_server(arguments_t *arguments)
+{
+    printf("port:\t%d\n", arguments->port);
+    printf("height:\t%d\n", arguments->height);
+    printf("width:\t%d\n", arguments->width);
+    printf("nb_teams:\t%d\n", arguments->nb_teams);
+    printf("teams:\n");
+    for (int i = 0; arguments->name_teams[i] != NULL; i++) {
+        printf("\tteam [%d]: name = %s\n", i, arguments->name_teams[i]);
+    }
 }
 
 void get_arguments(arguments_t *arguments, const int argc, const char **argv)
@@ -46,4 +63,5 @@ void get_arguments(arguments_t *arguments, const int argc, const char **argv)
         if (is_valid == false)
             exit(84);
     }
+    print_arguments_server(arguments);
 }
