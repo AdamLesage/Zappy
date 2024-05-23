@@ -12,6 +12,15 @@
     #include <arpa/inet.h>
     #include <sys/select.h>
     #include <netinet/ip.h>
+    #include <stddef.h>
+
+    typedef struct select_info_s {
+        fd_set rfds;
+        fd_set temp_fds;
+        int max_fd;
+        struct timeval tv;
+        int fd_socket_control;
+    } select_info_t;
 
     typedef struct socket_config_s {
         struct sockaddr_in my_sockaddr_in;
@@ -19,12 +28,15 @@
     } socket_config_t;
 
     typedef struct core_s {
-        socket_config_t socket_config;    
+        socket_config_t socket_config;
+        select_info_t select_info;    
     } core_t;
 
 void init_core(const int argc, const char **argv, core_t *core);
 void init_server(core_t *core);
 void close_server(core_t *core);
 void lunch_server(core_t *core);
+void connect_client(select_info_t *select_info);
+void get_client_command(core_t *core);
 
 #endif /* !SERVER_H_ */
