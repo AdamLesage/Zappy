@@ -23,6 +23,7 @@ jobs:
       - name: print error annotations
         timeout-minutes: 2
         run: |
+            rm -f zappy_server; rm -f zappy_ai; rm -f zappy_gui
             if [ -s "coding-style-reports.log" ]; then
               errors_found=false
               while IFS= read -r line; do
