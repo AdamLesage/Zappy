@@ -5,7 +5,14 @@
 ** main
 */
 
-int main()
+#include "../../include/server/server.h"
+
+int main(const int argc, const char **argv)
 {
-    return (0);
+    core_t core;
+    init_core(argc, argv, &core);
+    init_server(&core);
+    lunch_server(&core);
+    // close_server(&core)
+    return(0);
 }
