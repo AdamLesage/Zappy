@@ -14,6 +14,7 @@ SRC_SEVER			=	src/server/main.c									\
 						src/server/lunch_server.c							\
 						src/server/dataManagment/arguments/get_arguments.c	\
 						src/server/dataManagment/arguments/get_port.c		\
+						src/server/dataManagment/arguments/get_width.c		\
 						src/server/utils/str_is_num.c						\
 
 SRC_GUI				=	src/gui/main.cpp												\

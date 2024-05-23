@@ -30,6 +30,10 @@ void get_arguments(arguments_t *arguments, const int argc, const char **argv)
             arguments->port = get_port(argv, &i);
             is_valid = true;
         }
+        if (strcmp(argv[i], "-x") == 0) {
+            arguments->width = get_width(argv, &i);
+            is_valid = true;
+        }
         if (is_valid == false)
             exit(84);
     }
