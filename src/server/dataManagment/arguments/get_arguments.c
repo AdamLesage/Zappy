@@ -70,7 +70,7 @@ static void print_arguments_server(arguments_t *arguments)
 
 void print_usage(char *error)
 {
-    dprintf(2 ,"Error: %s\n", error);
+    dprintf(2, "Error: %s\n", error);
     dprintf(2, "USAGE: ./zappy_server -p port -x width -y height"
         " -n name1 name2 ... -c clientsNb -f freq\n");
     exit(84);
