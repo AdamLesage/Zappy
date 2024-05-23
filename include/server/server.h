@@ -8,9 +8,19 @@
 #ifndef SERVER_H_
 #define SERVER_H_
 
-typedef struct core_s {
+    #include <sys/socket.h>
+    #include <arpa/inet.h>
+    #include <sys/select.h>
+    #include <netinet/ip.h>
 
-} core_t;
+    typedef struct socket_config_s {
+        struct sockaddr_in my_sockaddr_in;
+        int sockfd;
+    } socket_config_t;
+
+    typedef struct core_s {
+        socket_config_t socket_config;    
+    } core_t;
 
 void init_core(const int argc, const char **argv, core_t *core);
 void init_server(core_t *core);
