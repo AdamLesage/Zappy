@@ -29,7 +29,7 @@ server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS)
 
 zappy_gui:
-	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS)
+	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS) -lGL -lglut -lGLEW -lassimp
 clean:
 	rm -f unit*
 	rm -f *.o
@@ -49,7 +49,7 @@ tests_run:
 coverage:
 	gcovr --exclude tests/
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re zappy_gui
 
 run_epitest: re
 	sudo docker build -t epitest:lastest .
