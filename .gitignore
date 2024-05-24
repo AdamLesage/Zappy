@@ -58,3 +58,14 @@ zappy_ai
 zappy_gui
 
 *.log
+.bash_history
+test_binaries
+
+
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.pyc
+*.pyo

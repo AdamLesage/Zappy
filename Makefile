@@ -15,6 +15,8 @@ SRC_SEVER			=	src/server/main.c									  \
 
 SRC_GUI				=	src/gui/main.cpp							   		  \
 
+SRC_AI				=	src/ai/main.py										  \
+
 TEST 		=	\
 
 Name		=	zappy
@@ -23,19 +25,26 @@ NAME_BINARY_SERVER	=	zappy_server
 
 NAME_BINARY_GUI		=	zappy_gui
 
+NAME_BINARY_AI		=	zappy_ai
+
 NAMETEST 	=	unit_tests
 
 CFLAGS		= 	-Wall -Wextra -Wshadow
 
 all:    $(Name)
 
-$(Name): server
+$(Name): zappy_server zappy_ai
 
-server:
+zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS)
 
 zappy_gui:
 	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS) -lGL -lglut -lGLEW -lassimp
+
+zappy_ai:
+	ln -s -f $(SRC_AI) $(NAME_BINARY_AI)
+	chmod 777 ${NAME_BINARY_AI}
+
 clean:
 	rm -f unit*
 	rm -f *.o
