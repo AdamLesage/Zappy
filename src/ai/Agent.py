@@ -14,7 +14,7 @@ class Agent():
         self.ip = ip
         self.client = None
 
-    def connect_to_server(self):
+    def connect_to_server(self) -> None:
         """Connect to the server from the given ip and port"""
         try:
             self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -30,6 +30,6 @@ class Agent():
 
 
 
-    def disconnect_from_server(self):
+    def disconnect_from_server(self) -> None:
         """Disconnect from the server"""
         pass

@@ -33,15 +33,15 @@ CFLAGS		= 	-Wall -Wextra -Wshadow
 
 all:    $(Name)
 
-$(Name): server ai
+$(Name): zappy_server zappy_ai
 
-server:
+zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS)
 
-gui:
+zappy_gui:
 	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS) -lGL -lglut -lGLEW -lassimp
 
-ai:
+zappy_ai:
 	ln -s -f $(SRC_AI) $(NAME_BINARY_AI)
 	chmod 777 ${NAME_BINARY_AI}
 
