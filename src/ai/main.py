@@ -1,7 +1,8 @@
 #! /usr/bin/env python3
 
 from sys import stderr
-from error_handling import error_handling
+from error_handling import *
+from Agent import Agent
 
 def main() -> None:
     try:
@@ -9,7 +10,10 @@ def main() -> None:
     except ValueError as e:
         print(f"Error: {e}", file=stderr)
         exit(84)
-    print("Hello world!")
+    port, team_name, ip = retrieve_attributes()
+    agent = Agent(port, team_name, ip)
+    agent.connect_to_server()
+
 
 if __name__ == "__main__":
     main()

@@ -26,3 +26,12 @@ def error_handling() -> None:
         # If -h is not followed by a string
         if len(argv[argv.index("-h") + 1]) == 0:
             raise ValueError("Invalid machine name")
+
+def retrieve_attributes() -> tuple:
+    """Retrieve attributes from argv"""
+    port = int(argv[argv.index("-p") + 1])
+    team_name = argv[argv.index("-n") + 1]
+    ip = "localhost"
+    if "-h" in argv:
+        ip = argv[argv.index("-h") + 1]
+    return port, team_name, ip

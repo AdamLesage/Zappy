@@ -13,6 +13,7 @@ class Agent():
 
     def connect_to_server(self):
         """Connect to the server from the given ip and port"""
+        print(f"Connecting to {self.ip} on port {self.port} with team name {self.team_name}")
         pass
 
     def disconnect_from_server(self):
