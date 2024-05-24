@@ -33,13 +33,13 @@ CFLAGS		= 	-Wall -Wextra -Wshadow
 
 all:    $(Name)
 
-$(Name): server
+$(Name): server gui ai
 
 server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS)
 
-zappy_gui:
-	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS)
+gui:
+	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS) -lGL -lglut -lGLEW -lassimp
 
 ai:
 	ln -s -f $(SRC_AI) $(NAME_BINARY_AI)
@@ -64,7 +64,7 @@ tests_run:
 coverage:
 	gcovr --exclude tests/
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re zappy_gui
 
 run_epitest: re
 	sudo docker build -t epitest:lastest .
