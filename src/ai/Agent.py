@@ -6,6 +6,7 @@
 ##
 
 import socket
+from data_encryption import encrypt_data, decrypt_data
 
 class Agent():
     def __init__(self, port: int, team_name: str, ip: str = "localhost"):
@@ -22,6 +23,8 @@ class Agent():
             while True:
                 data = self.client.recv(1024).decode()
                 print(f"Received: {data}")
+                message = input(" > ")
+                self.send_to_server(message)
 
 
         except Exception as e:
@@ -29,7 +32,10 @@ class Agent():
             exit(84)
 
 
+    def send_to_server(self, message: str) -> None:
+        """Send a message to the server"""
+        self.client.send(message.encode())
 
     def disconnect_from_server(self) -> None:
         """Disconnect from the server"""
-        pass
+        self.client.close()
