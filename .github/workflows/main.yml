@@ -59,8 +59,8 @@ jobs:
         fetch-depth: 0
     - name: install c++ dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y freeglut3-dev libglew-dev libassimp-dev
+        sudo apt update
+        sudo apt install -y freeglut3-dev libglew-dev libassimp-dev
     - run: make re
       timeout-minutes: 1
   push_to_mirror:
