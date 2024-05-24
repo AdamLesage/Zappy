@@ -33,7 +33,7 @@ CFLAGS		= 	-Wall -Wextra -Wshadow
 
 all:    $(Name)
 
-$(Name): server gui ai
+$(Name): server ai
 
 server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS)
