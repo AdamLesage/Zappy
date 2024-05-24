@@ -11,5 +11,5 @@ To install the C++ libraries, you can use the package manager of your system. Fo
 ```bash
 sudo dnf install freeglut-devel
 sudo dnf install glew-devel
-sudo dnf install glew-devel
+sudo dnf install assimp-devel
 ```
