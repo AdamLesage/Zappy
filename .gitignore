@@ -58,3 +58,4 @@ zappy_ai
 zappy_gui
 
 *.log
+.bash_history
