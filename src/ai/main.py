@@ -2,7 +2,7 @@
 
 from sys import stderr
 from error_handling import *
-from ai.models.Agent import Agent
+from models.Agent import Agent
 
 def main() -> None:
     try:
