@@ -48,6 +48,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 
 TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_init_map.c					\
+				tests/server/test_init_players.c				\
 
 Name		=	zappy
 
