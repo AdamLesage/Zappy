@@ -50,7 +50,7 @@ typedef struct players_s {
     players_list_t *players_list;
 } players_t;
 
-typedef struct tiles_list_s {
+typedef struct tile_info_s {
     int pos_x;
     int pos_y;
     int nb_players;
@@ -61,6 +61,12 @@ typedef struct tiles_list_s {
     int nb_phiras;
     int nb_thystame;
     int nb_eggs;
+} tile_info_t;
+
+typedef struct tiles_list_s {
+    int pos_x;
+    int pos_y;
+    tile_info_t *tile_info;
     tiles_list_t *next;
 } tiles_list_t;
 
