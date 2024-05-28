@@ -127,7 +127,6 @@ char **get_map_info(map_t *map)
 {
     char **map_array = malloc(sizeof(char *) * (map->height * map->width + 1));
     tiles_list_t *tmp = map->tiles_list;
-    char *str = NULL;
 
     if (map_array == NULL) {
         exit(84);

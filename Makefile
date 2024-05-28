@@ -20,6 +20,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/dataManagment/arguments/get_number_client_by_teams.c	\
 			src/server/dataManagment/arguments/get_frequency.c				\
 			src/server/dataManagment/map/init_map.c							\
+			src/server/dataManagment/players/init_players.c					\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
 

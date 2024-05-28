@@ -96,5 +96,6 @@ typedef struct arguments_s {
 } arguments_t;
 
 void init_map(map_t *map, arguments_t *arguments);
+void init_players(players_t *players, arguments_t *arguments);
 
 #endif /* !SERVER_DATA_H_ */
