@@ -39,7 +39,7 @@ zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS)
 
 zappy_gui:
-	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS) -lGL -lglut -lGLEW -lassimp
+	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS) -lsfml-graphics -lsfml-window -lsfml-system
 
 zappy_ai:
 	ln -s -f $(SRC_AI) $(NAME_BINARY_AI)
