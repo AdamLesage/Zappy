@@ -5,6 +5,7 @@
 ** Interface
 */
 
+#include "bar.hpp"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -20,8 +21,9 @@ class Interface {
         void loop();
 
     protected:
-        sf::RenderWindow window;
+        std::shared_ptr<sf::RenderWindow> window;
         sf::Event event;
+        std::vector<std::shared_ptr<Bar>> bars;
     private:
 };
 
