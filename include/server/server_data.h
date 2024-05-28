@@ -8,6 +8,43 @@
 #ifndef SERVER_DATA_H_
     #define SERVER_DATA_H_
 
+enum Orientation {
+    N = 1,
+    E = 2,
+    S = 3,
+    W = 4,
+};
+
+typedef struct inventory_s {
+    int nb_linemate;
+    int nb_deraumere;
+    int nb_sibur;
+    int nb_mendiane;
+    int nb_phiras;
+    int nb_thystame;
+} inventory_t;
+
+typedef struct players_list_s {
+    int pos_x;
+    int pos_y;
+    int level;
+    inventory_t *inventory;
+    char *action_queue[10];
+    char *last_action;
+    int timer_action;
+    enum Orientation orientation;
+    int fd;
+    char *team_name;
+    int last_feed;
+    players_list_t *next;
+} players_list_t;
+
+typedef struct players_s {
+    int nb_client;
+    int nb_teams;
+    players_list_t *players_list;
+} players_t;
+
 typedef struct arguments_s {
     int port;
     int width;
