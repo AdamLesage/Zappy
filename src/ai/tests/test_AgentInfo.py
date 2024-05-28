@@ -74,7 +74,7 @@ class DataEncryption(unittest.TestCase):
         team_name = "team"
         encrypted_data = encrypt_data(data, key, team_name)
         decrypted_data = decrypt_data(encrypted_data, key)
-        self.assertEqual(decrypted_data.split("/")[0], "team_name")
+        self.assertEqual(decrypted_data.split("/")[0], team_name)
         return
     
     def testMessageEncryption(self):
