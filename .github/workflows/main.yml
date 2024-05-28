@@ -62,9 +62,23 @@ jobs:
         make zappy_ai
         make re
       timeout-minutes: 1
-  push_to_mirror:
+  run_tests_and_coverage:
     needs:
       - check_compilation
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker:latest
+      options: --privileged
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - run: |
+        ./tests/run_test.sh
+      timeout-minutes: 1
+  push_to_mirror:
+    needs:
+      - run_tests_and_coverage
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
