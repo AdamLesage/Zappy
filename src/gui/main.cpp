@@ -5,10 +5,13 @@
 ** main
 */
 
-#include <stdio.h>
+#include <iostream>
+#include "Interface.hpp"
 
-int main(int ac, char **av)
+int main()
 {
-    printf("gui\n");
+    Interface interface;
+
+    interface.loop();
     return 0;
 }

@@ -14,6 +14,7 @@ SRC_SEVER			=	src/server/main.c									  \
 						src/server/lunch_server.c							  \
 
 SRC_GUI				=	src/gui/main.cpp							   		  \
+						src/gui/Interface.cpp								  \
 
 SRC_AI				=	src/ai/main.py										  \
 
@@ -39,7 +40,7 @@ zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS)
 
 zappy_gui:
-	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS) -lGL -lglut -lGLEW -lassimp
+	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS) -lsfml-graphics -lsfml-window -lsfml-system
 
 zappy_ai:
 	ln -s -f $(SRC_AI) $(NAME_BINARY_AI)
