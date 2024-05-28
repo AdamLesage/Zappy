@@ -1,8 +1,18 @@
 #!/bin/bash
 
-cd src/ai/tests; python3 test_AgentInfo.py -v; cd ../../../
-cd src/ai/tests; python3 test_Commands.py -v; cd ../../../
+# Find the coverage tool
+COVERAGE=$(python3 -m site --user-base)/bin/coverage
 
+$COVERAGE erase
+
+# Execute tests
+cd src/ai/tests
+$COVERAGE run -m unittest test_AgentInfo.py -v
+$COVERAGE run -m unittest test_Commands.py -v
+$COVERAGE report -m
+cd ../../../
+
+# Check the exit code
 if [ $? -eq 0 ]; then
     echo "Exit code is 0."
     exit 0
