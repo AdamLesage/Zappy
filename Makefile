@@ -14,6 +14,7 @@ SRC_SEVER			=	src/server/main.c									  \
 						src/server/lunch_server.c							  \
 
 SRC_GUI				=	src/gui/main.cpp							   		  \
+						src/gui/Interface.cpp								  \
 
 SRC_AI				=	src/ai/main.py										  \
 
