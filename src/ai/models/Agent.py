@@ -29,8 +29,6 @@ class Agent():
                 print(f"Received: {data}")
                 message = input(" > ")
                 self.send_to_server(message)
-
-
         except Exception as e:
             print(f"Error: {e}")
             exit(84)
