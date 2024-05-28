@@ -28,7 +28,26 @@ SRC_GUI				=	src/gui/main.cpp							   		  \
 
 SRC_AI				=	src/ai/main.py										  \
 
-TEST 		=	\
+SRC_TEST_SERVER		=	src/server/close_server.c							\
+			src/server/connect_client.c										\
+			src/server/get_client_command.c									\
+			src/server/init_core.c											\
+			src/server/init_server.c										\
+			src/server/lunch_server.c										\
+			src/server/dataManagment/arguments/get_arguments.c				\
+			src/server/dataManagment/arguments/get_port.c					\
+			src/server/dataManagment/arguments/get_width.c					\
+			src/server/dataManagment/arguments/get_height.c					\
+			src/server/dataManagment/arguments/get_teams_name.c				\
+			src/server/dataManagment/arguments/get_number_client_by_teams.c	\
+			src/server/dataManagment/arguments/get_frequency.c				\
+			src/server/dataManagment/map/init_map.c							\
+			src/server/dataManagment/players/init_players.c					\
+			src/server/utils/str_is_num.c									\
+			src/server/utils/int_to_str.c									\
+
+TEST 		=	tests/server/test_arguments.c					\
+				tests/server/test_init_map.c					\
 
 Name		=	zappy
 
@@ -69,7 +88,7 @@ fclean: clean
 re: fclean all
 
 tests_run:
-	g++ -o $(NAMETEST) $(SRC_TEST) $(TEST) $(CFLAGS) -lcriterion --coverage
+	gcc -o $(NAMETEST) $(SRC_TEST_SERVER) $(TEST) $(CFLAGS) -Iinclude/server -lcriterion --coverage
 	./$(NAMETEST)
 
 coverage:
