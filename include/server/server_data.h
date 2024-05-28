@@ -24,7 +24,7 @@ typedef struct inventory_s {
     int nb_thystame;
 } inventory_t;
 
-typedef struct players_list_s {
+typedef struct player_info_s {
     int pos_x;
     int pos_y;
     int level;
@@ -36,6 +36,11 @@ typedef struct players_list_s {
     int fd;
     char *team_name;
     int last_feed;
+} player_info_t;
+
+typedef struct players_list_s {
+    int fd;
+    player_info_t player_info;
     players_list_t *next;
 } players_list_t;
 
@@ -75,5 +80,7 @@ typedef struct arguments_s {
     int nb_client;
     int frequency;
 } arguments_t;
+
+void init_map(map_t *map, arguments_t *arguments);
 
 #endif /* !SERVER_DATA_H_ */

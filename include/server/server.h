@@ -37,6 +37,8 @@ typedef struct core_s {
     socket_config_t socket_config;
     select_info_t select_info;
     arguments_t arguments;
+    map_t map;
+    players_t players;
 } core_t;
 
 void init_core(const int argc, const char **argv, core_t *core);
