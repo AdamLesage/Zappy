@@ -45,6 +45,27 @@ typedef struct players_s {
     players_list_t *players_list;
 } players_t;
 
+typedef struct tiles_list_s {
+    int pos_x;
+    int pos_y;
+    int nb_players;
+    int nb_linemate;
+    int nb_deraumere;
+    int nb_sibur;
+    int nb_mendiane;
+    int nb_phiras;
+    int nb_thystame;
+    int nb_eggs;
+    tiles_list_t *next;
+} tiles_list_t;
+
+typedef struct map_s {
+    int width;
+    int height;
+    int last_refille;
+    tiles_list_t *tiles_list;
+} map_t;
+
 typedef struct arguments_s {
     int port;
     int width;
