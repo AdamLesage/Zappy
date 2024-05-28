@@ -6,10 +6,14 @@
 ##
 
 import socket
+import sys
+sys.path.append("..")
 from data_encryption import encrypt_data, decrypt_data
+from models.AgentInfo import AgentInfo
 
 class Agent():
     def __init__(self, port: int, team_name: str, ip: str = "localhost"):
+        self.agentInfo = AgentInfo()
         self.port = port
         self.team_name = team_name
         self.ip = ip
