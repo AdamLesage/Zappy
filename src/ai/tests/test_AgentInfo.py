@@ -61,36 +61,30 @@ class DataEncryption(unittest.TestCase):
         """Test the data encryption methods"""
         data = "Hello World"
         key = "key"
-        encrypted_data = encrypt_data(data, key)
+        team_name = "team"
+        encrypted_data = encrypt_data(data, key, team_name)
         decrypted_data = decrypt_data(encrypted_data, key)
-        self.assertEqual(decrypted_data, data)
+        self.assertEqual(decrypted_data, f"{team_name}/{data}")
+        return
+
+    def testSignatureEncryption(self):
+        """Test the signature encryption methods"""
+        data = "Hello World"
+        key = "key"
+        team_name = "team"
+        encrypted_data = encrypt_data(data, key, team_name)
+        decrypted_data = decrypt_data(encrypted_data, key)
+        self.assertEqual(decrypted_data.split("/")[0], team_name)
         return
     
-    def testAddSignature(self):
-        """Test the add_signature method of the data_encryption module"""
+    def testMessageEncryption(self):
+        """Test the message encryption methods"""
         data = "Hello World"
-        team_name = "epitech"
-        crypted_data = add_signature(data, team_name)
-        self.assertEqual(crypted_data.split("/")[1], data)
-        return
-    
-    def testSignatureCrypted(self):
-        """Test the add_signature method of the data_encryption module"""
-        data = "Hello World"
-        team_name = "epitech"
-        crypted_data = add_signature(data, team_name)
-        self.assertEqual(crypted_data.split("/")[0], encrypt_data(team_name, team_name))
-        return
-    
-    def testSignatureDecrypted(self):
-        """Test the add_signature method of the data_encryption module"""
-        data = "Hello World"
-        team_name = "epitech"
-        crypted_data = encrypt_data(data, team_name)
-        crypted_data = add_signature(data, team_name)
-        decrypted_signature = crypted_data.split("/")[0]
-        self.assertEqual(decrypt_data(decrypted_signature, team_name), team_name)
-        return
+        key = "key"
+        team_name = "team"
+        encrypted_data = encrypt_data(data, key, team_name)
+        decrypted_data = decrypt_data(encrypted_data, key)
+        self.assertEqual(decrypted_data.split("/")[1], data)
 
 
 if __name__ == '__main__':
