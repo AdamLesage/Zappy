@@ -22,6 +22,7 @@ typedef struct inventory_s {
     int nb_mendiane;
     int nb_phiras;
     int nb_thystame;
+    int nb_food;
 } inventory_t;
 
 typedef struct player_info_s {
@@ -41,7 +42,7 @@ typedef struct player_info_s {
 typedef struct players_list_s {
     int fd;
     player_info_t player_info;
-    players_list_t *next;
+    struct players_list_s *next;
 } players_list_t;
 
 typedef struct players_s {
@@ -49,6 +50,12 @@ typedef struct players_s {
     int nb_teams;
     players_list_t *players_list;
 } players_t;
+
+typedef struct eggs_s {
+    char *team_name;
+    int nb_eggs;
+    struct eggs_s *next;
+} eggs_t;
 
 typedef struct tile_info_s {
     int pos_x;
@@ -60,14 +67,15 @@ typedef struct tile_info_s {
     int nb_mendiane;
     int nb_phiras;
     int nb_thystame;
-    int nb_eggs;
+    int nb_food;
+    eggs_t *eggs;
 } tile_info_t;
 
 typedef struct tiles_list_s {
     int pos_x;
     int pos_y;
     tile_info_t *tile_info;
-    tiles_list_t *next;
+    struct tiles_list_s *next;
 } tiles_list_t;
 
 typedef struct map_s {

@@ -57,5 +57,6 @@ void connect_client(select_info_t *select_info,
     struct sockaddr_in *server_socket);
 void get_client_command(core_t *core);
 bool str_isnum(char *str);
+char *int_to_str(int nbr);
 
 #endif /* !SERVER_H_ */
