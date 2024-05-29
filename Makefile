@@ -89,7 +89,8 @@ fclean: clean
 re: fclean all
 
 tests_run:
-	gcc -o $(NAMETEST) $(SRC_TEST_SERVER) $(TEST) $(CFLAGS) -Iinclude/server -lcriterion --coverage
+	gcc -o $(NAMETEST) $(SRC_TEST_SERVER) \
+	$(TEST) $(CFLAGS) -Iinclude/server -lcriterion --coverage
 	./$(NAMETEST)
 
 coverage:
