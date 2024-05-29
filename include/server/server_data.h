@@ -97,6 +97,7 @@ typedef struct arguments_s {
 
 void init_map(map_t *map, arguments_t *arguments);
 tile_info_t *find_tile(map_t *map, int x, int y);
+bool put_player(map_t *map, int x, int y);
 void init_players(players_t *players, arguments_t *arguments);
 
 #endif /* !SERVER_DATA_H_ */

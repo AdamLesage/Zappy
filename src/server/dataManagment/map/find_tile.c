@@ -10,7 +10,7 @@
 tile_info_t *find_tile(map_t *map, int x, int y)
 {
     tiles_list_t *tmp = NULL;
-    
+
     if (map == NULL) {
         return NULL;
     }
