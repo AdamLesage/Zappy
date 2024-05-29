@@ -23,6 +23,8 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/dataManagment/map/find_tile.c						\
 			src/server/dataManagment/map/put_on_map.c						\
 			src/server/dataManagment/map/put_on_map2.c						\
+			src/server/dataManagment/map/remove_from_map.c					\
+			src/server/dataManagment/map/remove_from_map2.c					\
 			src/server/dataManagment/players/init_players.c					\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
@@ -48,6 +50,8 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/dataManagment/map/find_tile.c						\
 			src/server/dataManagment/map/put_on_map.c						\
 			src/server/dataManagment/map/put_on_map2.c						\
+			src/server/dataManagment/map/remove_from_map.c					\
+			src/server/dataManagment/map/remove_from_map2.c					\
 			src/server/dataManagment/players/init_players.c					\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
@@ -57,6 +61,7 @@ TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_init_players.c				\
 				tests/server/test_find_tiles.c					\
 				tests/server/test_map_put.c						\
+				tests/server/test_map_remove.c					\
 
 Name		=	zappy
 

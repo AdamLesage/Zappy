@@ -108,6 +108,15 @@ bool put_phiras(map_t *map, int x, int y);
 bool put_thystame(map_t *map, int x, int y);
 bool put_eggs(map_t *map, int x, int y, char *team_name);
 bool put_deraumere(map_t *map, int x, int y);
+bool remove_food(map_t *map, int x, int y);
+bool remove_player(map_t *map, int x, int y);
+bool remove_linemate(map_t *map, int x, int y);
+bool remove_sibur(map_t *map, int x, int y);
+bool remove_deraumere(map_t *map, int x, int y);
+bool remove_mendiane(map_t *map, int x, int y);
+bool remove_phiras(map_t *map, int x, int y);
+bool remove_thystame(map_t *map, int x, int y);
+bool remove_eggs(map_t *map, int x, int y, char *team_name);
 void init_players(players_t *players, arguments_t *arguments);
 
 #endif /* !SERVER_DATA_H_ */
