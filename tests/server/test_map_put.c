@@ -25,7 +25,7 @@ Test(put_player, put_on_valide_tile)
 
     init_map(&map, &arguments);
     return_value = put_player(&map, 5, 4);
-    info = find_tile_info(&map, 5, 4);
+    info = find_tile(&map, 5, 4);
 
     cr_assert_eq(info->nb_players, 1);
     cr_assert_eq(return_value, true);
@@ -65,7 +65,7 @@ Test(put_linemate, put_on_valide_tile)
 
     init_map(&map, &arguments);
     return_value = put_linemate(&map, 5, 4);
-    info = find_tile_info(&map, 5, 4);
+    info = find_tile(&map, 5, 4);
 
     cr_assert_eq(info->nb_linemate, 1);
     cr_assert_eq(return_value, true);
@@ -105,7 +105,7 @@ Test(put_player, put_on_valide_tile)
 
     init_map(&map, &arguments);
     return_value = put_deraumere(&map, 5, 4);
-    info = find_tile_info(&map, 5, 4);
+    info = find_tile(&map, 5, 4);
 
     cr_assert_eq(info->nb_deraumere, 1);
     cr_assert_eq(return_value, true);
@@ -145,7 +145,7 @@ Test(put_player, put_on_valide_tile)
 
     init_map(&map, &arguments);
     return_value = put_sibur(&map, 5, 4);
-    info = find_tile_info(&map, 5, 4);
+    info = find_tile(&map, 5, 4);
 
     cr_assert_eq(info->nb_sibur, 1);
     cr_assert_eq(return_value, true);
@@ -185,7 +185,7 @@ Test(put_player, put_on_valide_tile)
 
     init_map(&map, &arguments);
     return_value = put_mendiane(&map, 5, 4);
-    info = find_tile_info(&map, 5, 4);
+    info = find_tile(&map, 5, 4);
 
     cr_assert_eq(info->nb_mendiane, 1);
     cr_assert_eq(return_value, true);
@@ -225,7 +225,7 @@ Test(put_player, put_on_valide_tile)
 
     init_map(&map, &arguments);
     return_value = put_phiras(&map, 5, 4);
-    info = find_tile_info(&map, 5, 4);
+    info = find_tile(&map, 5, 4);
 
     cr_assert_eq(info->nb_phiras, 1);
     cr_assert_eq(return_value, true);
@@ -265,7 +265,7 @@ Test(put_thystame, put_on_valide_tile)
 
     init_map(&map, &arguments);
     return_value = put_thystame(&map, 5, 4);
-    info = find_tile_info(&map, 5, 4);
+    info = find_tile(&map, 5, 4);
 
     cr_assert_eq(info->nb_thystame, 1);
     cr_assert_eq(return_value, true);
@@ -305,7 +305,7 @@ Test(put_eggs, put_on_valide_tile)
 
     init_map(&map, &arguments);
     return_value = put_eggs(&map, 5, 4, "name1");
-    info = find_tile_info(&map, 5, 4);
+    info = find_tile(&map, 5, 4);
 
     cr_assert_str_eq(info->eggs->team_name, "name1");
     cr_assert_eq(info->eggs->nb_eggs, 1);
@@ -329,7 +329,7 @@ Test(put_eggs, put_on_same_team_eggs)
     return_value = put_eggs(&map, 5, 4, "name1");
     return_value = put_eggs(&map, 5, 4, "name1");
     return_value = put_eggs(&map, 5, 4, "name1");
-    info = find_tile_info(&map, 5, 4);
+    info = find_tile(&map, 5, 4);
 
     cr_assert_str_eq(info->eggs->team_name, "name1");
     cr_assert_eq(info->eggs->nb_eggs, 3);
@@ -353,7 +353,7 @@ Test(put_eggs, put_on_different_team_eggs)
     return_value = put_eggs(&map, 5, 4, "name1");
     return_value = put_eggs(&map, 5, 4, "name2");
     return_value = put_eggs(&map, 5, 4, "name1");
-    info = find_tile_info(&map, 5, 4);
+    info = find_tile(&map, 5, 4);
 
     cr_assert_str_eq(info->eggs->next->team_name, "name1");
     cr_assert_eq(info->eggs->next->nb_eggs, 2);
@@ -396,7 +396,7 @@ Test(put_food, put_on_valide_tile)
 
     init_map(&map, &arguments);
     return_value = put_food(&map, 5, 4);
-    info = find_tile_info(&map, 5, 4);
+    info = find_tile(&map, 5, 4);
 
     cr_assert_eq(info->nb_food, 1);
     cr_assert_eq(return_value, true);

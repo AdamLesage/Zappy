@@ -23,7 +23,7 @@ Test(find_tile, find_on_unset_map)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    info = find_tile_info(NULL, 5, 4);
+    info = find_tile(NULL, 5, 4);
     cr_assert_eq(info, NULL);
 }
 
@@ -40,6 +40,6 @@ Test(find_tile, find_invalide_tile)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    info = find_tile_info(&map, 10, 20);
+    info = find_tile(&map, 10, 20);
     cr_assert_eq(info, NULL);
 }
