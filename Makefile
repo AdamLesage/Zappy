@@ -66,7 +66,7 @@ all:    $(Name)
 
 $(Name): zappy_server zappy_ai
 
-server:
+zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS) -Iinclude/server
 
 zappy_gui:
