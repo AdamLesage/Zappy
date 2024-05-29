@@ -41,7 +41,7 @@ typedef struct player_info_s {
 
 typedef struct players_list_s {
     int fd;
-    player_info_t player_info;
+    player_info_t *player_info;
     struct players_list_s *next;
 } players_list_t;
 

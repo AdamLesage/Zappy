@@ -13,7 +13,7 @@
 Test(put_player, put_on_valide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -27,14 +27,14 @@ Test(put_player, put_on_valide_tile)
     return_value = put_player(&map, 5, 4);
     info = find_tile_info(&map, 5, 4);
 
-    cr_assert_eq(info.nb_players, 1);
+    cr_assert_eq(info->nb_players, 1);
     cr_assert_eq(return_value, true);
 }
 
 Test(put_player, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -53,7 +53,7 @@ Test(put_player, put_on_invalide_tile)
 Test(put_linemate, put_on_valide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -67,14 +67,14 @@ Test(put_linemate, put_on_valide_tile)
     return_value = put_linemate(&map, 5, 4);
     info = find_tile_info(&map, 5, 4);
 
-    cr_assert_eq(info.nb_linemate, 1);
+    cr_assert_eq(info->nb_linemate, 1);
     cr_assert_eq(return_value, true);
 }
 
 Test(put_linemate, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -93,7 +93,7 @@ Test(put_linemate, put_on_invalide_tile)
 Test(put_player, put_on_valide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -107,14 +107,14 @@ Test(put_player, put_on_valide_tile)
     return_value = put_deraumere(&map, 5, 4);
     info = find_tile_info(&map, 5, 4);
 
-    cr_assert_eq(info.nb_deraumere, 1);
+    cr_assert_eq(info->nb_deraumere, 1);
     cr_assert_eq(return_value, true);
 }
 
 Test(put_deraumere, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -133,7 +133,7 @@ Test(put_deraumere, put_on_invalide_tile)
 Test(put_player, put_on_valide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -147,14 +147,14 @@ Test(put_player, put_on_valide_tile)
     return_value = put_sibur(&map, 5, 4);
     info = find_tile_info(&map, 5, 4);
 
-    cr_assert_eq(info.nb_sibur, 1);
+    cr_assert_eq(info->nb_sibur, 1);
     cr_assert_eq(return_value, true);
 }
 
 Test(put_sibur, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -173,7 +173,7 @@ Test(put_sibur, put_on_invalide_tile)
 Test(put_player, put_on_valide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -187,14 +187,14 @@ Test(put_player, put_on_valide_tile)
     return_value = put_mendiane(&map, 5, 4);
     info = find_tile_info(&map, 5, 4);
 
-    cr_assert_eq(info.nb_mendiane, 1);
+    cr_assert_eq(info->nb_mendiane, 1);
     cr_assert_eq(return_value, true);
 }
 
 Test(put_mendiane, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -213,7 +213,7 @@ Test(put_mendiane, put_on_invalide_tile)
 Test(put_player, put_on_valide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -227,14 +227,14 @@ Test(put_player, put_on_valide_tile)
     return_value = put_phiras(&map, 5, 4);
     info = find_tile_info(&map, 5, 4);
 
-    cr_assert_eq(info.nb_phiras, 1);
+    cr_assert_eq(info->nb_phiras, 1);
     cr_assert_eq(return_value, true);
 }
 
 Test(put_phiras, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -253,7 +253,7 @@ Test(put_phiras, put_on_invalide_tile)
 Test(put_thystame, put_on_valide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -267,14 +267,14 @@ Test(put_thystame, put_on_valide_tile)
     return_value = put_thystame(&map, 5, 4);
     info = find_tile_info(&map, 5, 4);
 
-    cr_assert_eq(info.nb_thystame, 1);
+    cr_assert_eq(info->nb_thystame, 1);
     cr_assert_eq(return_value, true);
 }
 
 Test(put_thystame, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -293,7 +293,7 @@ Test(put_thystame, put_on_invalide_tile)
 Test(put_eggs, put_on_valide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -307,15 +307,15 @@ Test(put_eggs, put_on_valide_tile)
     return_value = put_eggs(&map, 5, 4, "name1");
     info = find_tile_info(&map, 5, 4);
 
-    cr_assert_str_eq(info.eggs->team_name, "name1");
-    cr_assert_eq(info.eggs->nb_eggs, 1);
+    cr_assert_str_eq(info->eggs->team_name, "name1");
+    cr_assert_eq(info->eggs->nb_eggs, 1);
     cr_assert_eq(return_value, true);
 }
 
 Test(put_eggs, put_on_same_team_eggs)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -331,15 +331,15 @@ Test(put_eggs, put_on_same_team_eggs)
     return_value = put_eggs(&map, 5, 4, "name1");
     info = find_tile_info(&map, 5, 4);
 
-    cr_assert_str_eq(info.eggs->team_name, "name1");
-    cr_assert_eq(info.eggs->nb_eggs, 3);
+    cr_assert_str_eq(info->eggs->team_name, "name1");
+    cr_assert_eq(info->eggs->nb_eggs, 3);
     cr_assert_eq(return_value, true);
 }
 
 Test(put_eggs, put_on_different_team_eggs)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -355,17 +355,17 @@ Test(put_eggs, put_on_different_team_eggs)
     return_value = put_eggs(&map, 5, 4, "name1");
     info = find_tile_info(&map, 5, 4);
 
-    cr_assert_str_eq(info.eggs->next->team_name, "name1");
-    cr_assert_eq(info.eggs->next->nb_eggs, 2);
-    cr_assert_str_eq(info.eggs->team_name, "name2");
-    cr_assert_eq(info.eggs->nb_eggs, 1);
+    cr_assert_str_eq(info->eggs->next->team_name, "name1");
+    cr_assert_eq(info->eggs->next->nb_eggs, 2);
+    cr_assert_str_eq(info->eggs->team_name, "name2");
+    cr_assert_eq(info->eggs->nb_eggs, 1);
     cr_assert_eq(return_value, true);
 }
 
 Test(put_eggs, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -384,7 +384,7 @@ Test(put_eggs, put_on_invalide_tile)
 Test(put_food, put_on_valide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -398,14 +398,14 @@ Test(put_food, put_on_valide_tile)
     return_value = put_food(&map, 5, 4);
     info = find_tile_info(&map, 5, 4);
 
-    cr_assert_eq(info.nb_food, 1);
+    cr_assert_eq(info->nb_food, 1);
     cr_assert_eq(return_value, true);
 }
 
 Test(put_food, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t info;
+    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
