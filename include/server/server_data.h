@@ -102,6 +102,7 @@ tile_info_t *find_tile(map_t *map, int x, int y);
 bool put_player(map_t *map, int x, int y);
 bool put_food(map_t *map, int x, int y);
 bool put_linemate(map_t *map, int x, int y);
+bool put_sibur(map_t *map, int x, int y);
 void init_players(players_t *players, arguments_t *arguments);
 
 #endif /* !SERVER_DATA_H_ */
