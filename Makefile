@@ -22,6 +22,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/dataManagment/map/init_map.c							\
 			src/server/dataManagment/map/find_tile.c						\
 			src/server/dataManagment/map/put_on_map.c						\
+			src/server/dataManagment/map/put_on_map2.c						\
 			src/server/dataManagment/players/init_players.c					\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
@@ -46,6 +47,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/dataManagment/map/init_map.c							\
 			src/server/dataManagment/map/find_tile.c						\
 			src/server/dataManagment/map/put_on_map.c						\
+			src/server/dataManagment/map/put_on_map2.c						\
 			src/server/dataManagment/players/init_players.c					\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
@@ -87,6 +89,7 @@ clean:
 	rm -f *.o
 
 fclean: clean
+	rm -f $(NAME_BINARY_SERVER)
 	rm -f $(Name)
 	rm -f $(NAMETEST)
 	rm -f unit*

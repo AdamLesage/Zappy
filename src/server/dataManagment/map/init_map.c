@@ -150,7 +150,6 @@ void init_map(map_t *map, arguments_t *arguments)
     add_eggs_on_map(map, arguments);
     array = get_map_info(map);
     for (int i = 0; array[i] != NULL; i++) {
-        printf("%s", array[i]);
         free(array[i]);
     }
 }

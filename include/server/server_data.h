@@ -8,7 +8,7 @@
 #ifndef SERVER_DATA_H_
     #define SERVER_DATA_H_
 
-#include <stdbool.h>
+    #include <stdbool.h>
 
 enum Orientation {
     N = 1,
@@ -103,6 +103,11 @@ bool put_player(map_t *map, int x, int y);
 bool put_food(map_t *map, int x, int y);
 bool put_linemate(map_t *map, int x, int y);
 bool put_sibur(map_t *map, int x, int y);
+bool put_mendiane(map_t *map, int x, int y);
+bool put_phiras(map_t *map, int x, int y);
+bool put_thystame(map_t *map, int x, int y);
+bool put_eggs(map_t *map, int x, int y, char *team_name);
+bool put_deraumere(map_t *map, int x, int y);
 void init_players(players_t *players, arguments_t *arguments);
 
 #endif /* !SERVER_DATA_H_ */

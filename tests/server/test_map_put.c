@@ -9,7 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-//// put player ////
+// //// put player ////
 Test(put_player, put_on_valide_tile)
 {
     map_t map;
@@ -34,7 +34,6 @@ Test(put_player, put_on_valide_tile)
 Test(put_player, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -49,8 +48,8 @@ Test(put_player, put_on_invalide_tile)
     cr_assert_eq(return_value, false);
 }
 
-//// put linemate ////
-Test(put_linemate, put_on_valide_tile)
+// //// put linemate ////
+Test(put_linemate, put_linemate_on_valide_tile)
 {
     map_t map;
     tile_info_t *info;
@@ -71,10 +70,9 @@ Test(put_linemate, put_on_valide_tile)
     cr_assert_eq(return_value, true);
 }
 
-Test(put_linemate, put_on_invalide_tile)
+Test(put_linemate, put_linemate_on_invalide_tile)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -89,8 +87,8 @@ Test(put_linemate, put_on_invalide_tile)
     cr_assert_eq(return_value, false);
 }
 
-//// put deraumere ////
-Test(put_player, put_on_valide_tile)
+// //// put deraumere ////
+Test(put_deraumere, put_on_valide_tile)
 {
     map_t map;
     tile_info_t *info;
@@ -114,7 +112,6 @@ Test(put_player, put_on_valide_tile)
 Test(put_deraumere, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -129,8 +126,8 @@ Test(put_deraumere, put_on_invalide_tile)
     cr_assert_eq(return_value, false);
 }
 
-//// put sibur ////
-Test(put_player, put_on_valide_tile)
+// //// put sibur ////
+Test(put_sibur, put_sibur_on_valide_tile)
 {
     map_t map;
     tile_info_t *info;
@@ -154,7 +151,6 @@ Test(put_player, put_on_valide_tile)
 Test(put_sibur, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -169,8 +165,8 @@ Test(put_sibur, put_on_invalide_tile)
     cr_assert_eq(return_value, false);
 }
 
-//// put mendiane ////
-Test(put_player, put_on_valide_tile)
+// //// put mendiane ////
+Test(put_mendiane, put_on_valide_tile)
 {
     map_t map;
     tile_info_t *info;
@@ -194,7 +190,6 @@ Test(put_player, put_on_valide_tile)
 Test(put_mendiane, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -209,8 +204,8 @@ Test(put_mendiane, put_on_invalide_tile)
     cr_assert_eq(return_value, false);
 }
 
-//// put phiras ////
-Test(put_player, put_on_valide_tile)
+// //// put phiras ////
+Test(put_phiras, put_on_valide_tile)
 {
     map_t map;
     tile_info_t *info;
@@ -234,7 +229,6 @@ Test(put_player, put_on_valide_tile)
 Test(put_phiras, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -249,7 +243,7 @@ Test(put_phiras, put_on_invalide_tile)
     cr_assert_eq(return_value, false);
 }
 
-//// put thystame ////
+// //// put thystame ////
 Test(put_thystame, put_on_valide_tile)
 {
     map_t map;
@@ -274,7 +268,6 @@ Test(put_thystame, put_on_valide_tile)
 Test(put_thystame, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -289,7 +282,7 @@ Test(put_thystame, put_on_invalide_tile)
     cr_assert_eq(return_value, false);
 }
 
-//// put eggs ////
+// //// put eggs ////
 Test(put_eggs, put_on_valide_tile)
 {
     map_t map;
@@ -350,14 +343,14 @@ Test(put_eggs, put_on_different_team_eggs)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    return_value = put_eggs(&map, 5, 4, "name1");
-    return_value = put_eggs(&map, 5, 4, "name2");
-    return_value = put_eggs(&map, 5, 4, "name1");
+    return_value = put_eggs(&map, 5, 4, "team1");
+    return_value = put_eggs(&map, 5, 4, "team2");
+    return_value = put_eggs(&map, 5, 4, "team1");
     info = find_tile(&map, 5, 4);
 
-    cr_assert_str_eq(info->eggs->next->team_name, "name1");
+    cr_assert_str_eq(info->eggs->next->team_name, "team1");
     cr_assert_eq(info->eggs->next->nb_eggs, 2);
-    cr_assert_str_eq(info->eggs->team_name, "name2");
+    cr_assert_str_eq(info->eggs->team_name, "team2");
     cr_assert_eq(info->eggs->nb_eggs, 1);
     cr_assert_eq(return_value, true);
 }
@@ -365,7 +358,6 @@ Test(put_eggs, put_on_different_team_eggs)
 Test(put_eggs, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -376,7 +368,7 @@ Test(put_eggs, put_on_invalide_tile)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    return_value = put_eggs(&map, 40, 40);
+    return_value = put_eggs(&map, 40, 40, "name1");
     cr_assert_eq(return_value, false);
 }
 
@@ -405,7 +397,6 @@ Test(put_food, put_on_valide_tile)
 Test(put_food, put_on_invalide_tile)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
