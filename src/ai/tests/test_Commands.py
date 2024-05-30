@@ -25,6 +25,7 @@ from command.ConnectCommand import ConnectCommand
 from command.EjectCommand import EjectCommand
 from command.TakeCommand import TakeCommand
 from command.SetCommand import SetCommand
+from command.CommandInterface import CommandInterface
 
 class TestCommands(unittest.TestCase):
     def test01_ForkCommand(self):
@@ -135,6 +136,22 @@ class TestCommands(unittest.TestCase):
         self.assertEqual(testSet.response, "ok/ko")
         return
 
+    def test13_InterfaceCommand(self):
+        """Test the InterfaceCommand class"""
+        testInterface = CommandInterface()
+        self.assertEqual(testInterface.action, "This command do ...")
+        self.assertEqual(testInterface.command, "Command")
+        self.assertEqual(testInterface.time_limit, 0)
+        self.assertEqual(testInterface.response, "Response")
+        return
+    
+    def test14_InterfaceCommand_execute(self):
+        """Test the InterfaceCommand execute method"""
+        testInterface = CommandInterface()
+        testSocket = unittest.mock.Mock()
+        testSocket.send.return_value = "Command"
+        self.assertEqual(testInterface.execute(testSocket), "Command")
+        return
 
 if __name__ == '__main__':
     unittest.main()
