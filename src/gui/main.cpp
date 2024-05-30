@@ -49,11 +49,11 @@ int main(int ac, char **av)
         return 0;
     }
     std::array<std::string, 2> args = recup_args(ac, av);
-    Interface interface;
     try {
-        GuiConnect gui_connect(args[0], args[1]);
-        gui_connect.receive();
-        interface.loop();
+        Interface interface;
+        std::shared_ptr<GuiConnect> gui_connect = std::make_shared<GuiConnect>(args[0], args[1]);
+        gui_connect->send("GRAPHIC\n");
+        interface.loop(gui_connect);
     } catch (const Zappy::ConnectError &e) {
         std::cerr << "Error: " << e.what() << std::endl << "Location: " << e.where() << std::endl;
         return 84;

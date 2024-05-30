@@ -18,10 +18,12 @@ class GuiConnect {
         void send(std::string message);
         void receive();
         void close_socket();
+        void close_thread();
 
     protected:
         int _socket;
         int _port;
+        bool Running;
     private:
 };
 

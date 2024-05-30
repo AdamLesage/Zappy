@@ -23,6 +23,10 @@ Interface::Interface()
 Interface::~Interface()
 {
     window->close();
+    if (_gui_connect != nullptr)
+        _gui_connect->close_thread();
+    if (ReceiveProcess.joinable())
+        ReceiveProcess.join();
 }
 
 void Interface::print_sound()
@@ -37,8 +41,10 @@ void Interface::print_sound()
         sound.setTextureRect(sf::IntRect(0, 20, 450, 325));
 }
 
-void Interface::loop()
+void Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
 {
+    _gui_connect = gui_connect;
+    ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
     while (window->isOpen()) {
         window->clear(sf::Color::White);
         while (window->pollEvent(event)) {
@@ -47,7 +53,6 @@ void Interface::loop()
         }
         sound_volume = bars[0]->checkClick(window);
         bars[1]->checkClick(window);
-        printf("sound_volume: %d\n", sound_volume);
         bars[0]->displayBar(window);
         bars[1]->displayBar(window);
         window->draw(sound);

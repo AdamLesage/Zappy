@@ -17,6 +17,7 @@ GuiConnect::GuiConnect()
 {
     _socket = 0;
     _port = 0;
+    Running = true;
 }
 
 GuiConnect::GuiConnect(std::string port, std::string machine)
@@ -43,20 +44,30 @@ GuiConnect::GuiConnect(std::string port, std::string machine)
 
 void GuiConnect::send(std::string message)
 {
-    printf("need to be done");
+    if (write(_socket, message.c_str(), message.size()) == -1) {
+        throw Zappy::ConnectError("Failed to send message", "GuiConnect");
+    }
+
 }
 
 void GuiConnect::receive()
 {
     char buffer[1024] = {0};
 
-    if (read(_socket, buffer, 1024) == -1) {
-        throw Zappy::ConnectError("Failed to receive message", "GuiConnect");
+    while (Running) {
+        if (read(_socket, buffer, 1024) == -1) {
+            throw Zappy::ConnectError("Failed to receive message", "GuiConnect");
+        }
+        std::cout << buffer << std::endl;
     }
-    std::cout << buffer << std::endl;
 }
 
 void GuiConnect::close_socket()
 {
     close(_socket);
+}
+
+void GuiConnect::close_thread()
+{
+    Running = false;
 }
