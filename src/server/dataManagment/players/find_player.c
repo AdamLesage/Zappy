@@ -14,7 +14,7 @@ player_info_t *find_player(players_t *player, int fd)
     }
     for (players_list_t *tmp = player->players_list; tmp != NULL;
         tmp = tmp->next) {
-        if (tmp->fd = fd) {
+        if (tmp->fd == fd) {
             return (tmp->player_info);
         }
     }
