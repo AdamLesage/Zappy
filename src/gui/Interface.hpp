@@ -24,6 +24,8 @@ class Interface {
         std::shared_ptr<sf::RenderWindow> window;
         sf::Event event;
         std::vector<std::shared_ptr<Bar>> bars;
+        int tick;
+        int zoom;
     private:
 };
 
