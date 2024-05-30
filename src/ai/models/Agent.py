@@ -44,6 +44,31 @@ class Agent():
         command = self.availableCommands[command].execute(self.client)
         self.agentInfo.addCommandsToSend(command) # Add the command to the list of commands to send
 
+    def retrieveWorldDimensions(self, data: str) -> None:
+        """Retrieve the world dimensions"""
+        if self.agentInfo.world_width != 0 and self.agentInfo.world_height != 0 or len(data[0:len(data) - 1].split('\n')) != 2:
+            return
+        splited_data = data[0:len(data) - 1].split('\n')
+        splited_x = splited_data[1].split(' ')[0]
+        splited_y = splited_data[1].split(' ')[1]
+
+        if splited_x.isdigit() and splited_y.isdigit():
+            self.agentInfo.world_width = int(splited_x)
+            self.agentInfo.world_height = int(splited_y)
+        print(f"World dimensions: {self.agentInfo.world_width}x{self.agentInfo.world_height}")
+
+    def retrieveClientNumber(self, data: str) -> None:
+        """Retrieve the client number"""
+        splited_client_numero = data[0:len(data) - 1].split('\n')[0]
+        if splited_client_numero.isdigit():
+            client_num = int(splited_client_numero)
+            if client_num >= 1:
+                print(f"Connected as client {client_num}")
+                self.agentInfo.client_num = client_num
+            else:
+                print("No available slots for the team")
+                exit(1)
+
     def connect_to_server(self) -> None:
         """Connect to the server from the given ip and port"""
         try:
@@ -51,9 +76,11 @@ class Agent():
             self.client.connect((self.ip, self.port))
             while True:
                 data = self.client.recv(1024).decode()
-                print(f"Received: {data}")
-                message = input(" > ")
-                self.send_to_server(message)
+                if data == "WELCOME\n": # If the server sends "WELCOME\n", send the team name
+                    self.client.send(f"{self.team_name}\n".encode())
+
+                self.retrieveClientNumber(data)
+                self.retrieveWorldDimensions(data)
         except Exception as e:
             print(f"Error: {e}")
             exit(84)

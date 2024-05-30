@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Install the coverage tool
+pip3 install --user coverage
+
 # Find the coverage tool
 COVERAGE=$(python3 -m site --user-base)/bin/coverage
 
