@@ -15,7 +15,3 @@ class SetCommand(CommandInterface):
         self.command = "Set object"
         self.time_limit = 7
         self.response = "ok/ko"
-
-    def execute(self):
-        """Execute the command"""
-        pass # TODO: Implement this method

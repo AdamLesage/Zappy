@@ -5,6 +5,8 @@
 ## CommandInterface
 ##
 
+import socket
+
 class CommandInterface():
     """Command Interface"""
     def __init__(self) -> None:
@@ -13,6 +15,7 @@ class CommandInterface():
         self.time_limit = 0
         self.response = "Response"
 
-    def execute(self) -> None:
+    def execute(self, client: socket) -> str:
         """Execute the command"""
-        pass
+        client.send(self.command.encode())
+        return self.command

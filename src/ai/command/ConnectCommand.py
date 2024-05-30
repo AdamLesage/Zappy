@@ -15,7 +15,3 @@ class ConnectCommand(CommandInterface):
         self.command = "Connect_nbr"
         self.time_limit = 0
         self.response = "value"
-
-    def execute(self):
-        """Execute the command"""
-        pass # TODO: Implement this method

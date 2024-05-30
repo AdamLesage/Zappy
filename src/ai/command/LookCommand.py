@@ -15,7 +15,3 @@ class LookCommand(CommandInterface):
         self.command = "Look"
         self.time_limit = 7
         self.response = "[tile1, tile2, ...]"
-
-    def execute(self):
-        """Execute the command"""
-        pass # TODO: Implement this method

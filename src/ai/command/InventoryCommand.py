@@ -15,7 +15,3 @@ class InventoryCommand(CommandInterface):
         self.command = "Inventory"
         self.time_limit = 1
         self.response = "[linemate n, sibur n, ...]"
-
-    def execute(self):
-        """Execute the command"""
-        pass # TODO: Implement this method

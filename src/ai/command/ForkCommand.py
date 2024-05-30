@@ -15,7 +15,3 @@ class ForkCommand(CommandInterface):
         self.command = "Fork"
         self.time_limit = 42
         self.response = "ok"
-
-    def execute(self):
-        """Execute the command"""
-        pass # TODO: Implement this method

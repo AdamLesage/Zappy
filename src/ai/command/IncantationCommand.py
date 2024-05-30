@@ -15,7 +15,3 @@ class IncantationCommand(CommandInterface):
         self.command = "Incantation"
         self.time_limit = 300
         self.response = "Elevation underway Current level: k/ko"
-
-    def execute(self):
-        """Execute the command"""
-        pass # TODO: Implement this method

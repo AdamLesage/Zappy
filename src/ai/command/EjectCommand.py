@@ -15,7 +15,3 @@ class EjectCommand(CommandInterface):
         self.command = "Eject"
         self.time_limit = 7
         self.response = "ok/ko"
-
-    def execute(self):
-        """Execute the command"""
-        pass # TODO: Implement this method

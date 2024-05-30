@@ -15,7 +15,3 @@ class RightCommand(CommandInterface):
         self.command = "Right"
         self.time_limit = 7
         self.response = "ok"
-
-    def execute(self):
-        """Execute the command"""
-        pass # TODO: Implement this method
