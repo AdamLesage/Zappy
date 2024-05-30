@@ -18,8 +18,13 @@ class AgentInfo():
         self.client_num = 0
         self.world_width = 0
         self.world_height = 0
+        self.agentStatus = "Alive" # Alive, Dead, Incantation, Fork
 
     # Getters
+    def getAgentStatus(self) -> str:
+        """Get the status of the agent: Alive, Dead, Incantation, Fork"""
+        return (self.agentStatus)
+    
     def getCommandsToSend(self) -> list:
         """Get the list of commands to send to the server"""
         return (self.commandsToSend)
@@ -40,6 +45,12 @@ class AgentInfo():
                 return it[1]
 
     # Setters
+    def setStatus(self, status: str) -> None:
+        """Set the status of the agent: Alive, Dead, Incantation, Fork"""
+        if status not in ["Alive", "Dead", "Incantation", "Fork"]:
+            raise ValueError("Invalid status")
+        self.agentStatus = status
+    
     def addCommandsToSend(self, commandName: str) -> None:
         self.commandsToSend.append(commandName)
 
