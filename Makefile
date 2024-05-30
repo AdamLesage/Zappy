@@ -34,6 +34,8 @@ NAMETEST 	=	unit_tests
 
 CFLAGS		= 	-Wall -Wextra -Wshadow
 
+SFML		=	-lsfml-graphics -lsfml-window -lsfml-system
+
 all:    $(Name)
 
 $(Name): zappy_server zappy_ai
@@ -42,7 +44,7 @@ zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS)
 
 zappy_gui:
-	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS) -lsfml-graphics -lsfml-window -lsfml-system
+	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS) $(SFML)
 
 zappy_ai:
 	ln -s -f $(SRC_AI) $(NAME_BINARY_AI)
