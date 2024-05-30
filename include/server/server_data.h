@@ -118,5 +118,7 @@ bool remove_phiras(map_t *map, int x, int y);
 bool remove_thystame(map_t *map, int x, int y);
 bool remove_eggs(map_t *map, int x, int y, char *team_name);
 void init_players(players_t *players, arguments_t *arguments);
+bool add_player(map_t *map, players_t *players, int fd,
+    char *team_name);
 
 #endif /* !SERVER_DATA_H_ */
