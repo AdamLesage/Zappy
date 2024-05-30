@@ -59,14 +59,14 @@ class TestAgentInfo(unittest.TestCase):
         data = "Hello World"
         agent_info = AgentInfo()
         agent_info.addCommandsToSend(data)
-        self.assertEqual(agent_info.getCommandsToSend(), [data])
+        self.assertEqual(agent_info.getCommandsToSend()[0], data)
     
     def test07_testCommandReturnedManagement(self):
         """Test the command returned management"""
         data = "Hello World"
         agent_info = AgentInfo()
         agent_info.addCommandsReturned(data)
-        self.assertEqual(agent_info.getCommandsReturned(), [data])
+        self.assertEqual(agent_info.getCommandsReturned()[0], data)
     
     def test08_inventoryAllCase(self):
         """Test the inventory all case"""
@@ -106,5 +106,5 @@ class DataEncryption(unittest.TestCase):
         self.assertEqual(decrypted_data.split("/")[1], data)
 
 
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()

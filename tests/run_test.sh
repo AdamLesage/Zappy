@@ -11,7 +11,7 @@ $COVERAGE erase
 cd src/ai/tests
 
 # Define the test files
-TEST_FILES=("test_AgentInfo.py" "test_Commands.py")
+TEST_FILES=("main_tester.py")
 
 # Execute tests and check coverage for each file
 for file in "${TEST_FILES[@]}"
