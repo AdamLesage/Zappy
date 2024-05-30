@@ -19,13 +19,16 @@ class Interface {
         Interface();
         ~Interface();
         void loop();
-
+        void print_sound();
     protected:
         std::shared_ptr<sf::RenderWindow> window;
         sf::Event event;
         std::vector<std::shared_ptr<Bar>> bars;
         int tick;
         int zoom;
+        int sound_volume;
+        sf::Sprite sound;
+        sf::Texture sound_;
     private:
 };
 

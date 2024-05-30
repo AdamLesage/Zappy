@@ -11,13 +11,13 @@ Bar::Bar(sf::Vector2f size, sf::Vector2f size_back, sf::Vector2f pos, sf::Color 
 {
     this->shape.setSize(size);
     this->back_shape.setSize(size_back);
-    this->barSize = pos.x + size_back.x - size.x + outline;
+    this->barSize = pos.x + size_back.x - size.x;
     this->shape.setOutlineThickness(outline);
     this->back_shape.setOutlineThickness(outline);
     this->shape.setOutlineColor(outlineColor);
     this->back_shape.setOutlineColor(outlineColor);
     this->shape.setPosition(pos.x, pos.y);
-    this->back_shape.setPosition(pos.x, pos.y + (outline / 2));
+    this->back_shape.setPosition(pos.x, pos.y + outline);
     this->shape.setFillColor(color);
     this->back_shape.setFillColor(color);
     this->hoverSape.setSize(size);
@@ -31,7 +31,7 @@ Bar::~Bar()
 {
 }
 
-bool Bar::checkClick(std::shared_ptr<sf::RenderWindow> window)
+int Bar::checkClick(std::shared_ptr<sf::RenderWindow> window)
 {
     sf::Mouse mouse;
     sf::Vector2f mousPos;
@@ -42,7 +42,32 @@ bool Bar::checkClick(std::shared_ptr<sf::RenderWindow> window)
         this->setState(StateBar::Hover);
         if (mouse.isButtonPressed(sf::Mouse::Button::Left)) {
             this->setState(StateBar::Clicked);
-            sf::Vector2f newPos = {mousPos.x - this->shape.getSize().x / 2, _pos.y};
+            newPos = {mousPos.x - this->shape.getSize().x / 2, _pos.y};
+            if (newPos.x < _pos.x)
+                newPos.x = _pos.x;
+            if (newPos.x < barSize) {
+                this->shape.setPosition(newPos);
+                this->hoverSape.setPosition(newPos);
+            }
+        }
+    }
+    if (newPos.x - _pos.x > 0)
+        return(newPos.x - _pos.x);
+    return (0);
+}
+
+bool Bar::checkClick2(std::shared_ptr<sf::RenderWindow> window)
+{
+    sf::Mouse mouse;
+    sf::Vector2f mousPos;
+    mousPos.x = mouse.getPosition(*window.get()).x;
+    mousPos.y = mouse.getPosition(*window.get()).y;
+    this->setState(StateBar::None);
+    if (this->shape.getGlobalBounds().contains(mousPos)) {
+        this->setState(StateBar::Hover);
+        if (mouse.isButtonPressed(sf::Mouse::Button::Left)) {
+            this->setState(StateBar::Clicked);
+            newPos = {mousPos.x - this->shape.getSize().x / 2, _pos.y};
             if (newPos.x < _pos.x)
                 newPos.x = _pos.x;
             if (newPos.x < barSize) {
@@ -79,7 +104,7 @@ void Bar::displayBar(std::shared_ptr<sf::RenderWindow> window)
         this->renderText.setCharacterSize(this->_characterSize);
         this->renderText.setFillColor(sf::Color::Black);
         this->renderText.setPosition(this->shape.getGlobalBounds().left + (this->shape.getGlobalBounds().width - this->renderText.getGlobalBounds().width) / 2,
-            this->shape.getGlobalBounds().top + this->shape.getGlobalBounds().height / 4);
+        this->shape.getGlobalBounds().top + this->shape.getGlobalBounds().height / 4);
     }
     window->draw(this->renderText);
     window->draw(this->hoverSape);
