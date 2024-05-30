@@ -126,5 +126,6 @@ void move_player(map_t *map, players_t *player, int fd);
 void turn_left(players_t *players, int fd);
 void turn_right(players_t *players, int fd);
 int *get_pos(players_t *players, int fd);
+int get_level(players_t *players, int fd);
 
 #endif /* !SERVER_DATA_H_ */
