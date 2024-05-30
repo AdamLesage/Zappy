@@ -17,7 +17,7 @@ Bar::Bar(sf::Vector2f size, sf::Vector2f size_back, sf::Vector2f pos, sf::Color 
     this->shape.setOutlineColor(outlineColor);
     this->back_shape.setOutlineColor(outlineColor);
     this->shape.setPosition(pos.x, pos.y);
-    this->back_shape.setPosition(pos.x, pos.y + 2.5);
+    this->back_shape.setPosition(pos.x, pos.y + (outline / 2));
     this->shape.setFillColor(color);
     this->back_shape.setFillColor(color);
     this->hoverSape.setSize(size);
