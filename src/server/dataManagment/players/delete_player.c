@@ -11,12 +11,15 @@ static bool delete_player2(map_t *map, players_t *players, int fd)
 {
     players_list_t *deleted_player = NULL;
 
-    for (players_list_t *tmp = players->players_list; tmp->next != NULL; tmp = tmp->next) {
+    for (players_list_t *tmp = players->players_list; tmp->next != NULL;
+        tmp = tmp->next) {
         if (tmp->next->fd == fd) {
             deleted_player = tmp->next;
             tmp->next = tmp->next->next;
-            remove_player(map, deleted_player->player_info->pos_x, deleted_player->player_info->pos_y);
-            put_eggs(map, deleted_player->player_info->pos_x, deleted_player->player_info->pos_y,
+            remove_player(map, deleted_player->player_info->pos_x,
+                deleted_player->player_info->pos_y);
+            put_eggs(map, deleted_player->player_info->pos_x,
+                deleted_player->player_info->pos_y,
                 deleted_player->player_info->team_name);
             free(deleted_player);
             return (true);

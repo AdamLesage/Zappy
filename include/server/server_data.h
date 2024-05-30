@@ -122,5 +122,6 @@ bool add_player(map_t *map, players_t *players, int fd,
     char *team_name);
 player_info_t *find_player(players_t *player, int fd);
 bool delete_player(map_t *map, players_t *players, int fd);
+void move_player(map_t *map, players_t *player, int fd);
 
 #endif /* !SERVER_DATA_H_ */

@@ -29,6 +29,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/dataManagment/players/add_player.c					\
 			src/server/dataManagment/players/find_player.c					\
 			src/server/dataManagment/players/delete_player.c				\
+			src/server/dataManagment/players/move_player.c					\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
 
@@ -59,6 +60,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/dataManagment/players/add_player.c					\
 			src/server/dataManagment/players/find_player.c					\
 			src/server/dataManagment/players/delete_player.c				\
+			src/server/dataManagment/players/move_player.c					\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
 
