@@ -13,9 +13,11 @@
 class GuiConnect {
     public:
         GuiConnect();
-        GuiConnect(std::string port);
+        GuiConnect(std::string port, std::string machine);
         ~GuiConnect() = default;
-        void send(int socket, std::string message);
+        void send(std::string message);
+        void receive();
+        void close_socket();
 
     protected:
         int _socket;

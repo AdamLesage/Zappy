@@ -16,8 +16,7 @@
 
 class Interface {
     public:
-        Interface() = default;
-        Interface(std::string machine);
+        Interface();
         ~Interface();
         void loop();
 
@@ -27,7 +26,6 @@ class Interface {
         std::vector<std::shared_ptr<Bar>> bars;
         int tick;
         int zoom;
-        std::string _machine;
     private:
 };
 
