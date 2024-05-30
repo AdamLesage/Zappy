@@ -120,5 +120,6 @@ bool remove_eggs(map_t *map, int x, int y, char *team_name);
 void init_players(players_t *players, arguments_t *arguments);
 bool add_player(map_t *map, players_t *players, int fd,
     char *team_name);
+player_info_t *find_player(players_t *player, int fd);
 
 #endif /* !SERVER_DATA_H_ */
