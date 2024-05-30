@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-namespace RayTracer {
+namespace Zappy {
     class IError : public std::exception {
         public:
             virtual ~IError() noexcept = default;

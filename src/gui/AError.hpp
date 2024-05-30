@@ -11,7 +11,7 @@
 #include "IError.hpp"
 #include <iostream>
 
-namespace RayTracer {
+namespace Zappy {
     class AError : public IError {
         public:
             AError(const std::string& message, const std::string& location) {
