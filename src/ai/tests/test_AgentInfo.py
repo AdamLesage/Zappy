@@ -54,6 +54,25 @@ class TestAgentInfo(unittest.TestCase):
         self.assertEqual(testBot.getInventory("linemate"), 0)
         return
 
+    def test06_testCommandManagement(self):
+        """Test the command management"""
+        data = "Hello World"
+        agent_info = AgentInfo()
+        agent_info.addCommandsToSend(data)
+        self.assertEqual(agent_info.getCommandsToSend(), [data])
+    
+    def test07_testCommandReturnedManagement(self):
+        """Test the command returned management"""
+        data = "Hello World"
+        agent_info = AgentInfo()
+        agent_info.addCommandsReturned(data)
+        self.assertEqual(agent_info.getCommandsReturned(), [data])
+    
+    def test08_inventoryAllCase(self):
+        """Test the inventory all case"""
+        agent_info = AgentInfo()
+        self.assertEqual(agent_info.getInventory("all"), [["food", 0], ["linemate", 0], ["deraumere", 0],
+                        ["sibur", 0], ["mendiane", 0], ["phiras", 0], ["thystame", 0]])
 
 
 class DataEncryption(unittest.TestCase):

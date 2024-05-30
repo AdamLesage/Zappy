@@ -59,6 +59,8 @@ class Agent():
 
     def retrieveClientNumber(self, data: str) -> None:
         """Retrieve the client number"""
+        if self.agentInfo.client_num != 0:
+            return
         splited_client_numero = data[0:len(data) - 1].split('\n')[0]
         if splited_client_numero.isdigit():
             client_num = int(splited_client_numero)
