@@ -127,5 +127,6 @@ void turn_left(players_t *players, int fd);
 void turn_right(players_t *players, int fd);
 int *get_pos(players_t *players, int fd);
 int get_level(players_t *players, int fd);
+inventory_t *get_inventory(players_t *players, int fd);
 
 #endif /* !SERVER_DATA_H_ */
