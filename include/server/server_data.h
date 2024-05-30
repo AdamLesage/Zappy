@@ -129,5 +129,6 @@ int *get_pos(players_t *players, int fd);
 int get_level(players_t *players, int fd);
 inventory_t *get_inventory(players_t *players, int fd);
 char *get_player_team(players_t *players, int fd);
+int find_nb_player_on_team(players_t *players, char *team_name);
 
 #endif /* !SERVER_DATA_H_ */
