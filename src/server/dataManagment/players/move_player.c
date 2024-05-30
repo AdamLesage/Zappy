@@ -23,14 +23,8 @@ void check_new_pos(map_t *map, int *x, int *y)
     }
 }
 
-void move_player(map_t *map, players_t *player, int fd)
+void find_new_pos(player_info_t *info, map_t *map)
 {
-    player_info_t *info = find_player(player, fd);
-
-    if (info == NULL || map == NULL) {
-        return;
-    }
-    remove_player(map, info->pos_x, info->pos_y);
     switch (info->orientation) {
         case N:
             info->pos_y -= 1;
@@ -47,4 +41,15 @@ void move_player(map_t *map, players_t *player, int fd)
     }
     check_new_pos(map, &info->pos_x, &info->pos_y);
     put_player(map, info->pos_x, info->pos_y);
+}
+
+void move_player(map_t *map, players_t *player, int fd)
+{
+    player_info_t *info = find_player(player, fd);
+
+    if (info == NULL || map == NULL) {
+        return;
+    }
+    remove_player(map, info->pos_x, info->pos_y);
+    find_new_pos(info, map);
 }
