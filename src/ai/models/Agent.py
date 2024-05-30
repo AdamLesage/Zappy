@@ -32,15 +32,17 @@ class Agent():
         self.team_name = team_name
         self.ip = ip
         self.client = None
-        self.availableCommands = {"connect_nbr": ConnectCommand(), "forward": ForwardCommand(),
-                                "right": RightCommand(), "left": LeftCommand(),
-                                "look": LookCommand(), "inventory": InventoryCommand(),
-                                "broadcast": BroadcastCommand(), "fork": ForkCommand(),
-                                "eject": EjectCommand(), "take": TakeCommand(), "set": SetCommand(),
-                                "incantation": IncantationCommand()}
+        self.availableCommands = {"connect_nbr\n": ConnectCommand(), "forward\n": ForwardCommand(),
+                                "right\n": RightCommand(), "left\n": LeftCommand(),
+                                "look\n": LookCommand(), "inventory\n": InventoryCommand(),
+                                "broadcast\n": BroadcastCommand(), "fork\n": ForkCommand(),
+                                "eject\n": EjectCommand(), "take\n": TakeCommand(), "set\n": SetCommand(),
+                                "incantation\n": IncantationCommand()}
 
     def executeCommand(self, command: str) -> None:
         """Execute a command"""
+        if command not in self.availableCommands:
+            return
         command = self.availableCommands[command].execute(self.client)
         self.agentInfo.addCommandsToSend(command) # Add the command to the list of commands to send
 
@@ -83,15 +85,20 @@ class Agent():
 
                 self.retrieveClientNumber(data)
                 self.retrieveWorldDimensions(data)
+                self.executeCommand(data)
+                if self.disconnect_from_server(data):
+                    break
         except Exception as e:
             print(f"Error: {e}")
             exit(84)
-
 
     def send_to_server(self, message: str) -> None:
         """Send a message to the server"""
         self.client.send(message.encode())
 
-    def disconnect_from_server(self) -> None:
+    def disconnect_from_server(self, data: str) -> bool:
         """Disconnect from the server"""
-        self.client.close()
+        if data == "ko\n" or data == "dead\n":
+            self.client.close()
+            return True
+        return False
