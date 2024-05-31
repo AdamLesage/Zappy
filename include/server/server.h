@@ -62,7 +62,8 @@ void send_response(char *response, int fd);
 
 void authentification(core_t *core, char *command, int fd);
 int get_time_action(char *command);
-void execute_GUI_command(core_t *core, char *command, int fd);
+void execute_gui_command(core_t *core, char *command, int fd);
 bool is_know_player_command(char *command);
+void check_player_command(core_t *core);
 
 #endif /* !SERVER_H_ */

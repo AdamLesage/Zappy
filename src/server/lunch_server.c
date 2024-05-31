@@ -24,6 +24,7 @@ static void manage_select_notif(core_t *core, int retval)
             &core->socket_config.server_socket);
         get_client_command(core);
     } else {
+        check_player_command(core);
         printf("server select\n");
     }
 }
@@ -34,7 +35,7 @@ void lunch_server(core_t *core)
 
     init_select_info(core, 1);
     while (1) {
-        core->select_info.tv.tv_sec = 1;
+        core->select_info.tv.tv_sec = 1 / core->arguments.frequency;
         core->select_info.tv.tv_usec = 0;
         core->select_info.temp_fds = core->select_info.rfds;
         retval = select(core->select_info.max_fd + 1,

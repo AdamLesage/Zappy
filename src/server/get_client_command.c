@@ -50,7 +50,7 @@ void check_command(core_t *core, int fd, char *command)
     if (info == NULL) {
         authentification(core, command, fd);
     } else if (strcmp(get_player_team(&core->players, fd), "GRAPHIC") == 0) {
-        execute_GUI_command(core, command, fd);
+        execute_gui_command(core, command, fd);
     } else {
         set_player_command(&core->players, info, command);
     }

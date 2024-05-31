@@ -42,6 +42,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/command/GUI_command/execute_gui_command.c			\
 			src/server/command/Player_command/get_time_action.c				\
 			src/server/command/Player_command/is_know_player_command.c		\
+			src/server/command/Player_command/check_player_command.c		\
 			src/server/command/authentification.c							\
 			src/server/utils/send_response.c								\
 			src/server/utils/str_is_num.c									\
@@ -90,6 +91,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/command/GUI_command/execute_gui_command.c			\
 			src/server/command/Player_command/get_time_action.c				\
 			src/server/command/Player_command/is_know_player_command.c		\
+			src/server/command/Player_command/check_player_command.c		\
 			src/server/command/authentification.c							\
 			src/server/utils/send_response.c								\
 			src/server/utils/str_is_num.c									\
