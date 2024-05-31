@@ -22,6 +22,7 @@ class AgentInfo():
         self.level = 1
         self.teamInventory = [["food", 0], ["linemate", 0], ["deraumere", 0],
                         ["sibur", 0], ["mendiane", 0], ["phiras", 0], ["thystame", 0]] # Inventory of the team, must be updated at each broadcast. Computation of each player's inventory
+        self.playerVision = [] # Vision of player, tiles around him
 
     # Getters
     def getAgentStatus(self) -> str:
@@ -63,7 +64,7 @@ class AgentInfo():
         if status not in ["Alive", "Dead", "Incantation", "Fork"]:
             raise ValueError("Invalid status")
         self.agentStatus = status
-    
+
     def addCommandsToSend(self, commandName: str) -> None:
         self.commandsToSend.append(commandName)
 
