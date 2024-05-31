@@ -1,10 +1,12 @@
 # Prerequisites
 *.d
+.vscode/
 
 # Object files
 *.o
 *.ko
 *.elf
+*.obj
 
 # Linker output
 *.ilk
@@ -69,3 +71,4 @@ __pycache__/
 *.pyd
 *.pyc
 *.pyo
+.coverage
