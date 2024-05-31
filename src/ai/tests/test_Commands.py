@@ -153,5 +153,5 @@ class TestCommands(unittest.TestCase):
         self.assertEqual(testInterface.execute(testSocket), "Command")
         return
 
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()
