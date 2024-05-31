@@ -7,6 +7,7 @@
 
 #include "server.h"
 
-void look(core_t *core, int fd, char *command)
+void look(core_t *core, int fd, char **command)
 {
+    printf("look\n");
 }

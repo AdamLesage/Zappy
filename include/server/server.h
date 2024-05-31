@@ -43,7 +43,7 @@ typedef struct core_s {
 
 typedef struct command_list_s {
     char *name;
-    void (*exe_command) (core_t *core, int fd, char *command);
+    void (*exe_command) (core_t *core, int fd, char **command);
     int nb_argv;
     int time;
 } command_list_t;
@@ -75,17 +75,17 @@ void execute_gui_command(core_t *core, char *command, int fd);
 bool is_know_player_command(char *command);
 void check_player_command(core_t *core);
 
-void incantation(core_t *core, int fd, char *command);
-void broadcast(core_t *core, int fd, char *command);
-void connect_nbr(core_t *core, int fd, char *command);
-void eject(core_t *core, int fd, char *command);
-void ffork(core_t *core, int fd, char *command);
-void forward(core_t *core, int fd, char *command);
-void inventory(core_t *core, int fd, char *command);
-void left(core_t *core, int fd, char *command);
-void look(core_t *core, int fd, char *command);
-void right(core_t *core, int fd, char *command);
-void set(core_t *core, int fd, char *command);
-void take(core_t *core, int fd, char *command);
+void incantation(core_t *core, int fd, char **command);
+void broadcast(core_t *core, int fd, char **command);
+void connect_nbr(core_t *core, int fd, char **command);
+void eject(core_t *core, int fd, char **command);
+void ffork(core_t *core, int fd, char **command);
+void forward(core_t *core, int fd, char **command);
+void inventory(core_t *core, int fd, char **command);
+void left(core_t *core, int fd, char **command);
+void look(core_t *core, int fd, char **command);
+void right(core_t *core, int fd, char **command);
+void set(core_t *core, int fd, char **command);
+void take(core_t *core, int fd, char **command);
 
 #endif /* !SERVER_H_ */

@@ -7,6 +7,7 @@
 
 #include "server.h"
 
-void eject(core_t *core, int fd, char *command)
+void eject(core_t *core, int fd, char **command)
 {
+    printf("eject\n");
 }

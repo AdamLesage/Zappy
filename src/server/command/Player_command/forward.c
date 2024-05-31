@@ -7,6 +7,7 @@
 
 #include "server.h"
 
-void forward(core_t *core, int fd, char *command)
+void forward(core_t *core, int fd, char **command)
 {
+    printf("forward\n");
 }

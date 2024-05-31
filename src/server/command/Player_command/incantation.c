@@ -7,6 +7,7 @@
 
 #include "server.h"
 
-void incantation(core_t *core, int fd, char *command)
+void incantation(core_t *core, int fd, char **command)
 {
+    printf("invantation\n");
 }

@@ -7,6 +7,7 @@
 
 #include "server.h"
 
-void ffork(core_t *core, int fd, char *command)
+void ffork(core_t *core, int fd, char **command)
 {
+    printf("fork\n");
 }

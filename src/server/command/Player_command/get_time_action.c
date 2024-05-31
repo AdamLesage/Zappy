@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-const command_list_t commands_player_list[];
+extern const command_list_t commands_player_list[];
 
 int get_time_action(char *command)
 {

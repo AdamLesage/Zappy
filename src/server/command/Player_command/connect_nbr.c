@@ -7,6 +7,6 @@
 
 #include "server.h"
 
-void connect_nbr(core_t *core, int fd, char *command)
+void connect_nbr(core_t *core, int fd, char **command)
 {
 }

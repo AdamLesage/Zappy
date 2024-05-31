@@ -7,6 +7,7 @@
 
 #include "server.h"
 
-void set(core_t *core, int fd, char *command)
+void set(core_t *core, int fd, char **command)
 {
+    printf("set\n");
 }

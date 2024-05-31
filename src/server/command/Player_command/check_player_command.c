@@ -7,6 +7,8 @@
 
 #include "server.h"
 
+extern const command_list_t commands_player_list[];
+
 void next_player_command(player_info_t *info)
 {
     if (info->action_queue[0] != NULL) {
@@ -16,6 +18,19 @@ void next_player_command(player_info_t *info)
 
 void execute_client_command(core_t *core, char *command, int fd)
 {
+    char **array_command = my_str_to_word_array(command, ' ');
+
+    if (array_command == NULL) {
+        return;
+    }
+    for (int i = 0; commands_player_list[i].name != NULL; i++) {
+        if (strcmp(commands_player_list[i].name, array_command[0]) == 0) {
+            commands_player_list[i].exe_command(core, fd, array_command);
+            free_array(array_command);
+            return;
+        }
+    }
+    free_array(array_command);
 }
 
 void check_player_command(core_t *core)

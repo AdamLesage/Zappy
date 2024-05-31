@@ -7,6 +7,7 @@
 
 #include "server.h"
 
-void left(core_t *core, int fd, char *command)
+void left(core_t *core, int fd, char **command)
 {
+    printf("left\n");
 }

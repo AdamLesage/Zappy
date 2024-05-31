@@ -60,6 +60,8 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/utils/send_response.c								\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
+			src/server/utils/free_array.c									\
+			src/server/utils/my_str_to_word_array.c							\
 
 SRC_GUI				=	src/gui/main.cpp							   		  \
 						src/gui/Interface.cpp								  \
@@ -122,6 +124,8 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/utils/send_response.c								\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
+			src/server/utils/free_array.c									\
+			src/server/utils/my_str_to_word_array.c							\
 
 TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_init_map.c					\

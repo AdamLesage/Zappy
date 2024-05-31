@@ -7,6 +7,7 @@
 
 #include "server.h"
 
-void broadcast(core_t *core, int fd, char *command)
+void broadcast(core_t *core, int fd, char **command)
 {
+    printf("broadcast\n");
 }

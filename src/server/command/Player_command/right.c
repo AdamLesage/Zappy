@@ -7,6 +7,7 @@
 
 #include "server.h"
 
-void right(core_t *core, int fd, char *command)
+void right(core_t *core, int fd, char **command)
 {
+    printf("right\n");
 }

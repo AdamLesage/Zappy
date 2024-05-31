@@ -7,7 +7,7 @@
 
 #include "../../include/server/server.h"
 
-static void init_select_info(core_t *core, int delay)
+static void init_select_info(core_t *core, float delay)
 {
     core->select_info.max_fd = core->socket_config.sockfd;
     core->select_info.tv.tv_sec = delay;
@@ -33,10 +33,11 @@ void lunch_server(core_t *core)
 {
     int retval = 0;
 
-    init_select_info(core, 1);
+    init_select_info(core, (float)1 / core->arguments.frequency);
+    float period = (float)1 / core->arguments.frequency;
     while (1) {
-        core->select_info.tv.tv_sec = 1 / core->arguments.frequency;
-        core->select_info.tv.tv_usec = 0;
+        core->select_info.tv.tv_sec = 0;
+        core->select_info.tv.tv_usec = period * 1000000;
         core->select_info.temp_fds = core->select_info.rfds;
         retval = select(core->select_info.max_fd + 1,
             &core->select_info.temp_fds, NULL, NULL, &core->select_info.tv);

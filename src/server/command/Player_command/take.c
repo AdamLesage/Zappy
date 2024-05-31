@@ -7,6 +7,7 @@
 
 #include "server.h"
 
-void take(core_t *core, int fd, char *command)
+void take(core_t *core, int fd, char **command)
 {
+    printf("take\n");
 }
