@@ -25,7 +25,6 @@ static void manage_select_notif(core_t *core, int retval)
             &core->socket_config.server_socket);
     } else {
         check_player_command(core);
-        // printf("server select\n");
     }
 }
 
