@@ -23,12 +23,21 @@ class AgentInfo():
         self.teamInventory = [["food", 0], ["linemate", 0], ["deraumere", 0],
                         ["sibur", 0], ["mendiane", 0], ["phiras", 0], ["thystame", 0]] # Inventory of the team, must be updated at each broadcast. Computation of each player's inventory
         self.playerVision = [] # Vision of player, tiles around him
+        self.lifeUnits = 1260
+
+    def noLifeUnits(self) -> bool:
+        """Return True if there is no more life units"""
+        return (self.lifeUnits <= 0)
 
     # Getters
+    def getLifeUnits(self) -> int:
+        """Returns the number of life units"""
+        return (self.lifeUnits)
+
     def getAgentStatus(self) -> str:
         """Get the status of the agent: Alive, Dead, Incantation, Fork"""
         return (self.agentStatus)
-
+    
     def getCommandsToSend(self) -> list:
         """Get the list of commands to send to the server"""
         return (self.commandsToSend)
@@ -47,12 +56,20 @@ class AgentInfo():
         for it in self.inventory:
             if it[0] == type:
                 return it[1]
-
+    
     def getLevel(self) -> None:
         """Get the level of the target"""
         return (self.level)
 
     # Setters
+    def setLifeUnits(self, lu: int) -> None:
+        """Set the number of life Units"""
+        self.lifeUnits = lu
+    
+    def addLifeUnits(self, lu: int) -> None:
+        """Add the number of life Units"""
+        self.lifeUnits += lu
+
     def setLevel(self, level: int) -> None:
         """Set the level of the target"""
         if level > 8 or level < 1:
