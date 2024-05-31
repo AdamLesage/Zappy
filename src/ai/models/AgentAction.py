@@ -51,3 +51,23 @@ class AgentAction():
                     it[1] -= changes[2]
                 return True
         return False
+
+    def determineBestAction(self) -> str:
+        """Determine the best action to do"""
+        # Check if the agent is in incantation
+        if self.agent_info.getAgentStatus() == "Incantation":
+            return "Wait"
+        # Check if the agent is dead
+        if self.agent_info.noLifeUnits():
+            return "Dead"
+        # Check if the agent is in fork
+        if self.agent_info.getAgentStatus() == "Fork":
+            return "Fork"
+        # Check if the agent has to eat
+        if self.agent_info.getInventory("food") < 10:
+            return "Eat"
+        # Check if the agent has to incant
+        if self.agent_info.getLevel() == 1:
+            return "Incant"
+        # Check if the agent has to get resources
+        return "GetResources"
