@@ -60,3 +60,7 @@ void Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->display();
     }
 }
+
+void Interface::command_handler()
+{
+}
