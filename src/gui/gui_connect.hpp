@@ -23,7 +23,7 @@ class GuiConnect {
     protected:
         int _socket;
         int _port;
-        bool Running;
+        bool Running = true;
     private:
 };
 

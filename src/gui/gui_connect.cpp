@@ -54,12 +54,17 @@ void GuiConnect::receive()
 {
     char buffer[1024] = {0};
 
+    printf("test\n");
     while (Running) {
         if (read(_socket, buffer, 1024) == -1) {
             throw Zappy::ConnectError("Failed to receive message", "GuiConnect");
         }
-        std::cout << buffer << std::endl;
+        printf("%s\n", buffer);
     }
+    if (Running == false)
+        printf("Running = false\n");
+    else
+        printf("Running = true\n");
 }
 
 void GuiConnect::close_socket()
@@ -70,4 +75,5 @@ void GuiConnect::close_socket()
 void GuiConnect::close_thread()
 {
     Running = false;
+    printf("Je suis rentré ici");
 }
