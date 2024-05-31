@@ -23,16 +23,16 @@ Test (player_function, add_delete_find)
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    return_value = add_player(&map, &players, 2, "team1", &arguments);
+    return_value = add_player(&map, &players, 2, "team1");
     cr_assert_eq(return_value, true);
-    return_value = add_player(&map, &players, 3, "team2", &arguments);
+    return_value = add_player(&map, &players, 3, "team2");
     cr_assert_eq(return_value, true);
-    player_info = find_player(players, 3);
+    player_info = find_player(&players, 3);
     cr_assert_eq(player_info->fd, 3);
     cr_assert_eq(player_info->team_name, "team2");
     return_value = delete_player(&map, &players, 3);
     cr_assert_eq(return_value, true);
-    player_info = find_player(players, 2);
+    player_info = find_player(&players, 2);
     cr_assert_eq(player_info->fd, 2);
     cr_assert_eq(player_info->team_name, "team1");
     return_value = delete_player(&map, &players, 2);
@@ -52,29 +52,8 @@ Test (player_function, add_player_error_unknow_team)
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    return_value = add_player(&map, &players, 2, "abc", &arguments);
+    return_value = add_player(&map, &players, 2, "abc");
     cr_assert_eq(return_value, false);
-}
-
-Test (player_function, add_player_alredy_register)
-{
-    players_t players;
-    arguments_t arguments;
-    map_t map;
-    bool return_value = false;
-
-    const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
-    int argc = 12;
-
-    get_arguments(&arguments, argc, argv);
-    init_players(&players, &arguments);
-    init_map(&map, &arguments);
-    return_value = add_player(&map, &players, 2, "team1", &arguments);
-    cr_assert_eq(return_value, true);
-    return_value = add_player(&map, &players, 2, "team1", &arguments);
-    cr_assert_eq(return_value, false);
-    return_value = delete_player(&map, &players, 2);
-    cr_assert_eq(return_value, true);
 }
 
 Test (player_function, add_player_capcity_exeded)
@@ -90,19 +69,19 @@ Test (player_function, add_player_capcity_exeded)
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    return_value = add_player(&map, &players, 2, "team1", &arguments);
+    return_value = add_player(&map, &players, 2, "team1");
     cr_assert_eq(return_value, true);
-    return_value = add_player(&map, &players, 3, "team1", &arguments);
+    return_value = add_player(&map, &players, 3, "team1");
     cr_assert_eq(return_value, true);
-    return_value = add_player(&map, &players, 4, "team1", &arguments);
+    return_value = add_player(&map, &players, 4, "team1");
     cr_assert_eq(return_value, true);
-    return_value = add_player(&map, &players, 5, "team1", &arguments);
+    return_value = add_player(&map, &players, 5, "team1");
     cr_assert_eq(return_value, true);
-    return_value = add_player(&map, &players, 6, "team1", &arguments);
+    return_value = add_player(&map, &players, 6, "team1");
     cr_assert_eq(return_value, true);
-    return_value = add_player(&map, &players, 7, "team2", &arguments);
+    return_value = add_player(&map, &players, 7, "team2");
     cr_assert_eq(return_value, true);
-    return_value = add_player(&map, &players, 8, "team1", &arguments);
+    return_value = add_player(&map, &players, 8, "team1");
     cr_assert_eq(return_value, false);
     return_value = delete_player(&map, &players, 2);
     cr_assert_eq(return_value, true);
@@ -130,11 +109,11 @@ Test (player_function, delete_player_unknow_player)
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    return_value = add_player(&map, &players, 2, "team1", &arguments);
+    return_value = add_player(&map, &players, 2, "team1");
     cr_assert_eq(return_value, true);
-    return_value = add_player(&map, &players, 3, "team1", &arguments);
+    return_value = add_player(&map, &players, 3, "team1");
     cr_assert_eq(return_value, true);
-    return_value = delete_player(&map, &players, 4);
+    return_value = delete_player(&map, &players, 10);
     cr_assert_eq(return_value, false);
     return_value = delete_player(&map, &players, 2);
     return_value = delete_player(&map, &players, 3);
@@ -153,60 +132,134 @@ Test (player_function, find_player_unknow_player)
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    return_value = add_player(&map, &players, 2, "team1", &arguments);
+    return_value = add_player(&map, &players, 2, "team1");
     cr_assert_eq(return_value, true);
-    return_value = add_player(&map, &players, 3, "team1", &arguments);
+    return_value = add_player(&map, &players, 3, "team1");
     cr_assert_eq(return_value, true);
-    player_info = find_player(&map, &players, 4);
+    player_info = find_player(&players, 4);
     cr_assert_eq(player_info, NULL);
     return_value = delete_player(&map, &players, 2);
     return_value = delete_player(&map, &players, 3);
 }
 
-Test (player_function, find_player_unknow_player)
+Test (player_function, player_move_N)
 {
     players_t players;
     arguments_t arguments;
     map_t map;
     player_info_t *player_info;
-    bool return_value = false;
     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
     int argc = 12;
 
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    return_value = add_player(&map, &players, 2, "team1", &arguments);
-    cr_assert_eq(return_value, true);
-    return_value = add_player(&map, &players, 3, "team1", &arguments);
-    cr_assert_eq(return_value, true);
-    player_info = find_player(&map, &players, 4);
-    cr_assert_eq(player_info, NULL);
-    return_value = delete_player(&map, &players, 2);
-    return_value = delete_player(&map, &players, 3);
+    add_player(&map, &players, 2, "team1");
+    player_info = find_player(&players, 2);
+    player_info->orientation = N;
+    int prev_x = player_info->pos_x;
+    int prev_y = player_info->pos_y;
+    move_player(&map, &players, 2);
+    player_info = find_player(&players, 2);
+    if (prev_y == 0) {
+        cr_assert_eq(player_info->pos_y, map.height - 1);
+        cr_assert_eq(player_info->pos_x, prev_x);
+    } else {
+        cr_assert_eq(player_info->pos_y, prev_y - 1);
+        cr_assert_eq(player_info->pos_x, prev_x);
+    }
+
+    delete_player(&map, &players, 2);
 }
 
-Test (player_function, find_player_unknow_player)
+Test (player_function, player_move_S)
 {
     players_t players;
     arguments_t arguments;
     map_t map;
     player_info_t *player_info;
-    bool return_value = false;
     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
     int argc = 12;
 
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    return_value = add_player(&map, &players, 2, "team1", &arguments);
-    cr_assert_eq(return_value, true);
-    return_value = add_player(&map, &players, 3, "team1", &arguments);
-    cr_assert_eq(return_value, true);
-    player_info = find_player(&map, &players, 4);
-    cr_assert_eq(player_info, NULL);
-    return_value = delete_player(&map, &players, 2);
-    return_value = delete_player(&map, &players, 3);
+    add_player(&map, &players, 2, "team1");
+    player_info = find_player(&players, 2);
+    player_info->orientation = S;
+    int prev_x = player_info->pos_x;
+    int prev_y = player_info->pos_y;
+    move_player(&map, &players, 2);
+    player_info = find_player(&players, 2);
+    if (prev_y == map.height - 1) {
+        cr_assert_eq(player_info->pos_y, 0);
+        cr_assert_eq(player_info->pos_x, prev_x);
+    } else {
+        cr_assert_eq(player_info->pos_y, prev_y + 1);
+        cr_assert_eq(player_info->pos_x, prev_x);
+    }
+
+    delete_player(&map, &players, 2);
+}
+
+Test (player_function, player_move_E)
+{
+    players_t players;
+    arguments_t arguments;
+    map_t map;
+    player_info_t *player_info;
+    const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
+    int argc = 12;
+
+    get_arguments(&arguments, argc, argv);
+    init_players(&players, &arguments);
+    init_map(&map, &arguments);
+    add_player(&map, &players, 2, "team1");
+    player_info = find_player(&players, 2);
+    player_info->orientation = E;
+    int prev_x = player_info->pos_x;
+    int prev_y = player_info->pos_y;
+    move_player(&map, &players, 2);
+    player_info = find_player(&players, 2);
+    if (prev_x == map.width - 1) {
+        cr_assert_eq(player_info->pos_x, 0);
+        cr_assert_eq(player_info->pos_y, prev_y);
+    } else {
+        cr_assert_eq(player_info->pos_x, prev_x - 1);
+        cr_assert_eq(player_info->pos_y, prev_y);
+    }
+
+    delete_player(&map, &players, 2);
+}
+
+Test (player_function, player_move_W)
+{
+    players_t players;
+    arguments_t arguments;
+    map_t map;
+    player_info_t *player_info;
+    const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
+    int argc = 12;
+
+    get_arguments(&arguments, argc, argv);
+    init_players(&players, &arguments);
+    init_map(&map, &arguments);
+    add_player(&map, &players, 2, "team1");
+    player_info = find_player(&players, 2);
+    player_info->orientation = W;
+    int prev_x = player_info->pos_x;
+    int prev_y = player_info->pos_y;
+    move_player(&map, &players, 2);
+    player_info = find_player(&players, 2);
+    if (prev_x == 0) {
+        cr_assert_eq(player_info->pos_x, map.width - 1);
+        cr_assert_eq(player_info->pos_y, prev_y);
+    } else {
+        cr_assert_eq(player_info->pos_x, prev_x - 1);
+        cr_assert_eq(player_info->pos_y, prev_y);
+    }
+
+    delete_player(&map, &players, 2);
 }
 
 Test (player_function, player_turn_left)
@@ -214,14 +267,13 @@ Test (player_function, player_turn_left)
     players_t players;
     arguments_t arguments;
     map_t map;
-    player_info_t *player_info;
     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
     int argc = 12;
 
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    add_player(&map, &players, 2, "team1", &arguments);
+    add_player(&map, &players, 2, "team1");
 
     players.players_list->player_info->orientation = N;
     turn_left(&players, 2);
@@ -240,14 +292,13 @@ Test (player_function, player_turn_right)
     players_t players;
     arguments_t arguments;
     map_t map;
-    player_info_t *player_info;
     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
     int argc = 12;
 
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    add_player(&map, &players, 2, "team1", &arguments);
+    add_player(&map, &players, 2, "team1");
 
     players.players_list->player_info->orientation = N;
     turn_right(&players, 2);
@@ -267,14 +318,13 @@ Test (player_function, player_get_inventory)
     arguments_t arguments;
     map_t map;
     inventory_t *inventory;
-    player_info_t *player_info;
     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
     int argc = 12;
 
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    add_player(&map, &players, 2, "team1", &arguments);
+    add_player(&map, &players, 2, "team1");
 
     players.players_list->player_info->inventory->nb_deraumere = 4;
     players.players_list->player_info->inventory->nb_food = 5;
@@ -302,14 +352,13 @@ Test (player_function, player_get_pos)
     arguments_t arguments;
     map_t map;
     int *pos;
-    player_info_t *player_info;
     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
     int argc = 12;
 
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    add_player(&map, &players, 2, "team1", &arguments);
+    add_player(&map, &players, 2, "team1");
 
     players.players_list->player_info->pos_x = 2;
     players.players_list->player_info->pos_y = 4;
@@ -327,14 +376,13 @@ Test (player_function, player_get_level)
     arguments_t arguments;
     map_t map;
     int level;
-    player_info_t *player_info;
     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
     int argc = 12;
 
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    add_player(&map, &players, 2, "team1", &arguments);
+    add_player(&map, &players, 2, "team1");
 
     players.players_list->player_info->level = 5;
     level = get_level(&players, 2);
@@ -350,17 +398,16 @@ Test (player_function, player_get_player_team)
     arguments_t arguments;
     map_t map;
     char *team_name;
-    player_info_t *player_info;
     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
     int argc = 12;
 
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    add_player(&map, &players, 2, "team1", &arguments);
+    add_player(&map, &players, 2, "team1");
 
     team_name = get_player_team(&players, 2);
-    cr_assert_eq(team_name, "team1");
+    cr_assert_str_eq(team_name, "team1");
     team_name = get_player_team(&players, 1);
     cr_assert_eq(team_name, NULL);
     delete_player(&map, &players, 2);
@@ -379,13 +426,13 @@ Test (player_function, player_find_nb_player_on_team)
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    add_player(&map, &players, 2, "team1", &arguments);
-    add_player(&map, &players, 3, "team1", &arguments);
-    add_player(&map, &players, 4, "team1", &arguments);
-    add_player(&map, &players, 5, "team1", &arguments);
-    add_player(&map, &players, 6, "team2", &arguments);
-    add_player(&map, &players, 7, "team2", &arguments);
-    add_player(&map, &players, 8, "team2", &arguments);
+    add_player(&map, &players, 2, "team1");
+    add_player(&map, &players, 3, "team1");
+    add_player(&map, &players, 4, "team1");
+    add_player(&map, &players, 5, "team1");
+    add_player(&map, &players, 6, "team2");
+    add_player(&map, &players, 7, "team2");
+    add_player(&map, &players, 8, "team2");
 
     number = find_nb_player_on_team(&players, "team1");
     cr_assert_eq(number, 4);
@@ -396,24 +443,24 @@ Test (player_function, player_find_nb_player_on_team)
     delete_player(&map, &players, 2);
 }
 
-// Test (player_function, player_put_on_inventory)
-// {
-//     players_t players;
-//     arguments_t arguments;
-//     map_t map;
-//     int number;
-//     player_info_t *player_info;
-//     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
-//     int argc = 12;
+// // Test (player_function, player_put_on_inventory)
+// // {
+// //     players_t players;
+// //     arguments_t arguments;
+// //     map_t map;
+// //     int number;
+// //     player_info_t *player_info;
+// //     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
+// //     int argc = 12;
 
-//     get_arguments(&arguments, argc, argv);
-//     init_players(&players, &arguments);
-//     init_map(&map, &arguments);
-//     add_player(&map, &players, 2, "team1", &arguments);
+// //     get_arguments(&arguments, argc, argv);
+// //     init_players(&players, &arguments);
+// //     init_map(&map, &arguments);
+// //     add_player(&map, &players, 2, "team1", &arguments);
 
-//     put_on_inventory();
-//     delete_player(&map, &players, 2);
-// }
+// //     put_on_inventory();
+// //     delete_player(&map, &players, 2);
+// // }
 
 Test (player_function, player_queue)
 {
@@ -428,22 +475,22 @@ Test (player_function, player_queue)
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    add_player(&map, &players, 2, "team1", &arguments);
+    add_player(&map, &players, 2, "team1");
 
     add_action_in_queue(&players, 2, "test");
-    cr_assert_eq(players.players_list->player_info->action_queue[0], "test");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[0], "test");
     cr_assert_eq(players.players_list->player_info->action_queue[1], NULL);
     add_action_in_queue(&players, 2, "other");
-    cr_assert_eq(players.players_list->player_info->action_queue[0], "test");
-    cr_assert_eq(players.players_list->player_info->action_queue[1], "other");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[0], "test");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[1], "other");
     action = get_action_in_queue(&players, 2);
-    cr_assert_eq(players.players_list->player_info->action_queue[0], "other");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[0], "other");
     cr_assert_eq(players.players_list->player_info->action_queue[1], NULL);
-    cr_assert_eq(action, "test");
+    cr_assert_str_eq(action, "test");
     action = get_action_in_queue(&players, 2);
     cr_assert_eq(players.players_list->player_info->action_queue[0], NULL);
     cr_assert_eq(players.players_list->player_info->action_queue[1], NULL);
-    cr_assert_eq(action, "other");
+    cr_assert_str_eq(action, "other");
     action = get_action_in_queue(&players, 2);
     cr_assert_eq(players.players_list->player_info->action_queue[0], NULL);
     cr_assert_eq(players.players_list->player_info->action_queue[1], NULL);
@@ -464,7 +511,7 @@ Test (player_function, player_queue_full)
     get_arguments(&arguments, argc, argv);
     init_players(&players, &arguments);
     init_map(&map, &arguments);
-    add_player(&map, &players, 2, "team1", &arguments);
+    add_player(&map, &players, 2, "team1");
 
     add_action_in_queue(&players, 2, "test1");
     add_action_in_queue(&players, 2, "test2");
@@ -477,15 +524,38 @@ Test (player_function, player_queue_full)
     add_action_in_queue(&players, 2, "test9");
     add_action_in_queue(&players, 2, "test10");
     add_action_in_queue(&players, 2, "test11");
-    cr_assert_eq(players.players_list->player_info->action_queue[0], "test1");
-    cr_assert_eq(players.players_list->player_info->action_queue[1], "test2");
-    cr_assert_eq(players.players_list->player_info->action_queue[2], "test3");
-    cr_assert_eq(players.players_list->player_info->action_queue[3], "test4");
-    cr_assert_eq(players.players_list->player_info->action_queue[4], "test5");
-    cr_assert_eq(players.players_list->player_info->action_queue[5], "test6");
-    cr_assert_eq(players.players_list->player_info->action_queue[6], "test7");
-    cr_assert_eq(players.players_list->player_info->action_queue[7], "test8");
-    cr_assert_eq(players.players_list->player_info->action_queue[8], "test9");
-    cr_assert_eq(players.players_list->player_info->action_queue[9], "test10");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[0], "test1");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[1], "test2");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[2], "test3");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[3], "test4");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[4], "test5");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[5], "test6");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[6], "test7");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[7], "test8");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[8], "test9");
+    cr_assert_str_eq(players.players_list->player_info->action_queue[9], "test10");
+    delete_player(&map, &players, 2);
+}
+
+
+
+Test (player_function, player_queue_unknow)
+{
+    players_t players;
+    arguments_t arguments;
+    map_t map;
+    char *action;
+    player_info_t *player_info;
+    const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
+    int argc = 12;
+
+    get_arguments(&arguments, argc, argv);
+    init_players(&players, &arguments);
+    init_map(&map, &arguments);
+    add_player(&map, &players, 2, "team1");
+
+    add_action_in_queue(&players, 1, "test");
+    action = get_action_in_queue(&players, 1);
+    cr_assert_eq(action, NULL);
     delete_player(&map, &players, 2);
 }

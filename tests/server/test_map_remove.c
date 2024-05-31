@@ -240,7 +240,6 @@ Test(remove_eggs_of_map, complex)
 Test(remove_eggs_of_map, unknow_team)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -260,7 +259,6 @@ Test(remove_eggs_of_map, unknow_team)
 Test(remove_eggs_of_map, delete_on_middle_last)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -281,7 +279,6 @@ Test(remove_eggs_of_map, delete_on_middle_last)
 Test(remove_eggs_of_map, unknow_team_one_egg)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
