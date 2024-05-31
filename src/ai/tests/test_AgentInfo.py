@@ -97,6 +97,17 @@ class TestAgentInfo(unittest.TestCase):
         agent_info = AgentInfo()
         with self.assertRaises(ValueError):
             agent_info.setLevel(9)
+    
+    def test13_noLifeUnits(self):
+        """Test the no life units method"""
+        agent_info = AgentInfo()
+        self.assertEqual(agent_info.noLifeUnits(), False)
+    
+    def test14_noLifeUnits(self):
+        """Test the no life units method"""
+        agent_info = AgentInfo()
+        agent_info.setLifeUnits(0)
+        self.assertEqual(agent_info.noLifeUnits(), True)
 
 class DataEncryption(unittest.TestCase):
     def testDataEncryption(self):
