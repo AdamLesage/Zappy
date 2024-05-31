@@ -20,12 +20,14 @@ class AgentInfo():
         self.world_height = 0
         self.agentStatus = "Alive" # Alive, Dead, Incantation, Fork
         self.level = 1
+        self.teamInventory = [["food", 0], ["linemate", 0], ["deraumere", 0],
+                        ["sibur", 0], ["mendiane", 0], ["phiras", 0], ["thystame", 0]] # Inventory of the team, must be updated at each broadcast. Computation of each player's inventory
 
     # Getters
     def getAgentStatus(self) -> str:
         """Get the status of the agent: Alive, Dead, Incantation, Fork"""
         return (self.agentStatus)
-    
+
     def getCommandsToSend(self) -> list:
         """Get the list of commands to send to the server"""
         return (self.commandsToSend)
@@ -44,7 +46,7 @@ class AgentInfo():
         for it in self.inventory:
             if it[0] == type:
                 return it[1]
-    
+
     def getLevel(self) -> None:
         """Get the level of the target"""
         return (self.level)

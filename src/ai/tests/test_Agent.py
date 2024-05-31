@@ -15,11 +15,7 @@ def find_available_port():
 
 def create_server(port, backlog):
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        server.bind(('localhost', port))
-    except socket.error as e:
-        print(str(e))
-        return None
+    server.bind(('localhost', port))
     server.listen(backlog)
     return server
 
@@ -32,9 +28,6 @@ class ServerThread(threading.Thread):
         self.lock = threading.Lock()
 
     def run(self):
-        if self.server is None:
-            print("Port already in use")
-            return
         self.server.settimeout(1)
         start_time = time.time()
         while self.running:
