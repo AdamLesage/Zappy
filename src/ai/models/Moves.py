@@ -40,7 +40,7 @@ class Moves():
         pos = 0
 
         for item in lookResult.split(","):
-            if item == itemToReach:
+            if itemToReach in item:
                 break
             itemPosition += 1
         if itemPosition in midTiles:
