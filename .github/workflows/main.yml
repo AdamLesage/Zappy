@@ -75,6 +75,7 @@ jobs:
         fetch-depth: 0
     - run: |
         ./tests/run_test.sh
+        make tests_run
       timeout-minutes: 1
   push_to_mirror:
     needs:
