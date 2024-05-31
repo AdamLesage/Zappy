@@ -69,7 +69,7 @@ static void add_eggs_on_map(map_t *map, arguments_t *arguments)
         for (int nb = 0; nb != arguments->nb_client; nb++) {
             x = rand() % map->width;
             y = rand() % map->height;
-            printf("eggs x=%d, y=%d\n", x, y);
+            put_eggs(map, x, y, arguments->name_teams[i]);
         }
     }
 }
