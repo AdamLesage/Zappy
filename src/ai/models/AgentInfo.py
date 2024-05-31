@@ -24,6 +24,7 @@ class AgentInfo():
                         ["sibur", 0], ["mendiane", 0], ["phiras", 0], ["thystame", 0]] # Inventory of the team, must be updated at each broadcast. Computation of each player's inventory
         self.playerVision = [] # Vision of player, tiles around him
         self.lifeUnits = 1260
+        self.teamPlayers = {"level1": 0, "level2": 0, "level3": 0, "level4": 0, "level5": 0, "level6": 0, "level7": 0, "level8": 0}
 
     def noLifeUnits(self) -> bool:
         """Return True if there is no more life units"""
@@ -56,10 +57,19 @@ class AgentInfo():
         for it in self.inventory:
             if it[0] == type:
                 return it[1]
-    
+
     def getLevel(self) -> None:
         """Get the level of the target"""
         return (self.level)
+
+    def getPlayers(self, level: str = "all") -> int:
+        """Get the number of players in the team"""
+        available_levels = ["level1", "level2", "level3", "level4", "level5", "level6", "level7", "level8"]
+        if level not in available_levels and level != "all":
+            raise ValueError("Invalid level")
+        if level != "all": # Return the number of players at the specified level
+            return self.teamPlayers[level]
+        return sum(self.teamPlayers.values()) # Return the sum of all players, so the total number of players in the team
 
     # Setters
     def setLifeUnits(self, lu: int) -> None:
@@ -93,3 +103,10 @@ class AgentInfo():
             if it[0] == type:
                 it[1] += quantity
         return
+
+    def addPlayers(self, level: str, quantity: int) -> None:
+        """Set the number of players in the team"""
+        available_levels = ["level1", "level2", "level3", "level4", "level5", "level6", "level7", "level8"]
+        if level not in available_levels:
+            raise ValueError("Invalid level")
+        self.teamPlayers[level] += quantity
