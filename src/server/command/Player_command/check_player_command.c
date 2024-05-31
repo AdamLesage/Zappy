@@ -27,9 +27,11 @@ void execute_client_command(core_t *core, char *command, int fd)
         if (strcmp(commands_player_list[i].name, array_command[0]) == 0) {
             commands_player_list[i].exe_command(core, fd, array_command);
             free_array(array_command);
+            send_response("ko\n", fd);
             return;
         }
     }
+    send_response("ko\n", fd);
     free_array(array_command);
 }
 
@@ -44,6 +46,8 @@ void check_player_command(core_t *core)
             command = get_action_in_queue(&core->players, tmp->fd);
             execute_client_command(core, command, tmp->fd);
             next_player_command(tmp->player_info);
+        } else {
+            tmp->player_info->timer_action--;
         }
     }
 }

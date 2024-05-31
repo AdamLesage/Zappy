@@ -25,7 +25,7 @@ char *get_command(core_t *core, int fd_client)
         FD_CLR(fd_client, &core->select_info.rfds);
         return (NULL);
     } else {
-        buf[readbite] = '\0';
+        buf[readbite - 1] = '\0';
         printf("reiceive Command: %s\n", buf);
     }
     return (strdup(buf));
@@ -47,9 +47,12 @@ void check_command(core_t *core, int fd, char *command)
 {
     player_info_t *info = find_player(&core->players, fd);
 
+    if (command == NULL) {
+        return;
+    }
     if (info == NULL) {
         authentification(core, command, fd);
-    } else if (strcmp(get_player_team(&core->players, fd), "GRAPHIC") == 0) {
+     } else if (strcmp(get_player_team(&core->players, fd), "GRAPHIC") == 0) {
         execute_gui_command(core, command, fd);
     } else {
         set_player_command(&core->players, info, command);

@@ -20,21 +20,22 @@ static void init_select_info(core_t *core, float delay)
 static void manage_select_notif(core_t *core, int retval)
 {
     if (retval > 0) {
+        get_client_command(core);
         connect_client(&core->select_info,
             &core->socket_config.server_socket);
-        get_client_command(core);
     } else {
         check_player_command(core);
-        printf("server select\n");
+        // printf("server select\n");
     }
 }
 
 void lunch_server(core_t *core)
 {
     int retval = 0;
+    float period = 0;
 
-    init_select_info(core, (float)1 / core->arguments.frequency);
-    float period = (float)1 / core->arguments.frequency;
+    period = (float)1 / core->arguments.frequency;
+    init_select_info(core, period);
     while (1) {
         core->select_info.tv.tv_sec = 0;
         core->select_info.tv.tv_usec = period * 1000000;
