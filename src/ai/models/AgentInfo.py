@@ -103,3 +103,10 @@ class AgentInfo():
             if it[0] == type:
                 it[1] += quantity
         return
+
+    def addPlayers(self, level: str, quantity: int) -> None:
+        """Set the number of players in the team"""
+        available_levels = ["level1", "level2", "level3", "level4", "level5", "level6", "level7", "level8"]
+        if level not in available_levels:
+            raise ValueError("Invalid level")
+        self.teamPlayers[level] += quantity
