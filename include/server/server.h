@@ -66,6 +66,8 @@ void get_client_command(core_t *core);
 bool str_isnum(char *str);
 char *int_to_str(int nbr);
 void send_response(char *response, int fd);
+void free_array(char **array);
+char **my_str_to_word_array(char *str, char separator);
 
 void authentification(core_t *core, char *command, int fd);
 int get_time_action(char *command);
