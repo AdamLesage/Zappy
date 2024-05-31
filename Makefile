@@ -43,6 +43,19 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/command/Player_command/get_time_action.c				\
 			src/server/command/Player_command/is_know_player_command.c		\
 			src/server/command/Player_command/check_player_command.c		\
+			src/server/command/Player_command/client_command.c				\
+			src/server/command/Player_command/broadcast.c					\
+			src/server/command/Player_command/connect_nbr.c					\
+			src/server/command/Player_command/eject.c						\
+			src/server/command/Player_command/fork.c						\
+			src/server/command/Player_command/forward.c						\
+			src/server/command/Player_command/incantation.c					\
+			src/server/command/Player_command/inventory.c					\
+			src/server/command/Player_command/left.c						\
+			src/server/command/Player_command/look.c						\
+			src/server/command/Player_command/right.c						\
+			src/server/command/Player_command/set.c							\
+			src/server/command/Player_command/take.c						\
 			src/server/command/authentification.c							\
 			src/server/utils/send_response.c								\
 			src/server/utils/str_is_num.c									\
@@ -92,6 +105,19 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/command/Player_command/get_time_action.c				\
 			src/server/command/Player_command/is_know_player_command.c		\
 			src/server/command/Player_command/check_player_command.c		\
+			src/server/command/Player_command/client_command.c				\
+			src/server/command/Player_command/broadcast.c					\
+			src/server/command/Player_command/connect_nbr.c					\
+			src/server/command/Player_command/eject.c						\
+			src/server/command/Player_command/fork.c						\
+			src/server/command/Player_command/forward.c						\
+			src/server/command/Player_command/incantation.c					\
+			src/server/command/Player_command/inventory.c					\
+			src/server/command/Player_command/left.c						\
+			src/server/command/Player_command/look.c						\
+			src/server/command/Player_command/right.c						\
+			src/server/command/Player_command/set.c							\
+			src/server/command/Player_command/take.c						\
 			src/server/command/authentification.c							\
 			src/server/utils/send_response.c								\
 			src/server/utils/str_is_num.c									\
