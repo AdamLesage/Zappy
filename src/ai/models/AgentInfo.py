@@ -20,6 +20,7 @@ class AgentInfo():
         self.world_height = 0
         self.agentStatus = "Alive" # Alive, Dead, Incantation, Fork
         self.level = 1
+        self.numberingVision = 1
         self.teamInventory = [["food", 0], ["linemate", 0], ["deraumere", 0],
                         ["sibur", 0], ["mendiane", 0], ["phiras", 0], ["thystame", 0]] # Inventory of the team, must be updated at each broadcast. Computation of each player's inventory
         self.playerVision = [] # Vision of player, tiles around him
@@ -34,6 +35,10 @@ class AgentInfo():
     def getLifeUnits(self) -> int:
         """Returns the number of life units"""
         return (self.lifeUnits)
+    
+    def getNumberingVision(self) -> int:
+        """Get the numbering vision"""
+        return (self.numberingVision)
 
     def getAgentStatus(self) -> str:
         """Get the status of the agent: Alive, Dead, Incantation, Fork"""
@@ -75,6 +80,10 @@ class AgentInfo():
     def setLifeUnits(self, lu: int) -> None:
         """Set the number of life Units"""
         self.lifeUnits = lu
+
+    def setNumberingVision(self) -> None:
+        """Set the numbering vision"""
+        self.numberingVision += 2
     
     def addLifeUnits(self, lu: int) -> None:
         """Add the number of life Units"""
