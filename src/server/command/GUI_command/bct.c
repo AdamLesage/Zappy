@@ -2,12 +2,12 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** btc
+** bct
 */
 
 #include "server.h"
 
-void btc(core_t *core, int fd, char **command)
+void bct(core_t *core, int fd, char **command)
 {
-    printf("btc\n");
+    printf("bct\n");
 }

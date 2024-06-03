@@ -9,7 +9,7 @@
 
 const command_list_t commands_gui_list[] = {
     {"msz", &msz, 1, 0},
-    {"bct", &btc, 3, 0},
+    {"bct", &bct, 3, 0},
     {"mct", &mct, 1, 0},
     {"tna", &tna, 1, 0},
     {"ppo", &ppo, 2, 0},

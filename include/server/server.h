@@ -89,7 +89,7 @@ void right(core_t *core, int fd, char **command);
 void set(core_t *core, int fd, char **command);
 void take(core_t *core, int fd, char **command);
 
-void btc(core_t *core, int fd, char **command);
+void bct(core_t *core, int fd, char **command);
 void mct(core_t *core, int fd, char **command);
 void msz(core_t *core, int fd, char **command);
 void pin(core_t *core, int fd, char **command);
