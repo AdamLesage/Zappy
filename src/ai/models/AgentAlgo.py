@@ -49,5 +49,4 @@ class AgentAlgo():
         if self.agentInfo.commandsToSend == deque([]) or self.client == None: # If there are no commands to send, get out of the function
             return
         command_to_send = self.agentInfo.commandsToSend.popleft() # Get the first command to send and remove it from the list
-        print(f"{self.agentInfo.commandsToSend=} <--------")
         self.client.send(command_to_send.encode())

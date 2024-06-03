@@ -82,10 +82,11 @@ class TestAgent(unittest.TestCase):
             agent = Agent(port, "Team1")
             agent.connect_to_server()
         finally:
+            time.sleep(1)
+            server_thread.stop()
             self.assertEqual(agent.agentInfo.world_width, 15)
             self.assertEqual(agent.agentInfo.world_height, 15)
             self.assertEqual(agent.agentInfo.client_num, 19)
-            server_thread.stop()
             agent.client.close()
 
     def test03_connect_to_unexisting_server(self):
