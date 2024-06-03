@@ -40,6 +40,16 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/dataManagment/players/add_action_on_queue.c			\
 			src/server/dataManagment/players/get_action_in_queue.c			\
 			src/server/command/GUI_command/execute_gui_command.c			\
+			src/server/command/GUI_command/gui_command.c					\
+			src/server/command/GUI_command/btc.c							\
+			src/server/command/GUI_command/mct.c							\
+			src/server/command/GUI_command/msz.c							\
+			src/server/command/GUI_command/pin.c							\
+			src/server/command/GUI_command/plv.c							\
+			src/server/command/GUI_command/ppo.c							\
+			src/server/command/GUI_command/sgt.c							\
+			src/server/command/GUI_command/sst.c							\
+			src/server/command/GUI_command/tna.c							\
 			src/server/command/Player_command/get_time_action.c				\
 			src/server/command/Player_command/is_know_player_command.c		\
 			src/server/command/Player_command/check_player_command.c		\
@@ -62,6 +72,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/utils/int_to_str.c									\
 			src/server/utils/free_array.c									\
 			src/server/utils/my_str_to_word_array.c							\
+			src/server/utils/len_array.c									\
 
 SRC_GUI				=	src/gui/main.cpp							   		  \
 						src/gui/Interface.cpp								  \
@@ -104,6 +115,16 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/dataManagment/players/add_action_on_queue.c			\
 			src/server/dataManagment/players/get_action_in_queue.c			\
 			src/server/command/GUI_command/execute_gui_command.c			\
+			src/server/command/GUI_command/gui_command.c					\
+			src/server/command/GUI_command/btc.c							\
+			src/server/command/GUI_command/mct.c							\
+			src/server/command/GUI_command/msz.c							\
+			src/server/command/GUI_command/pin.c							\
+			src/server/command/GUI_command/plv.c							\
+			src/server/command/GUI_command/ppo.c							\
+			src/server/command/GUI_command/sgt.c							\
+			src/server/command/GUI_command/sst.c							\
+			src/server/command/GUI_command/tna.c							\
 			src/server/command/Player_command/get_time_action.c				\
 			src/server/command/Player_command/is_know_player_command.c		\
 			src/server/command/Player_command/check_player_command.c		\
@@ -126,6 +147,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/utils/int_to_str.c									\
 			src/server/utils/free_array.c									\
 			src/server/utils/my_str_to_word_array.c							\
+			src/server/utils/len_array.c									\
 
 TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_init_map.c					\

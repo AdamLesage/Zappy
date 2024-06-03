@@ -68,6 +68,7 @@ char *int_to_str(int nbr);
 void send_response(char *response, int fd);
 void free_array(char **array);
 char **my_str_to_word_array(char *str, char separator);
+int len_array(char **arr);
 
 void authentification(core_t *core, char *command, int fd);
 int get_time_action(char *command);
@@ -87,5 +88,15 @@ void look(core_t *core, int fd, char **command);
 void right(core_t *core, int fd, char **command);
 void set(core_t *core, int fd, char **command);
 void take(core_t *core, int fd, char **command);
+
+void btc(core_t *core, int fd, char **command);
+void mct(core_t *core, int fd, char **command);
+void msz(core_t *core, int fd, char **command);
+void pin(core_t *core, int fd, char **command);
+void plv(core_t *core, int fd, char **command);
+void ppo(core_t *core, int fd, char **command);
+void sgt(core_t *core, int fd, char **command);
+void sst(core_t *core, int fd, char **command);
+void tna(core_t *core, int fd, char **command);
 
 #endif /* !SERVER_H_ */
