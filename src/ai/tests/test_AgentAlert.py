@@ -20,7 +20,7 @@ class TestAgentAlert(unittest.TestCase):
     def test01_food_alert(self):
         agent = AgentInfo()
         agentAlert = AgentAlerts(agent, 100)
-        agent.setLifeUnits(50)
+        agent.setTimeUnits(50)
         agentAlert.checkAlerts()
         self.assertEqual(agentAlert.alerts, ["food"])
     

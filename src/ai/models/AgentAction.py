@@ -22,29 +22,23 @@ class AgentAction():
         # item = name of the item
         # action = add, remove
         # quantity = quantity to add or remove
+        item = changes[0]
+        print(f"Item: [{item}], {self.agent_info.inventory}")
 
-        if changes[0] not in ["food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]:
-            print("Invalid item", file=sys.stderr)
+        if item not in self.agent_info.inventory:
+            print(f"Invalid item [{item}]", file=sys.stderr)
             return False
         if changes[1] not in ["add", "remove"]:
-            print("Invalid action", file=sys.stderr)
+            print(f"Invalid action [{changes[1]}]", file=sys.stderr)
             return False
 
-        for it in self.agent_info.inventory:
-            if it[0] == changes[0]:
-                if changes[1] == "add":
-                    it[1] += changes[2]
-                elif changes[1] == "remove":
-                    it[1] -= changes[2]
-                break
+        if changes[1] == "add": # Add the item to the inventory and to the team inventory
+            self.agent_info.inventory[item] += changes[2]
+            self.agent_info.teamInventory[item] += changes[2]
+        elif changes[1] == "remove": # Remove the item from the inventory and from the team inventory
+            self.agent_info.inventory[item] -= changes[2]
+            self.agent_info.teamInventory[item] -= changes[2]
 
-        for it in self.agent_info.teamInventory:
-            if it[0] == changes[0]:
-                if changes[1] == "add":
-                    it[1] += changes[2]
-                elif changes[1] == "remove":
-                    it[1] -= changes[2]
-                break
         return True
 
     def useAlerts(self, alerts: list[str]) -> None:
@@ -54,8 +48,8 @@ class AgentAction():
         for alert in alerts:
             if alert == "food":
                 self.agent.findFood()
-            if alert == "incantation":
-                self.agent.findIncantation()
+            # if alert == "incantation":
+            #     self.agent.findIncantation()
 
     def findFood(self) -> None:
         """Find food"""

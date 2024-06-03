@@ -81,11 +81,12 @@ class TestAgent(unittest.TestCase):
         try:
             agent = Agent(port, "Team1")
             agent.connect_to_server()
-        finally:
             self.assertEqual(agent.agentInfo.world_width, 15)
             self.assertEqual(agent.agentInfo.world_height, 15)
             self.assertEqual(agent.agentInfo.client_num, 19)
+        finally:
             server_thread.stop()
+            agent.client.close()
 
     def test03_connect_to_unexisting_server(self):
         """Test the connection to an unexisting server"""
@@ -93,6 +94,8 @@ class TestAgent(unittest.TestCase):
         # asset agent.connect_to_server() exits with code 84
         with self.assertRaises(SystemExit) as context:
             agent.connect_to_server()
+        self.assertEqual(context.exception.code, 84)
+        agent.client.close()
 
     def test04_retrieve_unexisting_client_number(self):
         """Test the retrieval of an unexisting client number"""
@@ -116,3 +119,4 @@ class TestAgent(unittest.TestCase):
         finally:
             self.assertEqual(agent.agentInfo.commandsToSend, deque(maxlen=10)) # Check if the command was sent and queue is empty
             server_thread.stop()
+            agent.client.close()

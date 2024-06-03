@@ -22,14 +22,23 @@ class AgentInfo():
         self.numberingVision = 1
         self.teamInventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0} # Inventory of the team
         self.playerVision = [] # Vision of player, tiles around him
-        self.lifeUnits = 1260
+        self.lifeUnits = 10
+        self.timeUnits = 1260
         self.teamPlayers = {"level1": 0, "level2": 0, "level3": 0, "level4": 0, "level5": 0, "level6": 0, "level7": 0, "level8": 0}
 
     def noLifeUnits(self) -> bool:
         """Return True if there is no more life units"""
         return (self.lifeUnits <= 0)
 
+    def noTimeUnits(self) -> bool:
+        """Return True if there is no more time units"""
+        return (self.timeUnits <= 0)
+
     # Getters
+    def getTimeUnits(self) -> int:
+        """Returns the number of time units"""
+        return (self.timeUnits) 
+
     def getLifeUnits(self) -> int:
         """Returns the number of life units"""
         return (self.lifeUnits)
@@ -73,6 +82,10 @@ class AgentInfo():
         return sum(self.teamPlayers.values()) # Return the sum of all players, so the total number of players in the team
 
     # Setters
+    def setTimeUnits(self, tu: int) -> None:
+        """Set the number of time Units"""
+        self.timeUnits = tu
+    
     def setLifeUnits(self, lu: int) -> None:
         """Set the number of life Units"""
         self.lifeUnits = lu
@@ -98,20 +111,22 @@ class AgentInfo():
         self.agentStatus = status
 
     def addCommandsToSend(self, commandName: str) -> None:
+        """Add a command to the list of commands to send"""
         self.commandsToSend.append(commandName)
 
     def addCommandsReturned(self, commandName: str) -> None:
+        """Add a command to the list of commands returned by the server"""
         self.commandsReturned.append(commandName)
 
     def addInventory(self, type: str, quantity : int) -> None:
         """Add an item to the inventory"""
         if type not in ["food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]:
-            raise ValueError("Invalid item")
+            raise ValueError(f"Invalid item {type}")
         self.inventory[type] += quantity
 
     def addPlayers(self, level: str, quantity: int) -> None:
         """Set the number of players in the team"""
         available_levels = ["level1", "level2", "level3", "level4", "level5", "level6", "level7", "level8"]
         if level not in available_levels:
-            raise ValueError("Invalid level")
+            raise ValueError(f"Invalid level {level}")
         self.teamPlayers[level] += quantity
