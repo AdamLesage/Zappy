@@ -8,6 +8,8 @@ COVERAGE=$(python3 -m site --user-base)/bin/coverage
 
 $COVERAGE erase
 
+rm unit_tests*
+
 cd src/ai/tests
 
 # Define the test files

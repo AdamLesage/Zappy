@@ -5,6 +5,7 @@ import sys
 sys.path.append("..")
 from models.Agent import Agent
 import unittest
+from collections import deque
 
 def find_available_port():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -81,7 +82,37 @@ class TestAgent(unittest.TestCase):
             agent = Agent(port, "Team1")
             agent.connect_to_server()
         finally:
+            self.assertEqual(agent.agentInfo.world_width, 15)
+            self.assertEqual(agent.agentInfo.world_height, 15)
+            self.assertEqual(agent.agentInfo.client_num, 19)
             server_thread.stop()
 
-# if __name__ == "__main__":
-#     unittest.main()
+    def test03_connect_to_unexisting_server(self):
+        """Test the connection to an unexisting server"""
+        agent = Agent(4242, "Team1")
+        # asset agent.connect_to_server() exits with code 84
+        with self.assertRaises(SystemExit) as context:
+            agent.connect_to_server()
+
+    def test04_retrieve_unexisting_client_number(self):
+        """Test the retrieval of an unexisting client number"""
+        agent = Agent(4242, "Team1")
+        with self.assertRaises(SystemExit):
+            agent.retrieveClientNumber("0\n15 15\n")
+
+    def test05_send_to_server(self):
+        """Test sending a message to the server"""
+        # Get an available port
+        port = find_available_port()
+        server_thread = ServerThread(port)
+        server_thread.start()
+
+        time.sleep(1)
+
+        try:
+            agent = Agent(port, "Team1")
+            agent.agentInfo.addCommandsToSend("look\n")
+            agent.connect_to_server()
+        finally:
+            self.assertEqual(agent.agentInfo.commandsToSend, deque(maxlen=10)) # Check if the command was sent and queue is empty
+            server_thread.stop()
