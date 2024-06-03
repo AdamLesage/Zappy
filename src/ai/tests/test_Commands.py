@@ -149,8 +149,8 @@ class TestCommands(unittest.TestCase):
         """Test the InterfaceCommand execute method"""
         testInterface = CommandInterface()
         testSocket = unittest.mock.Mock()
-        testSocket.send.return_value = "Command"
-        self.assertEqual(testInterface.execute(testSocket), "Command")
+        testSocket.send.return_value = "Command\n"
+        self.assertEqual(testInterface.execute(testSocket), "Command\n")
         return
 
 # if __name__ == '__main__':

@@ -30,13 +30,12 @@ class TestAgentAction(unittest.TestCase):
     def test03_updateInventory_add_food(self):
         agent_info = AgentInfo()
         agent_action = AgentAction(agent_info)
-        agent_info.inventory = [["food", 0]]
         self.assertTrue(agent_action.updateInventories(["food", "add", 1]))
-        self.assertEqual(agent_info.inventory[0][1], 1)
+        self.assertEqual(agent_info.inventory["food"], 1)
 
     def test04_updateInventory_remove_food(self):
         agent_info = AgentInfo()
         agent_action = AgentAction(agent_info)
-        agent_info.inventory = [["food", 1]]
+        agent_info.inventory = {"food": 1, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.assertTrue(agent_action.updateInventories(["food", "remove", 1]))
-        self.assertEqual(agent_info.inventory[0][1], 0)
+        self.assertEqual(agent_info.inventory["food"], 0)

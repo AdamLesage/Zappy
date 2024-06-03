@@ -49,7 +49,10 @@ class Agent():
         """Execute a command"""
         if command not in self.availableCommands:
             return
-        command = self.availableCommands[command].execute(self.client)
+        splited_command = command.split(' ')
+        additional_data = splited_command[1] if len(splited_command) > 1 else ""
+
+        command = self.availableCommands[command].execute(self.client, additional_data)
         self.agentInfo.addCommandsToSend(command) # Add the command to the list of commands to send
 
     def retrieveWorldDimensions(self, data: str) -> None:
@@ -63,7 +66,6 @@ class Agent():
         if splited_x.isdigit() and splited_y.isdigit():
             self.agentInfo.world_width = int(splited_x)
             self.agentInfo.world_height = int(splited_y)
-        print(f"World dimensions: {self.agentInfo.world_width}x{self.agentInfo.world_height}")
 
     def retrieveClientNumber(self, data: str) -> None:
         """Retrieve the client number"""
