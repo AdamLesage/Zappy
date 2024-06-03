@@ -48,18 +48,18 @@ class Agent():
                                 "eject\n": EjectCommand(), "take\n": TakeCommand(), "set\n": SetCommand(),
                                 "incantation\n": IncantationCommand()}
 
-    def executeCommand(self, command: str) -> None:
+    def addCommandToExecuteInList(self, command: str) -> None:
         """Execute a command"""
-        splited_command = command.split(' ')
+        splited_command = command.split(' ') # Split the command to get the command and the additional data Ex: "Broadcast message\n" -> ["Broadcast", "message\n"]
         additional_data = splited_command[1] if len(splited_command) > 1 else ""
         command_idx = splited_command[0] if len(splited_command) > 1 else command
         if command_idx.find('\n') != -1:
             command = command_idx[0:len(command_idx) - 1] + '\n'
         if command_idx not in self.availableCommands:
             return
-
         self.availableCommands[command_idx].execute(self.client, additional_data)
         self.agentInfo.addCommandsToSend(command) # Add the command to the list of commands to send
+
 
     def retrieveWorldDimensions(self, data: str) -> None:
         """Retrieve the world dimensions"""
@@ -105,8 +105,8 @@ class Agent():
 
                 self.retrieveClientNumber(self.receive_from_server)
                 self.retrieveWorldDimensions(self.receive_from_server)
-                self.executeCommand(self.receive_from_server)
-                self.agentAlgo.play(self.agentInfo, self.receive_from_server)
+                # self.agentAlgo.play(self.agentInfo, self.receive_from_server)
+                self.addCommandToExecuteInList(self.receive_from_server)
                 self.agentAlgo.send_to_server()
         except Exception as e:
             print(f"Error: {e}")
