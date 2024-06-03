@@ -9,10 +9,11 @@ import socket
 import sys
 sys.path.append("..")
 from data_encryption import encrypt_data, decrypt_data
-from models.AgentInfo import AgentInfo
-# from models.AgentAlert import AgentAlert
-from models.AgentAction import AgentAction
 from collections import deque
+
+from models.AgentInfo import AgentInfo
+from models.AgentAction import AgentAction
+from models.AgentAlgo import AgentAlgo
 
 # Import all the commands
 from command.BroadcastCommand import BroadcastCommand
@@ -32,7 +33,7 @@ class Agent():
     def __init__(self, port: int, team_name: str, ip: str = "localhost"):
         self.agentInfo = AgentInfo()
         self.agentAction = AgentAction(self.agentInfo)
-        # self.agentAlert = AgentAlert(self.agentInfo)
+        self.agentAlgo = None
         self.port = port
         self.team_name = team_name
         self.receive_from_server = None
@@ -90,6 +91,7 @@ class Agent():
             self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.client.connect((self.ip, self.port))
             while True:
+                self.agentAlgo = AgentAlgo(self.agentInfo, 100)
                 self.receive_from_server = self.client.recv(1024).decode()
                 if self.receive_from_server == "WELCOME\n": # If the server sends "WELCOME\n", send the team name
                     self.client.send(f"{self.team_name}\n".encode())
@@ -104,12 +106,6 @@ class Agent():
         except Exception as e:
             print(f"Error: {e}")
             exit(84)
-
-    def play(self) -> None:
-        """Play the game, search for resources, level up, incantation, etc"""
-        # alerts = self.agentAlert.checkAlerts()
-        # self.agentAction.useAlerts(alerts)
-        pass
 
     def send_to_server(self) -> None:
         """Send a message to the server"""
