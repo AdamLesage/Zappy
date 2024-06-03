@@ -7,6 +7,7 @@
 
 from models.AgentAlert import AgentAlerts
 from models.AgentInfo import AgentInfo
+from models.AgentMoves import Moves
 
 class AgentAlgo():
     """
@@ -15,7 +16,12 @@ class AgentAlgo():
     """
     def __init__(self, agentInfo: AgentInfo, fTime: int) -> None:
         self.alerts = AgentAlerts(agentInfo, fTime)
+        self.agentInfo = agentInfo
+        self.agentMoves = Moves()
         pass
+
+    def updateAgentInfo(self, info: AgentInfo):
+        self.agentInfo = info
 
     def play(self, agentInfo: AgentInfo, data: str) -> str:
         """
@@ -29,5 +35,8 @@ class AgentAlgo():
         if "incantation" in alerts:
             # setup the logic for incantation
             return "Incantation"
+        if "food" in alerts:
+            #
+            return "Continue"
         return "Continue"
     
