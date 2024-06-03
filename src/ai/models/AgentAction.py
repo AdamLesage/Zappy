@@ -23,7 +23,6 @@ class AgentAction():
         # action = add, remove
         # quantity = quantity to add or remove
         item = changes[0]
-        print(f"Item: [{item}], {self.agent_info.inventory}")
 
         if item not in self.agent_info.inventory:
             print(f"Invalid item [{item}]", file=sys.stderr)
