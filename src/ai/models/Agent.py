@@ -33,6 +33,7 @@ class Agent():
     def __init__(self, port: int, team_name: str, ip: str = "localhost"):
         self.agentInfo = AgentInfo()
         self.agentAction = AgentAction(self.agentInfo)
+        self.agentAlgo = AgentAlgo(self.agentInfo, 100)
         self.agentAlgo = None
         self.port = port
         self.team_name = team_name
@@ -87,7 +88,7 @@ class Agent():
             self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.client.connect((self.ip, self.port))
             while True:
-                self.agentAlgo = AgentAlgo(self.agentInfo, 100)
+                self.agentAlgo.updateAgentInfo(self.agentInfo)
                 data = self.client.recv(1024).decode()
                 if data == "WELCOME\n": # If the server sends "WELCOME\n", send the team name
                     self.client.send(f"{self.team_name}\n".encode())
