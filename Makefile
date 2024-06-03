@@ -41,7 +41,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/dataManagment/players/get_action_in_queue.c			\
 			src/server/command/GUI_command/execute_gui_command.c			\
 			src/server/command/GUI_command/gui_command.c					\
-			src/server/command/GUI_command/btc.c							\
+			src/server/command/GUI_command/bct.c							\
 			src/server/command/GUI_command/mct.c							\
 			src/server/command/GUI_command/msz.c							\
 			src/server/command/GUI_command/pin.c							\
@@ -116,7 +116,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/dataManagment/players/get_action_in_queue.c			\
 			src/server/command/GUI_command/execute_gui_command.c			\
 			src/server/command/GUI_command/gui_command.c					\
-			src/server/command/GUI_command/btc.c							\
+			src/server/command/GUI_command/bct.c							\
 			src/server/command/GUI_command/mct.c							\
 			src/server/command/GUI_command/msz.c							\
 			src/server/command/GUI_command/pin.c							\
