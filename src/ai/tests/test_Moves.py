@@ -13,7 +13,7 @@ from unittest.mock import patch
 import importlib.util
 
 # Project imports
-from models.Moves import Moves
+from models.AgentMoves import Moves
 
 class TestMovesClass(unittest.TestCase):
     def test01_checkItem(self):
