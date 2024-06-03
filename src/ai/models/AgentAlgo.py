@@ -5,19 +5,25 @@
 ## AgentAlgo
 ##
 
+# Imports
 from models.AgentAlert import AgentAlerts
 from models.AgentInfo import AgentInfo
 from models.AgentMoves import Moves
+
+# Import libraries
+from collections import deque
+import socket
 
 class AgentAlgo():
     """
     This class is the main class for the agent's algorithm.
     It will handle the agent's actions and decisions.
     """
-    def __init__(self, agentInfo: AgentInfo, fTime: int) -> None:
+    def __init__(self, agentInfo: AgentInfo, fTime: int, client: socket = None):
         self.alerts = AgentAlerts(agentInfo, fTime)
         self.agentInfo = agentInfo
         self.agentMoves = Moves()
+        self.client = client
         pass
 
     def updateAgentInfo(self, info: AgentInfo):
@@ -30,8 +36,6 @@ class AgentAlgo():
         """
         alerts = self.alerts.checkAlerts()
 
-        if agentInfo.noLifeUnits() or agentInfo.noTimeUnits() or "dead" in alerts:
-            return "Dead"
         if "incantation" in alerts:
             # setup the logic for incantation
             return "Incantation"
@@ -39,4 +43,10 @@ class AgentAlgo():
             #
             return "Continue"
         return "Continue"
-    
+
+    def send_to_server(self) -> None:
+        """Send a message to the server"""
+        if self.agentInfo.commandsToSend == deque([]) or self.client == None: # If there are no commands to send, get out of the function
+            return
+        command_to_send = self.agentInfo.commandsToSend.popleft() # Get the first command to send and remove it from the list
+        self.client.send(command_to_send.encode())
