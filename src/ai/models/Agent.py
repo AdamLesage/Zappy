@@ -58,7 +58,10 @@ class Agent():
         if command_idx not in self.availableCommands:
             return
         self.availableCommands[command_idx].execute(self.client, additional_data)
-        self.agentInfo.addCommandsToSend(command) # Add the command to the list of commands to send
+        if len(self.agentInfo.commandsToSend) < 10:
+            self.agentInfo.addCommandsToSend(command) # Add the command to the list of commands to send
+        else:
+            self.agentInfo.commandWaitingList.append(command)
 
 
     def retrieveWorldDimensions(self, data: str) -> None:

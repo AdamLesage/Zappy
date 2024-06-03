@@ -16,6 +16,7 @@ import importlib.util
 from models.AgentInfo import AgentInfo
 from data_encryption import *
 from models.AgentAction import AgentAction
+from models.Agent import Agent
 
 class TestAgentInfo(unittest.TestCase):
     def test01_getInventory(self):

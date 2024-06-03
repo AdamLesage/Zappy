@@ -50,3 +50,6 @@ class AgentAlgo():
             return
         command_to_send = self.agentInfo.commandsToSend.popleft() # Get the first command to send and remove it from the list
         self.client.send(command_to_send.encode())
+        # Add first command from waiting list to the commandsToSend list
+        if self.agentInfo.commandWaitingList != []:
+            self.agentInfo.commandsToSend.append(self.agentInfo.commandWaitingList.pop(0))
