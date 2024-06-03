@@ -9,5 +9,5 @@
 
 void right(core_t *core, int fd, char **command)
 {
-    printf("right\n");
+    turn_right(&core->players, fd);
 }
