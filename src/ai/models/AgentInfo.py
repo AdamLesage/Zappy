@@ -13,16 +13,14 @@ class AgentInfo():
         """Ctor of the AgentInfo class"""
         self.commandsToSend = deque(maxlen=10)
         self.commandsReturned = deque(maxlen=10)
-        self.inventory = [["food", 0], ["linemate", 0], ["deraumere", 0],
-                        ["sibur", 0], ["mendiane", 0], ["phiras", 0], ["thystame", 0]]
+        self.inventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.client_num = 0
         self.world_width = 0
         self.world_height = 0
         self.agentStatus = "Alive" # Alive, Dead, Incantation, Fork
         self.level = 1
         self.numberingVision = 1
-        self.teamInventory = [["food", 0], ["linemate", 0], ["deraumere", 0],
-                        ["sibur", 0], ["mendiane", 0], ["phiras", 0], ["thystame", 0]] # Inventory of the team, must be updated at each broadcast. Computation of each player's inventory
+        self.teamInventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0} # Inventory of the team
         self.playerVision = [] # Vision of player, tiles around him
         self.lifeUnits = 1260
         self.teamPlayers = {"level1": 0, "level2": 0, "level3": 0, "level4": 0, "level5": 0, "level6": 0, "level7": 0, "level8": 0}
@@ -59,9 +57,7 @@ class AgentInfo():
         """
         if type == "all":
             return self.inventory
-        for it in self.inventory:
-            if it[0] == type:
-                return it[1]
+        return self.inventory[type]
 
     def getLevel(self) -> None:
         """Get the level of the target"""
@@ -108,10 +104,10 @@ class AgentInfo():
         self.commandsReturned.append(commandName)
 
     def addInventory(self, type: str, quantity : int) -> None:
-        for it in self.inventory:
-            if it[0] == type:
-                it[1] += quantity
-        return
+        """Add an item to the inventory"""
+        if type not in ["food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]:
+            raise ValueError("Invalid item")
+        self.inventory[type] += quantity
 
     def addPlayers(self, level: str, quantity: int) -> None:
         """Set the number of players in the team"""

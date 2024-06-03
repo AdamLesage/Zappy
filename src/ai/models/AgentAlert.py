@@ -24,7 +24,7 @@ class AgentAlerts(AgentInfo):
             """No more life units"""
             self.alerts.append("dead")
             return (self.alerts)
-        
+
         if self.agent.getLifeUnits() < self.foodMin:
             """Need to eat"""
             self.alerts.append("food")

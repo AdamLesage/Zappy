@@ -10,6 +10,8 @@ import sys
 sys.path.append("..")
 from data_encryption import encrypt_data, decrypt_data
 from models.AgentInfo import AgentInfo
+# from models.AgentAlert import AgentAlert
+from models.AgentAction import AgentAction
 
 # Import all the commands
 from command.BroadcastCommand import BroadcastCommand
@@ -28,6 +30,8 @@ from command.EjectCommand import EjectCommand
 class Agent():
     def __init__(self, port: int, team_name: str, ip: str = "localhost"):
         self.agentInfo = AgentInfo()
+        self.agentAction = AgentAction(self.agentInfo)
+        # self.agentAlert = AgentAlert(self.agentInfo)
         self.port = port
         self.team_name = team_name
         self.ip = ip
@@ -86,11 +90,18 @@ class Agent():
                 self.retrieveClientNumber(data)
                 self.retrieveWorldDimensions(data)
                 self.executeCommand(data)
+                self.play()
                 if self.disconnect_from_server(data):
                     break
         except Exception as e:
             print(f"Error: {e}")
             exit(84)
+
+    def play(self) -> None:
+        """Play the game, search for resources, level up, incantation, etc"""
+        # alerts = self.agentAlert.checkAlerts()
+        # self.agentAction.useAlerts(alerts)
+        pass
 
     def send_to_server(self, message: str) -> None:
         """Send a message to the server"""
