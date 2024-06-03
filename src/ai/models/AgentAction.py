@@ -48,8 +48,8 @@ class AgentAction():
         for alert in alerts:
             if alert == "food":
                 self.agent.findFood()
-            if alert == "incantation":
-                self.agent.findIncantation()
+            # if alert == "incantation":
+            #     self.agent.findIncantation()
 
     def findFood(self) -> None:
         """Find food"""

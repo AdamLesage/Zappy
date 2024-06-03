@@ -37,6 +37,7 @@ class Agent():
         self.agentAlgo = None
         self.port = port
         self.team_name = team_name
+        self.receive_from_server = None
         self.ip = ip
         self.client = None
         self.availableCommands = {"connect_nbr\n": ConnectCommand(), "forward\n": ForwardCommand(),
@@ -48,12 +49,15 @@ class Agent():
 
     def executeCommand(self, command: str) -> None:
         """Execute a command"""
-        if command not in self.availableCommands:
-            return
         splited_command = command.split(' ')
         additional_data = splited_command[1] if len(splited_command) > 1 else ""
+        command_idx = splited_command[0] if len(splited_command) > 1 else command
+        if command_idx.find('\n') != -1:
+            command = command_idx[0:len(command_idx) - 1] + '\n'
+        if command_idx not in self.availableCommands:
+            return
 
-        command = self.availableCommands[command].execute(self.client, additional_data)
+        self.availableCommands[command_idx].execute(self.client, additional_data)
         self.agentInfo.addCommandsToSend(command) # Add the command to the list of commands to send
 
     def retrieveWorldDimensions(self, data: str) -> None:
@@ -88,17 +92,17 @@ class Agent():
             self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.client.connect((self.ip, self.port))
             while True:
-                self.agentAlgo.updateAgentInfo(self.agentInfo)
+                self.agentAlgo = AgentAlgo(self.agentInfo, 100)
                 data = self.client.recv(1024).decode()
+                self.receive_from_server = self.client.recv(1024).decode()
                 if data == "WELCOME\n": # If the server sends "WELCOME\n", send the team name
                     self.client.send(f"{self.team_name}\n".encode())
 
-                self.retrieveClientNumber(data)
-                self.retrieveWorldDimensions(data)
-                self.executeCommand(data)
+                self.retrieveClientNumber(self.receive_from_server)
+                self.retrieveWorldDimensions(self.receive_from_server)
+                self.executeCommand(self.receive_from_server)
                 self.send_to_server()
-                self.agentAlgo.play(self.agentInfo, data)
-                if self.disconnect_from_server(data):
+                if self.disconnect_from_server(self.receive_from_server):
                     break
         except Exception as e:
             print(f"Error: {e}")
@@ -106,14 +110,14 @@ class Agent():
 
     def send_to_server(self) -> None:
         """Send a message to the server"""
-        if self.agentInfo.commandsToSend == deque([]):
+        if self.agentInfo.commandsToSend == deque([]): # If there are no commands to send, get out of the function
             return
-        command_to_send = self.agentInfo.commandsToSend.popleft()
+        command_to_send = self.agentInfo.commandsToSend.popleft() # Get the first command to send and remove it from the list
         self.client.send(command_to_send.encode())
 
     def disconnect_from_server(self, data: str) -> bool:
         """Disconnect from the server"""
-        if data == "ko\n" or data == "dead\n":
+        if data == "ko\n" or data == "dead\n": # If the server sends "ko\n" or "dead\n", close the connection
             self.client.close()
             return True
         return False
