@@ -58,10 +58,10 @@ void GuiConnect::send(std::string message)
 
 void GuiConnect::receive()
 {
-    char buffer[1024] = {0};
+    char buffer[10000] = {0};
 
     while (Running) {
-        if (read(_socket, buffer, 1024) == -1) {
+        if (read(_socket, buffer, 10000) == -1) {
             throw Zappy::ConnectError("Failed to receive message", "GuiConnect");
         }
         printf("Received: %s\n", buffer);
