@@ -100,7 +100,6 @@ class Agent():
                 self.retrieveWorldDimensions(self.receive_from_server)
                 self.executeCommand(self.receive_from_server)
                 self.send_to_server()
-                self.play()
                 if self.disconnect_from_server(self.receive_from_server):
                     break
         except Exception as e:
