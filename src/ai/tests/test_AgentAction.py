@@ -40,8 +40,3 @@ class TestAgentAction(unittest.TestCase):
         agent_info.inventory = [["food", 1]]
         self.assertTrue(agent_action.updateInventories(["food", "remove", 1]))
         self.assertEqual(agent_info.inventory[0][1], 0)
-
-    def test05_determineBestAction(self):
-        agent_info = AgentInfo()
-        agent_action = AgentAction(agent_info)
-        self.assertEqual(agent_action.determineBestAction(), None)

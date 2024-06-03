@@ -69,5 +69,16 @@ class Moves():
                 movements.append("Forward")
                 posIndice += 1
             return (movements)
+        
+    def searchItem(self, itemToSearch: str, lookResult: str, needReaching: bool = True):
+        """
+        This function will search for an item in the look result.
+        If the item is present and needReaching is True,
+        it will return the list of movements to reach the item.
+        If the item is not present, it will return False.
+        """
+        if self.checkItem(lookResult, itemToSearch) and needReaching == True:
+            return self.reachItemList(itemToSearch, lookResult)
+        return False
 
 #[player,,,thystame,,food,,,,,thystame,,,,,,]

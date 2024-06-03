@@ -47,6 +47,16 @@ class AgentAction():
                 break
         return True
 
-    def determineBestAction(self) -> str:
-        """Determine the best action to do"""
-        pass
+    def useAlerts(self, alerts: list[str]) -> None:
+        """
+        Use alerts
+        """
+        for alert in alerts:
+            if alert == "food":
+                self.agent.findFood()
+            if alert == "incantation":
+                self.agent.findIncantation()
+
+    def findFood(self) -> None:
+        """Find food"""
+        self.agent_info.addCommandsToSend("look\n")

@@ -18,6 +18,7 @@ from tests.test_AgentInfo import *
 from tests.test_Commands import *
 from tests.test_AgentAction import *
 from tests.test_Moves import *
+from tests.test_AgentAlert import *
 
 if __name__ == "__main__":
     unittest.main()
