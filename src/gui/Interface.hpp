@@ -30,6 +30,7 @@ class Interface {
         void command_handler();
         std::array<int, 2> get_mape_size() { return _mape_size; }
         void set_mape_size(std::array<int, 2> mape_size) { _mape_size = mape_size; }
+        void set_map();
     protected:
         std::shared_ptr<sf::RenderWindow> window;
         sf::Event event;
@@ -40,6 +41,8 @@ class Interface {
         std::array<int, 2> _mape_size;
         std::vector<std::vector<std::shared_ptr<Tile>>> map;
         std::vector<std::vector<sf::Sprite>> map_sprites;
+        sf::Sprite sprite;
+        sf::Texture texture;
         std::vector<sf::Texture> textures;
         std::vector<std::shared_ptr<Player>> players;
         sf::Font font;

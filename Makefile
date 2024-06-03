@@ -19,6 +19,10 @@ SRC_GUI				=	src/gui/main.cpp						   			\
 						src/gui/gui_connect.cpp								\
 						src/gui/my_str_to_line_array.cpp					\
 						src/gui/my_str_to_word_array.cpp					\
+						src/gui/Tile.cpp									\
+						src/gui/Inventory.cpp								\
+						src/gui/AInventory.cpp								\
+						src/gui/Player.cpp									\
 
 SRC_AI				=	src/ai/main.py										  \
 
