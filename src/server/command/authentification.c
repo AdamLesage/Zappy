@@ -25,6 +25,16 @@ void player_authentification(core_t *core, char *command, int fd)
     send_response("ko\n", fd);
 }
 
+void graphic_authentification(core_t *core, char *command, int fd)
+{
+    add_player(&core->map, &core->players, fd, command);
+    send_response("msz", fd);
+    send_response(int_to_str(core->arguments.width), fd);
+    send_response(" ", fd);
+    send_response(int_to_str(core->arguments.height), fd);
+    send_response("\n", fd);
+}
+
 void authentification(core_t *core, char *command, int fd)
 {
     if (strcmp(command, "GRAPHIC") == 0) {
