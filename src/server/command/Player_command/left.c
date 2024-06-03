@@ -9,5 +9,6 @@
 
 void left(core_t *core, int fd, char **command)
 {
-    printf("left\n");
+    turn_left(&core->players, fd);
+    send_response("ok\n", fd);
 }

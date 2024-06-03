@@ -10,4 +10,5 @@
 void right(core_t *core, int fd, char **command)
 {
     turn_right(&core->players, fd);
+    send_response("ok\n", fd);
 }
