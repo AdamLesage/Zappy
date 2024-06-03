@@ -22,7 +22,7 @@ class AgentAlerts(AgentInfo):
         """
         playerLevel = self.agent.getLevel()
         
-        if self.agent.getLifeUnits() < self.foodMin:
+        if self.agent.getTimeUnits() < self.foodMin:
             """Need to eat"""
             self.alerts.append("food")
         

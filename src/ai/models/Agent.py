@@ -9,10 +9,11 @@ import socket
 import sys
 sys.path.append("..")
 from data_encryption import encrypt_data, decrypt_data
-from models.AgentInfo import AgentInfo
-# from models.AgentAlert import AgentAlert
-from models.AgentAction import AgentAction
 from collections import deque
+
+from models.AgentInfo import AgentInfo
+from models.AgentAction import AgentAction
+from models.AgentAlgo import AgentAlgo
 
 # Import all the commands
 from command.BroadcastCommand import BroadcastCommand
@@ -32,7 +33,7 @@ class Agent():
     def __init__(self, port: int, team_name: str, ip: str = "localhost"):
         self.agentInfo = AgentInfo()
         self.agentAction = AgentAction(self.agentInfo)
-        # self.agentAlert = AgentAlert(self.agentInfo)
+        self.agentAlgo = None
         self.port = port
         self.team_name = team_name
         self.ip = ip
@@ -84,6 +85,7 @@ class Agent():
             self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.client.connect((self.ip, self.port))
             while True:
+                self.agentAlgo = AgentAlgo(self.agentInfo, 100)
                 data = self.client.recv(1024).decode()
                 if data == "WELCOME\n": # If the server sends "WELCOME\n", send the team name
                     self.client.send(f"{self.team_name}\n".encode())
@@ -92,18 +94,12 @@ class Agent():
                 self.retrieveWorldDimensions(data)
                 self.executeCommand(data)
                 self.send_to_server()
-                self.play()
+                self.agentAlgo.play(self.agentInfo, data)
                 if self.disconnect_from_server(data):
                     break
         except Exception as e:
             print(f"Error: {e}")
             exit(84)
-
-    def play(self) -> None:
-        """Play the game, search for resources, level up, incantation, etc"""
-        # alerts = self.agentAlert.checkAlerts()
-        # self.agentAction.useAlerts(alerts)
-        pass
 
     def send_to_server(self) -> None:
         """Send a message to the server"""
