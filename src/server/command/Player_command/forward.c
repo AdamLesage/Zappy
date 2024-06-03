@@ -9,5 +9,6 @@
 
 void forward(core_t *core, int fd, char **command)
 {
-    printf("forward\n");
+    move_player(&core->map, &core->players, fd);
+    send_response("ok\n", fd);
 }
