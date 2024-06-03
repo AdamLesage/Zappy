@@ -98,9 +98,11 @@ class AgentInfo():
         self.agentStatus = status
 
     def addCommandsToSend(self, commandName: str) -> None:
+        """Add a command to the list of commands to send"""
         self.commandsToSend.append(commandName)
 
     def addCommandsReturned(self, commandName: str) -> None:
+        """Add a command to the list of commands returned by the server"""
         self.commandsReturned.append(commandName)
 
     def addInventory(self, type: str, quantity : int) -> None:
