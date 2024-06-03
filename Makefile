@@ -13,10 +13,12 @@ SRC_SEVER			=	src/server/main.c									  \
 						src/server/init_server.c							  \
 						src/server/lunch_server.c							  \
 
-SRC_GUI				=	src/gui/main.cpp							   		  \
-						src/gui/Interface.cpp								  \
-						src/gui/bar.cpp										  \
-						src/gui/gui_connect.cpp								  \
+SRC_GUI				=	src/gui/main.cpp						   			\
+						src/gui/Interface.cpp								\
+						src/gui/bar.cpp										\
+						src/gui/gui_connect.cpp								\
+						src/gui/my_str_to_line_array.cpp					\
+						src/gui/my_str_to_word_array.cpp					\
 
 SRC_AI				=	src/ai/main.py										  \
 

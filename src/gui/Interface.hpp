@@ -39,7 +39,11 @@ class Interface {
         int sound_volume;
         std::array<int, 2> _mape_size;
         std::vector<std::vector<std::shared_ptr<Tile>>> map;
+        std::vector<std::vector<sf::Sprite>> map_sprites;
+        std::vector<sf::Texture> textures;
         std::vector<std::shared_ptr<Player>> players;
+        sf::Font font;
+        std::vector<sf::Text> Texts;
         sf::Sprite sound;
         sf::Texture sound_;
         std::shared_ptr<GuiConnect> _gui_connect;

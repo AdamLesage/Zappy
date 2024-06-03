@@ -12,12 +12,18 @@
 #include <unistd.h>
 #include <cstring>
 #include <iostream>
+#include <vector>
+
+std::vector<std::string> my_str_to_line_array(char *str);
+std::vector<std::string> my_str_to_word_array(const char *str);
 
 GuiConnect::GuiConnect()
 {
     _socket = 0;
     _port = 0;
     Running = true;
+    _size_map[0] = 0;
+    _size_map[1] = 0;
 }
 
 GuiConnect::GuiConnect(std::string port, std::string machine)
@@ -54,12 +60,19 @@ void GuiConnect::receive()
 {
     char buffer[1024] = {0};
 
-    printf("test\n");
     while (Running) {
         if (read(_socket, buffer, 1024) == -1) {
             throw Zappy::ConnectError("Failed to receive message", "GuiConnect");
         }
-        printf("%s\n", buffer);
+        printf("Received: %s\n", buffer);
+        std::vector<std::string> pString = my_str_to_line_array(buffer);
+        for (size_t i = 0; i < pString.size(); i++) {
+            if (strncmp(pString[i].c_str(), "msz", 3) == 0) {
+                std::vector<std::string> pString2 = my_str_to_word_array(pString[i].c_str());
+                _size_map[0] = std::stoi(pString2[1]);
+                _size_map[1] = std::stoi(pString2[2]);
+            }
+        }
     }
     if (Running == false)
         printf("Running = false\n");
