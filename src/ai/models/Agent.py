@@ -110,8 +110,7 @@ class Agent():
         if self.agentInfo.commandsToSend == deque([]):
             return
         command_to_send = self.agentInfo.commandsToSend.popleft()
-        print(f"Sending command: {command_to_send}")
-        self.client.sendall(command_to_send.encode())
+        self.client.send(command_to_send.encode())
 
     def disconnect_from_server(self, data: str) -> bool:
         """Disconnect from the server"""

@@ -24,10 +24,10 @@ class AgentAction():
         # quantity = quantity to add or remove
 
         if changes[0] not in ["food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]:
-            print("Invalid item", file=sys.stderr)
+            print(f"Invalid item {changes[0]}", file=sys.stderr)
             return False
         if changes[1] not in ["add", "remove"]:
-            print("Invalid action", file=sys.stderr)
+            print(f"Invalid action {changes[1]}", file=sys.stderr)
             return False
 
         for it in self.agent_info.inventory:
