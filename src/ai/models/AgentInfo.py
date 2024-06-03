@@ -22,14 +22,23 @@ class AgentInfo():
         self.numberingVision = 1
         self.teamInventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0} # Inventory of the team
         self.playerVision = [] # Vision of player, tiles around him
-        self.lifeUnits = 1260
+        self.lifeUnits = 10
+        self.timeUnits = 1260
         self.teamPlayers = {"level1": 0, "level2": 0, "level3": 0, "level4": 0, "level5": 0, "level6": 0, "level7": 0, "level8": 0}
 
     def noLifeUnits(self) -> bool:
         """Return True if there is no more life units"""
         return (self.lifeUnits <= 0)
 
+    def noTimeUnits(self) -> bool:
+        """Return True if there is no more time units"""
+        return (self.timeUnits <= 0)
+
     # Getters
+    def getTimeUnits(self) -> int:
+        """Returns the number of time units"""
+        return (self.timeUnits) 
+
     def getLifeUnits(self) -> int:
         """Returns the number of life units"""
         return (self.lifeUnits)
@@ -73,6 +82,10 @@ class AgentInfo():
         return sum(self.teamPlayers.values()) # Return the sum of all players, so the total number of players in the team
 
     # Setters
+    def setTimeUnits(self, tu: int) -> None:
+        """Set the number of time Units"""
+        self.timeUnits = tu
+    
     def setLifeUnits(self, lu: int) -> None:
         """Set the number of life Units"""
         self.lifeUnits = lu
