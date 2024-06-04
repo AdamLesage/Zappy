@@ -13,6 +13,7 @@ class AgentInfo():
         """Ctor of the AgentInfo class"""
         self.commandsToSend = deque(maxlen=10)
         self.commandsReturned = deque(maxlen=10)
+        self.commandWaitingList = []
         self.inventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.client_num = 0
         self.world_width = 0

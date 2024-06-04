@@ -11,7 +11,7 @@ class BroadcastCommand(CommandInterface):
     """Broadcast Command"""
     def __init__(self):
         super().__init__()
-        self.action = "broadcast text"
-        self.command = "Broadcast text"
+        self.action = "broadcast"
+        self.command = "Broadcast"
         self.time_limit = 7
         self.response = "ok"

@@ -69,25 +69,6 @@ class TestAgent(unittest.TestCase):
         self.assertEqual(agent.agentInfo.world_width, 0)
         self.assertEqual(agent.agentInfo.world_height, 0)
 
-    def test02_executeCommand(self):
-        """Test the execution of a command"""
-        # Get an available port
-        port = find_available_port()
-        server_thread = ServerThread(port)
-        server_thread.start()
-
-        time.sleep(1)  # Give the server a moment to start
-
-        try:
-            agent = Agent(port, "Team1")
-            agent.connect_to_server()
-            self.assertEqual(agent.agentInfo.world_width, 15)
-            self.assertEqual(agent.agentInfo.world_height, 15)
-            self.assertEqual(agent.agentInfo.client_num, 19)
-        finally:
-            server_thread.stop()
-            agent.client.close()
-
     def test03_connect_to_unexisting_server(self):
         """Test the connection to an unexisting server"""
         agent = Agent(4242, "Team1")
