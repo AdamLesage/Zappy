@@ -14,6 +14,7 @@
 #include "./Command/TNA.hpp"
 #include "./Command/PLV.hpp"
 #include "./Command/PIN.hpp"
+#include "./Command/PEX.hpp"
 
 Zappy::CommandFactory::CommandFactory(int serverSocket)
 {
@@ -26,6 +27,7 @@ Zappy::CommandFactory::CommandFactory(int serverSocket)
     registerCommand("tna", std::make_shared<TNA>());
     registerCommand("plv", std::make_shared<PLV>());
     registerCommand("pin", std::make_shared<PIN>());
+    registerCommand("pex", std::make_shared<PEX>());
 }
 
 Zappy::CommandFactory::~CommandFactory()
