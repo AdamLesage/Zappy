@@ -61,6 +61,7 @@ SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/ServerInfo/Command/PLV.cpp								\
 			src/gui/ServerInfo/Command/PIN.cpp								\
 			src/gui/ServerInfo/Command/PEX.cpp								\
+			src/gui/ServerInfo/Command/PBC.cpp								\
 
 SRC_AI				=	src/ai/main.py										\
 

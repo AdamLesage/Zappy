@@ -15,6 +15,7 @@
 #include "./Command/PLV.hpp"
 #include "./Command/PIN.hpp"
 #include "./Command/PEX.hpp"
+#include "./Command/PBC.hpp"
 
 Zappy::CommandFactory::CommandFactory(int serverSocket)
 {
@@ -28,6 +29,7 @@ Zappy::CommandFactory::CommandFactory(int serverSocket)
     registerCommand("plv", std::make_shared<PLV>());
     registerCommand("pin", std::make_shared<PIN>());
     registerCommand("pex", std::make_shared<PEX>());
+    registerCommand("pbc", std::make_shared<PBC>());
 }
 
 Zappy::CommandFactory::~CommandFactory()
