@@ -5,7 +5,7 @@
 ** gui_connect
 */
 
-#include "gui_connect.hpp"
+#include "GuiConnect.hpp"
 #include "ConnectError.hpp"
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -64,7 +64,7 @@ void GuiConnect::receive()
         if (read(_socket, buffer, 10000) == -1) {
             throw Zappy::ConnectError("Failed to receive message", "GuiConnect");
         }
-        printf("Received: %s\n", buffer);
+        printf("Received: [%s]\n", buffer);
         std::vector<std::string> pString = my_str_to_line_array(buffer);
         for (size_t i = 0; i < pString.size(); i++) {
             if (strncmp(pString[i].c_str(), "msz", 3) == 0) {
@@ -88,5 +88,4 @@ void GuiConnect::close_socket()
 void GuiConnect::close_thread()
 {
     Running = false;
-    printf("Je suis rentré ici");
 }

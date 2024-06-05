@@ -7,10 +7,10 @@
 
 #include "Player.hpp"
 
-Player::Player()
+Zappy::Player::Player()
 {
 }
 
-Player::~Player()
+Zappy::Player::~Player()
 {
 }

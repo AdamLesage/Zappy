@@ -10,7 +10,7 @@
 
 #include "AError.hpp"
 
-namespace RayTracer {
+namespace Zappy {
     class InterfaceError : public AError {
     public:
         InterfaceError(const std::string &message, const std::string &location) : AError(message, location) {}

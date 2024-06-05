@@ -7,10 +7,10 @@
 
 #include "Inventory.hpp"
 
-Inventory::Inventory()
+Zappy::Inventory::Inventory()
 {
 }
 
-Inventory::~Inventory()
+Zappy::Inventory::~Inventory()
 {
 }

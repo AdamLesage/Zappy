@@ -10,13 +10,15 @@
 
 #include "APlayer.hpp"
 
-class Player : public APlayer{
-    public:
-        Player();
-        ~Player();
+namespace Zappy {
+    class Player : public APlayer{
+        public:
+            Player();
+            ~Player();
 
-    protected:
-    private:
-};
+        protected:
+        private:
+    };
+}
 
 #endif /* !PLAYER_HPP_ */

@@ -7,7 +7,7 @@
 
 #include "AInventory.hpp"
 
-int AInventory::get(std::string name)
+int Zappy::AInventory::get(std::string name)
 {
     if (name == "Food")
         return _food;
@@ -27,7 +27,7 @@ int AInventory::get(std::string name)
 
 }
 
-void AInventory::set(std::string name, int value)
+void Zappy::AInventory::set(std::string name, int value)
 {
     if (name == "Food")
         _food = value;
@@ -45,7 +45,7 @@ void AInventory::set(std::string name, int value)
         _thystame = value;
 }
 
-void AInventory::add(std::string name, int value)
+void Zappy::AInventory::add(std::string name, int value)
 {
     if (name == "Food")
         _food += value;
@@ -63,7 +63,7 @@ void AInventory::add(std::string name, int value)
         _thystame += value;
 }
 
-void AInventory::remove(std::string name, int value)
+void Zappy::AInventory::remove(std::string name, int value)
 {
     if (name == "Food")
         _food -= value;
@@ -81,7 +81,7 @@ void AInventory::remove(std::string name, int value)
         _thystame -= value;
 }
 
-void AInventory::Empty_all()
+void Zappy::AInventory::Empty_all()
 {
     _food = 0;
     _linemate = 0;

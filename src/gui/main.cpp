@@ -8,7 +8,7 @@
 #include <iostream>
 #include <string.h>
 #include "Interface.hpp"
-#include "gui_connect.hpp"
+#include "GuiConnect.hpp"
 #include <array>
 #include "ConnectError.hpp"
 
@@ -50,7 +50,7 @@ int main(int ac, char **av)
     }
     std::array<std::string, 2> args = recup_args(ac, av);
     try {
-        Interface interface;
+        Zappy::Interface interface;
         std::shared_ptr<GuiConnect> gui_connect = std::make_shared<GuiConnect>(args[0], args[1]);
         gui_connect->send("GRAPHIC\n");
         interface.loop(gui_connect);

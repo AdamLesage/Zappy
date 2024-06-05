@@ -7,7 +7,7 @@
 
 #include "bar.hpp"
 
-Bar::Bar(sf::Vector2f size, sf::Vector2f size_back, sf::Vector2f pos, sf::Color color, int outline, sf::Color outlineColor)
+Zappy::Bar::Bar(sf::Vector2f size, sf::Vector2f size_back, sf::Vector2f pos, sf::Color color, int outline, sf::Color outlineColor)
 {
     this->shape.setSize(size);
     this->back_shape.setSize(size_back);
@@ -27,11 +27,11 @@ Bar::Bar(sf::Vector2f size, sf::Vector2f size_back, sf::Vector2f pos, sf::Color 
     this->_pos = pos;
 }
 
-Bar::~Bar()
+Zappy::Bar::~Bar()
 {
 }
 
-int Bar::checkClick(std::shared_ptr<sf::RenderWindow> window)
+int Zappy::Bar::checkClick(std::shared_ptr<sf::RenderWindow> window)
 {
     sf::Mouse mouse;
     sf::Vector2f mousPos;
@@ -56,7 +56,7 @@ int Bar::checkClick(std::shared_ptr<sf::RenderWindow> window)
     return (0);
 }
 
-bool Bar::checkClick2(std::shared_ptr<sf::RenderWindow> window)
+bool Zappy::Bar::checkClick2(std::shared_ptr<sf::RenderWindow> window)
 {
     sf::Mouse mouse;
     sf::Vector2f mousPos;
@@ -80,7 +80,7 @@ bool Bar::checkClick2(std::shared_ptr<sf::RenderWindow> window)
     return (false);
 }
 
-void Bar::displayBar(std::shared_ptr<sf::RenderWindow> window)
+void Zappy::Bar::displayBar(std::shared_ptr<sf::RenderWindow> window)
 {
     std::string font_path("./asset/gui/Pacifico.ttf");
     sf::Font font;
@@ -110,18 +110,18 @@ void Bar::displayBar(std::shared_ptr<sf::RenderWindow> window)
     window->draw(this->hoverSape);
 }
 
-void Bar::setState(StateBar newState)
+void Zappy::Bar::setState(StateBar newState)
 {
     this->state = newState;
 }
 
-void Bar::setPosition(sf::Vector2f pos)
+void Zappy::Bar::setPosition(sf::Vector2f pos)
 {
     this->shape.setPosition(pos);
     this->hoverSape.setPosition(pos);
 }
 
-void Bar::setSprite(sf::Sprite sprite)
+void Zappy::Bar::setSprite(sf::Sprite sprite)
 {
     this->Texture.loadFromImage(sprite.getTexture()->copyToImage());
 }

@@ -10,13 +10,15 @@
 
 #include "AInventory.hpp"
 
-class Inventory : public AInventory{
-    public:
-        Inventory();
-        ~Inventory();
+namespace Zappy {
+    class Inventory : public AInventory {
+        public:
+            Inventory();
+            ~Inventory();
 
-    protected:
-    private:
-};
+        protected:
+        private:
+    };
+}
 
 #endif /* !INVENTORY_HPP_ */

@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include "Interface.hpp"
 
-Interface::Interface()
+Zappy::Interface::Interface()
 {
     window = std::make_shared<sf::RenderWindow>();
     window->create(sf::VideoMode(1920, 1080), "Zappy");
@@ -45,7 +45,7 @@ Interface::Interface()
     // view.rotate(5);
 }
 
-Interface::~Interface()
+Zappy::Interface::~Interface()
 {
     window->close();
     if (_gui_connect != nullptr)
@@ -54,7 +54,7 @@ Interface::~Interface()
         ReceiveProcess.join();
 }
 
-void Interface::print_sound()
+void Zappy::Interface::print_sound()
 {
     if (sound_volume == 0)
         sound.setTextureRect(sf::IntRect(0, 360, 450, 325));
@@ -66,7 +66,7 @@ void Interface::print_sound()
         sound.setTextureRect(sf::IntRect(0, 20, 450, 325));
 }
 
-void Interface::set_map()
+void Zappy::Interface::set_map()
 {
     for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
         std::vector<std::shared_ptr<Tile>> tmp;
@@ -81,7 +81,7 @@ void Interface::set_map()
     }
 }
 
-void Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
+void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
 {
     _gui_connect = gui_connect;
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
@@ -151,6 +151,6 @@ void Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
 }
 
 
-void Interface::command_handler()
+void Zappy::Interface::command_handler()
 {
 }

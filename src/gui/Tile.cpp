@@ -7,16 +7,16 @@
 
 #include "Tile.hpp"
 
-Tile::Tile()
+Zappy::Tile::Tile()
 {
 }
 
-Tile::Tile(sf::Vector2f position, std::shared_ptr<Inventory> inventory)
+Zappy::Tile::Tile(sf::Vector2f position, std::shared_ptr<Inventory> inventory)
 {
     _position = position;
     _inventory = inventory;
 }
 
-Tile::~Tile()
+Zappy::Tile::~Tile()
 {
 }

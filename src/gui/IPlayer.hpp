@@ -11,16 +11,18 @@
 #ifndef IPLAYER_HPP_
 #define IPLAYER_HPP_
 
-class IPlayer {
-    public:
-        ~IPlayer() = default;
-        virtual std::string getTeamName() = 0;
-        virtual std::string getPlayerName() = 0;
-        virtual int getLevel() = 0;
-        virtual std::array<int, 2> getPosition() = 0;
-        virtual void setPosition(int x, int y) = 0;
-    protected:
-    private:
-};
+namespace Zappy {
+    class IPlayer {
+        public:
+            ~IPlayer() = default;
+            virtual std::string getTeamName() = 0;
+            virtual std::string getPlayerName() = 0;
+            virtual int getLevel() = 0;
+            virtual std::array<int, 2> getPosition() = 0;
+            virtual void setPosition(int x, int y) = 0;
+        protected:
+        private:
+    };
+}
 
 #endif /* !IPLAYER_HPP_ */

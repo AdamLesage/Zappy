@@ -45,7 +45,7 @@ SRC_SEVER	=	src/server/main.c											\
 SRC_GUI				=	src/gui/main.cpp						   			\
 						src/gui/Interface.cpp								\
 						src/gui/bar.cpp										\
-						src/gui/gui_connect.cpp								\
+						src/gui/GuiConnect.cpp								\
 						src/gui/my_str_to_line_array.cpp					\
 						src/gui/my_str_to_word_array.cpp					\
 						src/gui/Tile.cpp									\

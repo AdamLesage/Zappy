@@ -15,18 +15,20 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
-class Tile {
-    public:
-        Tile();
-        Tile(sf::Vector2f position, std::shared_ptr<Inventory> inventory);
-        ~Tile();
+namespace Zappy {
+    class Tile {
+        public:
+            Tile();
+            Tile(sf::Vector2f position, std::shared_ptr<Inventory> inventory);
+            ~Tile();
 
-    protected:
-        std::vector<Player> _players;
-        std::shared_ptr<Inventory> _inventory;
-        sf::Vector2f _position;
+        protected:
+            std::vector<Player> _players;
+            std::shared_ptr<Inventory> _inventory;
+            sf::Vector2f _position;
 
-    private:
-};
+        private:
+    };
+}
 
 #endif /* !TILE_HPP_ */
