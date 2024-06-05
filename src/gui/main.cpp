@@ -7,10 +7,10 @@
 
 #include <iostream>
 #include <string.h>
-#include "Interface.hpp"
-#include "GuiConnect.hpp"
+#include "Interface/Interface.hpp"
+#include "ServerInfo/GuiConnect.hpp"
 #include <array>
-#include "ConnectError.hpp"
+#include "ServerInfo/ConnectError.hpp"
 
 std::array<std::string, 2> recup_args(int ac, char **av)
 {

@@ -6,9 +6,9 @@
 */
 
 #include "bar.hpp"
-#include "GuiConnect.hpp"
-#include "Player.hpp"
-#include "Tile.hpp"
+#include "../ServerInfo/GuiConnect.hpp"
+#include "../Entity/Player.hpp"
+#include "../Entity/Tile.hpp"
 #include <iostream>
 #include <thread>
 #include <array>

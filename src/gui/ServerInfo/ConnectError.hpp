@@ -8,7 +8,7 @@
 #ifndef SCENEERROR_HPP_
 #define SCENEERROR_HPP_
 
-#include "AError.hpp"
+#include "../AError.hpp"
 
 namespace Zappy {
     class ConnectError : public AError {

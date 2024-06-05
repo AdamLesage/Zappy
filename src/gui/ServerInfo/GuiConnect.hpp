@@ -11,7 +11,7 @@
 #ifndef GUI_CONNECT_HPP_
 #define GUI_CONNECT_HPP_
 
-#include "ServerInfo/CommandFactory.hpp"
+#include "../ServerInfo/CommandFactory.hpp"
 
 class GuiConnect {
     public:
