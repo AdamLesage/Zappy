@@ -30,6 +30,9 @@ bool remove_fom_inventory(players_t *players, enum Object object,
 {
     inventory_t *inventory = get_inventory(players, fd);
 
+    if (object == None) {
+        return (false);
+    }
     if (inventory->nb_food == 0 && object == Food)
         return (false);
     inventory->nb_food -= (object == Food) ? 1 : 0;

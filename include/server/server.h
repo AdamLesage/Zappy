@@ -70,6 +70,7 @@ void send_response_int(int response, int fd);
 void free_array(char **array);
 char **my_str_to_word_array(char *str, char separator);
 int len_array(char **arr);
+enum Object string_to_object(char *str);
 
 void authentification(core_t *core, char *command, int fd);
 int get_time_action(char *command);

@@ -76,6 +76,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/utils/free_array.c									\
 			src/server/utils/my_str_to_word_array.c							\
 			src/server/utils/len_array.c									\
+			src/server/utils/string_to_object.c								\
 
 SRC_GUI				=	src/gui/main.cpp							   		  \
 						src/gui/Interface.cpp								  \
