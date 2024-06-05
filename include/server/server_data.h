@@ -97,6 +97,16 @@ typedef struct arguments_s {
     int frequency;
 } arguments_t;
 
+enum object {
+    Food,
+    Linemate,
+    Sibur,
+    Mendiane,
+    Phiras,
+    Thystame,
+    Deraumere
+};
+
 void init_map(map_t *map, arguments_t *arguments);
 tile_info_t *find_tile(map_t *map, int x, int y);
 bool put_player(map_t *map, int x, int y);
@@ -117,6 +127,8 @@ bool remove_mendiane(map_t *map, int x, int y);
 bool remove_phiras(map_t *map, int x, int y);
 bool remove_thystame(map_t *map, int x, int y);
 bool remove_eggs(map_t *map, int x, int y, char *team_name);
+void refill_map(map_t *map);
+
 void init_players(players_t *players, arguments_t *arguments);
 bool add_player(map_t *map, players_t *players, int fd,
     char *team_name);
