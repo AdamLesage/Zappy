@@ -2,19 +2,19 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** PPO
+** PNW
 */
 
-#ifndef PPO_HPP_
-#define PPO_HPP_
+#ifndef PNW_HPP_
+#define PNW_HPP_
 
 #include "../ACommand.hpp"
 
 namespace Zappy {
-    class PPO : public ACommand {
+    class PNW : public ACommand {
         public:
-            PPO();
-            ~PPO();
+            PNW();
+            ~PNW();
 
             std::vector<std::string> receiveData(std::string message);
             void askCommand(int socket, std::vector<std::string> args) override;
@@ -23,4 +23,4 @@ namespace Zappy {
     };
 }
 
-#endif /* !PPO_HPP_ */
+#endif /* !PNW_HPP_ */

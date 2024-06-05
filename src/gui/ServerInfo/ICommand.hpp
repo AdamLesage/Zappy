@@ -21,6 +21,7 @@ class ICommand {
         virtual ~ICommand() = default;
 
         virtual void askCommand(int socket, std::vector<std::string> args) = 0;
+        virtual std::vector<std::string> receiveData(std::string message) = 0;
     protected:
     private:
 };

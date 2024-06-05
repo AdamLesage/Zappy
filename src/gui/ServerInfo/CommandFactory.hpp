@@ -11,6 +11,7 @@
 #include <map>
 #include <memory>
 #include "ICommand.hpp"
+#include <vector>
 
 namespace Zappy {
     class CommandFactory {
@@ -19,8 +20,7 @@ namespace Zappy {
             ~CommandFactory();
 
             void registerCommand(std::string commandName, std::shared_ptr<ICommand> command);
-            template<typename T>
-            T executeCommand(std::string commandName, std::string message);
+            std::vector<std::string> executeCommand(std::string commandName, std::string message);
             void askCommand(std::string commandName, std::vector<std::string> args);
         protected:
             std::map<std::string, std::shared_ptr<ICommand>> _commands;

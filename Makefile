@@ -52,8 +52,14 @@ SRC_GUI				=	src/gui/main.cpp						   			\
 						src/gui/Inventory.cpp								\
 						src/gui/AInventory.cpp								\
 						src/gui/Player.cpp									\
+						src/gui/ServerInfo/ServerInfo.cpp					\
+						src/gui/ServerInfo/CommandFactory.cpp				\
+						src/gui/ServerInfo/Command/MSZ.cpp					\
+						src/gui/ServerInfo/Command/PNW.cpp					\
+						src/gui/ServerInfo/Command/PPO.cpp					\
+						src/gui/ServerInfo/Command/TNA.cpp					\
 
-SRC_AI				=	src/ai/main.py										  \
+SRC_AI				=	src/ai/main.py										\
 
 SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/connect_client.c										\

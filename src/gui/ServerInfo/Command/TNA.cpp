@@ -15,16 +15,15 @@ Zappy::TNA::~TNA()
 {
 }
 
-template<typename T>
-T Zappy::TNA::receiveData(std::string message)
+std::vector<std::string> Zappy::TNA::receiveData(std::string message)
 {
     if (strncmp(message.c_str(), "tna", 3))
-        return;
+        return {};
     // receive : tna N\n * nbr_teams
-    std::vector<std::string> args = my_str_to_line_array(message.c_str()); // vector of strings like : { "tna N\n", "tna team1\n", "tna team2\n", ... }
+    std::vector<std::string> args = my_str_to_line_array((char *)message.c_str()); // vector of strings like : { "tna N\n", "team1\n", "team2\n", ... }
     std::vector<std::string> teams;
 
-    for (int i = 1; i < args.size(); i++) {
+    for (std::size_t i = 1; i < args.size(); i++) {
         teams.push_back(args[i].substr(4, args[i].size() - 4)); // vector of strings like : { "team1\n", "team2\n", ... }
     }
     // return format std::vector<std::string> { "tna", "team1", "team2", ... };
@@ -33,6 +32,8 @@ T Zappy::TNA::receiveData(std::string message)
 
 void Zappy::TNA::askCommand(int fd, std::vector<std::string> args)
 {
+    if (args.size() != 1)
+        throw std::invalid_argument("Invalid number of arguments for TNA command");
     std::string message = "tna\n";
     write(fd, message.c_str(), message.size());
 }

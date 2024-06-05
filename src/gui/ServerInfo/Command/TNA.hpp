@@ -11,13 +11,12 @@
 #include "../ACommand.hpp"
 
 namespace Zappy {
-    class TNA {
+    class TNA : public ACommand {
         public:
             TNA();
             ~TNA();
 
-            template<typename T>
-            T receiveData(std::string message);
+            std::vector<std::string> receiveData(std::string message);
             void askCommand(int socket, std::vector<std::string> args);
         protected:
         private:

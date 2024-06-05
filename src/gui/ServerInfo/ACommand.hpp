@@ -13,10 +13,10 @@
 namespace Zappy {
     class ACommand : public ICommand {
         public:
-            virtual ~ACommand() = default;
+            ACommand() {}
+            ~ACommand() {}
 
-            template<typename T>
-            T receiveData(std::string message);
+            virtual std::vector<std::string> receiveData(std::string message) = 0;
             virtual void askCommand(int socket, std::vector<std::string> args) = 0;
         protected:
         private:
