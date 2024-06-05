@@ -28,8 +28,6 @@ std::vector<std::string> Zappy::PEX::receiveData(std::string message)
 
 void Zappy::PEX::askCommand(int socket, std::vector<std::string> args)
 {
-    if (args.size() != 1)
+    if (args.size() == 0 || socket == -1)
         return;
-    std::string str = "pex " + args[1] + "\n";
-    write(socket, str.c_str(), str.length());
 }

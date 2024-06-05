@@ -28,8 +28,6 @@ std::vector<std::string> Zappy::PBC::receiveData(std::string message)
 
 void Zappy::PBC::askCommand(int socket, std::vector<std::string> args)
 {
-    if (args.size() != 2)
+    if (args.size() == 0 || socket == -1)
         return;
-    std::string str = "pbc " + args[1] + "\n";
-    write(socket, str.c_str(), str.length());
 }
