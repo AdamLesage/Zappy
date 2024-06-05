@@ -7,11 +7,17 @@
 
 #include "CommandFactory.hpp"
 
-#include "PPO.hpp"
+// Include all commands
+#include "./Command/PPO.hpp"
+#include "./Command/MSZ.hpp"
 
-Zappy::CommandFactory::CommandFactory()
+Zappy::CommandFactory::CommandFactory(int serverSocket)
 {
+    _serverSocket = serverSocket;
+
+    // Register all commands
     registerCommand("ppo", std::make_shared<PPO>());
+    registerCommand("msz", std::make_shared<MSZ>());
 }
 
 Zappy::CommandFactory::~CommandFactory()
@@ -23,9 +29,17 @@ void Zappy::CommandFactory::registerCommand(std::string commandName, std::shared
     _commands[commandName] = command;
 }
 
-void Zappy::CommandFactory::executeCommand(std::string commandName, std::string message)
+template<typename T>
+T Zappy::CommandFactory::executeCommand(std::string commandName, std::string message)
 {
     if (_commands.find(commandName) != _commands.end()) { // if command exists
-        _commands[commandName]->execute(message);
+        return _commands[commandName]->execute(message);
+    }
+}
+
+void Zappy::CommandFactory::askCommand(std::string commandName, std::vector<std::string> args)
+{
+    if (_commands.find(commandName) != _commands.end()) { // if command exists
+        _commands[commandName]->askCommand(_serverSocket, args);
     }
 }

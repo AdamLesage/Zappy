@@ -19,7 +19,6 @@ class ICommand {
     public:
         virtual ~ICommand() = default;
 
-        virtual void execute(std::string message) = 0;
         virtual void askCommand(int socket, std::vector<std::string> args) = 0;
     protected:
     private:

@@ -15,7 +15,8 @@ Zappy::PPO::~PPO()
 {
 }
 
-void Zappy::PPO::execute(std::string message)
+template<typename T>
+T Zappy::PPO::execute(std::string message)
 {
     if (strncmp(message.c_str(), "ppo", 3))
         return;
@@ -25,6 +26,7 @@ void Zappy::PPO::execute(std::string message)
 
 void Zappy::PPO::askCommand(int fd, std::vector<std::string> args)
 {
+    
     std::string message = "ppo\n"; // add player number
     write(fd, message.c_str(), message.size());
 }

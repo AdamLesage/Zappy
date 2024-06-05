@@ -15,15 +15,18 @@
 namespace Zappy {
     class CommandFactory {
         public:
-            CommandFactory();
+            CommandFactory(int serverSocket);
             ~CommandFactory();
 
             void registerCommand(std::string commandName, std::shared_ptr<ICommand> command);
-            void executeCommand(std::string commandName, std::string message);
+            template<typename T>
+            T executeCommand(std::string commandName, std::string message);
+            void askCommand(std::string commandName, std::vector<std::string> args);
         protected:
             std::map<std::string, std::shared_ptr<ICommand>> _commands;
+            int _serverSocket;
         private:
-    };
+    };;
 }
 
 #endif /* !COMMANDFACTORY_HPP_ */

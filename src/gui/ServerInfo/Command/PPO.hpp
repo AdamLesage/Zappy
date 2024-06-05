@@ -8,15 +8,16 @@
 #ifndef PPO_HPP_
 #define PPO_HPP_
 
-#include "ICommand.hpp"
+#include "../ACommand.hpp"
 
 namespace Zappy {
-    class PPO : public ICommand {
+    class PPO : public ACommand {
         public:
             PPO();
             ~PPO();
 
-            void execute(std::string message) override;
+            template<typename T>
+            T execute(std::string message);
             void askCommand(int socket, std::vector<std::string> args) override;
         protected:
         private:
