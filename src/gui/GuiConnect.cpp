@@ -102,6 +102,9 @@ void GuiConnect::executeCommandChanges(std::string commandName, std::string mess
             if (response[0] == "pnw") {
                 // Need to create a new player
             }
+            if (response[0] == "bct") {
+                // Need to fill the inventory of a tile
+            }
         }
     }
 }
