@@ -54,6 +54,7 @@ SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/Entity/Player.cpp										\
 			src/gui/ServerInfo/ServerInfo.cpp								\
 			src/gui/ServerInfo/CommandFactory.cpp							\
+			src/gui/ServerInfo/ACommand.cpp									\
 			src/gui/ServerInfo/Command/MSZ.cpp								\
 			src/gui/ServerInfo/Command/PNW.cpp								\
 			src/gui/ServerInfo/Command/PPO.cpp								\
@@ -68,6 +69,15 @@ SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/ServerInfo/Command/PDR.cpp								\
 			src/gui/ServerInfo/Command/PGT.cpp								\
 			src/gui/ServerInfo/Command/PDI.cpp								\
+			src/gui/ServerInfo/Command/ENW.cpp								\
+			src/gui/ServerInfo/Command/EBO.cpp								\
+			src/gui/ServerInfo/Command/EDI.cpp								\
+			src/gui/ServerInfo/Command/SGT.cpp								\
+			src/gui/ServerInfo/Command/SST.cpp								\
+			src/gui/ServerInfo/Command/SEG.cpp								\
+			src/gui/ServerInfo/Command/SMG.cpp								\
+			src/gui/ServerInfo/Command/SUC.cpp								\
+			src/gui/ServerInfo/Command/SBP.cpp								\
 
 SRC_AI				=	src/ai/main.py										\
 

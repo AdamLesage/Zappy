@@ -16,7 +16,6 @@ namespace Zappy {
             PDI();
             ~PDI();
 
-            void askCommand(int socket, std::vector<std::string> args) override;
         protected:
         private:
     };

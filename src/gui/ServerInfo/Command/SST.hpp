@@ -2,25 +2,24 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** TNA
+** SST
 */
 
-#ifndef TNA_HPP_
-#define TNA_HPP_
+#ifndef SST_HPP_
+#define SST_HPP_
 
 #include "../ACommand.hpp"
 
 namespace Zappy {
-    class TNA : public ACommand {
+    class SST : public ACommand {
         public:
-            TNA();
-            ~TNA();
+            SST();
+            ~SST();
 
-            std::vector<std::string> receiveData(std::string message, std::string commandName) override;
             void askCommand(int socket, std::vector<std::string> args);
         protected:
         private:
     };
 }
 
-#endif /* !TNA_HPP_ */
+#endif /* !SST_HPP_ */

@@ -16,7 +16,6 @@ namespace Zappy {
             ENW();
             ~ENW();
 
-            void askCommand(int socket, std::vector<std::string> args) override;
         protected:
         private:
     };

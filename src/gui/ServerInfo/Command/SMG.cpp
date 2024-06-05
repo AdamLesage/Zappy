@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** PEX
+** SMG
 */
 
-#include "PEX.hpp"
+#include "SMG.hpp"
 
-Zappy::PEX::PEX()
+Zappy::SMG::SMG()
 {
 }
 
-Zappy::PEX::~PEX()
+Zappy::SMG::~SMG()
 {
 }

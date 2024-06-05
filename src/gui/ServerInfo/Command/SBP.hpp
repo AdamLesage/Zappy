@@ -5,20 +5,20 @@
 ** PEX
 */
 
-#ifndef PGT_HPP_
-#define PGT_HPP_
+#ifndef SBP_HPP_
+#define SBP_HPP_
 
 #include "../ACommand.hpp"
 
 namespace Zappy {
-    class PGT : public ACommand {
+    class SBP : public ACommand {
         public:
-            PGT();
-            ~PGT();
+            SBP();
+            ~SBP();
 
         protected:
         private:
     };
 }
 
-#endif /* !PGT_HPP_ */
+#endif /* !SBP_HPP_ */

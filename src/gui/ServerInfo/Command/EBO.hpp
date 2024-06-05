@@ -2,23 +2,23 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** PEX
+** EBO
 */
 
-#ifndef PGT_HPP_
-#define PGT_HPP_
+#ifndef EBO_HPP_
+#define EBO_HPP_
 
 #include "../ACommand.hpp"
 
 namespace Zappy {
-    class PGT : public ACommand {
+    class EBO : public ACommand {
         public:
-            PGT();
-            ~PGT();
+            EBO();
+            ~EBO();
 
         protected:
         private:
     };
 }
 
-#endif /* !PGT_HPP_ */
+#endif /* !EBO_HPP_ */

@@ -13,11 +13,11 @@
 namespace Zappy {
     class ACommand : public ICommand {
         public:
-            ACommand() {}
-            ~ACommand() {}
+            ACommand();
+            ~ACommand();
 
-            std::vector<std::string> receiveData(std::string message, std::string commandName) override;
-            virtual void askCommand(int socket, std::vector<std::string> args) = 0;
+            std::vector<std::string> receiveData(std::string message, std::string commandName);
+            void askCommand(int socket, std::vector<std::string> args);
         protected:
         private:
     };

@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** PEX
+** SEG
 */
 
-#include "PEX.hpp"
+#include "SEG.hpp"
 
-Zappy::PEX::PEX()
+Zappy::SEG::SEG()
 {
 }
 
-Zappy::PEX::~PEX()
+Zappy::SEG::~SEG()
 {
 }

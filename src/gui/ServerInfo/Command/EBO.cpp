@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** PEX
+** EBO
 */
 
-#include "PEX.hpp"
+#include "EBO.hpp"
 
-Zappy::PEX::PEX()
+Zappy::EBO::EBO()
 {
 }
 
-Zappy::PEX::~PEX()
+Zappy::EBO::~EBO()
 {
 }

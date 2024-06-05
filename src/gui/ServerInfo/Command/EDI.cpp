@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** PEX
+** EDI
 */
 
-#include "PEX.hpp"
+#include "EDI.hpp"
 
-Zappy::PEX::PEX()
+Zappy::EDI::EDI()
 {
 }
 
-Zappy::PEX::~PEX()
+Zappy::EDI::~EDI()
 {
 }

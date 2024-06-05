@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** PEX
+** SUC
 */
 
-#include "PEX.hpp"
+#include "SUC.hpp"
 
-Zappy::PEX::PEX()
+Zappy::SUC::SUC()
 {
 }
 
-Zappy::PEX::~PEX()
+Zappy::SUC::~SUC()
 {
 }

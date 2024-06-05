@@ -22,6 +22,15 @@
 #include "./Command/PGT.hpp"
 #include "./Command/PDR.hpp"
 #include "./Command/PDI.hpp"
+#include "./Command/ENW.hpp"
+#include "./Command/EBO.hpp"
+#include "./Command/EDI.hpp"
+#include "./Command/SGT.hpp"
+#include "./Command/SST.hpp"
+#include "./Command/SEG.hpp"
+#include "./Command/SMG.hpp"
+#include "./Command/SUC.hpp"
+#include "./Command/SBP.hpp"
 
 Zappy::CommandFactory::CommandFactory(int serverSocket)
 {
@@ -42,6 +51,15 @@ Zappy::CommandFactory::CommandFactory(int serverSocket)
     registerCommand("pgt", std::make_shared<PGT>());
     registerCommand("pdr", std::make_shared<PDR>());
     registerCommand("pdi", std::make_shared<PDI>());
+    registerCommand("enw", std::make_shared<ENW>());
+    registerCommand("ebo", std::make_shared<EBO>());
+    registerCommand("edi", std::make_shared<EDI>());
+    registerCommand("sgt", std::make_shared<SGT>());
+    registerCommand("sst", std::make_shared<SST>());
+    registerCommand("seg", std::make_shared<SEG>());
+    registerCommand("smg", std::make_shared<SEG>());
+    registerCommand("suc", std::make_shared<SUC>());
+    registerCommand("sbp", std::make_shared<SBP>());
 }
 
 Zappy::CommandFactory::~CommandFactory()
@@ -56,7 +74,7 @@ void Zappy::CommandFactory::registerCommand(std::string commandName, std::shared
 std::vector<std::string> Zappy::CommandFactory::executeCommand(std::string commandName, std::string message)
 {
     if (_commands.find(commandName) != _commands.end()) { // if command exists
-        return _commands[commandName]->receiveData(message);
+        return _commands[commandName]->receiveData(message, commandName);
     }
     return {};
 }

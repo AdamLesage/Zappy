@@ -26,3 +26,9 @@ std::vector<std::string> Zappy::ACommand::receiveData(std::string message, std::
         data.push_back(args[i]);
     return (data);
 }
+
+void Zappy::ACommand::askCommand(int socket, std::vector<std::string> args)
+{
+    if (args.size() == 0 || socket == -1)
+        return;
+}

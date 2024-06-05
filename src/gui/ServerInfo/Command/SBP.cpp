@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** PEX
+** SBP
 */
 
-#include "PEX.hpp"
+#include "SBP.hpp"
 
-Zappy::PEX::PEX()
+Zappy::SBP::SBP()
 {
 }
 
-Zappy::PEX::~PEX()
+Zappy::SBP::~SBP()
 {
 }
