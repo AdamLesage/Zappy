@@ -22,6 +22,7 @@ namespace Zappy {
             void registerCommand(std::string commandName, std::shared_ptr<ICommand> command);
             std::vector<std::string> executeCommand(std::string commandName, std::string message);
             void askCommand(std::string commandName, std::vector<std::string> args);
+            bool isARegisteredCommand(std::string commandName) { return _commands.find(commandName) != _commands.end(); }
         protected:
             std::map<std::string, std::shared_ptr<ICommand>> _commands;
             int _serverSocket;

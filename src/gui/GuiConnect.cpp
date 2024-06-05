@@ -24,6 +24,7 @@ GuiConnect::GuiConnect()
     Running = true;
     _size_map[0] = 0;
     _size_map[1] = 0;
+    _commandFactory = std::make_shared<Zappy::CommandFactory>(0);
 }
 
 GuiConnect::GuiConnect(std::string port, std::string machine)
@@ -46,6 +47,7 @@ GuiConnect::GuiConnect(std::string port, std::string machine)
         throw Zappy::ConnectError("Failed to connect to server", "GuiConnect");
         close(_socket);
     }
+    _commandFactory = std::make_shared<Zappy::CommandFactory>(_socket);
 }
 
 void GuiConnect::send(std::string message)
@@ -53,7 +55,6 @@ void GuiConnect::send(std::string message)
     if (write(_socket, message.c_str(), message.size()) == -1) {
         throw Zappy::ConnectError("Failed to send message", "GuiConnect");
     }
-
 }
 
 void GuiConnect::receive()
@@ -67,10 +68,9 @@ void GuiConnect::receive()
         printf("Received: [%s]\n", buffer);
         std::vector<std::string> pString = my_str_to_line_array(buffer);
         for (size_t i = 0; i < pString.size(); i++) {
-            if (strncmp(pString[i].c_str(), "msz", 3) == 0) {
-                std::vector<std::string> pString2 = my_str_to_word_array(pString[i].c_str());
-                _size_map[0] = std::stoi(pString2[1]);
-                _size_map[1] = std::stoi(pString2[2]);
+            std::vector<std::string> args = my_str_to_word_array(pString[i].c_str());
+            if (args.size() > 0) {
+                executeCommandChanges(args[0], pString[i]);
             }
         }
     }
@@ -88,4 +88,17 @@ void GuiConnect::close_socket()
 void GuiConnect::close_thread()
 {
     Running = false;
+}
+
+void GuiConnect::executeCommandChanges(std::string commandName, std::string message)
+{
+    if (_commandFactory->isARegisteredCommand(commandName)) {
+        std::vector<std::string> response = _commandFactory->executeCommand(commandName, message);
+        if (response.size() > 0) {
+            if (response[0] == "msz") {
+                std::array<int, 2> size_map = {std::stoi(response[1]), std::stoi(response[2])};
+                set_size_map(size_map);
+            }
+        }
+    }
 }
