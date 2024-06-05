@@ -16,7 +16,6 @@ namespace Zappy {
             MSZ();
             ~MSZ();
 
-            std::vector<std::string> receiveData(std::string message);
             void askCommand(int socket, std::vector<std::string> args) override;
         protected:
         private:

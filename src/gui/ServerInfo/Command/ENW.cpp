@@ -2,20 +2,20 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** PDR
+** ENW
 */
 
-#include "PDR.hpp"
+#include "ENW.hpp"
 
-Zappy::PDR::PDR()
+Zappy::ENW::ENW()
 {
 }
 
-Zappy::PDR::~PDR()
+Zappy::ENW::~ENW()
 {
 }
 
-void Zappy::PDR::askCommand(int socket, std::vector<std::string> args)
+void Zappy::ENW::askCommand(int socket, std::vector<std::string> args)
 {
     if (args.size() == 0 || socket == -1)
         return;

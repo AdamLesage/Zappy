@@ -2,19 +2,19 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** PEX
+** ENW
 */
 
-#ifndef PIC_HPP_
-#define PIC_HPP_
+#ifndef ENW_HPP_
+#define ENW_HPP_
 
 #include "../ACommand.hpp"
 
 namespace Zappy {
-    class PIC : public ACommand {
+    class ENW : public ACommand {
         public:
-            PIC();
-            ~PIC();
+            ENW();
+            ~ENW();
 
             void askCommand(int socket, std::vector<std::string> args) override;
         protected:
@@ -22,4 +22,4 @@ namespace Zappy {
     };
 }
 
-#endif /* !PIC_HPP_ */
+#endif /* !ENW_HPP_ */

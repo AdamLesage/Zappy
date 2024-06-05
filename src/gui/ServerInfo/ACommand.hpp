@@ -16,7 +16,7 @@ namespace Zappy {
             ACommand() {}
             ~ACommand() {}
 
-            virtual std::vector<std::string> receiveData(std::string message) = 0;
+            std::vector<std::string> receiveData(std::string message, std::string commandName) override;
             virtual void askCommand(int socket, std::vector<std::string> args) = 0;
         protected:
         private:
