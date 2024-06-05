@@ -7,7 +7,56 @@
 
 #include "server.h"
 
+static enum Object string_to_object(char *str)
+{
+    if (strcmp(str, "food") == 0)
+        return Food;
+    if (strcmp(str, "linemate") == 0)
+        return Linemate;
+    if (strcmp(str, "deraumere") == 0)
+        return Deraumere;
+    if (strcmp(str, "sibur") == 0)
+        return Sibur;
+    if (strcmp(str, "mendiane") == 0)
+        return Mendiane;
+    if (strcmp(str, "phiras") == 0)
+        return Phiras;
+    if (strcmp(str, "thystame") == 0)
+        return Thystame;
+    return (None);
+}
+
+bool take_on_map(int *pos, enum Object object, map_t *map)
+{
+    switch (object) {
+        case Food:
+            return remove_food(map, pos[0], pos[1]);
+        case Linemate:
+            return remove_linemate(map, pos[0], pos[1]);
+        case Deraumere:
+            return remove_deraumere(map, pos[0], pos[1]);
+        case Sibur:
+            return remove_sibur(map, pos[0], pos[1]);
+        case Mendiane:
+            return remove_mendiane(map, pos[0], pos[1]);
+        case Phiras:
+            return remove_phiras(map, pos[0], pos[1]);
+        case Thystame:
+            return remove_thystame(map, pos[0], pos[1]);
+        case None:
+            return (false);
+    }
+    return (false);
+}
+
 void take(core_t *core, int fd, char **command)
 {
-    printf("take\n");
+    int *pos = get_pos(&core->players, fd);
+    enum Object object = string_to_object(command[1]);
+
+    if (take_on_map(pos, object, &core->map) == false) {
+        send_response("ko\n", fd);
+    }
+    put_on_inventory(&core->players, object, fd);
+    send_response("ok\n", fd);
 }

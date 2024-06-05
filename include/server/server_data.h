@@ -104,7 +104,8 @@ enum Object {
     Mendiane,
     Phiras,
     Thystame,
-    Deraumere
+    Deraumere,
+    None,
 };
 
 void init_map(map_t *map, arguments_t *arguments);
