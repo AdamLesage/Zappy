@@ -10,15 +10,23 @@
 void msz(core_t *core, int fd, char **command)
 {
     char *buff = NULL;
+    int buff_size = 0;
 
-    if (len_array(command) != 1) {
+    if (command == NULL || len_array(command) != 1) {
         send_response("sbp\n", fd);
         return;
     }
-    buff = strcat("msz ", int_to_str(core->map.width));
-    buff = strcat(buff, " ");
-    buff = strcat(buff, int_to_str(core->map.height));
-    buff = strcat(buff, "\n");
+    buff_size = strlen("msz ") + strlen(int_to_str(core->map.width)) + strlen(" ") + strlen(int_to_str(core->map.height)) + strlen("\n") + 1;
+    buff = malloc(sizeof(char) * buff_size);
+    if (buff == NULL) {
+        return;
+    }
+    buff[0] = '\0';
+    strcat(buff, "msz ");
+    strcat(buff, int_to_str(core->map.width));
+    strcat(buff, " ");
+    strcat(buff, int_to_str(core->map.height));
+    strcat(buff, "\n");
     send_response(buff, fd);
     free(buff);
 }
