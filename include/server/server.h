@@ -17,6 +17,8 @@
     #include <stdlib.h>
     #include <string.h>
     #include <unistd.h>
+    #include <stdbool.h>
+    #include "server_data.h"
 
 typedef struct select_info_s {
     fd_set rfds;
@@ -34,14 +36,27 @@ typedef struct socket_config_s {
 typedef struct core_s {
     socket_config_t socket_config;
     select_info_t select_info;
+    arguments_t arguments;
+    map_t map;
+    players_t players;
 } core_t;
 
 void init_core(const int argc, const char **argv, core_t *core);
+void get_arguments(arguments_t *arguments, const int argc, const char **argv);
+void print_usage(char *error);
+int get_port(const char **argv, int *index);
+int get_width(const char **argv, int *index);
+int get_height(const char **argv, int *index);
+void get_teams_name(arguments_t *arguments, const char **argv, int *index);
+int get_number_client_by_teams(const char **argv, int *index);
+int get_frequency(const char **argv, int *index);
 void init_server(core_t *core);
 void close_server(core_t *core);
 void lunch_server(core_t *core);
 void connect_client(select_info_t *select_info,
     struct sockaddr_in *server_socket);
 void get_client_command(core_t *core);
+bool str_isnum(char *str);
+char *int_to_str(int nbr);
 
 #endif /* !SERVER_H_ */

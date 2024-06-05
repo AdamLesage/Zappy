@@ -71,3 +71,7 @@ __pycache__/
 *.pyd
 *.pyc
 *.pyo
+.coverage
+
+# Tests
+unit_tests*
