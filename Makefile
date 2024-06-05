@@ -40,6 +40,8 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/dataManagment/players/find_nb_player_on_team.c		\
 			src/server/dataManagment/players/add_action_on_queue.c			\
 			src/server/dataManagment/players/get_action_in_queue.c			\
+			src/server/dataManagment/players/put_on_inventory.c				\
+			src/server/dataManagment/players/remove_from_inventory.c		\
 			src/server/command/GUI_command/execute_gui_command.c			\
 			src/server/command/GUI_command/gui_command.c					\
 			src/server/command/GUI_command/bct.c							\
@@ -116,6 +118,8 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/dataManagment/players/find_nb_player_on_team.c		\
 			src/server/dataManagment/players/add_action_on_queue.c			\
 			src/server/dataManagment/players/get_action_in_queue.c			\
+			src/server/dataManagment/players/put_on_inventory.c				\
+			src/server/dataManagment/players/remove_from_inventory.c		\
 			src/server/command/GUI_command/execute_gui_command.c			\
 			src/server/command/GUI_command/gui_command.c					\
 			src/server/command/GUI_command/bct.c							\
