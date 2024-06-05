@@ -25,6 +25,7 @@ namespace Zappy {
             std::string _playerName;
             int _level;
             std::array<int, 2> _position;
+            int _playerNumber;
         private:
     };
 }
