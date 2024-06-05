@@ -156,6 +156,7 @@ TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_map_put.c						\
 				tests/server/test_map_remove.c					\
 				tests/server/test_player_function.c				\
+				tests/server/test_command_GUI.c					\
 
 Name		=	zappy
 

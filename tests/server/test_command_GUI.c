@@ -5,7 +5,6 @@
 ** test_command_GUI
 */
 
-
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 #include "server.h"
