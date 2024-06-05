@@ -42,23 +42,15 @@ bool put_thystame(map_t *map, int x, int y)
 
 bool put_eggs(map_t *map, int x, int y, char *team_name)
 {
-    tile_info_t *info = find_tile(map, x, y);
     eggs_t *new_eggs = NULL;
 
-    if (info == NULL)
-        return (false);
-    for (eggs_t *tmp = info->eggs; tmp != NULL; tmp = tmp->next) {
-        if (strcmp(tmp->team_name, team_name) == 0) {
-            tmp->nb_eggs++;
-            return true;
-        }
-    }
     new_eggs = malloc(sizeof(eggs_t));
     if (new_eggs == NULL)
         return (false);
     new_eggs->team_name = strdup(team_name);
-    new_eggs->nb_eggs = 1;
-    new_eggs->next = info->eggs;
-    info->eggs = new_eggs;
+    new_eggs->pos_x = x;
+    new_eggs->pos_y = y;
+    new_eggs->next = map->eggs;
+    map->eggs = new_eggs;
     return (true);
 }

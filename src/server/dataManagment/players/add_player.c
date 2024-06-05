@@ -7,13 +7,15 @@
 
 #include "server.h"
 
-static bool find_eggs(eggs_t *eggs, char *team_name)
+static bool find_eggs(eggs_t *eggs, char *team_name, int *x, int *y)
 {
     if (eggs == NULL) {
         return (false);
     }
     for (eggs_t *tmp = eggs; tmp != NULL; tmp = tmp->next) {
         if (strcmp(team_name, tmp->team_name) == 0) {
+            *x = tmp->pos_x;
+            *y = tmp->pos_y;
             return (true);
         }
     }
@@ -54,7 +56,7 @@ static player_info_t *init_new_player_info(int fd, char *team_name,
     info->orientation = rand_number;
     info->pos_x = pos_x;
     info->pos_y = pos_y;
-    info->team_name = team_name;
+    info->team_name = strdup(team_name);
     info->timer_action = 0;
     for (int i = 0; i != 10; i++) {
         info->action_queue[i] = NULL;
@@ -65,23 +67,22 @@ static player_info_t *init_new_player_info(int fd, char *team_name,
 bool add_player(map_t *map, players_t *players, int fd,
     char *team_name)
 {
-    tiles_list_t *tmp = NULL;
     players_list_t *new_player = NULL;
+    int x = 0;
+    int y = 0;
 
     if (map == NULL)
         return (false);
-    for (tmp = map->tiles_list; tmp != NULL; tmp = tmp->next) {
-        if (find_eggs(tmp->tile_info->eggs, team_name) == true) {
-            new_player = malloc(sizeof(players_list_t));
-            tmp->tile_info->nb_players++;
-            remove_eggs(map, tmp->pos_x, tmp->pos_y, team_name);
-            new_player->fd = fd;
-            new_player->player_info = init_new_player_info(fd, team_name,
-                tmp->pos_x, tmp->pos_y);
-            new_player->next = players->players_list;
-            players->players_list = new_player;
-            return (true);
-        }
+    if (find_eggs(map->eggs, team_name, &x, &y) == true) {
+        new_player = malloc(sizeof(players_list_t));
+        remove_eggs(map, x, y, team_name);
+        put_player(map, x, y);
+        new_player->fd = fd;
+        new_player->player_info = init_new_player_info(fd, team_name,
+            x, y);
+        new_player->next = players->players_list;
+        players->players_list = new_player;
+        return (true);
     }
     return (false);
 }

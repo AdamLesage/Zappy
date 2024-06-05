@@ -26,6 +26,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/dataManagment/map/remove_from_map.c					\
 			src/server/dataManagment/map/remove_from_map2.c					\
 			src/server/dataManagment/map/refill_map.c						\
+			src/server/dataManagment/map/find_number_eggs_on_team.c			\
 			src/server/dataManagment/players/init_players.c					\
 			src/server/dataManagment/players/add_player.c					\
 			src/server/dataManagment/players/find_player.c					\
@@ -105,6 +106,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/dataManagment/map/remove_from_map.c					\
 			src/server/dataManagment/map/remove_from_map2.c					\
 			src/server/dataManagment/map/refill_map.c						\
+			src/server/dataManagment/map/find_number_eggs_on_team.c			\
 			src/server/dataManagment/players/init_players.c					\
 			src/server/dataManagment/players/add_player.c					\
 			src/server/dataManagment/players/find_player.c					\

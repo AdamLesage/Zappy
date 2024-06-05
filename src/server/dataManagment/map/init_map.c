@@ -12,7 +12,6 @@ tile_info_t *create_tile(int x, int y)
     tile_info_t *tile_info = malloc(sizeof(tile_info_t));
 
     tile_info->nb_deraumere = 0;
-    tile_info->eggs = NULL;
     tile_info->nb_linemate = 0;
     tile_info->nb_mendiane = 0;
     tile_info->nb_phiras = 0;
@@ -146,6 +145,7 @@ void init_map(map_t *map, arguments_t *arguments)
     map->height = arguments->height;
     map->width = arguments->width;
     map->last_refille = 0;
+    map->eggs = NULL;
     create_tiles_list(map);
     add_eggs_on_map(map, arguments);
     array = get_map_info(map);

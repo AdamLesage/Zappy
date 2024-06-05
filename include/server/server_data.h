@@ -55,7 +55,8 @@ typedef struct players_s {
 
 typedef struct eggs_s {
     char *team_name;
-    int nb_eggs;
+    int pos_x;
+    int pos_y;
     struct eggs_s *next;
 } eggs_t;
 
@@ -70,7 +71,6 @@ typedef struct tile_info_s {
     int nb_phiras;
     int nb_thystame;
     int nb_food;
-    eggs_t *eggs;
 } tile_info_t;
 
 typedef struct tiles_list_s {
@@ -85,6 +85,7 @@ typedef struct map_s {
     int height;
     int last_refille;
     tiles_list_t *tiles_list;
+    eggs_t *eggs;
 } map_t;
 
 typedef struct arguments_s {
@@ -129,6 +130,7 @@ bool remove_phiras(map_t *map, int x, int y);
 bool remove_thystame(map_t *map, int x, int y);
 bool remove_eggs(map_t *map, int x, int y, char *team_name);
 void refill_map(map_t *map);
+int find_number_eggs_on_team(eggs_t *eggs, char *team);
 
 void init_players(players_t *players, arguments_t *arguments);
 bool add_player(map_t *map, players_t *players, int fd,

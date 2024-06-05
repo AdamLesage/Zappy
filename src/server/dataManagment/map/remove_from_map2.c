@@ -49,21 +49,16 @@ bool remove_thystame(map_t *map, int x, int y)
     return (true);
 }
 
-static bool delete_eggs(tile_info_t *info, char *team_name)
+static bool delete_eggs(char *team_name, map_t *map, int x, int y)
 {
     eggs_t *deleted_eggs = NULL;
 
-    for (eggs_t *tmp = info->eggs; tmp->next != NULL; tmp = tmp->next) {
+    for (eggs_t *tmp = map->eggs; tmp->next != NULL; tmp = tmp->next) {
         if (strcmp(tmp->next->team_name, team_name) == 0 &&
-            tmp->next->nb_eggs == 1) {
+            tmp->pos_x == x && tmp->pos_y == y) {
             deleted_eggs = tmp->next;
             tmp->next = tmp->next->next;
             free(deleted_eggs);
-            return (true);
-        }
-        if (strcmp(tmp->next->team_name, team_name) == 0 &&
-            tmp->next->nb_eggs != 1) {
-            tmp->next->nb_eggs--;
             return (true);
         }
     }
@@ -72,21 +67,17 @@ static bool delete_eggs(tile_info_t *info, char *team_name)
 
 bool remove_eggs(map_t *map, int x, int y, char *team_name)
 {
-    tile_info_t *info = find_tile(map, x, y);
     eggs_t *deleted_eggs = NULL;
 
-    if (info == NULL || info->eggs == NULL)
+    if (map == NULL || map->eggs == NULL) {
         return (false);
-    if (strcmp(info->eggs->team_name, team_name) == 0) {
-        if (info->eggs->nb_eggs == 1) {
-            deleted_eggs = info->eggs;
-            info->eggs = info->eggs->next;
-            free(deleted_eggs);
-            return true;
-        } else {
-            info->eggs->nb_eggs--;
-            return true;
-        }
     }
-    return delete_eggs(info, team_name);
+    if (strcmp(map->eggs->team_name, team_name) == 0 &&
+        map->eggs->pos_x == x && map->eggs->pos_y == y) {
+        deleted_eggs = map->eggs;
+        map->eggs = map->eggs->next;
+        free(deleted_eggs);
+        return (true);
+    }
+    return delete_eggs(team_name, map, x, y);
 }
