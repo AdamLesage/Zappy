@@ -34,3 +34,15 @@ Test(tna, test_tna)
     tna(&core, 0, command);
     cr_assert_stdout_eq_str(expected);
 }
+
+Test(sgt, test_sgt)
+{
+    core_t core;
+    char *command[] = {"sgt", NULL};
+    char *team_names[] = {"team1", "team2", NULL};
+    char *expected = "sgt 100\n";
+
+    core.arguments.frequency = 100;
+    sgt(&core, 0, command);
+    cr_assert_stdout_eq_str(expected);
+}
