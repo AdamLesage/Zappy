@@ -14,6 +14,7 @@
 #include <unistd.h>
 
 std::vector<std::string> my_str_to_word_array(const char *str);
+std::vector<std::string> my_str_to_line_array(char *str);
 
 class ICommand {
     public:

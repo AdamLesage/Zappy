@@ -16,7 +16,7 @@ Zappy::MSZ::~MSZ()
 }
 
 template<typename T>
-T Zappy::MSZ::execute(std::string message)
+T Zappy::MSZ::receiveData(std::string message)
 {
     if (strncmp(message.c_str(), "msz", 3))
         return;
@@ -24,7 +24,8 @@ T Zappy::MSZ::execute(std::string message)
     std::vector<std::string> args = my_str_to_word_array(message.c_str());
     x = std::stoi(args[1]);
     y = std::stoi(args[2]);
-    pair = std::pair<int, int>(x, y);
+    // return format std::vector<std::string> { "msz", "x", "y" };
+    std::vector<std::string> pair = { "msz", args[1], args[2] };
     return pair;
 }
 

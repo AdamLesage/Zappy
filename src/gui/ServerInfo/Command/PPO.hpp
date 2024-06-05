@@ -17,7 +17,7 @@ namespace Zappy {
             ~PPO();
 
             template<typename T>
-            T execute(std::string message);
+            T receiveData(std::string message);
             void askCommand(int socket, std::vector<std::string> args) override;
         protected:
         private:

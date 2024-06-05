@@ -16,7 +16,7 @@ Zappy::PPO::~PPO()
 }
 
 template<typename T>
-T Zappy::PPO::execute(std::string message)
+T Zappy::PPO::receiveData(std::string message)
 {
     if (strncmp(message.c_str(), "ppo", 3))
         return;
@@ -27,7 +27,7 @@ T Zappy::PPO::execute(std::string message)
 
     // return format std::vector<std::string> { "ppo", "playerNumber", "x_pos", "y_pos", "orientation" };
     std::string response = "ppo " + args[1] + " " + args[2] + " " + args[3] + " " + args[4] + "\n";
-
+    return response;
 }
 
 void Zappy::PPO::askCommand(int fd, std::vector<std::string> args)

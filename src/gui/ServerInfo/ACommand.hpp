@@ -16,7 +16,7 @@ namespace Zappy {
             virtual ~ACommand() = default;
 
             template<typename T>
-            T execute(std::string message);
+            T receiveData(std::string message);
             virtual void askCommand(int socket, std::vector<std::string> args) = 0;
         protected:
         private:

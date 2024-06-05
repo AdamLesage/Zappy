@@ -2,27 +2,26 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** MSZ
+** TNA
 */
 
-#ifndef MSZ_HPP_
-#define MSZ_HPP_
+#ifndef TNA_HPP_
+#define TNA_HPP_
 
 #include "../ACommand.hpp"
-#include <vector>
 
 namespace Zappy {
-    class MSZ : public ACommand {
+    class TNA {
         public:
-            MSZ();
-            ~MSZ();
+            TNA();
+            ~TNA();
 
             template<typename T>
             T receiveData(std::string message);
-            void askCommand(int socket, std::vector<std::string> args) override;
+            void askCommand(int socket, std::vector<std::string> args);
         protected:
         private:
     };
 }
 
-#endif /* !MSZ_HPP_ */
+#endif /* !TNA_HPP_ */
