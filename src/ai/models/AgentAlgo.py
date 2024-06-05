@@ -57,12 +57,15 @@ class AgentAlgo():
         """
         alerts = self.alerts.checkAlerts()
 
+        # TODO: Check if current game state (Continue, End, Dead, Incantation) is still available (Food -> if food is still on the map, etc...)
         for alert in alerts:
             if alert.startswith("incantation"):
                 self.addCommandToExecuteInList(f"Broadcast {alert}\n")
                 return "Incantation"
             if alert == "food":
                 return "Continue"
+
+        # TODO: from current alert, do an action to reach the target
         return "Continue"
 
     def send_to_server(self) -> None:
