@@ -25,12 +25,13 @@ static inventory_t *get_nb_object(tiles_list_t *tile)
         inventory->nb_mendiane += tmp->tile_info->nb_mendiane;
         inventory->nb_phiras += tmp->tile_info->nb_phiras;
         inventory->nb_sibur += tmp->tile_info->nb_sibur;
-        inventory->nb_thystame += tmp->tile_info->nb_thystame;              
+        inventory->nb_thystame += tmp->tile_info->nb_thystame;
     }
     return (inventory);
 }
 
-static void reffil_object(map_t *map, int nb_object, float density, bool *put(map_t *, int, int))
+static void reffil_object(map_t *map, int nb_object, float density,
+    bool put(map_t *, int, int))
 {
     int x = 0;
     int y = 0;
@@ -46,7 +47,6 @@ static void reffil_object(map_t *map, int nb_object, float density, bool *put(ma
 void refill_map(map_t *map)
 {
     inventory_t *inventory = get_nb_object(map->tiles_list);
-    int nb_tile = map->height * map->width;
 
     reffil_object(map, inventory->nb_food, 0.5, &put_food);
     reffil_object(map, inventory->nb_linemate, 0.3, &put_linemate);

@@ -28,7 +28,7 @@ static inventory_t *init_inventory(void)
         return (NULL);
     }
     inventory->nb_deraumere = 0;
-    inventory->nb_food = 0;
+    inventory->nb_food = 10;
     inventory->nb_linemate = 0;
     inventory->nb_mendiane = 0;
     inventory->nb_phiras = 0;

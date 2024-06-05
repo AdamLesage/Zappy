@@ -79,8 +79,6 @@ void look(core_t *core, int fd, char **command)
 {
     player_info_t *info = find_player(&core->players, fd);
     int *orientation_x_y = get_look_orientation(info->orientation);
-    int x = 0;
-    int y = 0;
 
     send_response("[", fd);
     for (int level = 0; level != info->level + 1; level++) {
