@@ -97,7 +97,7 @@ typedef struct arguments_s {
     int frequency;
 } arguments_t;
 
-enum object {
+enum Object {
     Food,
     Linemate,
     Sibur,
@@ -144,5 +144,7 @@ char *get_player_team(players_t *players, int fd);
 int find_nb_player_on_team(players_t *players, char *team_name);
 void add_action_in_queue(players_t *players, int fd, char *action);
 char *get_action_in_queue(players_t *players, int fd);
+bool put_on_inventory(players_t *players, enum Object object,
+    int fd);
 
 #endif /* !SERVER_DATA_H_ */
