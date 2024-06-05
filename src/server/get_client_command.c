@@ -34,7 +34,7 @@ char *get_command(core_t *core, int fd_client)
 void set_player_command(players_t *players, player_info_t *info, char *command)
 {
     if (!is_know_player_command(command)) {
-        send_response("KO\n", info->fd);
+        send_response("ko\n", info->fd);
     } else {
         if (info->action_queue[0] == NULL) {
             info->timer_action = get_time_action(command);

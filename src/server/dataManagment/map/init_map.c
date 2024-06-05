@@ -152,4 +152,5 @@ void init_map(map_t *map, arguments_t *arguments)
     for (int i = 0; array[i] != NULL; i++) {
         free(array[i]);
     }
+    refill_map(map);
 }
