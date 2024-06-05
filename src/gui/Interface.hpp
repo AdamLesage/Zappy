@@ -36,8 +36,10 @@ class Interface {
         sf::Event event;
         std::vector<std::shared_ptr<Bar>> bars;
         int tick;
-        int zoom;
+        float zoom;
+        float last_zoom;
         int sound_volume;
+        std::vector<sf::RectangleShape> _rect;
         std::array<int, 2> _mape_size;
         std::vector<std::vector<std::shared_ptr<Tile>>> map;
         std::vector<std::vector<sf::Sprite>> map_sprites;
@@ -51,6 +53,9 @@ class Interface {
         sf::Texture sound_;
         std::shared_ptr<GuiConnect> _gui_connect;
         std::thread ReceiveProcess;
+        sf::View view;
+        sf::Vector2i lastMousePos;
+
     private:
 };
 
