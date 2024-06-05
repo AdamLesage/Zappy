@@ -21,6 +21,7 @@
 #include "./Command/PFK.hpp"
 #include "./Command/PGT.hpp"
 #include "./Command/PDR.hpp"
+#include "./Command/PDI.hpp"
 
 Zappy::CommandFactory::CommandFactory(int serverSocket)
 {
@@ -40,6 +41,7 @@ Zappy::CommandFactory::CommandFactory(int serverSocket)
     registerCommand("pfk", std::make_shared<PFK>());
     registerCommand("pgt", std::make_shared<PGT>());
     registerCommand("pdr", std::make_shared<PDR>());
+    registerCommand("pdi", std::make_shared<PDI>());
 }
 
 Zappy::CommandFactory::~CommandFactory()
