@@ -25,6 +25,10 @@ static void manage_select_notif(core_t *core, int retval)
             &core->socket_config.server_socket);
     } else {
         check_player_command(core);
+        core->map.last_refille--;
+        if (core->map.last_refille == 0) {
+            refill_map(&core->map);
+        }
     }
 }
 
@@ -37,7 +41,7 @@ void lunch_server(core_t *core)
     init_select_info(core, period);
     while (1) {
         core->select_info.tv.tv_sec = 0;
-        core->select_info.tv.tv_usec = period * 1000000;
+        core->select_info.tv.tv_usec = ((float)1 / core->arguments.frequency) * 1000000;
         core->select_info.temp_fds = core->select_info.rfds;
         retval = select(core->select_info.max_fd + 1,
             &core->select_info.temp_fds, NULL, NULL, &core->select_info.tv);

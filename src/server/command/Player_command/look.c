@@ -70,7 +70,7 @@ static void print_look_on_tile(core_t *core, int level,
             orientation_x_y[0] : info->pos_y + i + level * orientation_x_y[0];
         check_pos_tile(&core->map, &y, &x);
         print_object_on_tile(&core->map, x, y, fd);
-        if (!(level == 3 && i == level))
+        if (!(level == info->level && i == level))
             send_response(",", fd);
     }
 }
@@ -83,7 +83,7 @@ void look(core_t *core, int fd, char **command)
     int y = 0;
 
     send_response("[", fd);
-    for (int level = 0; level != 3 + 1; level++) {
+    for (int level = 0; level != info->level + 1; level++) {
         print_look_on_tile(core, level, orientation_x_y, fd);
     }
     send_response(" ]\n", fd);
