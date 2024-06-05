@@ -16,11 +16,9 @@ void msz(core_t *core, int fd, char **command)
         send_response("sbp\n", fd);
         return;
     }
-    buff_size = strlen("msz ") + strlen(int_to_str(core->map.width)) + strlen(" ") + strlen(int_to_str(core->map.height)) + strlen("\n") + 1;
+    buff_size = strlen("msz ") + strlen(int_to_str(core->map.width))
+    + strlen(" ") + strlen(int_to_str(core->map.height)) + strlen("\n") + 1;
     buff = malloc(sizeof(char) * buff_size);
-    if (buff == NULL) {
-        return;
-    }
     buff[0] = '\0';
     strcat(buff, "msz ");
     strcat(buff, int_to_str(core->map.width));
