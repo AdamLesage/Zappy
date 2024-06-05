@@ -18,6 +18,9 @@
 #include "./Command/PBC.hpp"
 #include "./Command/PIC.hpp"
 #include "./Command/PIE.hpp"
+#include "./Command/PFK.hpp"
+#include "./Command/PGT.hpp"
+#include "./Command/PDR.hpp"
 
 Zappy::CommandFactory::CommandFactory(int serverSocket)
 {
@@ -34,6 +37,9 @@ Zappy::CommandFactory::CommandFactory(int serverSocket)
     registerCommand("pbc", std::make_shared<PBC>());
     registerCommand("pic", std::make_shared<PIC>());
     registerCommand("pie", std::make_shared<PIE>());
+    registerCommand("pfk", std::make_shared<PFK>());
+    registerCommand("pgt", std::make_shared<PGT>());
+    registerCommand("pdr", std::make_shared<PDR>());
 }
 
 Zappy::CommandFactory::~CommandFactory()
