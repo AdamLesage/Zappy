@@ -19,7 +19,6 @@ class AInventory : public IInventory
         void add(std::string name, int value);
         void remove(std::string name, int value);
         void Empty_all();
-    protected:
         int _food;
         int _linemate;
         int _deraumere;

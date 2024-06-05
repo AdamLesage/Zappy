@@ -9,19 +9,19 @@
 
 int AInventory::get(std::string name)
 {
-    if (name == "food")
+    if (name == "Food")
         return _food;
-    if (name == "linemate")
+    if (name == "Linemate")
         return _linemate;
-    if (name == "deraumere")
+    if (name == "Deraumere")
         return _deraumere;
-    if (name == "sibur")
+    if (name == "Sibur")
         return _sibur;
-    if (name == "mendiane")
+    if (name == "Mendiane")
         return _mendiane;
-    if (name == "phiras")
+    if (name == "Phiras")
         return _phiras;
-    if (name == "thystame")
+    if (name == "Thystame")
         return _thystame;
     return 0;
 
@@ -29,55 +29,55 @@ int AInventory::get(std::string name)
 
 void AInventory::set(std::string name, int value)
 {
-    if (name == "food")
+    if (name == "Food")
         _food = value;
-    if (name == "linemate")
+    if (name == "Linemate")
         _linemate = value;
-    if (name == "deraumere")
+    if (name == "Deraumere")
         _deraumere = value;
-    if (name == "sibur")
+    if (name == "Sibur")
         _sibur = value;
-    if (name == "mendiane")
+    if (name == "Mendiane")
         _mendiane = value;
-    if (name == "phiras")
+    if (name == "Phiras")
         _phiras = value;
-    if (name == "thystame")
+    if (name == "Thystame")
         _thystame = value;
 }
 
 void AInventory::add(std::string name, int value)
 {
-    if (name == "food")
+    if (name == "Food")
         _food += value;
-    if (name == "linemate")
+    if (name == "Linemate")
         _linemate += value;
-    if (name == "deraumere")
+    if (name == "Deraumere")
         _deraumere += value;
-    if (name == "sibur")
+    if (name == "Sibur")
         _sibur += value;
-    if (name == "mendiane")
+    if (name == "Mendiane")
         _mendiane += value;
-    if (name == "phiras")
+    if (name == "Phiras")
         _phiras += value;
-    if (name == "thystame")
+    if (name == "Thystame")
         _thystame += value;
 }
 
 void AInventory::remove(std::string name, int value)
 {
-    if (name == "food")
+    if (name == "Food")
         _food -= value;
-    if (name == "linemate")
+    if (name == "Linemate")
         _linemate -= value;
-    if (name == "deraumere")
+    if (name == "Deraumere")
         _deraumere -= value;
-    if (name == "sibur")
+    if (name == "Sibur")
         _sibur -= value;
-    if (name == "mendiane")
+    if (name == "Mendiane")
         _mendiane -= value;
-    if (name == "phiras")
+    if (name == "Phiras")
         _phiras -= value;
-    if (name == "thystame")
+    if (name == "Thystame")
         _thystame -= value;
 }
 
