@@ -2,19 +2,19 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** MSZ
+** PLV
 */
 
-#ifndef MSZ_HPP_
-#define MSZ_HPP_
+#ifndef PLV_HPP_
+#define PLV_HPP_
 
 #include "../ACommand.hpp"
 
 namespace Zappy {
-    class MSZ : public ACommand {
+    class PLV : public ACommand {
         public:
-            MSZ();
-            ~MSZ();
+            PLV();
+            ~PLV();
 
             std::vector<std::string> receiveData(std::string message);
             void askCommand(int socket, std::vector<std::string> args) override;
@@ -23,4 +23,4 @@ namespace Zappy {
     };
 }
 
-#endif /* !MSZ_HPP_ */
+#endif /* !PLV_HPP_ */

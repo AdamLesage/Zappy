@@ -99,6 +99,9 @@ void GuiConnect::executeCommandChanges(std::string commandName, std::string mess
                 std::array<int, 2> size_map = {std::stoi(response[1]), std::stoi(response[2])};
                 set_size_map(size_map);
             }
+            if (response[0] == "pnw") {
+                // Need to create a new player
+            }
         }
     }
 }

@@ -12,6 +12,7 @@
 #include "./Command/MSZ.hpp"
 #include "./Command/PNW.hpp"
 #include "./Command/TNA.hpp"
+#include "./Command/PLV.hpp"
 
 Zappy::CommandFactory::CommandFactory(int serverSocket)
 {
@@ -22,6 +23,7 @@ Zappy::CommandFactory::CommandFactory(int serverSocket)
     registerCommand("msz", std::make_shared<MSZ>());
     registerCommand("pnw", std::make_shared<PNW>());
     registerCommand("tna", std::make_shared<TNA>());
+    registerCommand("plv", std::make_shared<PLV>());
 }
 
 Zappy::CommandFactory::~CommandFactory()

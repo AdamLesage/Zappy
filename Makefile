@@ -58,6 +58,7 @@ SRC_GUI				=	src/gui/main.cpp						   			\
 						src/gui/ServerInfo/Command/PNW.cpp					\
 						src/gui/ServerInfo/Command/PPO.cpp					\
 						src/gui/ServerInfo/Command/TNA.cpp					\
+						src/gui/ServerInfo/Command/PLV.cpp					\
 
 SRC_AI				=	src/ai/main.py										\
 
