@@ -9,6 +9,7 @@
 #define ACOMMAND_HPP_
 
 #include "ICommand.hpp"
+#include "../Entity/Player.hpp"
 
 namespace Zappy {
     class ACommand : public ICommand {

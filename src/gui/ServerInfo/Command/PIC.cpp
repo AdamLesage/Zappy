@@ -22,15 +22,14 @@ void Zappy::PIC::applyChanges(std::vector<std::string> parsedData,
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs
 )
 {
+    (void)size_map; // unused
+    (void)tiles; // unused
+    (void)eggs; // unused
     // parsedData vector { "pic", "x", "y", "level", "playerNumber", "playerNumber", ... }
     if (parsedData.size() < 5)
         throw std::invalid_argument("Invalid number of arguments for PIC command");
 
     try {
-        int x = std::stoi(parsedData[1]);
-        int y = std::stoi(parsedData[2]);
-        int level = std::stoi(parsedData[3]);
-        
         // Update player isIncanting status
         for (auto &player : players) {
             for (std::size_t i = 4; i < parsedData.size(); i++) {

@@ -120,3 +120,15 @@ std::shared_ptr<Zappy::Player> GuiConnect::getPlayerByNb(int playerNb)
     }
     return nullptr;
 }
+
+std::vector<std::shared_ptr<Zappy::Player>> GuiConnect::findPlayersByCoords(std::pair<int, int> coords)
+{
+    std::vector<std::shared_ptr<Zappy::Player>> players;
+
+    for (std::size_t i = 0; i < this->_players.size(); i++) {
+        if (this->_players[i]->getPosition()[0] == coords.first && this->_players[i]->getPosition()[1] == coords.second) {
+            players.push_back(this->_players[i]);
+        }
+    }
+    return players;
+}

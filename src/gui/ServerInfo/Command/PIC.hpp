@@ -9,7 +9,6 @@
 #define PIC_HPP_
 
 #include "../ACommand.hpp"
-#include "../../Entity/Player.hpp"
 
 namespace Zappy {
     class PIC : public ACommand {
