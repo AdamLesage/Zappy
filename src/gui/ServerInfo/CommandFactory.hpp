@@ -29,7 +29,8 @@ namespace Zappy {
                                             std::array<int, 2> &size_map,
                                             std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> &tiles,
                                             std::vector<std::shared_ptr<Zappy::Player>> &players,
-                                            std::vector<std::shared_ptr<Zappy::Egg>> &eggs);
+                                            std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
+                                            int &timeUnit);
             void askCommand(std::string commandName, std::vector<std::string> args);
             bool isARegisteredCommand(std::string commandName) { return _commands.find(commandName) != _commands.end(); }
         protected:

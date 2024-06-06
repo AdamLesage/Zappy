@@ -25,12 +25,14 @@ void Zappy::PIE::applyChanges(std::vector<std::string> parsedData,
                                 std::array<int, 2> &size_map,
                                 std::vector<std::shared_ptr<Zappy::Tile>> &tiles,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
-                                std::vector<std::shared_ptr<Zappy::Egg>> &eggs
+                                std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
+                                int timeUnit
 )
 {
     (void)size_map; // unused
     (void)tiles; // unused
     (void)eggs; // unused
+    (void)timeUnit; // unused
     // parsedData vector { "pie", "x", "y", "incantation result" }
     if (parsedData.size() < 5)
         throw std::invalid_argument("Invalid number of arguments for PIC command");

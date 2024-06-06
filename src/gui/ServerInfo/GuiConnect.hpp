@@ -72,6 +72,7 @@ class GuiConnect {
         std::vector<std::shared_ptr<Zappy::Player>> _players;
         std::vector<std::shared_ptr<Zappy::Egg>> _eggs;
         std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> _tiles;
+        int _timeUnit;
     private:
 };
 
