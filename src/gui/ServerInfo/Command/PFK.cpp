@@ -42,6 +42,7 @@ void Zappy::PFK::applyChanges(std::vector<std::string> parsedData,
         std::shared_ptr<Zappy::Egg> egg = std::make_shared<Zappy::Egg>();
         egg->setPosition(player->getPosition()[0], player->getPosition()[1]);
         egg->setPlayerNumber(player->getPlayerNumber());
+        egg->setTeamName(player->getTeamName());
         eggs.push_back(egg);
     } catch (std::exception &e) {
         throw std::invalid_argument("Invalid arguments for PFK command");
