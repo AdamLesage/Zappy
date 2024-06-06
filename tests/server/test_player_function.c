@@ -29,12 +29,12 @@ Test (player_function, add_delete_find)
     cr_assert_eq(return_value, true);
     player_info = find_player(&players, 3);
     cr_assert_eq(player_info->fd, 3);
-    cr_assert_eq(player_info->team_name, "team2");
+    cr_assert_str_eq(player_info->team_name, "team2");
     return_value = delete_player(&map, &players, 3);
     cr_assert_eq(return_value, true);
     player_info = find_player(&players, 2);
     cr_assert_eq(player_info->fd, 2);
-    cr_assert_eq(player_info->team_name, "team1");
+    cr_assert_str_eq(player_info->team_name, "team1");
     return_value = delete_player(&map, &players, 2);
     cr_assert_eq(return_value, true);
 }

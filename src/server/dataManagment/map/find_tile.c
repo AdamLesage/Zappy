@@ -11,7 +11,7 @@ tile_info_t *find_tile(map_t *map, int x, int y)
 {
     tiles_list_t *tmp = NULL;
 
-    if (map == NULL) {
+    if (map == NULL || x < 0 || y < 0) {
         return NULL;
     }
     x = x % map->width;

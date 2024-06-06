@@ -45,7 +45,7 @@ bool put_eggs(map_t *map, int x, int y, char *team_name)
     eggs_t *new_eggs = NULL;
 
     new_eggs = malloc(sizeof(eggs_t));
-    if (new_eggs == NULL)
+    if (new_eggs == NULL || x < 0 || y < 0)
         return (false);
     new_eggs->team_name = strdup(team_name);
     new_eggs->pos_x = x;

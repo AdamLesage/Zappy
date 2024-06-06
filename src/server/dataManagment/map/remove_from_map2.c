@@ -55,7 +55,7 @@ static bool delete_eggs(char *team_name, map_t *map, int x, int y)
 
     for (eggs_t *tmp = map->eggs; tmp->next != NULL; tmp = tmp->next) {
         if (strcmp(tmp->next->team_name, team_name) == 0 &&
-            tmp->pos_x == x && tmp->pos_y == y) {
+            tmp->next->pos_x == x && tmp->next->pos_y == y) {
             deleted_eggs = tmp->next;
             tmp->next = tmp->next->next;
             free(deleted_eggs);
