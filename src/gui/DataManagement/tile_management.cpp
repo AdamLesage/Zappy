@@ -33,11 +33,6 @@ void GuiConnect::errorhandlingInvetory(std::vector<std::string> args)
 
 std::vector<Zappy::Inventory> GuiConnect::fill_inventory(std::vector<std::string> args, std::vector<Zappy::Inventory> inventories)
 {
-    std::cout << "FILL INVENTORY" << std::endl;
-    for (const auto &arg : args)
-    {
-        std::cout << arg << std::endl;
-    }
     // errorhandlingInvetory(args);
     Zappy::Inventory tmp;
     update_inventory(args, tmp);
