@@ -16,7 +16,8 @@ void eject(core_t *core, int fd, char **command)
     for (players_list_t *tmp = core->players.players_list;
         tmp != NULL; tmp = tmp->next) {
         if (tmp->fd != fd && tmp->player_info->pos_x == info->pos_x &&
-            tmp->player_info->pos_y == info->pos_y) {
+            tmp->player_info->pos_y == info->pos_y && 
+            strcmp(tmp->player_info->team_name, "GRAPHIC") != 0) {
             move_player2(&core->map, &core->players, tmp->fd,
                 info->orientation);
             send_response("eject: ", tmp->fd);
