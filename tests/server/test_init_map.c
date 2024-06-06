@@ -24,7 +24,7 @@ Test (init_map, valid_map_initialization, .init = cr_redirect_stdout)
 
     cr_assert_eq(map.height, 2);
     cr_assert_eq(map.width, 2);
-    cr_assert_eq(map.last_refille, 0);
+    cr_assert_eq(map.last_refille, 20);
     tiles_list_t *tmp = map.tiles_list;
     while (tmp != NULL) {
         tiles_list_t *next = tmp->next;
@@ -49,7 +49,7 @@ Test (init_map, large_valid_map_initialization, .init = cr_redirect_stdout)
 
     cr_assert_eq(map.height, 100);
     cr_assert_eq(map.width, 100);
-    cr_assert_eq(map.last_refille, 0);
+    cr_assert_eq(map.last_refille, 20);
     tiles_list_t *tmp = map.tiles_list;
     while (tmp != NULL) {
         tiles_list_t *next = tmp->next;

@@ -41,6 +41,13 @@ typedef struct core_s {
     players_t players;
 } core_t;
 
+typedef struct command_list_s {
+    char *name;
+    void (*exe_command) (core_t *core, int fd, char **command);
+    int nb_argv;
+    int time;
+} command_list_t;
+
 void init_core(const int argc, const char **argv, core_t *core);
 void get_arguments(arguments_t *arguments, const int argc, const char **argv);
 void print_usage(char *error);
@@ -58,5 +65,40 @@ void connect_client(select_info_t *select_info,
 void get_client_command(core_t *core);
 bool str_isnum(char *str);
 char *int_to_str(int nbr);
+void send_response(char *response, int fd);
+void send_response_int(int response, int fd);
+void free_array(char **array);
+char **my_str_to_word_array(char *str, char separator);
+int len_array(char **arr);
+enum Object string_to_object(char *str);
+
+void authentification(core_t *core, char *command, int fd);
+int get_time_action(char *command);
+void execute_gui_command(core_t *core, char *command, int fd);
+bool is_know_player_command(char *command);
+void check_player_command(core_t *core);
+
+void incantation(core_t *core, int fd, char **command);
+void broadcast(core_t *core, int fd, char **command);
+void connect_nbr(core_t *core, int fd, char **command);
+void eject(core_t *core, int fd, char **command);
+void ffork(core_t *core, int fd, char **command);
+void forward(core_t *core, int fd, char **command);
+void inventory(core_t *core, int fd, char **command);
+void left(core_t *core, int fd, char **command);
+void look(core_t *core, int fd, char **command);
+void right(core_t *core, int fd, char **command);
+void set(core_t *core, int fd, char **command);
+void take(core_t *core, int fd, char **command);
+
+void bct(core_t *core, int fd, char **command);
+void mct(core_t *core, int fd, char **command);
+void msz(core_t *core, int fd, char **command);
+void pin(core_t *core, int fd, char **command);
+void plv(core_t *core, int fd, char **command);
+void ppo(core_t *core, int fd, char **command);
+void sgt(core_t *core, int fd, char **command);
+void sst(core_t *core, int fd, char **command);
+void tna(core_t *core, int fd, char **command);
 
 #endif /* !SERVER_H_ */

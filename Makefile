@@ -25,6 +25,8 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/dataManagment/map/put_on_map2.c						\
 			src/server/dataManagment/map/remove_from_map.c					\
 			src/server/dataManagment/map/remove_from_map2.c					\
+			src/server/dataManagment/map/refill_map.c						\
+			src/server/dataManagment/map/find_number_eggs_on_team.c			\
 			src/server/dataManagment/players/init_players.c					\
 			src/server/dataManagment/players/add_player.c					\
 			src/server/dataManagment/players/find_player.c					\
@@ -39,8 +41,43 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/dataManagment/players/find_nb_player_on_team.c		\
 			src/server/dataManagment/players/add_action_on_queue.c			\
 			src/server/dataManagment/players/get_action_in_queue.c			\
+			src/server/dataManagment/players/put_on_inventory.c				\
+			src/server/dataManagment/players/remove_from_inventory.c		\
+			src/server/command/GUI_command/execute_gui_command.c			\
+			src/server/command/GUI_command/gui_command.c					\
+			src/server/command/GUI_command/bct.c							\
+			src/server/command/GUI_command/mct.c							\
+			src/server/command/GUI_command/msz.c							\
+			src/server/command/GUI_command/pin.c							\
+			src/server/command/GUI_command/plv.c							\
+			src/server/command/GUI_command/ppo.c							\
+			src/server/command/GUI_command/sgt.c							\
+			src/server/command/GUI_command/sst.c							\
+			src/server/command/GUI_command/tna.c							\
+			src/server/command/Player_command/get_time_action.c				\
+			src/server/command/Player_command/is_know_player_command.c		\
+			src/server/command/Player_command/check_player_command.c		\
+			src/server/command/Player_command/client_command.c				\
+			src/server/command/Player_command/broadcast.c					\
+			src/server/command/Player_command/connect_nbr.c					\
+			src/server/command/Player_command/eject.c						\
+			src/server/command/Player_command/fork.c						\
+			src/server/command/Player_command/forward.c						\
+			src/server/command/Player_command/incantation.c					\
+			src/server/command/Player_command/inventory.c					\
+			src/server/command/Player_command/left.c						\
+			src/server/command/Player_command/look.c						\
+			src/server/command/Player_command/right.c						\
+			src/server/command/Player_command/set.c							\
+			src/server/command/Player_command/take.c						\
+			src/server/command/authentification.c							\
+			src/server/utils/send_response.c								\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
+			src/server/utils/free_array.c									\
+			src/server/utils/my_str_to_word_array.c							\
+			src/server/utils/len_array.c									\
+			src/server/utils/string_to_object.c								\
 
 SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/Interface/Interface.cpp									\
@@ -100,6 +137,8 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/dataManagment/map/put_on_map2.c						\
 			src/server/dataManagment/map/remove_from_map.c					\
 			src/server/dataManagment/map/remove_from_map2.c					\
+			src/server/dataManagment/map/refill_map.c						\
+			src/server/dataManagment/map/find_number_eggs_on_team.c			\
 			src/server/dataManagment/players/init_players.c					\
 			src/server/dataManagment/players/add_player.c					\
 			src/server/dataManagment/players/find_player.c					\
@@ -114,16 +153,52 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/dataManagment/players/find_nb_player_on_team.c		\
 			src/server/dataManagment/players/add_action_on_queue.c			\
 			src/server/dataManagment/players/get_action_in_queue.c			\
+			src/server/dataManagment/players/put_on_inventory.c				\
+			src/server/dataManagment/players/remove_from_inventory.c		\
+			src/server/command/GUI_command/execute_gui_command.c			\
+			src/server/command/GUI_command/gui_command.c					\
+			src/server/command/GUI_command/bct.c							\
+			src/server/command/GUI_command/mct.c							\
+			src/server/command/GUI_command/msz.c							\
+			src/server/command/GUI_command/pin.c							\
+			src/server/command/GUI_command/plv.c							\
+			src/server/command/GUI_command/ppo.c							\
+			src/server/command/GUI_command/sgt.c							\
+			src/server/command/GUI_command/sst.c							\
+			src/server/command/GUI_command/tna.c							\
+			src/server/command/Player_command/get_time_action.c				\
+			src/server/command/Player_command/is_know_player_command.c		\
+			src/server/command/Player_command/check_player_command.c		\
+			src/server/command/Player_command/client_command.c				\
+			src/server/command/Player_command/broadcast.c					\
+			src/server/command/Player_command/connect_nbr.c					\
+			src/server/command/Player_command/eject.c						\
+			src/server/command/Player_command/fork.c						\
+			src/server/command/Player_command/forward.c						\
+			src/server/command/Player_command/incantation.c					\
+			src/server/command/Player_command/inventory.c					\
+			src/server/command/Player_command/left.c						\
+			src/server/command/Player_command/look.c						\
+			src/server/command/Player_command/right.c						\
+			src/server/command/Player_command/set.c							\
+			src/server/command/Player_command/take.c						\
+			src/server/command/authentification.c							\
+			src/server/utils/send_response.c								\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
+			src/server/utils/free_array.c									\
+			src/server/utils/my_str_to_word_array.c							\
+			src/server/utils/len_array.c									\
+			src/server/utils/string_to_object.c								\
 
 TEST 		=	tests/server/test_arguments.c					\
+				tests/server/test_player_function.c				\
 				tests/server/test_init_map.c					\
 				tests/server/test_init_players.c				\
 				tests/server/test_find_tiles.c					\
 				tests/server/test_map_put.c						\
 				tests/server/test_map_remove.c					\
-				tests/server/test_player_function.c				\
+				tests/server/test_command_GUI.c					\
 
 Name		=	zappy
 
