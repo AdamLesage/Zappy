@@ -9,7 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-Test(msz, test_msz)
+Test(msz, test_msz, .init = cr_redirect_stdout)
 {
     core_t core;
     char *command[] = {"msz", NULL};
@@ -18,11 +18,11 @@ Test(msz, test_msz)
 
     core.map.width = 10;
     core.map.height = 10;
-    msz(&core, 0, command);
+    msz(&core, 1, command);
     cr_assert_stdout_eq_str(expected);
 }
 
-Test(tna, test_tna)
+Test(tna, test_tna, .init = cr_redirect_stdout)
 {
     core_t core;
     char *command[] = {"tna", NULL};
@@ -31,11 +31,11 @@ Test(tna, test_tna)
 
     core.arguments.name_teams = team_names;
     core.arguments.nb_teams = 2;
-    tna(&core, 0, command);
+    tna(&core, 1, command);
     cr_assert_stdout_eq_str(expected);
 }
 
-Test(sgt, test_sgt)
+Test(sgt, test_sgt, .init = cr_redirect_stdout)
 {
     core_t core;
     char *command[] = {"sgt", NULL};
@@ -43,6 +43,6 @@ Test(sgt, test_sgt)
     char *expected = "sgt 100\n";
 
     core.arguments.frequency = 100;
-    sgt(&core, 0, command);
+    sgt(&core, 1, command);
     cr_assert_stdout_eq_str(expected);
 }
