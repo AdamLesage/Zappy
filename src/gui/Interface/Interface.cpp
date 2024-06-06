@@ -143,10 +143,10 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         for (size_t i = 0; i < _rect.size(); i++)
             window->draw(_rect[i]);
         // printf("----------------------------------------------------------------------------------------\n");
-        printf("%ld", _gui_connect->get_team_names().size());
+        // printf("%ld", _gui_connect->get_team_names().size());
         for (size_t i = 0; i < gui_connect->get_team_names().size(); i++) {
             Texts.push_back(sf::Text(gui_connect->get_team_names()[i], font, 50));
-            printf("team[%ld]: %s\n", i, gui_connect->get_team_names()[i].c_str());
+            // printf("team[%ld]: %s\n", i, gui_connect->get_team_names()[i].c_str());
             Texts[2 + i].setFillColor(sf::Color::Black);
             Texts[2 + i].setPosition(10, 50 + (2 + i * 50));
         }
