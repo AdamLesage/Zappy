@@ -16,6 +16,7 @@ namespace Zappy {
             MSZ();
             ~MSZ();
 
+            void askCommand(int fd, std::vector<std::string> args) override;
         protected:
         private:
     };
