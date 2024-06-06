@@ -2,13 +2,13 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** remove_fom_inventory
+** remove_from_inventory
 */
 
 
 #include "server.h"
 
-static bool remove_fom_inventory2(inventory_t *inventory, enum Object object)
+static bool remove_from_inventory2(inventory_t *inventory, enum Object object)
 {
     if (inventory->nb_phiras == 0 && object == Phiras)
         return (false);
@@ -25,7 +25,7 @@ static bool remove_fom_inventory2(inventory_t *inventory, enum Object object)
     return (true);
 }
 
-bool remove_fom_inventory(players_t *players, enum Object object,
+bool remove_from_inventory(players_t *players, enum Object object,
     int fd)
 {
     inventory_t *inventory = get_inventory(players, fd);
@@ -42,5 +42,5 @@ bool remove_fom_inventory(players_t *players, enum Object object,
     if (inventory->nb_mendiane == 0 && object == Mendiane)
         return (false);
     inventory->nb_mendiane -= (object == Mendiane) ? 1 : 0;
-    return (remove_fom_inventory2(inventory, object));
+    return (remove_from_inventory2(inventory, object));
 }

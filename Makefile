@@ -43,6 +43,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/dataManagment/players/get_action_in_queue.c			\
 			src/server/dataManagment/players/put_on_inventory.c				\
 			src/server/dataManagment/players/remove_from_inventory.c		\
+			src/server/dataManagment/players/get_player_k.c					\
 			src/server/command/GUI_command/execute_gui_command.c			\
 			src/server/command/GUI_command/gui_command.c					\
 			src/server/command/GUI_command/bct.c							\
@@ -123,6 +124,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/dataManagment/players/get_action_in_queue.c			\
 			src/server/dataManagment/players/put_on_inventory.c				\
 			src/server/dataManagment/players/remove_from_inventory.c		\
+			src/server/dataManagment/players/get_player_k.c					\
 			src/server/command/GUI_command/execute_gui_command.c			\
 			src/server/command/GUI_command/gui_command.c					\
 			src/server/command/GUI_command/bct.c							\
@@ -187,7 +189,7 @@ all:    $(Name)
 $(Name): zappy_server zappy_ai
 
 zappy_server:
-	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS) -Iinclude/server
+	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS) -Iinclude/server -lm
 
 zappy_gui:
 	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS) $(SFML)
@@ -210,8 +212,10 @@ fclean: clean
 re: fclean all
 
 tests_run:
+	chmod +x tests/run_test.sh
+	tests/run_test.sh
 	gcc -o $(NAMETEST) $(SRC_TEST_SERVER) \
-	$(TEST) $(CFLAGS) -Iinclude/server -lcriterion --coverage
+	$(TEST) $(CFLAGS) -Iinclude/server -lcriterion --coverage -lm
 	./$(NAMETEST)
 
 coverage:

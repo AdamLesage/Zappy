@@ -129,6 +129,7 @@ bool remove_mendiane(map_t *map, int x, int y);
 bool remove_phiras(map_t *map, int x, int y);
 bool remove_thystame(map_t *map, int x, int y);
 bool remove_eggs(map_t *map, int x, int y, char *team_name);
+bool remove_eggs_at(map_t *map, int x, int y);
 void refill_map(map_t *map);
 int find_number_eggs_on_team(eggs_t *eggs, char *team);
 
@@ -138,6 +139,8 @@ bool add_player(map_t *map, players_t *players, int fd,
 player_info_t *find_player(players_t *player, int fd);
 bool delete_player(map_t *map, players_t *players, int fd);
 void move_player(map_t *map, players_t *player, int fd);
+void move_player2(map_t *map, players_t *player, int fd,
+    enum Orientation orientation);
 void turn_left(players_t *players, int fd);
 void turn_right(players_t *players, int fd);
 int *get_pos(players_t *players, int fd);
@@ -149,7 +152,9 @@ void add_action_in_queue(players_t *players, int fd, char *action);
 char *get_action_in_queue(players_t *players, int fd);
 bool put_on_inventory(players_t *players, enum Object object,
     int fd);
-bool remove_fom_inventory(players_t *players, enum Object object,
+bool remove_from_inventory(players_t *players, enum Object object,
     int fd);
+int get_player_k(player_info_t *player_info, int x, int y,
+    arguments_t *arguments);
 
 #endif /* !SERVER_DATA_H_ */

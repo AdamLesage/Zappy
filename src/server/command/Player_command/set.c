@@ -35,7 +35,7 @@ void set(core_t *core, int fd, char **command)
     int *pos = get_pos(&core->players, fd);
     enum Object object = string_to_object(command[1]);
 
-    if (remove_fom_inventory(&core->players, object, fd) == false) {
+    if (remove_from_inventory(&core->players, object, fd) == false) {
         send_response("ko\n", fd);
     }
     set_on_map(pos, object, &core->map);

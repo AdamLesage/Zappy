@@ -43,7 +43,40 @@ void find_new_pos(player_info_t *info, map_t *map)
     put_player(map, info->pos_x, info->pos_y);
 }
 
+static void find_new_pos2(player_info_t *info, map_t *map,
+    enum Orientation orientation)
+{
+    switch (orientation) {
+        case N:
+            info->pos_y -= 1;
+            break;
+        case S:
+            info->pos_y += 1;
+            break;
+        case W:
+            info->pos_x -= 1;
+            break;
+        case E:
+            info->pos_x += 1;
+            break;
+    }
+    check_new_pos(map, &info->pos_x, &info->pos_y);
+    put_player(map, info->pos_x, info->pos_y);
+}
+
 void move_player(map_t *map, players_t *player, int fd)
+{
+    player_info_t *info = find_player(player, fd);
+
+    if (info == NULL || map == NULL) {
+        return;
+    }
+    remove_player(map, info->pos_x, info->pos_y);
+    find_new_pos(info, map);
+}
+
+void move_player2(map_t *map, players_t *player, int fd,
+    enum Orientation orientation)
 {
     player_info_t *info = find_player(player, fd);
 
