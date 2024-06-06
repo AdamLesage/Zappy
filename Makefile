@@ -42,12 +42,44 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
 
-SRC_GUI				=	src/gui/main.cpp							   		  \
-						src/gui/Interface.cpp								  \
-						src/gui/bar.cpp										  \
-						src/gui/gui_connect.cpp								  \
+SRC_GUI	=	src/gui/main.cpp						   						\
+			src/gui/Interface/Interface.cpp									\
+			src/gui/Interface/bar.cpp										\
+			src/gui/ServerInfo/GuiConnect.cpp								\
+			src/gui/lib/my_str_to_line_array.cpp							\
+			src/gui/lib/my_str_to_word_array.cpp							\
+			src/gui/Entity/Tile.cpp											\
+			src/gui/Entity/Inventory.cpp									\
+			src/gui/Entity/AInventory.cpp									\
+			src/gui/Entity/Player.cpp										\
+			src/gui/ServerInfo/ServerInfo.cpp								\
+			src/gui/ServerInfo/CommandFactory.cpp							\
+			src/gui/ServerInfo/ACommand.cpp									\
+			src/gui/ServerInfo/Command/MSZ.cpp								\
+			src/gui/ServerInfo/Command/PNW.cpp								\
+			src/gui/ServerInfo/Command/PPO.cpp								\
+			src/gui/ServerInfo/Command/TNA.cpp								\
+			src/gui/ServerInfo/Command/PLV.cpp								\
+			src/gui/ServerInfo/Command/PIN.cpp								\
+			src/gui/ServerInfo/Command/PEX.cpp								\
+			src/gui/ServerInfo/Command/PBC.cpp								\
+			src/gui/ServerInfo/Command/PIC.cpp								\
+			src/gui/ServerInfo/Command/PIE.cpp								\
+			src/gui/ServerInfo/Command/PFK.cpp								\
+			src/gui/ServerInfo/Command/PDR.cpp								\
+			src/gui/ServerInfo/Command/PGT.cpp								\
+			src/gui/ServerInfo/Command/PDI.cpp								\
+			src/gui/ServerInfo/Command/ENW.cpp								\
+			src/gui/ServerInfo/Command/EBO.cpp								\
+			src/gui/ServerInfo/Command/EDI.cpp								\
+			src/gui/ServerInfo/Command/SGT.cpp								\
+			src/gui/ServerInfo/Command/SST.cpp								\
+			src/gui/ServerInfo/Command/SEG.cpp								\
+			src/gui/ServerInfo/Command/SMG.cpp								\
+			src/gui/ServerInfo/Command/SUC.cpp								\
+			src/gui/ServerInfo/Command/SBP.cpp								\
 
-SRC_AI				=	src/ai/main.py										  \
+SRC_AI				=	src/ai/main.py										\
 
 SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/connect_client.c										\
