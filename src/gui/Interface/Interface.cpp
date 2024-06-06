@@ -19,9 +19,12 @@ Zappy::Interface::Interface()
     sprite.setTexture(texture);
     sprite.setScale(0.1, 0.1);
     font.loadFromFile("./asset/gui/Pacifico.ttf");
-    Texts.push_back(sf::Text("zoom", font, 50));
+    Texts.push_back(sf::Text("tick", font, 50));
+    Texts.push_back(sf::Text("Team: ", font, 50));
     Texts[0].setFillColor(sf::Color::Black);
+    Texts[1].setFillColor(sf::Color::Black);
     Texts[0].setPosition(1750, 225);
+    Texts[1].setPosition(10, 50);
     sound_.loadFromFile("./asset/gui/logo_son.jpg");
     sound.setTexture(sound_);
     sound.setPosition(1725, 10);
@@ -139,11 +142,19 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->setView(window->getDefaultView());
         for (size_t i = 0; i < _rect.size(); i++)
             window->draw(_rect[i]);
-
+        printf("----------------------------------------------------------------------------------------\n");
+        printf("%ld", _gui_connect->get_team_names().size());
+        for (size_t i = 0; i < gui_connect->get_team_names().size(); i++) {
+            Texts.push_back(sf::Text(gui_connect->get_team_names()[i], font, 50));
+            printf("team[%ld]: %s\n", i, gui_connect->get_team_names()[i].c_str());
+            Texts[2 + i].setFillColor(sf::Color::Black);
+            Texts[2 + i].setPosition(10, 50 + (2 + i * 50));
+        }
+        for (size_t i = 0; i < Texts.size(); i++)
+            window->draw(Texts[i]);
         bars[1]->checkClick(window);
         bars[0]->displayBar(window);
         bars[1]->displayBar(window);
-        window->draw(Texts[0]);
         window->draw(sound);
         print_sound();
         window->display();
