@@ -26,16 +26,18 @@ void Zappy::PIE::applyChanges(std::vector<std::string> parsedData,
                                 std::vector<std::shared_ptr<Zappy::Tile>> &tiles,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
-                                int timeUnit
+                                int timeUnit,
+                                bool isRunning
 )
 {
     (void)size_map; // unused
     (void)tiles; // unused
     (void)eggs; // unused
     (void)timeUnit; // unused
+    (void)isRunning; // unused
     // parsedData vector { "pie", "x", "y", "incantation result" }
     if (parsedData.size() < 5)
-        throw std::invalid_argument("Invalid number of arguments for PIC command");
+        throw Zappy::CommandError("Invalid number of arguments for PIC command", "PIC");
 
     try {
         // Update player isIncanting status
@@ -51,6 +53,6 @@ void Zappy::PIE::applyChanges(std::vector<std::string> parsedData,
             }
         }
     } catch (std::exception &e) {
-        throw std::invalid_argument("Invalid arguments for PIC command");
+        throw Zappy::CommandError("Invalid arguments for PIC command", "PIC");
     }
 }

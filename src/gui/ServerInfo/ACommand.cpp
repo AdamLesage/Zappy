@@ -39,7 +39,8 @@ void Zappy::ACommand::applyChanges(std::vector<std::string> parsedData,
                                 std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> &tiles,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
-                                int timeUnit
+                                int timeUnit,
+                                bool isRunning
 )
 {
     // Doesnt do anything
@@ -49,4 +50,5 @@ void Zappy::ACommand::applyChanges(std::vector<std::string> parsedData,
     (void)players;
     (void)eggs;
     (void)timeUnit;
+    (void)isRunning;
 }

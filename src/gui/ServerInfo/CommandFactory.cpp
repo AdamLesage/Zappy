@@ -80,11 +80,12 @@ void Zappy::CommandFactory::executeCommand(std::string commandName, std::string 
                                             std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> &tiles,
                                             std::vector<std::shared_ptr<Zappy::Player>> &players,
                                             std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
-                                            int &_timeUnit)
+                                            int &timeUnit,
+                                            bool &isRunning)
 {
     std::vector<std::string> parsedData = _commands[commandName]->receiveData(message, commandName);
     // Order: parsedData, size_map, tiles, players, eggs
-    _commands[commandName]->applyChanges(parsedData, size_map, tiles, players, eggs, _timeUnit);
+    _commands[commandName]->applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning);
 }
 
 void Zappy::CommandFactory::askCommand(std::string commandName, std::vector<std::string> args)

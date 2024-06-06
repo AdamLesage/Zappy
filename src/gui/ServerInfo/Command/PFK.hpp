@@ -21,7 +21,8 @@ namespace Zappy {
                                 std::vector<std::shared_ptr<Zappy::Tile>> &tiles,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
-                                int timeUnit
+                                int timeUnit,
+                                bool isRunning
             );
         protected:
         private:

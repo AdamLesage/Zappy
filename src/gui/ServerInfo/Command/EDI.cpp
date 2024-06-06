@@ -20,17 +20,19 @@ void Zappy::EDI::applyChanges(std::vector<std::string> parsedData,
                                 std::vector<std::shared_ptr<Zappy::Tile>> &tiles,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
-                                int timeUnit
+                                int timeUnit,
+                                bool isRunning
 )
 {
     (void)size_map; // unused
     (void)tiles; // unused
     (void)players; // unused
     (void)timeUnit; // unused
+    (void)isRunning; // unused
     // parsedData vector { "edi", "eggNumber" }
 
     if (parsedData.size() != 2)
-        throw std::invalid_argument("Invalid number of arguments for PFK command");
+        throw Zappy::CommandError("Invalid number of arguments for PFK command", "PFK");
 
     try {
         for (auto &egg : eggs) {
@@ -40,6 +42,6 @@ void Zappy::EDI::applyChanges(std::vector<std::string> parsedData,
             }
         }
     } catch (std::exception &e) {
-        throw std::invalid_argument("Invalid arguments for PFK command");
+        throw Zappy::CommandError("Invalid arguments for PFK command", "PFK");
     }
 }
