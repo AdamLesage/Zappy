@@ -32,6 +32,7 @@
 #include "./Command/SUC.hpp"
 #include "./Command/SBP.hpp"
 #include "./Command/BCT.hpp"
+#include "./Command/MCT.hpp"
 
 Zappy::CommandFactory::CommandFactory(int serverSocket)
 {
@@ -62,6 +63,7 @@ Zappy::CommandFactory::CommandFactory(int serverSocket)
     registerCommand("suc", std::make_shared<SUC>());
     registerCommand("sbp", std::make_shared<SBP>());
     registerCommand("bct", std::make_shared<BCT>());
+    registerCommand("mct", std::make_shared<MCT>());
 }
 
 Zappy::CommandFactory::~CommandFactory()

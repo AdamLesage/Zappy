@@ -79,6 +79,7 @@ SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/ServerInfo/Command/SUC.cpp								\
 			src/gui/ServerInfo/Command/SBP.cpp								\
 			src/gui/ServerInfo/Command/BCT.cpp								\
+			src/gui/ServerInfo/Command/MCT.cpp								\
 
 SRC_AI				=	src/ai/main.py										\
 
