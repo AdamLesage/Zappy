@@ -87,36 +87,36 @@ void GuiConnect::close_thread()
 }
 
 
-Zappy::Inventory GuiConnect::fill_inventory(std::vector<std::string> args)
+std::vector<Zappy::Inventory> GuiConnect::fill_inventory(std::vector<std::string> args, std::vector<Zappy::Inventory> inventories)
 {
-    Zappy::Inventory inventory;
-
-    inventory._x = std::stoi(args[1]);
-    inventory._y = std::stoi(args[2]);
-    inventory._food = std::stoi(args[3]);
-    inventory._linemate = std::stoi(args[4]);
-    inventory._deraumere = std::stoi(args[5]);
-    inventory._sibur = std::stoi(args[6]);
-    inventory._mendiane = std::stoi(args[7]);
-    inventory._phiras = std::stoi(args[8]);
-    inventory._thystame = std::stoi(args[9]);
-    return inventory;
+    std::cout << "FILL INVENTORY" << std::endl;
+    args = args;
+    return inventories;
 }
-
 void GuiConnect::executeCommandChanges(std::string commandName, std::string message)
 {
     if (_commandFactory->isARegisteredCommand(commandName)) {
+        //printf("Command name1: [%s] --> [%s]\n", commandName.c_str(), message.c_str());
         std::vector<std::string> response = _commandFactory->executeCommand(commandName, message);
         if (response.size() > 0) {
+            // printf("response: [%s]\n", response[0].c_str());
+
             if (response[0] == "msz") {
                 std::array<int, 2> size_map = {std::stoi(response[1]), std::stoi(response[2])};
                 set_size_map(size_map);
+            }
+            if (response[0] == "tna") {
+                for (size_t i = 1; i < response.size(); i++) {
+                    team_names.push_back(response[i]);
+                    // printf("Team name: %s\n", response[i].c_str());
+                }
+                // printf("Team names size: %lu\n", team_names.size());
             }
             if (response[0] == "pnw") {
                 // Need to create a new player
             }
             if (response[0] == "bct") {
-                _inventories.push_back(fill_inventory(response));
+                _inventories = (fill_inventory(response, _inventories));
             }
         }
     }

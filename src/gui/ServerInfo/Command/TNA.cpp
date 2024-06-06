@@ -20,11 +20,11 @@ std::vector<std::string> Zappy::TNA::receiveData(std::string message, std::strin
     if (strncmp(message.c_str(), commandName.c_str(), commandName.size()))
         return {};
     // receive : tna N\n * nbr_teams
-    std::vector<std::string> args = my_str_to_line_array((char *)message.c_str()); // vector of strings like : { "tna N\n", "team1\n", "team2\n", ... }
+    std::vector<std::string> args = my_str_to_word_array((char *)message.c_str()); // vector of strings like : { "tna N\n", "team1\n", "team2\n", ... }
     std::vector<std::string> teams;
 
-    for (std::size_t i = 1; i < args.size(); i++) {
-        teams.push_back(args[i].substr(4, args[i].size() - 4)); // vector of strings like : { "team1\n", "team2\n", ... }
+    for (std::size_t i = 0; i < args.size(); i++) {
+        teams.push_back(args[i]); // vector of strings like : { "team1\n", "team2\n", ... }
     }
     // return format std::vector<std::string> { "tna", "team1", "team2", ... };
     return teams;
