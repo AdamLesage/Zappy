@@ -90,13 +90,21 @@ void GuiConnect::close_thread()
     Running = false;
 }
 
-std::shared_ptr<Zappy::Inventory> GuiConnect::fill_inventory(std::vector<std::string> args)
+
+Zappy::Inventory GuiConnect::fill_inventory(std::vector<std::string> args)
 {
-    std::shared_ptr<Zappy::Inventory> inventories = std::make_shared<Zappy::Inventory>();
-    for (size_t i = 0; i < args.size(); i++) {
-        std::cout << args[i] << std::endl;
-    }
-    return inventories;
+    Zappy::Inventory inventory;
+
+    inventory._x = std::stoi(args[1]);
+    inventory._y = std::stoi(args[2]);
+    inventory._food = std::stoi(args[3]);
+    inventory._linemate = std::stoi(args[4]);
+    inventory._deraumere = std::stoi(args[5]);
+    inventory._sibur = std::stoi(args[6]);
+    inventory._mendiane = std::stoi(args[7]);
+    inventory._phiras = std::stoi(args[8]);
+    inventory._thystame = std::stoi(args[9]);
+    return inventory;
 }
 
 void GuiConnect::executeCommandChanges(std::string commandName, std::string message)
@@ -112,7 +120,7 @@ void GuiConnect::executeCommandChanges(std::string commandName, std::string mess
                 // Need to create a new player
             }
             if (response[0] == "bct") {
-                _inventories = fill_inventory(response);
+                _inventories.push_back(fill_inventory(response));
             }
         }
     }
