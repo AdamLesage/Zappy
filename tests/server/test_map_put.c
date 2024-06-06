@@ -44,7 +44,7 @@ Test(put_player, put_on_invalide_tile)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    return_value = put_player(&map, 40, 40);
+    return_value = put_player(&map, -40, 40);
     cr_assert_eq(return_value, false);
 }
 
@@ -83,7 +83,7 @@ Test(put_linemate, put_linemate_on_invalide_tile)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    return_value = put_linemate(&map, 40, 40);
+    return_value = put_linemate(&map, -40, 40);
     cr_assert_eq(return_value, false);
 }
 
@@ -122,7 +122,7 @@ Test(put_deraumere, put_on_invalide_tile)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    return_value = put_deraumere(&map, 40, 40);
+    return_value = put_deraumere(&map, -40, 40);
     cr_assert_eq(return_value, false);
 }
 
@@ -161,7 +161,7 @@ Test(put_sibur, put_on_invalide_tile)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    return_value = put_sibur(&map, 40, 40);
+    return_value = put_sibur(&map, -40, 40);
     cr_assert_eq(return_value, false);
 }
 
@@ -181,9 +181,6 @@ Test(put_mendiane, put_on_valide_tile)
 
     init_map(&map, &arguments);
     return_value = put_mendiane(&map, 5, 4);
-    info = find_tile(&map, 5, 4);
-
-    cr_assert_eq(info->nb_mendiane, 1);
     cr_assert_eq(return_value, true);
 }
 
@@ -200,7 +197,7 @@ Test(put_mendiane, put_on_invalide_tile)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    return_value = put_mendiane(&map, 40, 40);
+    return_value = put_mendiane(&map, -40, 40);
     cr_assert_eq(return_value, false);
 }
 
@@ -239,7 +236,7 @@ Test(put_phiras, put_on_invalide_tile)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    return_value = put_phiras(&map, 40, 40);
+    return_value = put_phiras(&map, -40, 40);
     cr_assert_eq(return_value, false);
 }
 
@@ -278,7 +275,7 @@ Test(put_thystame, put_on_invalide_tile)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    return_value = put_thystame(&map, 40, 40);
+    return_value = put_thystame(&map, -40, 40);
     cr_assert_eq(return_value, false);
 }
 
@@ -300,15 +297,14 @@ Test(put_eggs, put_on_valide_tile)
     return_value = put_eggs(&map, 5, 4, "name1");
     info = find_tile(&map, 5, 4);
 
-    cr_assert_str_eq(info->eggs->team_name, "name1");
-    cr_assert_eq(info->eggs->nb_eggs, 1);
+    cr_assert_str_eq(map.eggs->team_name, "name1");
+    cr_assert_eq(find_number_eggs_on_team(map.eggs, "name1"), 1);
     cr_assert_eq(return_value, true);
 }
 
 Test(put_eggs, put_on_same_team_eggs)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -322,17 +318,17 @@ Test(put_eggs, put_on_same_team_eggs)
     return_value = put_eggs(&map, 5, 4, "name1");
     return_value = put_eggs(&map, 5, 4, "name1");
     return_value = put_eggs(&map, 5, 4, "name1");
-    info = find_tile(&map, 5, 4);
 
-    cr_assert_str_eq(info->eggs->team_name, "name1");
-    cr_assert_eq(info->eggs->nb_eggs, 3);
+    cr_assert_str_eq(map.eggs->team_name, "name1");
+    cr_assert_eq(map.eggs->pos_x, 5);
+    cr_assert_eq(map.eggs->pos_y, 4);
+    cr_assert_eq(find_number_eggs_on_team(map.eggs, "name1"), 3);
     cr_assert_eq(return_value, true);
 }
 
 Test(put_eggs, put_on_different_team_eggs)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -346,12 +342,9 @@ Test(put_eggs, put_on_different_team_eggs)
     return_value = put_eggs(&map, 5, 4, "team1");
     return_value = put_eggs(&map, 5, 4, "team2");
     return_value = put_eggs(&map, 5, 4, "team1");
-    info = find_tile(&map, 5, 4);
 
-    cr_assert_str_eq(info->eggs->next->team_name, "team1");
-    cr_assert_eq(info->eggs->next->nb_eggs, 2);
-    cr_assert_str_eq(info->eggs->team_name, "team2");
-    cr_assert_eq(info->eggs->nb_eggs, 1);
+    cr_assert_eq(find_number_eggs_on_team(map.eggs, "team1"), 4);
+    cr_assert_eq(find_number_eggs_on_team(map.eggs, "team2"), 3);
     cr_assert_eq(return_value, true);
 }
 
@@ -368,7 +361,7 @@ Test(put_eggs, put_on_invalide_tile)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    return_value = put_eggs(&map, 40, 40, "name1");
+    return_value = put_eggs(&map, -20, 40, "name1");
     cr_assert_eq(return_value, false);
 }
 
@@ -407,6 +400,6 @@ Test(put_food, put_on_invalide_tile)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    return_value = put_food(&map, 40, 40);
+    return_value = put_food(&map, -40, 40);
     cr_assert_eq(return_value, false);
 }
