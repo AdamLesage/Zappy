@@ -79,7 +79,7 @@ void Zappy::Interface::set_map()
             tmp_sprite.push_back(sprite);
             tmp_sprite[j].setPosition(i + 100, j + 100);
         }
-        map.push_back(tmp);
+        _gui_connect->getTiles().push_back(tmp);
         map_sprites.push_back(tmp_sprite);
     }
 }

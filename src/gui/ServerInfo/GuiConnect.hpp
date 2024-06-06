@@ -32,6 +32,8 @@ class GuiConnect {
         std::vector<std::string> team_names;
         void executeCommandChanges(std::string commandName, std::string message); // execute command changes from response given by factory
         void errorhandlingInvetory(std::vector<std::string> args); // verify that the args to fill an inventory is correct
+        std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> getTiles() { return _tiles; } // get tiles
+
         // DATA MANAGEMENT
 
         // Player management
@@ -68,7 +70,7 @@ class GuiConnect {
         std::shared_ptr<Zappy::CommandFactory> _commandFactory;
         std::vector<std::shared_ptr<Zappy::Player>> _players;
         std::vector<std::shared_ptr<Zappy::Egg>> _eggs;
-        std::vector<std::shared_ptr<Zappy::Tile>> _tiles;
+        std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> _tiles;
     private:
 };
 
