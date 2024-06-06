@@ -75,12 +75,15 @@ void Zappy::CommandFactory::registerCommand(std::string commandName, std::shared
     _commands[commandName] = command;
 }
 
-std::vector<std::string> Zappy::CommandFactory::executeCommand(std::string commandName, std::string message)
+void Zappy::CommandFactory::executeCommand(std::string commandName, std::string message,
+                                            std::array<int, 2> &size_map,
+                                            std::vector<std::shared_ptr<Zappy::Tile>> &tiles,
+                                            std::vector<std::shared_ptr<Zappy::Player>> &players,
+                                            std::vector<std::shared_ptr<Zappy::Egg>> &eggs)
 {
-    if (_commands.find(commandName) != _commands.end()) { // if command exists
-        return _commands[commandName]->receiveData(message, commandName);
-    }
-    return {};
+    std::vector<std::string> parsedData = _commands[commandName]->receiveData(message, commandName);
+    // Order: parsedData, size_map, tiles, players, eggs
+    _commands[commandName]->applyChanges(parsedData, size_map, tiles, players, eggs); 
 }
 
 void Zappy::CommandFactory::askCommand(std::string commandName, std::vector<std::string> args)

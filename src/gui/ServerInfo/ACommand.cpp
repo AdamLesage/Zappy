@@ -32,3 +32,19 @@ void Zappy::ACommand::askCommand(int socket, std::vector<std::string> args)
     if (args.size() == 0 || socket == -1)
         return;
 }
+
+// Order: parsedData, size_map, tiles, players, eggs
+void Zappy::ACommand::applyChanges(std::vector<std::string> parsedData,
+                                std::array<int, 2> &size_map,
+                                std::vector<std::shared_ptr<Zappy::Tile>> &tiles,
+                                std::vector<std::shared_ptr<Zappy::Player>> &players, 
+                                std::vector<std::shared_ptr<Zappy::Egg>> &eggs
+)
+{
+    // Doesnt do anything
+    (void)parsedData;
+    (void)size_map;
+    (void)tiles;
+    (void)players;
+    (void)eggs;
+}

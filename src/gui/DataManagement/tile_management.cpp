@@ -10,7 +10,6 @@
 
 std::vector<Zappy::Inventory> GuiConnect::fill_inventory(std::vector<std::string> args, std::vector<Zappy::Inventory> inventories)
 {
-    std::cout << "FILL INVENTORY" << std::endl;
     args = args;
     return inventories;
 }

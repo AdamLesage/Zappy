@@ -142,7 +142,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->setView(window->getDefaultView());
         for (size_t i = 0; i < _rect.size(); i++)
             window->draw(_rect[i]);
-        printf("----------------------------------------------------------------------------------------\n");
+        // printf("----------------------------------------------------------------------------------------\n");
         printf("%ld", _gui_connect->get_team_names().size());
         for (size_t i = 0; i < gui_connect->get_team_names().size(); i++) {
             Texts.push_back(sf::Text(gui_connect->get_team_names()[i], font, 50));

@@ -15,6 +15,7 @@
 #include "../Entity/Inventory.hpp"
 #include "../Entity/Player.hpp"
 #include "../Entity/Egg.hpp"
+#include "../Entity/Tile.hpp"
 
 class GuiConnect {
     public:
@@ -67,6 +68,7 @@ class GuiConnect {
         std::shared_ptr<Zappy::CommandFactory> _commandFactory;
         std::vector<std::shared_ptr<Zappy::Player>> _players;
         std::vector<std::shared_ptr<Zappy::Egg>> _eggs;
+        std::vector<std::shared_ptr<Zappy::Tile>> _tiles;
     private:
 };
 
