@@ -87,12 +87,6 @@ void GuiConnect::close_thread()
 }
 
 
-// std::vector<Zappy::Inventory> GuiConnect::fill_inventory(std::vector<std::string> args, std::vector<Zappy::Inventory> inventories)
-// {
-//     std::cout << "FILL INVENTORY" << std::endl;
-//     args = args;
-//     return inventories;
-// }
 void GuiConnect::executeCommandChanges(std::string commandName, std::string message)
 {
     if (_commandFactory->isARegisteredCommand(commandName)) {

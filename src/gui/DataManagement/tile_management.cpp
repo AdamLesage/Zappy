@@ -7,29 +7,20 @@
 
 #include "../ServerInfo/GuiConnect.hpp"
 
-namespace Zappy
+
+std::vector<Zappy::Inventory> GuiConnect::fill_inventory(std::vector<std::string> args,std::vector<Zappy::Inventory>)
 {
-    namespace GuiConnect
-    {
-        void fill_inventory(std::vector<std::string> args)
-        {
-            args = args;
-        }
+    args = args;
+    return std::vector<Zappy::Inventory>();
+}
 
-        void removeTileInventory(std::vector<std::string> args)
-        {
-            args = args;
-        }
+void GuiConnect::updateTileInventory(std::vector<std::string> args)
+{
+    args = args;
+}
 
-        void updateTileInventory(std::vector<std::string> args)
-        {
-            args = args;
-        }
-
-        void createTileInvetory(std::vector<std::string> args)
-        {
-            args = args;
-        }
-
-    }
+std::vector<Zappy::Inventory> removeTileInventory(std::vector<std::string> args)
+{
+    args = args;
+    return std::vector<Zappy::Inventory>();
 }

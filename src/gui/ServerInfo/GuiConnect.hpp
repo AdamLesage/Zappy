@@ -55,10 +55,9 @@ class GuiConnect {
         std::shared_ptr<Zappy::Egg> getEggByNb(int eggNb);
 
         // Tile management
-        void fill_inventory(std::vector<std::string> args,std::vector<Zappy::Inventory>); // fill inventories of all tiles
+        std::vector<Zappy::Inventory> fill_inventory(std::vector<std::string> args,std::vector<Zappy::Inventory>); // fill inventories of all tiles
         void updateTileInventory(std::vector<std::string> args); // update inventory of a tile
-        void createTileInvetory(std::vector<std::string> args); // create inventory of a tile
-        void removeTileInventory(std::vector<std::string> args); // remove inventory of a tile
+        std::vector<Zappy::Inventory> removeTileInventory(std::vector<std::string> args); // remove inventory of a tile
 
     protected:
         int _socket;
@@ -67,8 +66,8 @@ class GuiConnect {
         std::array<int, 2> _size_map;
         std::vector<Zappy::Inventory> _inventories;
         std::shared_ptr<Zappy::CommandFactory> _commandFactory;
-        std::vector<std::shared_ptr<Zappy::Player>> _players;
-        std::vector<std::shared_ptr<Zappy::Egg>> _eggs;
+        std::vector<Zappy::Player> _players;
+        std::vector<Zappy::Egg> _eggs;
     private:
 };
 
