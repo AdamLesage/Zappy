@@ -11,6 +11,7 @@ namespace Zappy {
     namespace GuiConnect {
         void updateTileInventory(std::vector<std::string> args)
         {
+            args = args;
         }
     }
 }
