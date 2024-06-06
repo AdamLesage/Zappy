@@ -20,6 +20,10 @@ namespace Zappy {
             virtual int getLevel() = 0;
             virtual std::array<int, 2> getPosition() = 0;
             virtual void setPosition(int x, int y) = 0;
+            virtual void setPlayerNumber(int playerNumber) = 0;
+            virtual void setOrientation(std::string orientation) = 0;
+            virtual void setTeamName(std::string teamName) = 0;
+            virtual void setPlayerLevel(int level) = 0;
         protected:
         private:
     };
