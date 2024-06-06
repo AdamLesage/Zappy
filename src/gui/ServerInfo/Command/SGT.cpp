@@ -40,11 +40,11 @@ void Zappy::SGT::applyChanges(std::vector<std::string> parsedData,
     // parsedData vector { "sgt", "timeUnit" }
 
     if (parsedData.size() != 2)
-        throw std::invalid_argument("Invalid number of arguments for PFK command");
+        throw std::invalid_argument("Invalid number of arguments for SGT command");
 
     try {
         timeUnit = std::stoi(parsedData[1]);
     } catch (std::exception &e) {
-        throw std::invalid_argument("Invalid arguments for PFK command");
+        throw std::invalid_argument("Invalid arguments for SGT command");
     }
 }
