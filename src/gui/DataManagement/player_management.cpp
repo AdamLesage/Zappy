@@ -21,58 +21,102 @@ void GuiConnect::createPlayer(std::vector<std::string> args)
     this->_players.push_back(player);
 }
 
-void GuiConnect::deletePlayer(std::vector<std::string> args)
+void GuiConnect::deletePlayer(int playerNb)
 {
-    args = args;
+    for (std::size_t i = 0; i < this->_players.size(); i++) {
+        if (this->_players[i]->getPlayerNumber() == playerNb) {
+            this->_players.erase(this->_players.begin() + i);
+            return;
+        }
+    }
 }
 
-void GuiConnect::updatePlayerCoords(std::vector<std::string> args)
+void GuiConnect::updatePlayerCoords(std::pair<int, int> coords, int playerNb)
 {
-    args = args;
+    for (std::size_t i = 0; i < this->_players.size(); i++) {
+        if (this->_players[i]->getPlayerNumber() == playerNb) {
+            this->_players[i]->setPosition(coords.first, coords.second);
+            return;
+        }
+    }
 }
 
-void GuiConnect::getPlayerCoords(std::vector<std::string> args)
+std::pair<int, int> GuiConnect::getPlayerCoords(int playerNb)
 {
-    args = args;
+    for (std::size_t i = 0; i < this->_players.size(); i++) {
+        if (this->_players[i]->getPlayerNumber() == playerNb) {
+            return std::make_pair(this->_players[i]->getPosition()[0], this->_players[i]->getPosition()[1]);
+        }
+    }
+    return std::make_pair(-1, -1);
 }
 
-void GuiConnect::updatePlayerInventory(std::vector<std::string> args)
+void GuiConnect::updatePlayerInventory(int playerNb, std::shared_ptr<Zappy::Inventory> inventory)
 {
-    args = args;
+    for (std::size_t i = 0; i < this->_players.size(); i++) {
+        if (this->_players[i]->getPlayerNumber() == playerNb) {
+            this->_players[i]->setInventory(inventory);
+            return;
+        }
+    }
 }
 
-void GuiConnect::createPlayerInventory(std::vector<std::string> args)
+
+std::shared_ptr<Zappy::Inventory> GuiConnect::getPlayerInventory(int playerNb)
 {
-    args = args;
+    std::shared_ptr<Zappy::Player> player = getPlayerByNb(playerNb);
+
+    if (player == nullptr)
+        return nullptr;
+    return player->getInventory();
 }
 
-void GuiConnect::getPlayerInventory(std::vector<std::string> args)
+std::string GuiConnect::getPlayerTeam(int playerNb)
 {
-    args = args;
+    for (std::size_t i = 0; i < this->_players.size(); i++) {
+        if (this->_players[i]->getPlayerNumber() == playerNb) {
+            return this->_players[i]->getTeamName();
+        }
+    }
+    return "";
 }
 
-void GuiConnect::getPlayerTeam(std::vector<std::string> args)
+void GuiConnect::updatePlayerTeam(int playerNb, std::string teamName)
 {
-    args = args;
+    for (std::size_t i = 0; i < this->_players.size(); i++) {
+        if (this->_players[i]->getPlayerNumber() == playerNb) {
+            this->_players[i]->setTeamName(teamName);
+            return;
+        }
+    }
 }
 
-void GuiConnect::updatePlayerTeam(std::vector<std::string> args)
+void GuiConnect::updatePlayerLevel(int playerNb, int level)
 {
-    args = args;
+    for (std::size_t i = 0; i < this->_players.size(); i++) {
+        if (this->_players[i]->getPlayerNumber() == playerNb) {
+            this->_players[i]->setPlayerLevel(level);
+            return;
+        }
+    }
 }
 
-void GuiConnect::updatePlayerLevel(std::vector<std::string> args)
+int GuiConnect::getPlayerLevel(int playerNb)
 {
-    args = args;
+    for (std::size_t i = 0; i < this->_players.size(); i++) {
+        if (this->_players[i]->getPlayerNumber() == playerNb) {
+            return this->_players[i]->getLevel();
+        }
+    }
+    return -1;
 }
 
-void GuiConnect::getPlayerLevel(std::vector<std::string> args)
+std::shared_ptr<Zappy::Player> GuiConnect::getPlayerByNb(int playerNb)
 {
-    args = args;
-}
-
-std::shared_ptr<Zappy::Player> getPlayerByNb(int playerNb)
-{
-    playerNb = playerNb;
+    for (std::size_t i = 0; i < this->_players.size(); i++) {
+        if (this->_players[i]->getPlayerNumber() == playerNb) {
+            return this->_players[i];
+        }
+    }
     return nullptr;
 }
