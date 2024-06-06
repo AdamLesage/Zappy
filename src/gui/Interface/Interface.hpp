@@ -42,7 +42,6 @@ namespace Zappy {
             int sound_volume;
             std::vector<sf::RectangleShape> _rect;
             std::array<int, 2> _mape_size;
-            std::vector<std::vector<std::shared_ptr<Tile>>> map;
             std::vector<std::vector<sf::Sprite>> map_sprites;
             sf::Sprite sprite;
             sf::Texture texture;

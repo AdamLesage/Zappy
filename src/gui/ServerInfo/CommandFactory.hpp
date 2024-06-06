@@ -27,7 +27,7 @@ namespace Zappy {
             void registerCommand(std::string commandName, std::shared_ptr<ICommand> command);
             void executeCommand(std::string commandName, std::string message,
                                             std::array<int, 2> &size_map,
-                                            std::vector<std::shared_ptr<Zappy::Tile>> &tiles,
+                                            std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> &tiles,
                                             std::vector<std::shared_ptr<Zappy::Player>> &players,
                                             std::vector<std::shared_ptr<Zappy::Egg>> &eggs);
             void askCommand(std::string commandName, std::vector<std::string> args);
