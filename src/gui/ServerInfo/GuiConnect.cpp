@@ -74,10 +74,6 @@ void GuiConnect::receive()
             }
         }
     }
-    if (Running == false)
-        printf("Running = false\n");
-    else
-        printf("Running = true\n");
 }
 
 void GuiConnect::close_socket()
