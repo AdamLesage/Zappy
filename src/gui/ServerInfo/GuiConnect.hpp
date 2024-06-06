@@ -36,16 +36,15 @@ class GuiConnect {
 
         // Player management
         void createPlayer(std::vector<std::string> args);
-        void deletePlayer(std::vector<std::string> args);
-        void updatePlayerCoords(std::vector<std::string> args);
-        void getPlayerCoords(std::vector<std::string> args);
-        void getPlayerTeam(std::vector<std::string> args);
-        void updatePlayerTeam(std::vector<std::string> args);
-        void getPlayerInventory(std::vector<std::string> args);
-        void updatePlayerInventory(std::vector<std::string> args);
-        void createPlayerInventory(std::vector<std::string> args);
-        void updatePlayerLevel(std::vector<std::string> args);
-        void getPlayerLevel(std::vector<std::string> args);
+        void deletePlayer(int playerNb);
+        void updatePlayerCoords(std::pair<int, int> coords, int playerNb);
+        std::pair<int, int> getPlayerCoords(int playerNb);
+        std::string getPlayerTeam(int playerNb);
+        void updatePlayerTeam(int playerNb, std::string teamName);
+        std::shared_ptr<Zappy::Inventory> getPlayerInventory(int playerNb);
+        void updatePlayerInventory(int playerNb, std::shared_ptr<Zappy::Inventory> inventory);
+        void updatePlayerLevel(int playerNb, int level);
+        int getPlayerLevel(int playerNb);
         std::shared_ptr<Zappy::Player> getPlayerByNb(int playerNb);
 
         // Egg management
