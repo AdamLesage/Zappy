@@ -11,6 +11,7 @@ void bct(core_t *core, int fd, char **command)
 {
     int x = atoi(command[1]);
     int y = atoi(command[2]);
+    tiles_list_t *current_tile = core->map.tiles_list;
 
     if (len_array(command) != 3) {
         send_response("sbp\n", fd);
@@ -20,7 +21,6 @@ void bct(core_t *core, int fd, char **command)
         send_response("sbp\n", fd);
         return;
     }
-    tiles_list_t *current_tile = core->map.tiles_list;
     if (current_tile != NULL) {
         bct_two(core, fd, current_tile);
     }
