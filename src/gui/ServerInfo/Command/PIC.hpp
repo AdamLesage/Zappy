@@ -9,6 +9,7 @@
 #define PIC_HPP_
 
 #include "../ACommand.hpp"
+#include "../../Entity/Player.hpp"
 
 namespace Zappy {
     class PIC : public ACommand {
@@ -16,6 +17,12 @@ namespace Zappy {
             PIC();
             ~PIC();
 
+            void applyChanges(std::vector<std::string> parsedData,
+                                std::array<int, 2> &size_map,
+                                std::vector<std::shared_ptr<Zappy::Tile>> &tiles,
+                                std::vector<std::shared_ptr<Zappy::Player>> &players, 
+                                std::vector<std::shared_ptr<Zappy::Egg>> &eggs
+            );
         protected:
         private:
     };

@@ -28,6 +28,8 @@ namespace Zappy {
             void setPlayerLevel(int level) {_level = level;}
             void setInventory(std::shared_ptr<Inventory> inventory) {_inventory = inventory;}
             std::shared_ptr<Inventory> getInventory() {return _inventory;}
+            bool isPlayerIncanting() {return _isIncanting;}
+            void setIsIncanting(bool isIncanting) {_isIncanting = isIncanting;}
 
         protected:
             std::string _teamName;
@@ -36,6 +38,7 @@ namespace Zappy {
             std::array<int, 2> _position;
             int _playerNumber;
             std::shared_ptr<Inventory> _inventory;
+            bool _isIncanting;
         private:
     };
 }
