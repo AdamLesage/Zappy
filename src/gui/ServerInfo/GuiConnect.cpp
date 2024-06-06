@@ -90,6 +90,15 @@ void GuiConnect::close_thread()
     Running = false;
 }
 
+std::shared_ptr<Zappy::Inventory> GuiConnect::fill_inventory(std::vector<std::string> args)
+{
+    std::shared_ptr<Zappy::Inventory> inventories = std::make_shared<Zappy::Inventory>();
+    for (size_t i = 0; i < args.size(); i++) {
+        std::cout << args[i] << std::endl;
+    }
+    return inventories;
+}
+
 void GuiConnect::executeCommandChanges(std::string commandName, std::string message)
 {
     if (_commandFactory->isARegisteredCommand(commandName)) {
@@ -103,7 +112,7 @@ void GuiConnect::executeCommandChanges(std::string commandName, std::string mess
                 // Need to create a new player
             }
             if (response[0] == "bct") {
-                // Need to fill the inventory of a tile
+                _inventories = fill_inventory(response);
             }
         }
     }
