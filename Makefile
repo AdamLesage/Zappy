@@ -157,14 +157,15 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/utils/free_array.c									\
 			src/server/utils/my_str_to_word_array.c							\
 			src/server/utils/len_array.c									\
+			src/server/utils/string_to_object.c								\
 
 TEST 		=	tests/server/test_arguments.c					\
+				tests/server/test_player_function.c				\
 				tests/server/test_init_map.c					\
 				tests/server/test_init_players.c				\
 				tests/server/test_find_tiles.c					\
 				tests/server/test_map_put.c						\
 				tests/server/test_map_remove.c					\
-				tests/server/test_player_function.c				\
 				tests/server/test_command_GUI.c					\
 
 Name		=	zappy
