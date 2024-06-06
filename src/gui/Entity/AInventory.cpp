@@ -91,3 +91,9 @@ void Zappy::AInventory::Empty_all()
     _phiras = 0;
     _thystame = 0;
 }
+
+void Zappy::AInventory::setpos(int x, int y)
+{
+    this->_x = x;
+    this->_y = y;
+}
