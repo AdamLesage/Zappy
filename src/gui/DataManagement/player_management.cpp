@@ -24,12 +24,42 @@ namespace Zappy {
 
         }
 
+        void getPlayerCoords(std::vector<std::string> args)
+        {
+
+        }
+
         void updatePlayerInventory(std::vector<std::string> args)
         {
 
         }
 
+        void createPlayerInventory(std::vector<std::string> args)
+        {
+
+        }
+
+        void getPlayerInventory(std::vector<std::string> args)
+        {
+
+        }
+
+        void getPlayerTeam(std::vector<std::string> args)
+        {
+
+        }
+
+        void updatePlayerTeam(std::vector<std::string> args)
+        {
+
+        }
+
         void updatePlayerLevel(std::vector<std::string> args)
+        {
+
+        }
+
+        void getPlayerLevel(std::vector<std::string> args)
         {
 
         }
