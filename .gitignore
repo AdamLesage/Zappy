@@ -54,7 +54,8 @@ dkms.conf
 
 
 # Local files
-
+._zappy_server
+._zappy_gui
 zappy_server
 zappy_ai
 zappy_gui
