@@ -67,8 +67,8 @@ class GuiConnect {
         std::array<int, 2> _size_map;
         std::vector<Zappy::Inventory> _inventories;
         std::shared_ptr<Zappy::CommandFactory> _commandFactory;
-        std::vector<Zappy::Player> _players;
-        std::vector<Zappy::Egg> _eggs;
+        std::vector<std::shared_ptr<Zappy::Player>> _players;
+        std::vector<std::shared_ptr<Zappy::Egg>> _eggs;
     private:
 };
 
