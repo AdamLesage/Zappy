@@ -13,6 +13,8 @@
 
 #include "../ServerInfo/CommandFactory.hpp"
 #include "../Entity/Inventory.hpp"
+#include "../Entity/Player.hpp"
+#include "../Entity/Egg.hpp"
 
 class GuiConnect {
     public:
@@ -28,15 +30,35 @@ class GuiConnect {
         std::vector<Zappy::Inventory> get_inventories() { return _inventories; } // get inventories
         Zappy::Inventory fill_inventory(std::vector<std::string> args); // fill inventories of all tiles
         void executeCommandChanges(std::string commandName, std::string message); // execute command changes from response given by factory
-        
+
+        // DATA MANAGEMENT
+
+        // Player management
+        void createPlayer(std::vector<std::string> args);
+        void deletePlayer(std::vector<std::string> args);
+        void updatePlayerCoords(std::vector<std::string> args);
+        void updatePlayerInventory(std::vector<std::string> args);
+        void updatePlayerLevel(std::vector<std::string> args);
+        std::shared_ptr<Zappy::Player> getPlayerByNb(int playerNb);
+
+        // Egg management
+        void createEgg(std::vector<std::string> args);
+        void deleteEgg(std::vector<std::string> args);
+        void updateEgg(std::vector<std::string> args);
+        std::shared_ptr<Zappy::Egg> getEggByNb(int eggNb);
+
+        // Tile management
+        void updateTileInventory(std::vector<std::string> args);
 
     protected:
         int _socket;
-        std::array<int, 2> _size_map;
-        std::vector<Zappy::Inventory> _inventories;
         int _port;
         bool Running = true;
+        std::array<int, 2> _size_map;
+        std::vector<Zappy::Inventory> _inventories;
         std::shared_ptr<Zappy::CommandFactory> _commandFactory;
+        std::vector<Zappy::Player> _players;
+        std::vector<Zappy::Egg> _eggs;
     private:
 };
 
