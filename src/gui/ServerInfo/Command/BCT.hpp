@@ -16,6 +16,8 @@ namespace Zappy {
             BCT();
             ~BCT();
 
+            void askCommand(int socket, std::vector<std::string> args);
+
         protected:
         private:
     };
