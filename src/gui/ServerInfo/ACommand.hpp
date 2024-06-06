@@ -10,6 +10,8 @@
 
 #include "ICommand.hpp"
 #include "../Entity/Player.hpp"
+#include "../Entity/Egg.hpp"
+#include "../Entity/Tile.hpp"
 
 namespace Zappy {
     class ACommand : public ICommand {
