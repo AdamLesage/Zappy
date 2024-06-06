@@ -27,7 +27,6 @@ class GuiConnect {
         void close_thread();
         std::array<int, 2> get_size_map() { return _size_map; } // get size map
         void set_size_map(std::array<int, 2> size_map) { _size_map = size_map; } // set size map
-        std::vector<Zappy::Inventory> get_inventories() { return _inventories; } // get inventories
         std::vector<std::string> get_team_names() { return team_names; }
         std::vector<std::string> team_names;
         void executeCommandChanges(std::string commandName, std::string message); // execute command changes from response given by factory
@@ -55,8 +54,9 @@ class GuiConnect {
 
         // Tile management
         std::vector<Zappy::Inventory> fill_inventory(std::vector<std::string> args,std::vector<Zappy::Inventory>); // fill inventories of all tiles
-        void updateTileInventory(std::vector<std::string> args); // update inventory of a tile
-        std::vector<Zappy::Inventory> removeTileInventory(std::vector<std::string> args); // remove inventory of a tile
+        std::vector<Zappy::Inventory> get_inventories() { return _inventories; } // get inventories
+        void update_inventory(std::vector<std::string> args); // update inventory of a tile
+        
 
     protected:
         int _socket;
@@ -65,8 +65,8 @@ class GuiConnect {
         std::array<int, 2> _size_map;
         std::vector<Zappy::Inventory> _inventories;
         std::shared_ptr<Zappy::CommandFactory> _commandFactory;
-        std::vector<Zappy::Player> _players;
-        std::vector<Zappy::Egg> _eggs;
+        std::vector<std::shared_ptr<Zappy::Player>> _players;
+        std::vector<std::shared_ptr<Zappy::Egg>> _eggs;
     private:
 };
 

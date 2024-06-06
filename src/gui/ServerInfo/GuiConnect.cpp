@@ -110,7 +110,7 @@ void GuiConnect::executeCommandChanges(std::string commandName, std::string mess
                 // Need to create a new player
             }
             if (response[0] == "bct") {
-                // Need to update a tile inventory
+                _inventories = (fill_inventory(response, _inventories));
             }
         }
     }
