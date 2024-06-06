@@ -12,6 +12,7 @@
 #define GUI_CONNECT_HPP_
 
 #include "../ServerInfo/CommandFactory.hpp"
+#include "../Entity/Inventory.hpp"
 
 class GuiConnect {
     public:
@@ -22,15 +23,19 @@ class GuiConnect {
         void receive();
         void close_socket();
         void close_thread();
-        std::array<int, 2> get_size_map() { return _size_map; }
+        std::array<int, 2> get_size_map() { return _size_map; } // get size map
+        void set_size_map(std::array<int, 2> size_map) { _size_map = size_map; } // set size map
+        std::vector<Zappy::Inventory> get_inventories() { return _inventories; } // get inventories
+        Zappy::Inventory fill_inventory(std::vector<std::string> args); // fill inventories of all tiles
         std::vector<std::string> get_team_names() { return team_names; }
         std::vector<std::string> team_names;
-        void set_size_map(std::array<int, 2> size_map) { _size_map = size_map; }
         void executeCommandChanges(std::string commandName, std::string message); // execute command changes from response given by factory
+        
 
     protected:
         int _socket;
         std::array<int, 2> _size_map;
+        std::vector<Zappy::Inventory> _inventories;
         int _port;
         bool Running = true;
         std::shared_ptr<Zappy::CommandFactory> _commandFactory;

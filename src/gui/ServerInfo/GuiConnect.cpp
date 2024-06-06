@@ -74,10 +74,6 @@ void GuiConnect::receive()
             }
         }
     }
-    if (Running == false)
-        printf("Running = false\n");
-    else
-        printf("Running = true\n");
 }
 
 void GuiConnect::close_socket()
@@ -88,6 +84,23 @@ void GuiConnect::close_socket()
 void GuiConnect::close_thread()
 {
     Running = false;
+}
+
+
+Zappy::Inventory GuiConnect::fill_inventory(std::vector<std::string> args)
+{
+    Zappy::Inventory inventory;
+
+    inventory._x = std::stoi(args[1]);
+    inventory._y = std::stoi(args[2]);
+    inventory._food = std::stoi(args[3]);
+    inventory._linemate = std::stoi(args[4]);
+    inventory._deraumere = std::stoi(args[5]);
+    inventory._sibur = std::stoi(args[6]);
+    inventory._mendiane = std::stoi(args[7]);
+    inventory._phiras = std::stoi(args[8]);
+    inventory._thystame = std::stoi(args[9]);
+    return inventory;
 }
 
 void GuiConnect::executeCommandChanges(std::string commandName, std::string message)
@@ -113,7 +126,7 @@ void GuiConnect::executeCommandChanges(std::string commandName, std::string mess
                 // Need to create a new player
             }
             if (response[0] == "bct") {
-                // Need to fill the inventory of a tile
+                _inventories.push_back(fill_inventory(response));
             }
         }
     }
