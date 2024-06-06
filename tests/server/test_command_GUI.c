@@ -46,3 +46,15 @@ Test(sgt, test_sgt, .init = cr_redirect_stdout)
     sgt(&core, 1, command);
     cr_assert_stdout_eq_str(expected);
 }
+
+Test(sst, test_sst, .init = cr_redirect_stdout)
+{
+    core_t core;
+    char *command[] = {"sst", "100", NULL};
+    char *team_names[] = {"team1", "team2", NULL};
+    char *expected = "sst 100\n";
+
+    core.arguments.frequency = 100;
+    sst(&core, 1, command);
+    cr_assert_stdout_eq_str(expected);
+}
