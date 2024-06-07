@@ -25,6 +25,11 @@ void Zappy::PNW::applyChanges(std::vector<std::string> parsedData,
                                 bool isRunning
 )
 {
+    (void)size_map;
+    (void)tiles;
+    (void)eggs;
+    (void)timeUnit;
+    (void)isRunning;
     std::shared_ptr<Player> player = std::make_shared<Player>();
     player->setPlayerNumber(std::stoi(parsedData[1]));
     player->setPosition(std::stoi(parsedData[2]), std::stoi(parsedData[3]));
