@@ -40,6 +40,7 @@
 #include "../../src/gui/ServerInfo/Command/SUC.hpp"
 #include "../../src/gui/ServerInfo/Command/PEX.hpp"
 #include "../../src/gui/ServerInfo/Command/EBO.hpp"
+#include "../../src/gui/ServerInfo/Command/EDI.hpp"
 
 
 #endif /* !GUI_INCLUDE_HPP_ */
