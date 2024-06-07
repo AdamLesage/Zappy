@@ -43,6 +43,7 @@
 #include "../../src/gui/ServerInfo/Command/EDI.hpp"
 #include "../../src/gui/ServerInfo/Command/MCT.hpp"
 #include "../../src/gui/ServerInfo/Command/SEG.hpp"
+#include "../../src/gui/ServerInfo/Command/SST.hpp"
 
 
 #endif /* !GUI_INCLUDE_HPP_ */
