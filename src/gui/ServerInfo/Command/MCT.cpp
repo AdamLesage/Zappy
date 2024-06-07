@@ -19,6 +19,6 @@ void Zappy::MCT::askCommand(int fd, std::vector<std::string> args)
 {
     if (args.size() != 1)
         throw Zappy::CommandError("Invalid number of arguments for SGT command", "MCT");
-    std::string message = "MCT\n";
+    std::string message = "mct\n";
     write(fd, message.c_str(), message.size());
 }
