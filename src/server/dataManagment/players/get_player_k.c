@@ -32,8 +32,8 @@ static int *find_shortest_path(player_info_t *player_info, int x, int y,
     if (vector == NULL) {
         return (NULL);
     }
-    vector[0] = player_info->pos_y - y;
-    vector[1] = player_info->pos_x - x;
+    vector[0] = y - player_info->pos_y;
+    vector[1] = x - player_info->pos_x;
     if (player_info->pos_x < arguments->width / 2 && abs(((arguments->width
         - x) + player_info->pos_x) - x) < abs(vector[1]))
         vector[1] = ((arguments->width - x) + player_info->pos_x) - x;
@@ -41,8 +41,8 @@ static int *find_shortest_path(player_info_t *player_info, int x, int y,
         - player_info->pos_x) + x) - x) < abs(vector[1]))
         vector[1] = ((arguments->width - player_info->pos_x) + x) - x;
     if (player_info->pos_y < arguments->height / 2 && abs(((arguments->height
-        - y) + player_info->pos_y) - y) < abs(vector[1]))
-        vector[0] = ((arguments->height - y) + player_info->pos_y) - y;
+        - y) + player_info->pos_y) - y) < abs(vector[0]))
+        vector[0] = (player_info->pos_y - (arguments->height - y));
     if (player_info->pos_y > arguments->height / 2 && abs(((arguments->height
         - player_info->pos_y) + y) - y) < abs(vector[0]))
         vector[0] = ((arguments->height - player_info->pos_y) + y) - y;
@@ -54,8 +54,21 @@ static int compute_angle(int *vector1, int *vector2)
     float s = vector1[0] * vector2[0] + vector1[1] * vector2[1];
     float u = sqrt(pow(vector1[0], 2) + pow(vector1[1], 2));
     float v = sqrt(pow(vector2[0], 2) + pow(vector2[1], 2));
+    float angle = acos(s / u * v) * (180 / 3.14159265358979323846);
 
-    return (acos(s / u * v) * (180 / 3.14159265358979323846));
+    if (vector1[0] < 0 && vector2[1] > 0) {
+        angle += 180;
+    }
+    if (vector1[0] > 0 && vector2[1] < 0) {
+        angle += 180;
+    }
+    if (vector1[1] < 0 && vector2[0] > 0) {
+        angle += 180;
+    }
+    if (vector1[1] > 0 && vector2[0] < 0) {
+        angle += 180;
+    }
+    return (angle);
 }
 
 int get_player_k(player_info_t *player_info, int x, int y,

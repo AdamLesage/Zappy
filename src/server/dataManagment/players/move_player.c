@@ -84,5 +84,5 @@ void move_player2(map_t *map, players_t *player, int fd,
         return;
     }
     remove_player(map, info->pos_x, info->pos_y);
-    find_new_pos(info, map);
+    find_new_pos2(info, map, orientation);
 }
