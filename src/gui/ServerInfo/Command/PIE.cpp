@@ -15,15 +15,6 @@ Zappy::PIE::~PIE()
 {
 }
 
-void Zappy::PIE::askCommand(int socket, std::vector<std::string> args)
-{
-    if (args.size() != 1) {
-        throw Zappy::CommandError("PIE command must have 1 argument", "PIE");
-    }
-    std::string command = "pie " + args[0] + "\n";
-    write(socket, command.c_str(), command.length());
-}
-
 void Zappy::PIE::applyChanges(std::vector<std::string> parsedData,
                                 std::array<int, 2> &size_map,
                                 std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> &tiles,
@@ -39,19 +30,19 @@ void Zappy::PIE::applyChanges(std::vector<std::string> parsedData,
     (void)timeUnit; // unused
     (void)isRunning; // unused
     // parsedData vector { "pie", "x", "y", "incantation result" }
-    if (parsedData.size() < 5)
+    if (parsedData.size() != 4)
         throw Zappy::CommandError("Invalid number of arguments for PIC command", "PIC");
 
     try {
         // Update player isIncanting status
         std::string incantationResult = parsedData[3];
-        for (auto &player : players) {
-            for (std::size_t i = 4; i < parsedData.size(); i++) {
-                if (player.get()->getPlayerNumber() == std::stoi(parsedData[i])) {
-                    player->setIsIncanting(false);
-                    if (incantationResult == "ok")
-                        player->setPlayerLevel(player->getLevel() + 1);
-                    break;
+        for (std::size_t i = 0; i < players.size(); i++) {
+            if (players[i]->getPosition()[0] == std::stoi(parsedData[1]) && // if playerX == incantationX
+                players[i]->getPosition()[1] == std::stoi(parsedData[2]) && // if playerY == incantationY
+                players[i]->isPlayerIncanting() == true) {
+                players[i]->setIsIncanting(false);
+                if (incantationResult == "ok") {
+                    players[i]->setPlayerLevel(players[i]->getLevel() + 1);
                 }
             }
         }
