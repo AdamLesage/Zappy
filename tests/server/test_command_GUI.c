@@ -70,7 +70,7 @@ Test(bct, test_bct, .init = cr_redirect_stdout)
     tiles_list_t tile;
     tile.pos_x = 5;
     tile.pos_y = 4;
-    tile_info_t tile_info = {0, 0, 0, 0, 0, 0, 0};
+    tile_info_t tile_info = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     tile.tile_info = &tile_info;
     tile.next = NULL;
     core.map.tiles_list = &tile;
@@ -89,7 +89,7 @@ Test(mct, test_mct, .init = cr_redirect_stdout)
     tiles_list_t tile;
     tile.pos_x = 0;
     tile.pos_y = 0;
-    tile_info_t tile_info = {0, 0, 0, 0, 0, 0, 0};
+    tile_info_t tile_info = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     tile.tile_info = &tile_info;
     tile.next = NULL;
     core.map.tiles_list = &tile;
@@ -97,10 +97,31 @@ Test(mct, test_mct, .init = cr_redirect_stdout)
     tiles_list_t tile2;
     tile2.pos_x = 0;
     tile2.pos_y = 1;
-    tile_info_t tile_info2 = {0, 0, 0, 0, 0, 0, 0};
+    tile_info_t tile_info2 = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     tile2.tile_info = &tile_info2;
     tile2.next = NULL;
     tile.next = &tile2;
     mct(&core, 1, command);
+    cr_assert_stdout_eq_str(expected);
+}
+
+Test(pin, test_pin, .init = cr_redirect_stdout)
+{
+    core_t core;
+    char *command[] = {"pin", "1", NULL};
+    char *expected = "pin 1 0 0 0 0 0 0 0 0 0\n";
+
+    core.map.width = 10;
+    core.map.height = 10;
+    players_list_t player;
+    player.fd = 1;
+    inventory_t inventory = {0, 0, 0, 0, 0, 0, 0};
+    player_info_t player_info = {0, 0, 1, &inventory, {NULL}, NULL, 0, N, 1, "team1", 0};
+
+    player.player_info = &player_info;
+    player.next = NULL;
+    core.players.players_list = &player;
+    
+    pin(&core, 1, command);
     cr_assert_stdout_eq_str(expected);
 }
