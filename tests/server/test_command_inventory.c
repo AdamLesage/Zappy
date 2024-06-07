@@ -9,18 +9,6 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-void clean_tile(tile_info_t *info)
-{
-    info->nb_deraumere = 0;
-    info->nb_food = 0;
-    info->nb_linemate = 0;
-    info->nb_mendiane = 0;
-    info->nb_phiras = 0;
-    info->nb_sibur = 0;
-    info->nb_thystame = 0;
-    info->nb_players = 0;
-}
-
 Test (command_Inventory, command_Inventory_success, .init = cr_redirect_stdout)
 {
     core_t core;
