@@ -256,6 +256,7 @@ TEST_GUI    =   tests/gui/command/test_bct.cpp					\
 				tests/gui/command/test_ppo.cpp					\
 				tests/gui/command/test_plv.cpp					\
 				tests/gui/command/test_pin.cpp					\
+				tests/gui/command/test_pie.cpp					\
 
 Name		=	zappy
 
@@ -300,7 +301,7 @@ re: fclean all
 
 tests_gui_run:
 	g++ -o $(NAMETEST) $(SRC_TEST_GUI) \
-	$(TEST_GUI) $(CFLAGS) -lcriterion --coverage -lsfml-graphics -lsfml-window -lsfml-system
+	$(TEST_GUI) $(CFLAGS) -lcriterion --coverage $(SFML)
 	./$(NAMETEST)
 
 tests_run:
