@@ -17,6 +17,9 @@ Zappy::PIN::~PIN()
 
 void Zappy::PIN::askCommand(int socket, std::vector<std::string> args)
 {
+    if (args.size() != 1) {
+        throw Zappy::CommandError("PIN command must have 1 argument", "PIN");
+    }
     std::string command = "pin " + args[0] + "\n";
     write(socket, command.c_str(), command.length());
 }
@@ -37,7 +40,8 @@ void Zappy::PIN::applyChanges(std::vector<std::string> parsedData,
     (void)eggs;
     (void)tiles;
 
-
+    if (parsedData.size() != 11)
+        throw Zappy::CommandError("Invalid number of arguments for PIN command", "PIN");
     for (auto &player : players) {
         if (player->getPlayerNumber() == std::stoi(parsedData[1])) {
             player->setInventory(std::make_shared<Inventory>());

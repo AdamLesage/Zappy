@@ -17,6 +17,9 @@ Zappy::PIE::~PIE()
 
 void Zappy::PIE::askCommand(int socket, std::vector<std::string> args)
 {
+    if (args.size() != 1) {
+        throw Zappy::CommandError("PIE command must have 1 argument", "PIE");
+    }
     std::string command = "pie " + args[0] + "\n";
     write(socket, command.c_str(), command.length());
 }
