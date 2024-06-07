@@ -17,6 +17,8 @@ Zappy::PPO::~PPO()
 
 void Zappy::PPO::askCommand(int fd, std::vector<std::string> args)
 {
+    if (args.size() != 2)
+        throw Zappy::CommandError("Invalid number of arguments for PPO command", "PPO");
     std::string playerNumber = args[1];
     std::string message = "ppo " + playerNumber + "\n";
     write(fd, message.c_str(), message.size());
@@ -37,6 +39,8 @@ void Zappy::PPO::applyChanges(std::vector<std::string> parsedData,
     (void) timeUnit;
     (void) isRunning;
     
+    if (parsedData.size() != 5)
+        throw Zappy::CommandError("Invalid number of arguments for PPO command", "PPO");
     int playerNumber = std::stoi(parsedData[1]);
     int x = std::stoi(parsedData[2]);
     int y = std::stoi(parsedData[3]);
