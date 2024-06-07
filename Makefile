@@ -263,6 +263,11 @@ TEST_GUI    =   tests/gui/command/test_bct.cpp					\
 				tests/gui/command/test_pdr.cpp					\
 				tests/gui/command/test_pgt.cpp					\
 				tests/gui/command/test_pdi.cpp					\
+				tests/gui/command/test_enw.cpp					\
+				tests/gui/command/test_smg.cpp					\
+				tests/gui/command/test_suc.cpp					\
+				tests/gui/command/test_sbp.cpp					\
+				tests/gui/command/test_pex.cpp					\
 
 Name		=	zappy
 
