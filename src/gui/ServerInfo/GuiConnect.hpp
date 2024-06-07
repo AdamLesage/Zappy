@@ -28,8 +28,6 @@ class GuiConnect {
         void close_thread();
         std::array<int, 2> get_size_map() { return _size_map; } // get size map
         void set_size_map(std::array<int, 2> size_map) { _size_map = size_map; } // set size map
-        std::vector<std::string> get_team_names() { return team_names; }
-        std::vector<std::string> team_names;
         void executeCommandChanges(std::string commandName, std::string message); // execute command changes from response given by factory
         std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> getTiles() { return _tiles; } // get tiles
 
@@ -41,6 +39,7 @@ class GuiConnect {
         void updatePlayerCoords(std::pair<int, int> coords, int playerNb);
         std::pair<int, int> getPlayerCoords(int playerNb);
         std::string getPlayerTeam(int playerNb);
+        std::vector<std::string> getTeamNames() { return _teams; }
         void updatePlayerTeam(int playerNb, std::string teamName);
         std::shared_ptr<Zappy::Inventory> getPlayerInventory(int playerNb);
         void updatePlayerInventory(int playerNb, std::shared_ptr<Zappy::Inventory> inventory);
@@ -71,6 +70,7 @@ class GuiConnect {
         std::vector<std::shared_ptr<Zappy::Egg>> _eggs;
         std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> _tiles;
         int _timeUnit;
+        std::vector<std::string> _teams;
     private:
 };
 
