@@ -18,6 +18,7 @@ void GuiConnect::createPlayer(std::vector<std::string> args)
     player->setOrientation(args[4]);
     player->setPlayerLevel(std::stoi(args[5]));
     player->setTeamName(args[6]);
+    player->setMessage("");
     this->_players.push_back(player);
 }
 

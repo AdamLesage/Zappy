@@ -40,5 +40,6 @@ void Zappy::PNW::applyChanges(std::vector<std::string> parsedData,
     player->setOrientation(std::stoi(parsedData[4]));
     player->setPlayerLevel(std::stoi(parsedData[5]));
     player->setTeamName(parsedData[6]);
+    player->setMessage("");
     players.push_back(player);
 }
