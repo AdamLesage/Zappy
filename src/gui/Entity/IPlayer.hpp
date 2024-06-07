@@ -16,7 +16,7 @@ namespace Zappy {
     class Inventory;
     class IPlayer {
         public:
-            ~IPlayer() = default;
+            virtual ~IPlayer() = default;
             virtual std::string getTeamName() = 0;
             virtual std::string getPlayerName() = 0;
             virtual int getLevel() = 0;
@@ -31,6 +31,8 @@ namespace Zappy {
             virtual std::shared_ptr<Inventory> getInventory() = 0;
             virtual bool isPlayerIncanting() = 0;
             virtual void setIsIncanting(bool isIncanting) = 0;
+            virtual int getOrientation() = 0;
+            virtual void setOrientation(int orientation) = 0;
         protected:
         private:
     };

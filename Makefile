@@ -198,6 +198,49 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/utils/len_array.c									\
 			src/server/utils/string_to_object.c								\
 
+SRC_TEST_GUI =  src/gui/Interface/Interface.cpp								\
+				src/gui/Interface/bar.cpp									\
+				src/gui/ServerInfo/GuiConnect.cpp							\
+				src/gui/lib/my_str_to_line_array.cpp						\
+				src/gui/lib/my_str_to_word_array.cpp						\
+				src/gui/Entity/Tile.cpp										\
+				src/gui/Entity/Inventory.cpp								\
+				src/gui/Entity/AInventory.cpp								\
+				src/gui/Entity/Player.cpp									\
+				src/gui/Entity/Egg.cpp										\
+				src/gui/ServerInfo/ServerInfo.cpp							\
+				src/gui/ServerInfo/CommandFactory.cpp						\
+				src/gui/ServerInfo/ACommand.cpp								\
+				src/gui/ServerInfo/Command/MSZ.cpp							\
+				src/gui/ServerInfo/Command/PNW.cpp							\
+				src/gui/ServerInfo/Command/PPO.cpp							\
+				src/gui/ServerInfo/Command/TNA.cpp							\
+				src/gui/ServerInfo/Command/PLV.cpp							\
+				src/gui/ServerInfo/Command/PIN.cpp							\
+				src/gui/ServerInfo/Command/PEX.cpp							\
+				src/gui/ServerInfo/Command/PBC.cpp							\
+				src/gui/ServerInfo/Command/PIC.cpp							\
+				src/gui/ServerInfo/Command/PIE.cpp							\
+				src/gui/ServerInfo/Command/PFK.cpp							\
+				src/gui/ServerInfo/Command/PDR.cpp							\
+				src/gui/ServerInfo/Command/PGT.cpp							\
+				src/gui/ServerInfo/Command/PDI.cpp							\
+				src/gui/ServerInfo/Command/ENW.cpp							\
+				src/gui/ServerInfo/Command/EBO.cpp							\
+				src/gui/ServerInfo/Command/EDI.cpp							\
+				src/gui/ServerInfo/Command/SGT.cpp							\
+				src/gui/ServerInfo/Command/SST.cpp							\
+				src/gui/ServerInfo/Command/SEG.cpp							\
+				src/gui/ServerInfo/Command/SMG.cpp							\
+				src/gui/ServerInfo/Command/SUC.cpp							\
+				src/gui/ServerInfo/Command/SBP.cpp							\
+				src/gui/ServerInfo/Command/BCT.cpp							\
+				src/gui/ServerInfo/Command/MCT.cpp							\
+				src/gui/DataManagement/egg_management.cpp					\
+				src/gui/DataManagement/player_management.cpp				\
+				src/gui/DataManagement/tile_management.cpp					\
+				src/gui/DataManagement/server_info_management.cpp			\
+
 TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_player_function.c				\
 				tests/server/test_init_map.c					\
@@ -206,6 +249,13 @@ TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_map_put.c						\
 				tests/server/test_map_remove.c					\
 				tests/server/test_command_GUI.c					\
+
+TEST_GUI    =   tests/gui/command/test_bct.cpp					\
+				tests/gui/command/test_msz.cpp					\
+				tests/gui/command/test_pnw.cpp					\
+				tests/gui/command/test_ppo.cpp					\
+				tests/gui/command/test_plv.cpp					\
+				tests/gui/command/test_pin.cpp					\
 
 Name		=	zappy
 
@@ -247,6 +297,11 @@ fclean: clean
 	rm -f plugins/*.so
 
 re: fclean all
+
+tests_gui_run:
+	g++ -o $(NAMETEST) $(SRC_TEST_GUI) \
+	$(TEST_GUI) $(CFLAGS) -lcriterion --coverage -lsfml-graphics -lsfml-window -lsfml-system
+	./$(NAMETEST)
 
 tests_run:
 	gcc -o $(NAMETEST) $(SRC_TEST_SERVER) \

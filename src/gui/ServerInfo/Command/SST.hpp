@@ -25,7 +25,7 @@ namespace Zappy {
                                 std::vector<std::string> &teams,
                                 int timeUnit,
                                 bool isRunning
-            );
+            ) override;
         protected:
         private:
     };

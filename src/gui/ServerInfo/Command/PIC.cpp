@@ -23,7 +23,7 @@ void Zappy::PIC::applyChanges(std::vector<std::string> parsedData,
                                 std::vector<std::string> &teams,
                                 int timeUnit,
                                 bool isRunning
-)
+) 
 {
     (void)size_map; // unused
     (void)tiles; // unused

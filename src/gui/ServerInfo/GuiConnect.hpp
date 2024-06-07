@@ -57,12 +57,8 @@ class GuiConnect {
         // Tile management
         std::vector<Zappy::Inventory> get_inventories() { return _inventories; } // get inventories
         Zappy::Inventory update_inventory(std::vector<std::string> args, Zappy::Inventory tmp); // update inventory of a tile
-        
+        std::shared_ptr<Zappy::Tile> getTileByCoords(std::pair<int, int> coords); // get tile by coords
 
-    protected:
-        int _socket;
-        int _port;
-        bool Running = true;
         std::array<int, 2> _size_map;
         std::vector<Zappy::Inventory> _inventories;
         std::shared_ptr<Zappy::CommandFactory> _commandFactory;
@@ -70,6 +66,10 @@ class GuiConnect {
         std::vector<std::shared_ptr<Zappy::Egg>> _eggs;
         std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> _tiles;
         int _timeUnit;
+        bool Running = true;
+    protected:
+        int _socket;
+        int _port;
         std::vector<std::string> _teams;
     private:
 };
