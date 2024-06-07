@@ -28,6 +28,7 @@ void Zappy::MSZ::applyChanges(std::vector<std::string> parsedData,
                                 std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> &tiles,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
+                                std::vector<std::string> &teams,
                                 int timeUnit,
                                 bool isRunning
 )
@@ -37,7 +38,7 @@ void Zappy::MSZ::applyChanges(std::vector<std::string> parsedData,
     (void)eggs; // unused
     (void)timeUnit; // unused
     (void)isRunning; // unused
-
+    (void)teams; // unused
     if (parsedData.size() != 3)
         throw Zappy::CommandError("Invalid number of arguments for SGT command", "MSZ");
     size_map[0] = std::stoi(parsedData[1]);

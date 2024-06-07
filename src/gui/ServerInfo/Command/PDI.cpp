@@ -20,6 +20,7 @@ void Zappy::PDI::applyChanges(std::vector<std::string> parsedData,
                                 std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> &tiles,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
+                                std::vector<std::string> &teams,
                                 int timeUnit,
                                 bool isRunning
 )
@@ -29,6 +30,7 @@ void Zappy::PDI::applyChanges(std::vector<std::string> parsedData,
     (void)eggs; // unused
     (void)timeUnit; // unused
     (void)isRunning; // unused
+    (void)teams; // unused    
     // parsedData vector { "pdi", "playerNumber" }
     if (parsedData.size() != 2)
         throw Zappy::CommandError("Invalid number of arguments for PIC command", "PIC");

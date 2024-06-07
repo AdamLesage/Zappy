@@ -29,6 +29,7 @@ void Zappy::PIN::applyChanges(std::vector<std::string> parsedData,
                                 std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> &tiles,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
+                                std::vector<std::string> &teams,
                                 int timeUnit,
                                 bool isRunning
 )
@@ -39,6 +40,7 @@ void Zappy::PIN::applyChanges(std::vector<std::string> parsedData,
     (void)isRunning;
     (void)eggs;
     (void)tiles;
+    (void)teams;
 
     if (parsedData.size() != 11)
         throw Zappy::CommandError("Invalid number of arguments for PIN command", "PIN");

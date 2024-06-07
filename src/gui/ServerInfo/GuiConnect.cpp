@@ -90,6 +90,6 @@ void GuiConnect::close_thread()
 void GuiConnect::executeCommandChanges(std::string commandName, std::string message)
 {
     if (_commandFactory->isARegisteredCommand(commandName)) {
-        _commandFactory->executeCommand(commandName, message, _size_map, _tiles, _players, _eggs, _timeUnit, Running);
+        _commandFactory->executeCommand(commandName, message, _size_map, _tiles, _players, _eggs, _teams, _timeUnit, Running);
     }
 }

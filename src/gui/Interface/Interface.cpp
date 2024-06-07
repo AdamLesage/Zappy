@@ -100,11 +100,9 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
             if (event.type == sf::Event::MouseWheelScrolled) {
                 if (event.mouseWheelScroll.delta > 0 && view.getSize().x > 960 && view.getSize().y > 540) {
                     view.zoom(0.9);
-                    printf("zoom: %f\n", zoom);
                     zoom += 1;
                 } else if (view.getSize().x < 1920 * 3 && view.getSize().y < 1080 * 3) {
                     view.zoom(1.1);
-                    printf("zoom: %f\n", zoom);
                     zoom -= 1;
                 }
             }
@@ -141,13 +139,10 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->setView(window->getDefaultView());
         for (size_t i = 0; i < _rect.size(); i++)
             window->draw(_rect[i]);
-        // printf("----------------------------------------------------------------------------------------\n");
-        // printf("%ld", _gui_connect->get_team_names().size());
-        for (size_t i = 0; i < gui_connect->get_team_names().size(); i++) {
-            Texts.push_back(sf::Text(gui_connect->get_team_names()[i], font, 50));
-            // printf("team[%ld]: %s\n", i, gui_connect->get_team_names()[i].c_str());
+        for (size_t i = 0; i < gui_connect->getTeamNames().size(); i++) {
+            Texts.push_back(sf::Text(gui_connect->getTeamNames()[i], font, 50));
             Texts[2 + i].setFillColor(sf::Color::Black);
-            Texts[2 + i].setPosition(10, 50 + (2 + i * 50));
+            Texts[2 + i].setPosition(10, 50 + ((2 + i) * 50));
         }
         for (size_t i = 0; i < Texts.size(); i++)
             window->draw(Texts[i]);
