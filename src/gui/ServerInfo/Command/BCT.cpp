@@ -28,12 +28,16 @@ void Zappy::BCT::applyChanges(std::vector<std::string> parsedData,
                                 std::array<int, 2> &size_map,
                                 std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> &tiles,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
-                                std::vector<std::shared_ptr<Zappy::Egg>> &eggs
+                                std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
+                                int timeUnit,
+                                bool isRunning
 )
 {
     (void)size_map; // unused
     (void)players; // unused
     (void)eggs; // unused
+    (void)timeUnit; // unused
+    (void)isRunning; // unused
     if (parsedData.size() != 10)
         throw std::invalid_argument("Invalid number of arguments for SGT command");
     if (tiles.size() == 0)
