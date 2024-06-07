@@ -16,7 +16,7 @@ namespace Zappy {
     class Inventory;
     class IPlayer {
         public:
-            ~IPlayer() = default;
+            virtual ~IPlayer() = default;
             virtual std::string getTeamName() = 0;
             virtual std::string getPlayerName() = 0;
             virtual int getLevel() = 0;
