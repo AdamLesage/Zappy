@@ -18,7 +18,7 @@ Zappy::BCT::~BCT()
 
 void Zappy::BCT::askCommand(int fd, std::vector<std::string> args)
 {
-    if (args.size() != 1)
+    if (args.size() != 3)
         throw Zappy::CommandError("Invalid number of arguments for SGT command", "BCT");
     std::string message = "bct " + args[1] + " " + args[2] + "\n";
     write(fd, message.c_str(), message.size());
@@ -39,11 +39,13 @@ void Zappy::BCT::applyChanges(std::vector<std::string> parsedData,
     (void)timeUnit; // unused
     (void)isRunning; // unused
     if (parsedData.size() != 10)
-        throw std::invalid_argument("Invalid number of arguments for SGT command");
+        throw Zappy::CommandError("Invalid number of arguments for BCT command", "BCT");
     if (tiles.size() == 0)
         return;
     int x = std::stoi(parsedData[1]);
     int y = std::stoi(parsedData[2]);
+    // tiles.resize(y + 1);
+    // tiles[y].resize(x + 1);
     tiles[y][x]->_inventory->set("Food", std::stoi(parsedData[3]));
     tiles[y][x]->_inventory->set("Linemate", std::stoi(parsedData[4]));
     tiles[y][x]->_inventory->set("Deraumere", std::stoi(parsedData[5]));
