@@ -31,12 +31,19 @@ void Zappy::PBC::applyChanges(std::vector<std::string> parsedData,
     (void)teams;
     (void)timeUnit;
     (void)isRunning;
-    std::string message = parsedData[1];
-    std::string playerNumber = parsedData[0];
-    for (auto &player : players) {
-        if (player->getPlayerNumber() == std::stoi(playerNumber)) {
-            player->setMessage(message);
-            break;
+    // parsedData vector { "pbc", "playerNumber", "message" }
+    if (parsedData.size() != 3)
+        throw Zappy::CommandError("Invalid number of arguments for PBC command", "PBC");
+    try {
+        std::string playerNumber = parsedData[1];
+        std::string message = parsedData[2];
+        for (auto &player : players) {
+            if (player->getPlayerNumber() == std::stoi(playerNumber)) {
+                player->setMessage(message);
+                break;
+            }
         }
+    } catch (std::exception &e) {
+        throw Zappy::CommandError("Invalid arguments for PBC command", "PBC");
     }
 }
