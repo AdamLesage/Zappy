@@ -34,15 +34,15 @@ namespace Zappy {
             void setOrientation(int orientation) {_orientation = orientation;}
 
             std::shared_ptr<Inventory> _inventory;
-        protected:
             std::string _teamName;
             std::string _playerName;
             int _level;
             std::array<int, 2> _position;
             int _playerNumber;
-            //std::shared_ptr<Inventory> _inventory;
             bool _isIncanting;
             int _orientation;
+        protected:
+            //std::shared_ptr<Inventory> _inventory;
         private:
     };
 }
