@@ -251,6 +251,7 @@ TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_command_GUI.c					\
 
 TEST_GUI    =   tests/gui/command/test_bct.cpp					\
+				tests/gui/command/test_msz.cpp					\
 
 Name		=	zappy
 
