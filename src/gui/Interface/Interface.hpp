@@ -32,6 +32,7 @@ namespace Zappy {
             std::array<int, 2> get_mape_size() { return _mape_size; }
             void set_mape_size(std::array<int, 2> mape_size) { _mape_size = mape_size; }
             void set_map();
+            void check_event();
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
@@ -55,6 +56,7 @@ namespace Zappy {
             std::thread ReceiveProcess;
             sf::View view;
             sf::Vector2i lastMousePos;
+            bool isPanning;
 
         private:
     };

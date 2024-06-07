@@ -43,6 +43,8 @@ Zappy::Interface::Interface()
     zoom = 100;
     last_zoom = 100;
     view.setSize(1920, 1080);
+    isPanning = false;
+
     // view.move(100, 100);
     // view.setRotation(20);
     // view.rotate(5);
@@ -84,52 +86,54 @@ void Zappy::Interface::set_map()
     }
 }
 
+void Zappy::Interface::check_event()
+{
+    while (window->pollEvent(event)) {
+        if (event.type == sf::Event::Closed)
+            window->close();
+        if (event.type == sf::Event::MouseWheelScrolled) {
+            if (event.mouseWheelScroll.delta > 0 && view.getSize().x > 960 && view.getSize().y > 540) {
+                view.zoom(0.9);
+                zoom += 1;
+            } else if (view.getSize().x < 1920 * 3 && view.getSize().y < 1080 * 3) {
+                view.zoom(1.1);
+                zoom -= 1;
+            }
+        }
+        if (event.type == sf::Event::MouseButtonPressed) {
+            if (event.mouseButton.button == sf::Mouse::Left && event.mouseButton.x > 230 && event.mouseButton.x < 1920 - 230 && event.mouseButton.y > 75 && event.mouseButton.y < 1080 - 300) {
+                isPanning = true;
+                lastMousePos = sf::Mouse::getPosition(*window);
+            }
+        }
+        if (event.type == sf::Event::MouseButtonReleased) {
+            if (event.mouseButton.button == sf::Mouse::Left) {
+                isPanning = false;
+            }
+        }
+        if (event.type == sf::Event::MouseMoved) {
+            if (isPanning) {
+                sf::Vector2i currentMousePos = sf::Mouse::getPosition(*window);
+                sf::Vector2f delta = window->mapPixelToCoords(lastMousePos) - window->mapPixelToCoords(currentMousePos);
+                view.move(delta);
+                lastMousePos = currentMousePos;
+            }
+        }
+    }
+}
+
 void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
 {
     _gui_connect = gui_connect;
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
     sleep(5);
     set_map();
-    bool isPanning = false;
 
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
-        while (window->pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window->close();
-            if (event.type == sf::Event::MouseWheelScrolled) {
-                if (event.mouseWheelScroll.delta > 0 && view.getSize().x > 960 && view.getSize().y > 540) {
-                    view.zoom(0.9);
-                    zoom += 1;
-                } else if (view.getSize().x < 1920 * 3 && view.getSize().y < 1080 * 3) {
-                    view.zoom(1.1);
-                    zoom -= 1;
-                }
-            }
-            if (event.type == sf::Event::MouseButtonPressed) {
-                if (event.mouseButton.button == sf::Mouse::Left && event.mouseButton.x > 230 && event.mouseButton.x < 1920 - 230 && event.mouseButton.y > 75 && event.mouseButton.y < 1080 - 300) {
-                    isPanning = true;
-                    lastMousePos = sf::Mouse::getPosition(*window);
-                }
-            }
-
-            if (event.type == sf::Event::MouseButtonReleased) {
-                if (event.mouseButton.button == sf::Mouse::Left) {
-                    isPanning = false;
-                }
-            }
-
-            if (event.type == sf::Event::MouseMoved) {
-                if (isPanning) {
-                    sf::Vector2i currentMousePos = sf::Mouse::getPosition(*window);
-                    sf::Vector2f delta = window->mapPixelToCoords(lastMousePos) - window->mapPixelToCoords(currentMousePos);
-                    view.move(delta);
-                    lastMousePos = currentMousePos;
-                }
-            }
-        }
+        check_event();
         sound_volume = bars[0]->checkClick(window);
-        window->setView(view);        
+        window->setView(view); 
         for (double i = 0; i < _gui_connect->get_size_map()[0]; i++) {
             for (double j = 0; j < _gui_connect->get_size_map()[1]; j++) {
                 map_sprites[i][j].setPosition(500 + (i * 102.4), 150 + (j * 102.4));
