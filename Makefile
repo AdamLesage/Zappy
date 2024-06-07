@@ -174,6 +174,7 @@ TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_map_remove.c					\
 				tests/server/test_command_GUI.c					\
 				tests/server/test_command_move_player.c			\
+				tests/server/test_command_interact_player.c		\
 
 Name		=	zappy
 

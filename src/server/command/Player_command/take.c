@@ -37,6 +37,7 @@ void take(core_t *core, int fd, char **command)
 
     if (take_on_map(pos, object, &core->map) == false) {
         send_response("ko\n", fd);
+        return;
     }
     put_on_inventory(&core->players, object, fd);
     send_response("ok\n", fd);
