@@ -42,10 +42,8 @@ void Zappy::BCT::applyChanges(std::vector<std::string> parsedData,
         throw std::invalid_argument("Invalid number of arguments for SGT command");
     if (tiles.size() == 0)
         return;
-    std::cout << "oiuhghuiuyguioiuyhuioiuyhghuiuyguiuygfghuiug" << std::endl;
     int x = std::stoi(parsedData[1]);
     int y = std::stoi(parsedData[2]);
-    std::cout << tiles[y][x]->_inventory->_food << std::endl;
     tiles[y][x]->_inventory->_food = std::stoi(parsedData[3]);
     tiles[y][x]->_inventory->set("Linemate", std::stoi(parsedData[4]));
     tiles[y][x]->_inventory->set("Deraumere", std::stoi(parsedData[5]));

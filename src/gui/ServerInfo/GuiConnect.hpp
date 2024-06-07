@@ -60,10 +60,6 @@ class GuiConnect {
         Zappy::Inventory update_inventory(std::vector<std::string> args, Zappy::Inventory tmp); // update inventory of a tile
         
 
-    protected:
-        int _socket;
-        int _port;
-        bool Running = true;
         std::array<int, 2> _size_map;
         std::vector<Zappy::Inventory> _inventories;
         std::shared_ptr<Zappy::CommandFactory> _commandFactory;
@@ -71,6 +67,10 @@ class GuiConnect {
         std::vector<std::shared_ptr<Zappy::Egg>> _eggs;
         std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> _tiles;
         int _timeUnit;
+        bool Running = true;
+    protected:
+        int _socket;
+        int _port;
     private:
 };
 

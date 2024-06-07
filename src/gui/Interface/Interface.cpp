@@ -79,8 +79,8 @@ void Zappy::Interface::set_map()
             tmp_sprite.push_back(sprite);
             tmp_sprite[j].setPosition(i + 100, j + 100);
         }
-        _gui_connect->getTiles().push_back(tmp);
-        map_sprites.push_back(tmp_sprite);
+        _gui_connect->_tiles.push_back(tmp);
+        map_sprites.push_back(tmp_sprite);   
     }
 }
 
@@ -90,7 +90,6 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
     sleep(5);
     set_map();
-    std::cout << _gui_connect->getTiles().size() << std::endl;
     bool isPanning = false;
 
     while (window->isOpen()) {
