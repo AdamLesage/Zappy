@@ -15,9 +15,10 @@ Test(pie, test_pie_apply_changes_throw)
     std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> tiles;
     std::vector<std::shared_ptr<Zappy::Player>> players;
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
+    std::vector<std::string> teams;
     int timeUnit = 1;
     bool isRunning = true;
-    cr_assert_throw(pie.applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning), Zappy::CommandError);
+    cr_assert_throw(pie.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
 }
 
 Test(pie, test_pie_apply_changes_result_ok)
@@ -29,6 +30,7 @@ Test(pie, test_pie_apply_changes_result_ok)
     std::vector<std::shared_ptr<Zappy::Player>> players;
     std::shared_ptr<Zappy::Player> player = std::make_shared<Zappy::Player>();
     std::shared_ptr<Zappy::Player> player2 = std::make_shared<Zappy::Player>();
+    std::vector<std::string> teams;
     player->setPlayerNumber(2);
     player2->setPlayerNumber(3);
     player->setPlayerLevel(1);
@@ -42,7 +44,7 @@ Test(pie, test_pie_apply_changes_result_ok)
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
     int timeUnit = 1;
     bool isRunning = true;
-    cr_assert_no_throw(pie.applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning), Zappy::CommandError);
+    cr_assert_no_throw(pie.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
     cr_assert_eq(players.size(), 2);
     cr_assert_eq(players[0]->getPlayerNumber(), 2);
     cr_assert_eq(players[0]->getLevel(), 2);
@@ -61,6 +63,7 @@ Test(pie, test_pie_apply_changes_result_failed)
     std::vector<std::shared_ptr<Zappy::Player>> players;
     std::shared_ptr<Zappy::Player> player = std::make_shared<Zappy::Player>();
     std::shared_ptr<Zappy::Player> player2 = std::make_shared<Zappy::Player>();
+    std::vector<std::string> teams;
     player->setPlayerNumber(2);
     player->setPlayerLevel(1);
     player->setPosition(2, 3);
@@ -74,7 +77,7 @@ Test(pie, test_pie_apply_changes_result_failed)
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
     int timeUnit = 1;
     bool isRunning = true;
-    cr_assert_no_throw(pie.applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning), Zappy::CommandError);
+    cr_assert_no_throw(pie.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
     cr_assert_eq(players.size(), 2);
     cr_assert_eq(players[0]->getPlayerNumber(), 2);
     cr_assert_eq(players[0]->getLevel(), 1);
@@ -93,6 +96,7 @@ Test(pie, test_pie_apply_changes_invalid_input)
     std::vector<std::shared_ptr<Zappy::Player>> players;
     std::shared_ptr<Zappy::Player> player = std::make_shared<Zappy::Player>();
     std::shared_ptr<Zappy::Player> player2 = std::make_shared<Zappy::Player>();
+    std::vector<std::string> teams;
     player->setPlayerNumber(2);
     player->setPlayerLevel(1);
     player->setPosition(2, 3);
@@ -106,5 +110,5 @@ Test(pie, test_pie_apply_changes_invalid_input)
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
     int timeUnit = 1;
     bool isRunning = true;
-    cr_assert_throw(pie.applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning), Zappy::CommandError);
+    cr_assert_throw(pie.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
 }

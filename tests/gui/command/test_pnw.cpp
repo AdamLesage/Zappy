@@ -15,9 +15,10 @@ Test(pnw, test_pnw_apply_changes_throw)
     std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> tiles;
     std::vector<std::shared_ptr<Zappy::Player>> players;
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
+    std::vector<std::string> teams;
     int timeUnit = 1;
     bool isRunning = true;
-    cr_assert_throw(pnw.applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning), Zappy::CommandError);
+    cr_assert_throw(pnw.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
 }
 
 Test(pnw, test_pnw_apply_changes)
@@ -28,7 +29,8 @@ Test(pnw, test_pnw_apply_changes)
     std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> tiles;
     std::vector<std::shared_ptr<Zappy::Player>> players;
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
+    std::vector<std::string> teams;
     int timeUnit = 1;
     bool isRunning = true;
-    cr_assert_no_throw(pnw.applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning), Zappy::CommandError);
+    cr_assert_no_throw(pnw.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
 }

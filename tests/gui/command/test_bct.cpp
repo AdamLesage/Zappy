@@ -29,9 +29,10 @@ Test(bct, test_bct_apply_changes_throw)
     std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> tiles;
     std::vector<std::shared_ptr<Zappy::Player>> players;
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
+    std::vector<std::string> teams;
     int timeUnit = 1;
     bool isRunning = true;
-    cr_assert_throw(bct.applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning), Zappy::CommandError);
+    cr_assert_throw(bct.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
 }
 
 Test(bct, test_bct_apply_changes_empty_map)
@@ -42,9 +43,10 @@ Test(bct, test_bct_apply_changes_empty_map)
     std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> tiles;
     std::vector<std::shared_ptr<Zappy::Player>> players;
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
+    std::vector<std::string> teams;
     int timeUnit = 1;
     bool isRunning = true;
-    cr_assert_no_throw(bct.applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning), Zappy::CommandError);
+    cr_assert_no_throw(bct.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
 }
 
 Test(bct, test_bct_apply_changes)
@@ -55,6 +57,7 @@ Test(bct, test_bct_apply_changes)
     std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> tiles;
     std::vector<std::shared_ptr<Zappy::Player>> players;
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
+    std::vector<std::string> teams;
     int timeUnit = 1;
     bool isRunning = true;
     for (int i = 0; i < size_map[0]; i++)
@@ -66,7 +69,7 @@ Test(bct, test_bct_apply_changes)
         }
         tiles.push_back(tmp);
     }
-    bct.applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning);
+    bct.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning);
     cr_assert_eq(tiles.size(), 10);
     cr_assert_eq(tiles[3][2]->_inventory->get("Food"), 1);
     cr_assert_eq(tiles[3][2]->_inventory->get("Linemate"), 2);

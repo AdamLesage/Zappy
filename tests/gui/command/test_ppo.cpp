@@ -30,9 +30,10 @@ Test(ppo, test_ppo_apply_changes_throw)
     std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> tiles;
     std::vector<std::shared_ptr<Zappy::Player>> players;
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
+    std::vector<std::string> teams;
     int timeUnit = 1;
     bool isRunning = true;
-    cr_assert_throw(ppo.applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning), Zappy::CommandError);
+    cr_assert_throw(ppo.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
 }
 
 Test(ppo, test_ppo_apply_changes_empty_map)
@@ -46,9 +47,10 @@ Test(ppo, test_ppo_apply_changes_empty_map)
     player->setPlayerNumber(2);
     players.push_back(player);
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
+    std::vector<std::string> teams;
     int timeUnit = 1;
     bool isRunning = true;
-    cr_assert_no_throw(ppo.applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning), Zappy::CommandError);
+    cr_assert_no_throw(ppo.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
     cr_assert_eq(players.size(), 1);
     cr_assert_eq(players[0]->getPlayerNumber(), 2);
     cr_assert_eq(players[0]->getPosition()[0], 3);

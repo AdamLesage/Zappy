@@ -29,9 +29,10 @@ Test(pin, test_pin_apply_changes_throw)
     std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> tiles;
     std::vector<std::shared_ptr<Zappy::Player>> players;
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
+    std::vector<std::string> teams;
     int timeUnit = 1;
     bool isRunning = true;
-    cr_assert_throw(pin.applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning), Zappy::CommandError);
+    cr_assert_throw(pin.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
 }
 
 Test(pin, test_pin_apply_changes)
@@ -45,9 +46,10 @@ Test(pin, test_pin_apply_changes)
     player->setPlayerNumber(2);
     players.push_back(player);
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
+    std::vector<std::string> teams;
     int timeUnit = 1;
     bool isRunning = true;
-    cr_assert_no_throw(pin.applyChanges(parsedData, size_map, tiles, players, eggs, timeUnit, isRunning), Zappy::CommandError);
+    cr_assert_no_throw(pin.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
     cr_assert_eq(players.size(), 1);
     cr_assert_eq(players[0]->getPlayerNumber(), 2);
     cr_assert_eq(players[0]->getInventory()->get("Food"), 4);
