@@ -19,9 +19,12 @@ Zappy::Interface::Interface()
     sprite.setTexture(texture);
     sprite.setScale(0.1, 0.1);
     font.loadFromFile("./asset/gui/Pacifico.ttf");
-    Texts.push_back(sf::Text("zoom", font, 50));
+    Texts.push_back(sf::Text("tick", font, 50));
+    Texts.push_back(sf::Text("Team: ", font, 50));
     Texts[0].setFillColor(sf::Color::Black);
+    Texts[1].setFillColor(sf::Color::Black);
     Texts[0].setPosition(1750, 225);
+    Texts[1].setPosition(10, 50);
     sound_.loadFromFile("./asset/gui/logo_son.jpg");
     sound.setTexture(sound_);
     sound.setPosition(1725, 10);
@@ -40,6 +43,8 @@ Zappy::Interface::Interface()
     zoom = 100;
     last_zoom = 100;
     view.setSize(1920, 1080);
+    isPanning = false;
+
     // view.move(100, 100);
     // view.setRotation(20);
     // view.rotate(5);
@@ -76,8 +81,44 @@ void Zappy::Interface::set_map()
             tmp_sprite.push_back(sprite);
             tmp_sprite[j].setPosition(i + 100, j + 100);
         }
-        map.push_back(tmp);
-        map_sprites.push_back(tmp_sprite);
+        _gui_connect->_tiles.push_back(tmp);
+        map_sprites.push_back(tmp_sprite);   
+    }
+}
+
+void Zappy::Interface::check_event()
+{
+    while (window->pollEvent(event)) {
+        if (event.type == sf::Event::Closed)
+            window->close();
+        if (event.type == sf::Event::MouseWheelScrolled) {
+            if (event.mouseWheelScroll.delta > 0 && view.getSize().x > 960 && view.getSize().y > 540) {
+                view.zoom(0.9);
+                zoom += 1;
+            } else if (view.getSize().x < 1920 * 3 && view.getSize().y < 1080 * 3) {
+                view.zoom(1.1);
+                zoom -= 1;
+            }
+        }
+        if (event.type == sf::Event::MouseButtonPressed) {
+            if (event.mouseButton.button == sf::Mouse::Left && event.mouseButton.x > 230 && event.mouseButton.x < 1920 - 230 && event.mouseButton.y > 75 && event.mouseButton.y < 1080 - 300) {
+                isPanning = true;
+                lastMousePos = sf::Mouse::getPosition(*window);
+            }
+        }
+        if (event.type == sf::Event::MouseButtonReleased) {
+            if (event.mouseButton.button == sf::Mouse::Left) {
+                isPanning = false;
+            }
+        }
+        if (event.type == sf::Event::MouseMoved) {
+            if (isPanning) {
+                sf::Vector2i currentMousePos = sf::Mouse::getPosition(*window);
+                sf::Vector2f delta = window->mapPixelToCoords(lastMousePos) - window->mapPixelToCoords(currentMousePos);
+                view.move(delta);
+                lastMousePos = currentMousePos;
+            }
+        }
     }
 }
 
@@ -87,49 +128,12 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
     sleep(5);
     set_map();
-    
-    bool isPanning = false;
 
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
-        while (window->pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window->close();
-            if (event.type == sf::Event::MouseWheelScrolled) {
-                if (event.mouseWheelScroll.delta > 0 && view.getSize().x > 960 && view.getSize().y > 540) {
-                    view.zoom(0.9);
-                    printf("zoom: %f\n", zoom);
-                    zoom += 1;
-                } else if (view.getSize().x < 1920 * 3 && view.getSize().y < 1080 * 3) {
-                    view.zoom(1.1);
-                    printf("zoom: %f\n", zoom);
-                    zoom -= 1;
-                }
-            }
-            if (event.type == sf::Event::MouseButtonPressed) {
-                if (event.mouseButton.button == sf::Mouse::Left && event.mouseButton.x > 230 && event.mouseButton.x < 1920 - 230 && event.mouseButton.y > 75 && event.mouseButton.y < 1080 - 300) {
-                    isPanning = true;
-                    lastMousePos = sf::Mouse::getPosition(*window);
-                }
-            }
-
-            if (event.type == sf::Event::MouseButtonReleased) {
-                if (event.mouseButton.button == sf::Mouse::Left) {
-                    isPanning = false;
-                }
-            }
-
-            if (event.type == sf::Event::MouseMoved) {
-                if (isPanning) {
-                    sf::Vector2i currentMousePos = sf::Mouse::getPosition(*window);
-                    sf::Vector2f delta = window->mapPixelToCoords(lastMousePos) - window->mapPixelToCoords(currentMousePos);
-                    view.move(delta);
-                    lastMousePos = currentMousePos;
-                }
-            }
-        }
+        check_event();
         sound_volume = bars[0]->checkClick(window);
-        window->setView(view);        
+        window->setView(view); 
         for (double i = 0; i < _gui_connect->get_size_map()[0]; i++) {
             for (double j = 0; j < _gui_connect->get_size_map()[1]; j++) {
                 map_sprites[i][j].setPosition(500 + (i * 102.4), 150 + (j * 102.4));
@@ -139,11 +143,16 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->setView(window->getDefaultView());
         for (size_t i = 0; i < _rect.size(); i++)
             window->draw(_rect[i]);
-
+        for (size_t i = 0; i < gui_connect->getTeamNames().size(); i++) {
+            Texts.push_back(sf::Text(gui_connect->getTeamNames()[i], font, 50));
+            Texts[2 + i].setFillColor(sf::Color::Black);
+            Texts[2 + i].setPosition(10, 50 + ((2 + i) * 50));
+        }
+        for (size_t i = 0; i < Texts.size(); i++)
+            window->draw(Texts[i]);
         bars[1]->checkClick(window);
         bars[0]->displayBar(window);
         bars[1]->displayBar(window);
-        window->draw(Texts[0]);
         window->draw(sound);
         print_sound();
         window->display();

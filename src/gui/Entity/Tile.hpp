@@ -21,12 +21,13 @@ namespace Zappy {
             Tile();
             Tile(sf::Vector2f position, std::shared_ptr<Inventory> inventory);
             ~Tile();
-
-        protected:
-            std::vector<Player> _players;
             std::shared_ptr<Inventory> _inventory;
-            sf::Vector2f _position;
+            sf::Vector2f getPosition() const;
 
+
+            std::vector<Player> _players;
+            sf::Vector2f _position;
+        protected:
         private:
     };
 }

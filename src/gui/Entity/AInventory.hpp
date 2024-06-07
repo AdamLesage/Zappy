@@ -17,6 +17,7 @@ namespace Zappy {
             ~AInventory() = default;
             int get(std::string name);
             void set(std::string name, int value);
+            void setpos(int x, int y);
             void add(std::string name, int value);
             void remove(std::string name, int value);
             void Empty_all();
@@ -27,6 +28,8 @@ namespace Zappy {
             int _mendiane;
             int _phiras;
             int _thystame;
+            int _x;
+            int _y;
         private:
     };
 }

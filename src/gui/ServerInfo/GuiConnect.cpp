@@ -16,6 +16,7 @@
 
 std::vector<std::string> my_str_to_line_array(char *str);
 std::vector<std::string> my_str_to_word_array(const char *str);
+std::vector<std::string> my_str_to_word_array_separator(const char *str, char separator);
 
 GuiConnect::GuiConnect()
 {
@@ -74,10 +75,6 @@ void GuiConnect::receive()
             }
         }
     }
-    if (Running == false)
-        printf("Running = false\n");
-    else
-        printf("Running = true\n");
 }
 
 void GuiConnect::close_socket()
@@ -90,21 +87,10 @@ void GuiConnect::close_thread()
     Running = false;
 }
 
+
 void GuiConnect::executeCommandChanges(std::string commandName, std::string message)
 {
     if (_commandFactory->isARegisteredCommand(commandName)) {
-        std::vector<std::string> response = _commandFactory->executeCommand(commandName, message);
-        if (response.size() > 0) {
-            if (response[0] == "msz") {
-                std::array<int, 2> size_map = {std::stoi(response[1]), std::stoi(response[2])};
-                set_size_map(size_map);
-            }
-            if (response[0] == "pnw") {
-                // Need to create a new player
-            }
-            if (response[0] == "bct") {
-                // Need to fill the inventory of a tile
-            }
-        }
+        _commandFactory->executeCommand(commandName, message, _size_map, _tiles, _players, _eggs, _teams, _timeUnit, Running);
     }
 }

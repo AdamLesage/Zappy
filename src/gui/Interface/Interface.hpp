@@ -32,6 +32,7 @@ namespace Zappy {
             std::array<int, 2> get_mape_size() { return _mape_size; }
             void set_mape_size(std::array<int, 2> mape_size) { _mape_size = mape_size; }
             void set_map();
+            void check_event();
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
@@ -42,7 +43,6 @@ namespace Zappy {
             int sound_volume;
             std::vector<sf::RectangleShape> _rect;
             std::array<int, 2> _mape_size;
-            std::vector<std::vector<std::shared_ptr<Tile>>> map;
             std::vector<std::vector<sf::Sprite>> map_sprites;
             sf::Sprite sprite;
             sf::Texture texture;
@@ -56,6 +56,7 @@ namespace Zappy {
             std::thread ReceiveProcess;
             sf::View view;
             sf::Vector2i lastMousePos;
+            bool isPanning;
 
         private:
     };

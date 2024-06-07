@@ -19,6 +19,7 @@ namespace Zappy {
             virtual void add(std::string name, int value) = 0;
             virtual void remove(std::string name, int value) = 0;
             virtual void Empty_all() = 0;
+            virtual void setpos(int x, int y) = 0;
 
         protected:
         private:
