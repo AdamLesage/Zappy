@@ -96,6 +96,8 @@ void set(core_t *core, int fd, char **command);
 void take(core_t *core, int fd, char **command);
 
 void bct(core_t *core, int fd, char **command);
+void bct_two(core_t *core, int fd, tiles_list_t *current_tile);
+void bct_three(core_t *core, int fd, tiles_list_t *current_tile);
 void mct(core_t *core, int fd, char **command);
 void msz(core_t *core, int fd, char **command);
 void pin(core_t *core, int fd, char **command);
