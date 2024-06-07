@@ -33,6 +33,8 @@ namespace Zappy {
             virtual void setIsIncanting(bool isIncanting) = 0;
             virtual int getOrientation() = 0;
             virtual void setOrientation(int orientation) = 0;
+            virtual std::string getMessage() = 0;
+            virtual void setMessage(std::string message) = 0;
         protected:
         private:
     };
