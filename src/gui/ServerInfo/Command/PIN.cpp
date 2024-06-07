@@ -40,7 +40,8 @@ void Zappy::PIN::applyChanges(std::vector<std::string> parsedData,
     (void)eggs;
     (void)tiles;
 
-
+    if (parsedData.size() != 11)
+        throw Zappy::CommandError("Invalid number of arguments for PIN command", "PIN");
     for (auto &player : players) {
         if (player->getPlayerNumber() == std::stoi(parsedData[1])) {
             player->setInventory(std::make_shared<Inventory>());
