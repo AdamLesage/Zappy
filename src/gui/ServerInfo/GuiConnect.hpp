@@ -47,6 +47,7 @@ class GuiConnect {
         void updatePlayerLevel(int playerNb, int level);
         int getPlayerLevel(int playerNb);
         std::shared_ptr<Zappy::Player> getPlayerByNb(int playerNb);
+        std::vector<std::shared_ptr<Zappy::Player>> findPlayersByCoords(std::pair<int, int> coords);
 
         // Egg management
         void createEgg(std::vector<std::string> args);
@@ -69,6 +70,7 @@ class GuiConnect {
         std::vector<std::shared_ptr<Zappy::Player>> _players;
         std::vector<std::shared_ptr<Zappy::Egg>> _eggs;
         std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> _tiles;
+        int _timeUnit;
     private:
 };
 

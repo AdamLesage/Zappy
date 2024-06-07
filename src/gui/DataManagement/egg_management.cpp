@@ -7,27 +7,23 @@
 
 #include "../ServerInfo/GuiConnect.hpp"
 
-namespace Zappy {
-    namespace GuiConnect {
-        void createEgg(std::vector<std::string> args)
-        {
-            args = args;
-        }
+void GuiConnect::createEgg(std::vector<std::string> args)
+{
+    args = args;
+}
 
-        void deleteEgg(std::vector<std::string> args)
-        {
-            args = args;
-        }
+void GuiConnect::deleteEgg(std::vector<std::string> args)
+{
+    args = args;
+}
 
-        void updateEgg(std::vector<std::string> args)
-        {
-            args = args;
-        }
+void GuiConnect::updateEgg(std::vector<std::string> args)
+{
+    args = args;
+}
 
-        std::shared_ptr<Egg> getEggByNb(int eggNb)
-        {
-            eggNb = eggNb;
-            return nullptr;
-        }
-    }
+std::shared_ptr<Zappy::Egg> GuiConnect::getEggByNb(int eggNb)
+{
+    eggNb = eggNb;
+    return nullptr;
 }

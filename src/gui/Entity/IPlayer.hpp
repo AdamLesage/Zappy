@@ -29,6 +29,8 @@ namespace Zappy {
             virtual void setPlayerLevel(int level) = 0;
             virtual void setInventory(std::shared_ptr<Inventory> inventory) = 0;
             virtual std::shared_ptr<Inventory> getInventory() = 0;
+            virtual bool isPlayerIncanting() = 0;
+            virtual void setIsIncanting(bool isIncanting) = 0;
         protected:
         private:
     };
