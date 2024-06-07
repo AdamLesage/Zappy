@@ -98,6 +98,8 @@ void bct_three(core_t *core, int fd, tiles_list_t *current_tile);
 void mct(core_t *core, int fd, char **command);
 void msz(core_t *core, int fd, char **command);
 void pin(core_t *core, int fd, char **command);
+void pin_two(core_t *core, int fd, players_list_t *player);
+void pin_three(core_t *core, int fd, players_list_t *player);
 void plv(core_t *core, int fd, char **command);
 void ppo(core_t *core, int fd, char **command);
 void sgt(core_t *core, int fd, char **command);
