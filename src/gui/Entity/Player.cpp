@@ -18,6 +18,7 @@ Zappy::Player::Player()
     _inventory = nullptr;
     _isIncanting = false;
     _orientation = 0;
+    _message = "";
 }
 
 Zappy::Player::~Player()

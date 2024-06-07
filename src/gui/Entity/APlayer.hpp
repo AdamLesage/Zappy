@@ -32,6 +32,8 @@ namespace Zappy {
             void setIsIncanting(bool isIncanting) {_isIncanting = isIncanting;}
             int getOrientation() {return _orientation;}
             void setOrientation(int orientation) {_orientation = orientation;}
+            std::string getMessage() {return _message;}
+            void setMessage(std::string message) {_message = message;}
 
             std::shared_ptr<Inventory> _inventory;
             std::string _teamName;
@@ -41,6 +43,7 @@ namespace Zappy {
             int _playerNumber;
             bool _isIncanting;
             int _orientation;
+            std::string _message;
         protected:
             //std::shared_ptr<Inventory> _inventory;
         private:
