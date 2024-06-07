@@ -31,6 +31,8 @@ namespace Zappy {
             virtual std::shared_ptr<Inventory> getInventory() = 0;
             virtual bool isPlayerIncanting() = 0;
             virtual void setIsIncanting(bool isIncanting) = 0;
+            virtual int getOrientation() = 0;
+            virtual void setOrientation(int orientation) = 0;
         protected:
         private:
     };
