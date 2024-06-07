@@ -17,9 +17,10 @@ Zappy::PFK::~PFK()
 
 void Zappy::PFK::applyChanges(std::vector<std::string> parsedData,
                                 std::array<int, 2> &size_map,
-                                std::vector<std::shared_ptr<Zappy::Tile>> &tiles,
+                                std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> &tiles,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
+                                std::vector<std::string> &teams,
                                 int timeUnit,
                                 bool isRunning
 )
@@ -28,6 +29,7 @@ void Zappy::PFK::applyChanges(std::vector<std::string> parsedData,
     (void)tiles; // unused
     (void)timeUnit; // unused
     (void)isRunning; // unused
+    (void)teams; // unused    
     // parsedData vector { "pfk", "playerNumber" }
 
     if (parsedData.size() != 2)
