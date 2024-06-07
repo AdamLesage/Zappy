@@ -31,7 +31,6 @@ class GuiConnect {
         std::vector<std::string> get_team_names() { return team_names; }
         std::vector<std::string> team_names;
         void executeCommandChanges(std::string commandName, std::string message); // execute command changes from response given by factory
-        void errorhandlingInvetory(std::vector<std::string> args); // verify that the args to fill an inventory is correct
         std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> getTiles() { return _tiles; } // get tiles
 
         // DATA MANAGEMENT
@@ -56,7 +55,6 @@ class GuiConnect {
         std::shared_ptr<Zappy::Egg> getEggByNb(int eggNb);
 
         // Tile management
-        std::vector<Zappy::Inventory> fill_inventory(std::vector<std::string> args,std::vector<Zappy::Inventory>); // fill inventories of all tiles
         std::vector<Zappy::Inventory> get_inventories() { return _inventories; } // get inventories
         Zappy::Inventory update_inventory(std::vector<std::string> args, Zappy::Inventory tmp); // update inventory of a tile
         

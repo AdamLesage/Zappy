@@ -90,7 +90,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
     sleep(5);
     set_map();
-    
+    std::cout << _gui_connect->getTiles().size() << std::endl;
     bool isPanning = false;
 
     while (window->isOpen()) {
