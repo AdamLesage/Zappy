@@ -141,7 +141,6 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
             window->draw(_rect[i]);
         for (size_t i = 0; i < gui_connect->getTeamNames().size(); i++) {
             Texts.push_back(sf::Text(gui_connect->getTeamNames()[i], font, 50));
-            printf("team[%ld]: %s\n", i, gui_connect->getTeamNames()[i].c_str());
             Texts[2 + i].setFillColor(sf::Color::Black);
             Texts[2 + i].setPosition(10, 50 + ((2 + i) * 50));
         }
