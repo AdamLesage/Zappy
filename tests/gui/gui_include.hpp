@@ -42,6 +42,7 @@
 #include "../../src/gui/ServerInfo/Command/EBO.hpp"
 #include "../../src/gui/ServerInfo/Command/EDI.hpp"
 #include "../../src/gui/ServerInfo/Command/MCT.hpp"
+#include "../../src/gui/ServerInfo/Command/SEG.hpp"
 
 
 #endif /* !GUI_INCLUDE_HPP_ */

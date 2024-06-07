@@ -17,8 +17,9 @@ Test(EDI, applyChanges_invalid_args)
     std::vector<std::shared_ptr<Zappy::Egg>> eggs;
     std::vector<std::string> teams;
     bool isRunning = true;
+    int timeUnit = 1;
 
-    cr_assert_throw(edi.applyChanges(parsedData, size_map, tiles, players, eggs, teams, 1, isRunning), Zappy::CommandError);
+    cr_assert_throw(edi.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
 }
 
 Test(EDI, applyChanges_invalid_egg_number)
@@ -35,8 +36,9 @@ Test(EDI, applyChanges_invalid_egg_number)
     eggs.push_back(egg);
     std::vector<std::string> teams;
     bool isRunning = true;
+    int timeUnit = 1;
 
-    cr_assert_throw(edi.applyChanges(parsedData, size_map, tiles, players, eggs, teams, 1, isRunning), Zappy::CommandError);
+    cr_assert_throw(edi.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning), Zappy::CommandError);
 }
 
 Test(EDI, applyChanges)
@@ -50,10 +52,11 @@ Test(EDI, applyChanges)
     std::vector<std::string> teams;
     std::shared_ptr<Zappy::Egg> egg = std::make_shared<Zappy::Egg>();
     bool isRunning = true;
+    int timeUnit = 1;
 
     egg->setPlayerNumber(2);
     egg->setTeamName("team1");
     eggs.push_back(egg);
-    edi.applyChanges(parsedData, size_map, tiles, players, eggs, teams, 1, isRunning);
+    edi.applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning);
     cr_assert_eq(eggs.size(), 0);
 }

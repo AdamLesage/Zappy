@@ -21,8 +21,8 @@ void Zappy::PBC::applyChanges(std::vector<std::string> parsedData,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
                                 std::vector<std::string> &teams,
-                                int timeUnit,
-                                bool isRunning
+                                int &timeUnit,
+                                bool &isRunning
 )
 {
     (void)size_map;
