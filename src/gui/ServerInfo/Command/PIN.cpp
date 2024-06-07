@@ -17,6 +17,9 @@ Zappy::PIN::~PIN()
 
 void Zappy::PIN::askCommand(int socket, std::vector<std::string> args)
 {
+    if (args.size() != 1) {
+        throw Zappy::CommandError("PIN command must have 1 argument", "PIN");
+    }
     std::string command = "pin " + args[0] + "\n";
     write(socket, command.c_str(), command.length());
 }

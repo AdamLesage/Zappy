@@ -254,6 +254,7 @@ TEST_GUI    =   tests/gui/command/test_bct.cpp					\
 				tests/gui/command/test_msz.cpp					\
 				tests/gui/command/test_pnw.cpp					\
 				tests/gui/command/test_ppo.cpp					\
+				tests/gui/command/test_plv.cpp					\
 
 Name		=	zappy
 

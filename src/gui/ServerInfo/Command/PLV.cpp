@@ -17,7 +17,10 @@ Zappy::PLV::~PLV()
 
 void Zappy::PLV::askCommand(int socket, std::vector<std::string> args)
 {
-    std::string command = "PLV " + args[0] + "\n";
+    if (args.size() != 1) {
+        throw Zappy::CommandError("PLV command must have 1 argument", "PLV");
+    }
+    std::string command = "plv " + args[0] + "\n";
     write(socket, command.c_str(), command.length());
 }
 
@@ -35,7 +38,9 @@ void Zappy::PLV::applyChanges(std::vector<std::string> parsedData,
     (void) eggs;
     (void) timeUnit;
     (void) isRunning;
-    
+
+    if (parsedData.size() != 3)
+        throw Zappy::CommandError("Invalid number of arguments for PLV command", "PLV");
     int playerNumber = std::stoi(parsedData[1]);
     int level = std::stoi(parsedData[2]);
     for (auto &player : players) {
