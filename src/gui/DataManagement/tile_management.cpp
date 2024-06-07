@@ -18,3 +18,21 @@ Zappy::Inventory GuiConnect::update_inventory(std::vector<std::string> args, Zap
     tmp.set("Thystame", std::stoi(args[9]));
     return tmp;
 }
+
+std::shared_ptr<Zappy::Tile> GuiConnect::getTileByCoords(std::pair<int, int> coords)
+{
+    for (const auto &row : _tiles)
+    {
+        for (const auto &tile : row)
+        {
+            int x = tile->_position.x;
+            int y = tile->_position.y;
+            if (x == coords.first && y == coords.second)
+            {
+                return tile;
+            }
+        }
+    }
+    throw std::runtime_error("Tile not found");
+    return nullptr;
+}

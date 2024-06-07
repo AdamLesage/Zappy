@@ -20,3 +20,8 @@ Zappy::Tile::Tile(sf::Vector2f position, std::shared_ptr<Inventory> inventory)
 Zappy::Tile::~Tile()
 {
 }
+
+sf::Vector2f Zappy::Tile::getPosition() const
+{
+    return _position;
+}

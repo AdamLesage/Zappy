@@ -58,6 +58,7 @@ class GuiConnect {
         // Tile management
         std::vector<Zappy::Inventory> get_inventories() { return _inventories; } // get inventories
         Zappy::Inventory update_inventory(std::vector<std::string> args, Zappy::Inventory tmp); // update inventory of a tile
+        std::shared_ptr<Zappy::Tile> getTileByCoords(std::pair<int, int> coords); // get tile by coords
 
         std::array<int, 2> _size_map;
         std::vector<Zappy::Inventory> _inventories;
