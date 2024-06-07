@@ -27,7 +27,6 @@ void execute_client_command(core_t *core, char *command, int fd)
         if (strcmp(commands_player_list[i].name, array_command[0]) == 0) {
             commands_player_list[i].exe_command(core, fd, array_command);
             free_array(array_command);
-            send_response("ko\n", fd);
             return;
         }
     }

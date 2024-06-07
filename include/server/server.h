@@ -80,6 +80,9 @@ bool is_know_player_command(char *command);
 void check_player_command(core_t *core);
 
 void incantation(core_t *core, int fd, char **command);
+bool incantation_is_valide(tile_info_t *info, players_list_t *players_list,
+    int level);
+void incantation_destroy_stone(tile_info_t *info, int level);
 void broadcast(core_t *core, int fd, char **command);
 void connect_nbr(core_t *core, int fd, char **command);
 void eject(core_t *core, int fd, char **command);

@@ -65,6 +65,8 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/command/Player_command/fork.c						\
 			src/server/command/Player_command/forward.c						\
 			src/server/command/Player_command/incantation.c					\
+			src/server/command/Player_command/incantation_is_valide.c		\
+			src/server/command/Player_command/incantation_destroy_stone.c	\
 			src/server/command/Player_command/inventory.c					\
 			src/server/command/Player_command/left.c						\
 			src/server/command/Player_command/look.c						\
@@ -146,6 +148,8 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/command/Player_command/fork.c						\
 			src/server/command/Player_command/forward.c						\
 			src/server/command/Player_command/incantation.c					\
+			src/server/command/Player_command/incantation_is_valide.c		\
+			src/server/command/Player_command/incantation_destroy_stone.c	\
 			src/server/command/Player_command/inventory.c					\
 			src/server/command/Player_command/left.c						\
 			src/server/command/Player_command/look.c						\
