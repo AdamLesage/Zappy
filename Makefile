@@ -177,6 +177,7 @@ TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_command_interact_player.c		\
 				tests/server/test_command_fork.c				\
 				tests/server/test_command_inventory.c			\
+				tests/server/test_command_look.c				\
 
 Name		=	zappy
 
@@ -220,8 +221,6 @@ fclean: clean
 re: fclean all
 
 tests_run:
-	chmod +x tests/run_test.sh
-	tests/run_test.sh
 	gcc -o $(NAMETEST) $(SRC_TEST_SERVER) \
 	$(TEST) $(CFLAGS) -Iinclude/server -lcriterion --coverage -lm
 	./$(NAMETEST)
