@@ -97,6 +97,6 @@ Test(TNA, receiveData)
 
     teams = tna.receiveData(message, commandName);
     cr_assert_eq(teams.size(), 2);
-    cr_assert_str_eq(teams[1].c_str(), "team1");
-    cr_assert_str_eq(teams[0].c_str(), "team2");
+    cr_assert_str_eq(teams[0].c_str(), "team1");
+    cr_assert_str_eq(teams[1].c_str(), "team2");
 }
