@@ -64,12 +64,12 @@ static void print_look_on_tile(core_t *core, int level,
     int number = 0;
     player_info_t *info = find_player(&core->players, fd);
 
-    if(orientation_x_y[0] == 0) {
+    if (orientation_x_y[0] == 0)
         number = orientation_x_y[1];
-    } else {
+    else
         number = orientation_x_y[0] * -1;
-    }
-    for (int i = level * (number * -1); i != (level + 1) * (number); i += (number)) {
+    for (int i = level * (number * -1); i != (level + 1) * (number);
+        i += (number)) {
         x = (orientation_x_y[1] == 0) ? info->pos_x + i + level *
             orientation_x_y[1] : info->pos_x + level * orientation_x_y[1];
         y = (orientation_x_y[1] == 0) ? info->pos_y + level *
