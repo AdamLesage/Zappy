@@ -17,7 +17,7 @@ Zappy::PDI::~PDI()
 
 void Zappy::PDI::applyChanges(std::vector<std::string> parsedData,
                                 std::array<int, 2> &size_map,
-                                std::vector<std::shared_ptr<Zappy::Tile>> &tiles,
+                                std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> &tiles,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
                                 int timeUnit,
