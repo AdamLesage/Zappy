@@ -74,6 +74,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/command/Player_command/set.c							\
 			src/server/command/Player_command/take.c						\
 			src/server/Event/pnw.c											\
+			src/server/Event/pex.c											\
 			src/server/command/authentification.c							\
 			src/server/utils/send_response.c								\
 			src/server/utils/str_is_num.c									\
@@ -159,6 +160,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/command/Player_command/take.c						\
 			src/server/command/authentification.c							\
 			src/server/Event/pnw.c											\
+			src/server/Event/pex.c											\
 			src/server/utils/send_response.c								\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\

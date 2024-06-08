@@ -110,5 +110,6 @@ void sst(core_t *core, int fd, char **command);
 void tna(core_t *core, int fd, char **command);
 
 void pnw(players_t *players, player_info_t *player_info);
+void pex(players_t *players, player_info_t *player_info);
 
 #endif /* !SERVER_H_ */
