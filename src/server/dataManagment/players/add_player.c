@@ -50,6 +50,7 @@ static player_info_t *init_new_player_info(int fd, char *team_name,
     info->last_action = NULL;
     info->last_feed = 1260;
     info->level = 1;
+    info->incantation_time = -1;
     while (rand_number == 0) {
         rand_number = rand() % 4;
     }
@@ -58,9 +59,8 @@ static player_info_t *init_new_player_info(int fd, char *team_name,
     info->pos_y = pos_y;
     info->team_name = strdup(team_name);
     info->timer_action = 0;
-    for (int i = 0; i != 10; i++) {
+    for (int i = 0; i != 10; i++)
         info->action_queue[i] = NULL;
-    }
     return info;
 }
 
@@ -80,6 +80,8 @@ bool add_player(map_t *map, players_t *players, int fd,
         new_player->fd = fd;
         new_player->player_info = init_new_player_info(fd, team_name,
             x, y);
+        new_player->player_info->id = players->current_id;
+        players->current_id++;
         new_player->next = players->players_list;
         players->players_list = new_player;
         return (true);

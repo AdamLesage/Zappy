@@ -39,6 +39,8 @@ typedef struct player_info_s {
     int fd;
     char *team_name;
     int last_feed;
+    int incantation_time;
+    int id;
 } player_info_t;
 
 typedef struct players_list_s {
@@ -51,6 +53,7 @@ typedef struct players_s {
     int nb_client;
     int nb_teams;
     players_list_t *players_list;
+    int current_id;
 } players_t;
 
 typedef struct eggs_s {

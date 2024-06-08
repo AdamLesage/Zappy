@@ -90,7 +90,6 @@ int angle_to_k(float angle)
     return (k);
 }
 
-
 int get_player_k(player_info_t *player_info, int x, int y,
     arguments_t *arguments)
 {
