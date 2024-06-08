@@ -71,6 +71,26 @@ static int compute_angle(int *vector1, int *vector2)
     return (angle);
 }
 
+int angle_to_k(float angle)
+{
+    float angle2 = 22.5;
+    int k = -1;
+
+    if (angle < 22.5 || angle > (360 - 22.5))
+        return (1);
+    for (double i = 2; i != 9; i++) {
+        if (angle >= angle2 && angle <= angle2 + 45)
+            k = i;
+        angle2 += 45;
+    }
+    if (k == 6)
+        k = 8;
+    else if (k == 8)
+        k = 6;
+    return (k);
+}
+
+
 int get_player_k(player_info_t *player_info, int x, int y,
     arguments_t *arguments)
 {
@@ -78,20 +98,13 @@ int get_player_k(player_info_t *player_info, int x, int y,
     int *orientation = get_player_orientation(player_info->orientation);
     float angle = 0;
     float angle2 = 22.5;
+    int k = -1;
 
     if (vector == NULL || orientation == NULL)
         return (-1);
-    if (player_info->pos_x == x && player_info->pos_y == y) {
+    if (player_info->pos_x == x && player_info->pos_y == y)
         return (0);
-    }
     angle = compute_angle(vector, orientation);
-    if (angle < 22.5 || angle > (360 - 22.5)) {
-        return (1);
-    }
-    for (double i = 2; i != 9; i++) {
-        if (angle >= angle2 && angle <= angle2 + 45)
-            return (i);
-        angle2 += 45;
-    }
-    return (-1);
+    k = angle_to_k(angle);
+    return (k);
 }

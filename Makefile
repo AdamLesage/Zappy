@@ -179,6 +179,7 @@ TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_command_inventory.c			\
 				tests/server/test_command_look.c				\
 				tests/server/test_command_eject.c				\
+				tests/server/test_command_broadcast.c			\
 
 Name		=	zappy
 
