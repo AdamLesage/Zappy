@@ -70,6 +70,7 @@ static void add_graphic_player(map_t *map, players_t *players, int fd,
     players_list_t *new_player = NULL;
 
     if (strcmp(team_name, "GRAPHIC") == 0) {
+        new_player = malloc(sizeof(players_list_t));
         new_player->fd = fd;
         new_player->player_info = init_player_info(fd, team_name,
             0, 0);

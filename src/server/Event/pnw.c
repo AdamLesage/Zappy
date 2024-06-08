@@ -19,6 +19,8 @@ void send_pnw_info(player_info_t *player_info, int fd)
     send_response_int(player_info->orientation, fd);
     send_response(" ", fd);
     send_response_int(player_info->level, fd);
+    send_response(" ", fd);
+    send_response(player_info->team_name, fd);
     send_response("\n", fd);
 }
 
