@@ -117,5 +117,6 @@ void pie(players_t *players, int x, int y, bool state);
 void pfk(players_t *players, int id);
 void pdr(players_t *players, int id, enum Object object);
 void pgt(players_t *players, int id, enum Object object);
+void pdi(players_t *players, int id);
 
 #endif /* !SERVER_H_ */
