@@ -112,5 +112,6 @@ void tna(core_t *core, int fd, char **command);
 void pnw(players_t *players, player_info_t *player_info);
 void pex(players_t *players, player_info_t *player_info);
 void pbc(players_t *players, int id, char *message);
+void pic(players_t *players, incantation_info_t *info);
 
 #endif /* !SERVER_H_ */

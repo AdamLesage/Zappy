@@ -27,6 +27,14 @@ typedef struct inventory_s {
     int nb_food;
 } inventory_t;
 
+typedef struct incantation_info_s {
+    int pos_x;
+    int pos_y;
+    int *ids;
+    int nb_players;
+    int incantation_level;
+} incantation_info_t;
+
 typedef struct player_info_s {
     int pos_x;
     int pos_y;
@@ -39,7 +47,7 @@ typedef struct player_info_s {
     int fd;
     char *team_name;
     int last_feed;
-    int incantation_time;
+    incantation_info_t *incantation_info;
     int id;
 } player_info_t;
 
