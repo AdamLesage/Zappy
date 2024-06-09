@@ -30,7 +30,7 @@ static inventory_t *init_inventory(void)
         return (NULL);
     }
     inventory->nb_deraumere = 0;
-    inventory->nb_food = 10;
+    inventory->nb_food = 9;
     inventory->nb_linemate = 0;
     inventory->nb_mendiane = 0;
     inventory->nb_phiras = 0;
@@ -48,7 +48,7 @@ static player_info_t *init_player_info(int fd, char *team_name,
     info->fd = fd;
     info->inventory = init_inventory();
     info->last_action = NULL;
-    info->last_feed = 1260;
+    info->last_feed = 126;
     info->level = 1;
     info->incantation_info = NULL;
     while (rand_number == 0) {

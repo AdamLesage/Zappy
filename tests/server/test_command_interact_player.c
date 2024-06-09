@@ -35,7 +35,7 @@ Test (command_interact_player, command_take_success, .init = cr_redirect_stdout)
     info->timer_action = 0;
     check_player_command(&core);
     cr_assert_eq(tile_info->nb_food, 0);
-    cr_assert_eq(info->inventory->nb_food, 11);
+    cr_assert_eq(info->inventory->nb_food, 10);
 
     info->action_queue[0] = strdup("Take deraumere");
     info->timer_action = 0;
@@ -138,7 +138,7 @@ Test (command_interact_player, command_set_success, .init = cr_redirect_stdout)
     info->timer_action = 0;
     check_player_command(&core);
     cr_assert_eq(tile_info->nb_food, 2);
-    cr_assert_eq(info->inventory->nb_food, 9);
+    cr_assert_eq(info->inventory->nb_food, 8);
 
     info->action_queue[0] = strdup("Set deraumere");
     info->timer_action = 0;

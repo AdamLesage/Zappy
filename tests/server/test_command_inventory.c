@@ -31,7 +31,7 @@ Test (command_Inventory, command_Inventory_success, .init = cr_redirect_stdout)
     info->action_queue[0] = strdup("Inventory");
     info->timer_action = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("[ food 10, linemate 4, deraumere 0, sibur 1, mendiane 0, phiras 0, thystame 3 ]\n");
+    cr_assert_stdout_eq_str("[ food 9, linemate 4, deraumere 0, sibur 1, mendiane 0, phiras 0, thystame 3 ]\n");
     inventory(&core, 1, NULL);
     delete_player(&core.map, &core.players, 1);
 }

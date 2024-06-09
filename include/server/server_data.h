@@ -167,6 +167,7 @@ bool put_on_inventory(players_t *players, enum Object object,
     int fd);
 bool remove_from_inventory(players_t *players, enum Object object,
     int fd);
+bool remove_from_inventory_2(player_info_t *info, enum Object object);
 int get_player_k(player_info_t *player_info, int x, int y,
     arguments_t *arguments);
 

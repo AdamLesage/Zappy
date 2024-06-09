@@ -38,6 +38,7 @@ void graphic_authentification(core_t *core, char *command, int fd)
 void authentification(core_t *core, char *command, int fd)
 {
     if (strcmp(command, "GRAPHIC") == 0) {
+        graphic_authentification(core, command, fd);
     } else {
         player_authentification(core, command, fd);
     }

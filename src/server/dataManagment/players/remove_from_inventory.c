@@ -44,3 +44,20 @@ bool remove_from_inventory(players_t *players, enum Object object,
     inventory->nb_mendiane -= (object == Mendiane) ? 1 : 0;
     return (remove_from_inventory2(inventory, object));
 }
+
+bool remove_from_inventory_2(player_info_t *info, enum Object object)
+{
+    if (object == None) {
+        return (false);
+    }
+    if (info->inventory->nb_food == 0 && object == Food)
+        return (false);
+    info->inventory->nb_food -= (object == Food) ? 1 : 0;
+    if (info->inventory->nb_linemate == 0 && object == Linemate)
+        return (false);
+    info->inventory->nb_linemate -= (object == Linemate) ? 1 : 0;
+    if (info->inventory->nb_mendiane == 0 && object == Mendiane)
+        return (false);
+    info->inventory->nb_mendiane -= (object == Mendiane) ? 1 : 0;
+    return (remove_from_inventory2(info->inventory, object));
+}
