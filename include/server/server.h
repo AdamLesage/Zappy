@@ -118,5 +118,6 @@ void pfk(players_t *players, int id);
 void pdr(players_t *players, int id, enum Object object);
 void pgt(players_t *players, int id, enum Object object);
 void pdi(players_t *players, int id);
+void enw(players_t *players, int player_id, eggs_t *eggs);
 
 #endif /* !SERVER_H_ */

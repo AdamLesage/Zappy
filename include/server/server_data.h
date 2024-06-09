@@ -68,6 +68,7 @@ typedef struct eggs_s {
     char *team_name;
     int pos_x;
     int pos_y;
+    int egg_id;
     struct eggs_s *next;
 } eggs_t;
 
@@ -97,6 +98,7 @@ typedef struct map_s {
     int last_refille;
     tiles_list_t *tiles_list;
     eggs_t *eggs;
+    int current_eggs_id;
 } map_t;
 
 typedef struct arguments_s {
