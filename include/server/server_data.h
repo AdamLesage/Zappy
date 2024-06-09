@@ -110,14 +110,14 @@ typedef struct arguments_s {
 } arguments_t;
 
 enum Object {
-    Food,
-    Linemate,
-    Sibur,
-    Mendiane,
-    Phiras,
-    Thystame,
-    Deraumere,
-    None,
+    Food = 0,
+    Linemate = 1,
+    Deraumere = 2,
+    Sibur = 3,
+    Mendiane = 4,
+    Phiras = 5,
+    Thystame = 6,
+    None = 7,
 };
 
 void init_map(map_t *map, arguments_t *arguments);
