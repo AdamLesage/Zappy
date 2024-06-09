@@ -116,5 +116,6 @@ void pic(players_t *players, incantation_info_t *info);
 void pie(players_t *players, int x, int y, bool state);
 void pfk(players_t *players, int id);
 void pdr(players_t *players, int id, enum Object object);
+void pgt(players_t *players, int id, enum Object object);
 
 #endif /* !SERVER_H_ */
