@@ -122,5 +122,6 @@ void enw(players_t *players, int player_id, eggs_t *eggs);
 void ebo(players_t *players, int egg_id);
 void edi(players_t *players, int egg_id);
 void seg(players_t *players, char *team_name);
+void smg(players_t *players, char *message);
 
 #endif /* !SERVER_H_ */

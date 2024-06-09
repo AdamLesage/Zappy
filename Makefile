@@ -86,6 +86,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/Event/ebo.c											\
 			src/server/Event/edi.c											\
 			src/server/Event/seg.c											\
+			src/server/Event/smg.c											\
 			src/server/command/authentification.c							\
 			src/server/utils/send_response.c								\
 			src/server/utils/str_is_num.c									\
@@ -183,6 +184,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/Event/ebo.c											\
 			src/server/Event/edi.c											\
 			src/server/Event/seg.c											\
+			src/server/Event/smg.c											\
 			src/server/utils/send_response.c								\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
@@ -219,6 +221,7 @@ TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_event_ebo.c					\
 				tests/server/test_event_edi.c					\
 				tests/server/test_event_seg.c					\
+				tests/server/test_event_smg.c					\
 
 Name		=	zappy
 
