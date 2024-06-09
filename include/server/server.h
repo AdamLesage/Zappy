@@ -119,5 +119,6 @@ void pdr(players_t *players, int id, enum Object object);
 void pgt(players_t *players, int id, enum Object object);
 void pdi(players_t *players, int id);
 void enw(players_t *players, int player_id, eggs_t *eggs);
+void ebo(players_t *players, int egg_id);
 
 #endif /* !SERVER_H_ */
