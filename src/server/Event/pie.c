@@ -9,7 +9,7 @@
 
 static void send_pie_info(int x, int y, bool state, int fd)
 {
-    send_response("pic ", fd);
+    send_response("pie ", fd);
     send_response_int(x, fd);
     send_response(" ", fd);
     send_response_int(y, fd);

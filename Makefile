@@ -194,6 +194,7 @@ TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_event_pex.c					\
 				tests/server/test_event_pbc.c					\
 				tests/server/test_event_pic.c					\
+				tests/server/test_event_pie.c					\
 
 Name		=	zappy
 
