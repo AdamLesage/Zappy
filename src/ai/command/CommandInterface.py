@@ -15,7 +15,8 @@ class CommandInterface():
         self.time_limit = 0
         self.response = "Response"
 
-    def execute(self, client: socket) -> str:
+    def execute(self, client: socket, data: str = "") -> str:
         """Execute the command"""
+        toSend = f"{self.command} {data}\n" if data != "" else f"{self.command}\n"
         client.send(self.command.encode())
-        return self.command
+        return toSend

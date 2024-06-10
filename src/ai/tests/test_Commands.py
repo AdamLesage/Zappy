@@ -26,6 +26,7 @@ from command.EjectCommand import EjectCommand
 from command.TakeCommand import TakeCommand
 from command.SetCommand import SetCommand
 from command.CommandInterface import CommandInterface
+from data_encryption import encrypt_data, decrypt_data
 
 class TestCommands(unittest.TestCase):
     def test01_ForkCommand(self):
@@ -40,8 +41,8 @@ class TestCommands(unittest.TestCase):
     def test02_BroadcastCommand(self):
         """Test the BroadcastCommand class"""
         testBroadcast = BroadcastCommand()
-        self.assertEqual(testBroadcast.action, "broadcast text")
-        self.assertEqual(testBroadcast.command, "Broadcast text")
+        self.assertEqual(testBroadcast.action, "broadcast")
+        self.assertEqual(testBroadcast.command, "Broadcast")
         self.assertEqual(testBroadcast.time_limit, 7)
         self.assertEqual(testBroadcast.response, "ok")
         return
@@ -149,9 +150,26 @@ class TestCommands(unittest.TestCase):
         """Test the InterfaceCommand execute method"""
         testInterface = CommandInterface()
         testSocket = unittest.mock.Mock()
-        testSocket.send.return_value = "Command"
-        self.assertEqual(testInterface.execute(testSocket), "Command")
+        testSocket.send.return_value = "Command\n"
+        self.assertEqual(testInterface.execute(testSocket), "Command\n")
+        return
+    
+    def test15_broadcast_with_message(self):
+        """Test the BroadcastCommand execute method with message"""
+        testBroadcast = BroadcastCommand()
+        testSocket = unittest.mock.Mock()
+        testSocket.send.return_value = "Broadcast\n"
+        self.assertEqual(testBroadcast.execute(testSocket, "message"), "Broadcast message\n")
+        return
+    
+    def test16_broadcast_with_message(self):
+        """Test the BroadcastCommand execute method without message"""
+        testBroadcast = BroadcastCommand()
+        testSocket = unittest.mock.Mock()
+        testSocket.send.return_value = "Broadcast\n"
+        crypted = encrypt_data("message", "key", "iv")
+        self.assertEqual(testBroadcast.execute(testSocket, crypted), f"Broadcast {crypted}\n")
         return
 
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()
