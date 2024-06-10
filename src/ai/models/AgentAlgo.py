@@ -67,7 +67,7 @@ class AgentAlgo():
             return
         self.status = "Continue"
 
-    def play(self, agentInfo: AgentInfo, data: str) -> str:
+    def play(self, agentInfo: AgentInfo) -> str:
         """
         Play the game, search for resources, level up, incantation, etc
         Return the current state of the game: Continue, End, Dead, Incantation
