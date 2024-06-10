@@ -191,23 +191,23 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.insert(0, "Inventory\n")
             self.round += 1
             return
-        if self.agentMentality == "Incantation":
-            return
-        if self.agentMentality == "Hungry":
-            return None
-        for alert in alerts:
-            if alerts == []:
-                break
-            if alert == "food":
-                self.agentMentality = "Hungry"
-                self.agentInfo.commandsToSend.clear()
-                self.agentInfo.addCommandsToSend("Look")
-                return
-            if alert.startswith("incantation"):
-                self.addCommandToExecuteInList(f"Broadcast {alert}\n")
-                self.agentMentality = "Incantation"
-                return
-        self.round += 1
+        #if self.agentMentality == "Incantation":
+        #    return
+        #if self.agentMentality == "Hungry":
+        #    return None
+        #self.round += 1
+        
+        self.updateClientStatus()
+        if self.status == "Incantation" or self.status == "Dead" or self.status == "End":
+            return # If the agent is in incantation, dead or end state, do nothing
+        self.clientPlayLevel1()
+        self.clientPlayLevel2()
+        self.clientPlayLevel3()
+        self.clientPlayLevel4()
+        self.clientPlayLevel5()
+        self.clientPlayLevel6()
+        self.clientPlayLevel7()
+        self.clientPlayLevel8()
         return
 
     def send_to_server(self) -> None:
