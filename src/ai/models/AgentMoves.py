@@ -19,7 +19,7 @@ class Moves():
         """
         return True if searchedItem in lookResult else False
     
-    def reachItemList(itemToReach: str, lookResult: str):
+    def reachItemList(self, itemToReach: str, lookResult: str):
         """
         This function will manage movements to reach an specific item.
         It will return the list of movements/commands to reach the item.
@@ -39,6 +39,10 @@ class Moves():
         itemPosition = 0
         pos = 0
 
+        inv = inv.replace("[ ", "")
+        inv = inv.replace(" ]", "")
+        inv = inv.replace("[", "")
+        inv = inv.replace("]", "")
         for item in lookResult.split(","):
             if itemToReach in item:
                 break
