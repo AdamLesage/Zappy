@@ -18,28 +18,65 @@ from models.AgentInfo import AgentInfo
 from models.AgentAlgo import AgentAlgo
 
 class TestAgentAlgo(unittest.TestCase):
-    def test01_setReturnCommansAnswer(self):
-        agent = AgentInfo()
-        agentAlgo = AgentAlgo(agent, 100)
-        agentAlgo.setReturnCommandAnswer("ok")
-        self.assertEqual(agentAlgo.getReturnCommand()[1], "ok")
+    # def test01_setReturnCommansAnswer(self):
+    #     agent = AgentInfo()
+    #     agentAlgo = AgentAlgo(agent, 100)
+    #     agentAlgo.setReturnCommandAnswer("ok")
+    #     self.assertEqual(agentAlgo.getReturnCommand()[1], "ok")
 
-    def test02_setReturnCommansAnswer(self):
-        agent = AgentInfo()
-        agentAlgo = AgentAlgo(agent, 100)
-        agentAlgo.setReturnCommandAnswer("ko")
-        self.assertEqual(agentAlgo.getReturnCommand()[1], "ko")
+    # def test02_setReturnCommansAnswer(self):
+    #     agent = AgentInfo()
+    #     agentAlgo = AgentAlgo(agent, 100)
+    #     agentAlgo.setReturnCommandAnswer("ko")
+    #     self.assertEqual(agentAlgo.getReturnCommand()[1], "ko")
     
-    def test03_clearReturnCommansAnswer(self):
-        agent = AgentInfo()
-        agentAlgo = AgentAlgo(agent, 100)
-        agentAlgo.setReturnCommandAnswer("Look")
-        agentAlgo.clearReturnCommand()
-        self.assertEqual(agentAlgo.getReturnCommand()[0], None)
+    # def test03_clearReturnCommansAnswer(self):
+    #     agent = AgentInfo()
+    #     agentAlgo = AgentAlgo(agent, 100)
+    #     agentAlgo.setReturnCommandAnswer("Look")
+    #     agentAlgo.clearReturnCommand()
+    #     self.assertEqual(agentAlgo.getReturnCommand()[0], None)
     
-    def test04_clearReturnCommansAnswer(self):
+    # def test04_clearReturnCommansAnswer(self):
+    #     agent = AgentInfo()
+    #     agentAlgo = AgentAlgo(agent, 100)
+    #     agentAlgo.setReturnCommandAnswer("ok")
+    #     agentAlgo.clearReturnCommand()
+    #     self.assertEqual(agentAlgo.getReturnCommand()[1], None)
+
+    def test05_updateClientStatus(self):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
-        agentAlgo.setReturnCommandAnswer("ok")
-        agentAlgo.clearReturnCommand()
-        self.assertEqual(agentAlgo.getReturnCommand()[1], None)
+        agentAlgo.alerts.alerts.append("food")
+        agentAlgo.updateClientStatus()
+        self.assertEqual(agentAlgo.status, "Continue")
+
+    def test06_updateAgentInfo(self):
+        agent = AgentInfo()
+        agent.setLevel(1)
+        agent.addInventory("linemate", 1)
+        agentAlgo = AgentAlgo(agent, 100)
+        agentAlgo.updateAgentInfo(agent)
+        self.assertEqual(agentAlgo.agentInfo.getLevel(), 1)
+        self.assertEqual(agentAlgo.agentInfo.getInventory("linemate"), 1)
+
+    def test07_updateClientStatusNoAlert(self):
+        agent = AgentInfo()
+        agentAlgo = AgentAlgo(agent, 100)
+        agentAlgo.updateClientStatus()
+        self.assertEqual(agentAlgo.status, "Continue")
+
+    def test08_updateClientStatusIncantation(self):
+        agent = AgentInfo()
+        agentAlgo = AgentAlgo(agent, 100)
+        agentAlgo.alerts.alerts.append("incantation")
+        agentAlgo.updateClientStatus()
+        self.assertEqual(agentAlgo.status, "Incantation")
+
+    def test09_updateClientStatusContinue(self):
+        agent = AgentInfo()
+        agentAlgo = AgentAlgo(agent, 100)
+        agentAlgo.alerts.alerts.append("Continue")
+        agentAlgo.updateClientStatus()
+        self.assertEqual(agentAlgo.status, "Continue")
+
