@@ -13,7 +13,7 @@ class AgentInfo():
         """Ctor of the AgentInfo class"""
         self.commandsToSend = deque(maxlen=8) # Defined as a deque with a max length of 8 because we need to execute Look and Inventory commands every 8 rounds
         #self.commandsReturned = deque(maxlen=8)
-        self.commandsReturned = (None, None)
+        self.commandsReturned = [None, None]
         self.commandWaitingList = []
         self.inventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.client_num = 0
