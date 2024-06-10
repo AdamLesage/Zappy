@@ -19,6 +19,7 @@ class AgentInfo():
         self.client_num = 0
         self.world_width = 0
         self.world_height = 0
+        self.movements = []
         self.agentStatus = "Alive" # Alive, Dead, Incantation, Fork
         self.level = 1
         self.numberingVision = 1
