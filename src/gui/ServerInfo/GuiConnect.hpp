@@ -47,6 +47,7 @@ class GuiConnect {
         int getPlayerLevel(int playerNb);
         std::shared_ptr<Zappy::Player> getPlayerByNb(int playerNb);
         std::vector<std::shared_ptr<Zappy::Player>> findPlayersByCoords(std::pair<int, int> coords);
+        sf::Vector2f getVectorBetweenTwoPlayers(int playerNb1, int playerNb2);
 
         // Egg management
         void createEgg(std::vector<std::string> args);
