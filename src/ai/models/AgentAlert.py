@@ -6,14 +6,22 @@
 ##
 
 from models.AgentInfo import AgentInfo
+from models.AgentMoves import Moves
 
 class AgentAlerts(AgentInfo):
     """AgentAlerts class for the Zappy project"""
-    def __init__(self, agent_info: AgentInfo, food: int = 100):
+    def __init__(self, agent_info: AgentInfo, minTU: int = 252):
         self.agent = agent_info
         self.alerts = []
-        self.foodMin = food
+        self.moves = Moves()
+        self.minTimeU = minTU
         pass
+
+    def setFoodAlert(self, minTimeU: int) -> None:
+        self.minTimeU = minTimeU
+    
+    def setAgentInfo(self, agentInfo: AgentInfo) -> None:
+        self.agent =  agentInfo
 
     def checkAlerts(self) -> list[str]:
         """
@@ -22,7 +30,7 @@ class AgentAlerts(AgentInfo):
         """
         playerLevel = self.agent.getLevel()
         
-        if self.agent.getTimeUnits() < self.foodMin:
+        if self.agent.getTimeUnits() < self.minTimeU:
             """Need to eat"""
             self.alerts.append("food")
             # send broadcast with crypted data
