@@ -83,7 +83,7 @@ class AgentInfo():
             return self.teamPlayers[level]
         return sum(self.teamPlayers.values()) # Return the sum of all players, so the total number of players in the team
 
-    # Setters
+    # Setters  
     def setTimeUnits(self, tu: int) -> None:
         """Set the number of time Units"""
         self.timeUnits = tu
@@ -124,7 +124,7 @@ class AgentInfo():
         """Add an item to the inventory"""
         if type not in ["food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]:
             raise ValueError(f"Invalid item {type}")
-        self.inventory[type] = self.inventory.get(type, 0) + int(quantity)
+        self.inventory[type] = int(quantity)
 
     def addPlayers(self, level: str, quantity: int) -> None:
         """Set the number of players in the team"""
