@@ -13,7 +13,6 @@ Test (command_Inventory, command_Inventory_success, .init = cr_redirect_stdout)
 {
     core_t core;
     player_info_t *info = NULL;
-    tile_info_t *tile_info = NULL;
 
     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "10", "-n", "team1", "team2", "-c", "5", "-f", "100", NULL};
     int argc = 12;
@@ -21,7 +20,6 @@ Test (command_Inventory, command_Inventory_success, .init = cr_redirect_stdout)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     info = find_player(&core.players, 1);
-    tile_info = find_tile(&core.map, 5, 5);
     info->orientation = N;
     info->pos_x = 5;
     info->pos_y = 5;

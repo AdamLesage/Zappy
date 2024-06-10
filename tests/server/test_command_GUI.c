@@ -13,7 +13,6 @@ Test(msz, test_msz, .init = cr_redirect_stdout)
 {
     core_t core;
     char *command[] = {"msz", NULL};
-    char *team_names[] = {"team1", "team2", NULL};
     char *expected = "msz 10 10\n";
 
     core.map.width = 10;
@@ -39,7 +38,6 @@ Test(sgt, test_sgt, .init = cr_redirect_stdout)
 {
     core_t core;
     char *command[] = {"sgt", NULL};
-    char *team_names[] = {"team1", "team2", NULL};
     char *expected = "sgt 100\n";
 
     core.arguments.frequency = 100;
@@ -51,7 +49,6 @@ Test(sst, test_sst, .init = cr_redirect_stdout)
 {
     core_t core;
     char *command[] = {"sst", "100", NULL};
-    char *team_names[] = {"team1", "team2", NULL};
     char *expected = "sst 100\n";
 
     core.arguments.frequency = 100;

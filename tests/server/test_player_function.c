@@ -419,7 +419,6 @@ Test (player_function, player_find_nb_player_on_team)
     arguments_t arguments;
     map_t map;
     int number;
-    player_info_t *player_info;
     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
     int argc = 12;
 
@@ -468,7 +467,6 @@ Test (player_function, player_queue)
     arguments_t arguments;
     map_t map;
     char *action;
-    player_info_t *player_info;
     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
     int argc = 12;
 
@@ -503,8 +501,6 @@ Test (player_function, player_queue_full)
     players_t players;
     arguments_t arguments;
     map_t map;
-    char *action;
-    player_info_t *player_info;
     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
     int argc = 12;
 
@@ -545,7 +541,6 @@ Test (player_function, player_queue_unknow)
     arguments_t arguments;
     map_t map;
     char *action;
-    player_info_t *player_info;
     const char *argv[] = {"./zappy_server", "-p", "4242", "-x", "10", "-y", "20", "-n", "team1", "team2", "-c", "5", "-f", "150", NULL};
     int argc = 12;
 
