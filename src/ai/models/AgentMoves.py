@@ -23,7 +23,7 @@ class Moves():
         """
         This function will manage movements to reach an specific item.
         It will return the list of movements/commands to reach the item.
-        The movements are: Left Right and Forward
+        The movements are: Left Right and Forward\n
         """
         midTiles = [0, 2, 6, 12, 20, 30, 42, 56, 72]
         rightTiles = [
@@ -46,28 +46,31 @@ class Moves():
         if itemPosition in midTiles:
             for i in midTiles:
                 if itemPosition == i:
+                    movements.append("Take object\n")
                     return (movements)
-                movements.append("Forward")
+                movements.append("Forward\n")
         if itemPosition in leftTiles:
             print(itemPosition)
             while itemPosition > midTiles[pos]:
-                movements.append("Forward")
+                movements.append("Forward\n")
                 pos += 1
                 posIndice = midTiles[pos]
-            movements.append("Left")
+            movements.append("Left\n")
             while posIndice != itemPosition:
-                movements.append("Forward")
+                movements.append("Forward\n")
                 posIndice -= 1
+            movements.append("Take object\n")
             return (movements)
         if itemPosition in rightTiles:
             while itemPosition > midTiles[pos + 1]:
-                movements.append("Forward")
+                movements.append("Forward\n")
                 pos += 1
                 posIndice = midTiles[pos]
-            movements.append("Right")
+            movements.append("Right\n")
             while posIndice != itemPosition:
-                movements.append("Forward")
+                movements.append("Forward\n")
                 posIndice += 1
+            movements.append("Take object\n")
             return (movements)
         
     def searchItem(self, itemToSearch: str, lookResult: str, needReaching: bool = True):

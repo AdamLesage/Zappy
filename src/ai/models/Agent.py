@@ -32,6 +32,8 @@ class Agent():
         """Retrieve the world dimensions"""
         if self.agentInfo.world_width != 0 and self.agentInfo.world_height != 0 or len(data[0:len(data) - 1].split('\n')) != 2:
             return
+        if data == None:
+            return
         splited_data = data[0:len(data) - 1].split('\n')
         splited_x = splited_data[1].split(' ')[0]
         splited_y = splited_data[1].split(' ')[1]
@@ -43,6 +45,8 @@ class Agent():
 
     def retrieveClientNumber(self, data: str) -> None:
         """Retrieve the client number"""
+        if data == None:
+            return
         if self.agentInfo.client_num != 0:
             return
         splited_client_numero = data[0:len(data) - 1].split('\n')[0]
@@ -58,23 +62,26 @@ class Agent():
     def connect_to_server(self) -> None:
         """Connect to the server from the given ip and port"""
         try:
+            firstConnexion = True
             self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.client.connect((self.ip, self.port))
             self.agentAlgo = AgentAlgo(self.agentInfo, 100, self.client)
-            # self.client.setblocking(0)
             while True:
-                # self.agentAlgo = AgentAlgo(self.agentInfo, 100, self.client)
-                self.receive_from_server = self.client.recv(1024).decode()
+                self.client.setblocking(0)
+                try:
+                    self.receive_from_server = self.client.recv(1024).decode()
+                except BlockingIOError:
+                    continue
                 if self.disconnect_from_server(self.receive_from_server):
                     break
                 if self.receive_from_server == "WELCOME\n": # If the server sends "WELCOME\n", send the team name
                     self.client.send(f"{self.team_name}\n".encode())
-
+                    firstConnexion = False
+                print(self.receive_from_server)
                 self.retrieveClientNumber(self.receive_from_server)
                 self.retrieveWorldDimensions(self.receive_from_server)
-                # self.agentAlgo.play(self.agentInfo, self.receive_from_server)
-                self.agentAlgo.addCommandToExecuteInList(self.receive_from_server)
-                self.agentAlgo.send_to_server()
+                self.agentAlgo.play(self.receive_from_server)
+                self.receive_from_server = self.agentAlgo.send_to_server()
         except Exception as e:
             print(f"Error: {e}")
             exit(84)

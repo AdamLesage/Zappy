@@ -18,7 +18,7 @@ class AgentAlerts(AgentInfo):
     def checkAlerts(self) -> list[str]:
         """
         Reterns a list of alerts.
-        Example: ["dead", "food", "incantation"]
+        Example: ["food", "incantation"]
         """
         playerLevel = self.agent.getLevel()
         
