@@ -16,7 +16,7 @@ void mct(core_t *core, int fd, char **command)
         return;
     }
     while (current_tile != NULL) {
-        bct_two(core, fd, current_tile);
+        bct_two(fd, current_tile);
         current_tile = current_tile->next;
     }
 }

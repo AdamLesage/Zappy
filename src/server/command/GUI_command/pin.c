@@ -17,13 +17,13 @@ void pin(core_t *core, int fd, char **command)
         return;
     }
     if (player_info != NULL) {
-        pin_two(core, fd, player_info);
+        pin_two(fd, player_info);
     } else {
         send_response("sbp\n", fd);
     }
 }
 
-void pin_two(core_t *core, int fd, player_info_t *player_info)
+void pin_two(int fd, player_info_t *player_info)
 {
     inventory_t *inventory = player_info->inventory;
 
@@ -42,10 +42,10 @@ void pin_two(core_t *core, int fd, player_info_t *player_info)
     send_response(" ", fd);
     send_response_int(inventory->nb_sibur, fd);
     send_response(" ", fd);
-    pin_three(core, fd, inventory);
+    pin_three(fd, inventory);
 }
 
-void pin_three(core_t *core, int fd, inventory_t *inventory)
+void pin_three(int fd, inventory_t *inventory)
 {
     send_response_int(inventory->nb_mendiane, fd);
     send_response(" ", fd);

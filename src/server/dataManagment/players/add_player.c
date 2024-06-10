@@ -64,7 +64,7 @@ static player_info_t *init_player_info(int fd, char *team_name,
     return info;
 }
 
-static void add_graphic_player(map_t *map, players_t *players, int fd,
+static void add_graphic_player(players_t *players, int fd,
     char *team_name)
 {
     players_list_t *new_player = NULL;
@@ -88,7 +88,7 @@ bool add_player(map_t *map, players_t *players, int fd,
 
     if (map == NULL)
         return (false);
-    add_graphic_player(map, players, fd, team_name);
+    add_graphic_player(players, fd, team_name);
     if (find_eggs(map->eggs, team_name, &x, &y) == true) {
         new_player = malloc(sizeof(players_list_t));
         remove_eggs(map, x, y, team_name);

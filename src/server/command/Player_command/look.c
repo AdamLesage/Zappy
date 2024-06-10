@@ -86,6 +86,8 @@ void look(core_t *core, int fd, char **command)
     player_info_t *info = find_player(&core->players, fd);
     int *orientation_x_y = get_look_orientation(info->orientation);
 
+    if (command == NULL)
+        return;
     send_response("[", fd);
     for (int level = 0; level != info->level + 1; level++) {
         print_look_on_tile(core, level, orientation_x_y, fd);

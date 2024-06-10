@@ -35,11 +35,11 @@ void bct(core_t *core, int fd, char **command)
         return;
     }
     if (current_tile != NULL) {
-        bct_two(core, fd, current_tile);
+        bct_two(fd, current_tile);
     }
 }
 
-void bct_two(core_t *core, int fd, tiles_list_t *current_tile)
+void bct_two(int fd, tiles_list_t *current_tile)
 {
     tile_info_t *tile_info = current_tile->tile_info;
 
@@ -58,10 +58,10 @@ void bct_two(core_t *core, int fd, tiles_list_t *current_tile)
     send_response(" ", fd);
     send_response_int(tile_info->nb_mendiane, fd);
     send_response(" ", fd);
-    bct_three(core, fd, current_tile);
+    bct_three(fd, current_tile);
 }
 
-void bct_three(core_t *core, int fd, tiles_list_t *current_tile)
+void bct_three(int fd, tiles_list_t *current_tile)
 {
     tile_info_t *tile_info = current_tile->tile_info;
 
