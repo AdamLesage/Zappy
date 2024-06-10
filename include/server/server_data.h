@@ -33,7 +33,13 @@ typedef struct incantation_info_s {
     int *ids;
     int nb_players;
     int incantation_level;
+    int incantation_timer;
 } incantation_info_t;
+
+typedef struct incantation_list_s {
+    incantation_info_t *incantation_info;
+    struct incantation_list_s *next;
+} incantation_list_t;
 
 typedef struct player_info_s {
     int pos_x;
@@ -47,7 +53,7 @@ typedef struct player_info_s {
     int fd;
     char *team_name;
     int last_feed;
-    incantation_info_t *incantation_info;
+    bool is_on_incantation;
     int id;
 } player_info_t;
 
@@ -61,6 +67,7 @@ typedef struct players_s {
     int nb_client;
     int nb_teams;
     players_list_t *players_list;
+    incantation_list_t *incantation_list;
     int current_id;
 } players_t;
 
@@ -170,5 +177,7 @@ bool remove_from_inventory(players_t *players, enum Object object,
 bool remove_from_inventory_2(player_info_t *info, enum Object object);
 int get_player_k(player_info_t *player_info, int x, int y,
     arguments_t *arguments);
+int nb_player_at_level(players_list_t *player_list, int level,
+    int x, int y);
 
 #endif /* !SERVER_DATA_H_ */
