@@ -195,19 +195,19 @@ class AgentAlgo():
         #    return
         #if self.agentMentality == "Hungry":
         #    return None
-        #self.round += 1
+        self.round += 1
         
-        self.updateClientStatus()
-        if self.status == "Incantation" or self.status == "Dead" or self.status == "End":
-            return # If the agent is in incantation, dead or end state, do nothing
-        self.clientPlayLevel1()
-        self.clientPlayLevel2()
-        self.clientPlayLevel3()
-        self.clientPlayLevel4()
-        self.clientPlayLevel5()
-        self.clientPlayLevel6()
-        self.clientPlayLevel7()
-        self.clientPlayLevel8()
+        #self.updateClientStatus()
+        #if self.status == "Incantation" or self.status == "Dead" or self.status == "End":
+        #    return # If the agent is in incantation, dead or end state, do nothing
+        #self.clientPlayLevel1()
+        #self.clientPlayLevel2()
+        #self.clientPlayLevel3()
+        #self.clientPlayLevel4()
+        #self.clientPlayLevel5()
+        #self.clientPlayLevel6()
+        #self.clientPlayLevel7()
+        #self.clientPlayLevel8()
         return
 
     def send_to_server(self) -> None:
