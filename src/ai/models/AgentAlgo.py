@@ -38,6 +38,8 @@ class AgentAlgo():
         self.agentInfo = agentInfo
         self.agentMoves = Moves()
         self.client = client
+        self.round = 0
+        self.agentMentality = "None" #Hungry, Incantation, Mining, None
 
         self.availableCommands = {"connect_nbr\n": ConnectCommand(), "forward\n": ForwardCommand(),
                                 "right\n": RightCommand(), "left\n": LeftCommand(),
@@ -49,28 +51,82 @@ class AgentAlgo():
 
     def updateAgentInfo(self, info: AgentInfo):
         self.agentInfo = info
+    
+    #def defineFoodAlert(self, agentInfo: AgentInfo) -> None:
+    #    """
+    #    It will define the alert threshold for food,
+    #    based on the player's level.
+    #    It's updated every 10 rounds.
+    #    """
+    #    if self.round % 10 != 0:
+    #        return
+    #    agentInfo.commandsToSend.insert(0, "Inventory")
+    #    agentInfo.commandsToSend.insert(1, "Look")
+    #    return
 
-    def play(self, agentInfo: AgentInfo, data: str) -> str:
+    def updateInventory(self, inv: str) -> None:
+        """
+        Update the inventory of the agent
+        """
+        inv = inv.replace("[", "")
+        inv = inv.replace("]", "")
+        for idx, char in enumerate(inv):
+            if char == "," and inv[idx + 1] == " ":
+                inv = inv.replace(", ", ",")
+        splitedInf = inv.split(',')
+        for item in splitedInf:
+            item = item.split(' ')
+            if self.agentInfo.inventory[item[0]] == int(item[1]):
+                continue
+            self.agentInfo.addInventory(item[0], item[1])
+        return
+
+    def play(self, data: str) -> str:
         """
         Play the game, search for resources, level up, incantation, etc
-        Return the current state of the game: Continue, End, Dead, Incantation
         """
         alerts = self.alerts.checkAlerts()
 
+        if self.getReturnCommand()[0] == "Inventory\n":
+            self.updateInventory(self.getReturnCommand()[1])
+            for item, qt in self.agentInfo.inventory.items():
+                print(f"{item}: {qt}")
+            return
+        if self.round % 2 == 0:
+            print("list of commands to send: ", self.agentInfo.commandsToSend)
+            self.agentInfo.commandsToSend.insert(0, "Inventory\n")
+            self.round += 1
+            return
+        if self.agentMentality == "Incantation":
+            return
+        if self.agentMentality == "Hungry":
+            return None
         for alert in alerts:
+            if alerts == []:
+                break
+            if alert == "food":
+                self.agentMentality = "Hungry"
+                self.agentInfo.commandsToSend.clear()
+                self.agentInfo.addCommandsToSend("Look")
+                return
             if alert.startswith("incantation"):
                 self.addCommandToExecuteInList(f"Broadcast {alert}\n")
-                return "Incantation"
-            if alert == "food":
-                return "Continue"
-        return "Continue"
+                self.agentMentality = "Incantation"
+                return
+        self.round += 1
+        return
 
     def send_to_server(self) -> None:
         """Send a message to the server"""
+        if self.agentInfo.commandsReturned[0] != None:
+            return None
         if self.agentInfo.commandsToSend == deque([]) or self.client == None: # If there are no commands to send, get out of the function
-            return
-        command_to_send = self.agentInfo.commandsToSend.popleft() # Get the first command to send and remove it from the list
+            return None
+        command_to_send = self.agentInfo.commandsToSend.popleft()
+        print(f"Sending command: {command_to_send}")
         self.client.send(command_to_send.encode())
+        tmp = [command_to_send, ""]
+        self.agentInfo.commandsReturned = tmp
         # Add first command from waiting list to the commandsToSend list
         if self.agentInfo.commandWaitingList != []:
             self.agentInfo.commandsToSend.append(self.agentInfo.commandWaitingList.pop(0))
@@ -89,3 +145,24 @@ class AgentAlgo():
             self.agentInfo.addCommandsToSend(command) # Add the command to the list of commands to send
         else:
             self.agentInfo.commandWaitingList.append(command)
+    
+    #def receiveFromServer(self) -> str:
+    #    """Receive a message from the server"""
+    #    self.client.setblocking(0)
+    #    try:
+    #        receivedData = self.client.recv(1024).decode()
+    #    except BlockingIOError:
+    #        return None
+    #    return receivedData
+
+    def setReturnCommandAnswer(self, serverAnswer: str) -> None:
+        """Set the command to return"""
+        self.agentInfo.commandsReturned[1] = serverAnswer
+    
+    def getReturnCommand(self) -> str:
+        """Get the command to return"""
+        return self.agentInfo.commandsReturned
+    
+    def clearReturnCommand(self) -> None:
+        """Clear the command to return"""
+        self.agentInfo.commandsReturned = [None, None]
