@@ -49,7 +49,7 @@ class TestAgentAlgo(unittest.TestCase):
         agentAlgo = AgentAlgo(agent, 100)
         agentAlgo.alerts.alerts.append("food")
         agentAlgo.updateClientStatus()
-        self.assertEqual(agentAlgo.status, "Continue")
+        self.assertEqual(agentAlgo.status, "Food")
 
     def test06_updateAgentInfo(self):
         agent = AgentInfo()

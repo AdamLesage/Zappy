@@ -74,7 +74,6 @@ class Agent():
                     tmp += 1
                 except BlockingIOError:
                     self.receive_from_server = None
-                    pass
                 if self.disconnect_from_server(self.receive_from_server):
                     break
                 if self.receive_from_server == "WELCOME\n": # If the server sends "WELCOME\n", send the team name

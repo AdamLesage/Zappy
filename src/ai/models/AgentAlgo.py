@@ -55,7 +55,7 @@ class AgentAlgo():
     def updateClientStatus(self) -> None:
         """
         Update the client status.
-        State could be: Continue, End, Dead, Incantation
+        State could be: Continue, End, Dead, Incantation, Food
         """
         if len(self.alerts.checkAlerts()) == 0:
             return
@@ -65,7 +65,7 @@ class AgentAlgo():
             self.status = "Incantation"
             return
         if alert == "food":
-            self.status = "Continue"
+            self.status = "Food"
             return
         self.status = "Continue"
 
@@ -186,7 +186,7 @@ class AgentAlgo():
             for item, qt in self.agentInfo.inventory.items():
                 print(f"{item}: {qt}")
             return
-        if self.round % 2 == 0:
+        if self.round % 2 == 0: # Frequency of inventory check
             print("list of commands to send: ", self.agentInfo.commandsToSend)
             self.agentInfo.commandsToSend.insert(0, "Inventory\n")
             self.round += 1
@@ -216,7 +216,9 @@ class AgentAlgo():
             return None
         if self.agentInfo.commandsToSend == deque([]) or self.client == None: # If there are no commands to send, get out of the function
             return None
+        print(f"LEN: {len(self.agentInfo.commandsToSend)} before sending")
         command_to_send = self.agentInfo.commandsToSend.popleft()
+        print(f"LEN: {len(self.agentInfo.commandsToSend)} after sending")
         print(f"Sending command: {command_to_send}")
         self.client.send(command_to_send.encode())
         tmp = [command_to_send, ""]

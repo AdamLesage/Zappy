@@ -11,7 +11,7 @@ class AgentInfo():
     """AgentInfo class for the Zappy project"""
     def __init__(self):
         """Ctor of the AgentInfo class"""
-        self.commandsToSend = deque(maxlen=8) # Defined as a deque with a max length of 8 because we need to execute Look and Inventory commands every 8 rounds
+        self.commandsToSend = deque(maxlen=10) # Defined as a deque with a max length of 8 because we need to execute Look and Inventory commands every 8 rounds
         #self.commandsReturned = deque(maxlen=8)
         self.commandsReturned = [None, None]
         self.commandWaitingList = []
