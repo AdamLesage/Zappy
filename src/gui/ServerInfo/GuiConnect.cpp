@@ -62,6 +62,7 @@ void GuiConnect::receive()
 {
     char buffer[10000] = {0};
 
+    send("GRAPHIC\n");
     while (Running) {
         if (read(_socket, buffer, 10000) == -1) {
             throw Zappy::ConnectError("Failed to receive message", "GuiConnect");
