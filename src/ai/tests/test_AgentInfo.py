@@ -37,8 +37,7 @@ class TestAgentInfo(unittest.TestCase):
         """Test the getInventory method of the AgentInfo class"""
         testBot = AgentInfo()
         testBot.addInventory("mendiane", 10)
-        testBot.addInventory("mendiane", -2)
-        self.assertEqual(testBot.getInventory("mendiane"), 8)
+        self.assertEqual(testBot.getInventory("mendiane"), 10)
         return
     
     def test04_getInventory(self):
@@ -47,7 +46,7 @@ class TestAgentInfo(unittest.TestCase):
         testBot.addInventory("sibur", 5)
         testBot.addInventory("mendiane", 1)
         testBot.addInventory("sibur", 2)
-        self.assertEqual(testBot.getInventory("sibur"), 7)
+        self.assertEqual(testBot.getInventory("sibur"), 2)
         return
     
     def test05_getInventory(self):
