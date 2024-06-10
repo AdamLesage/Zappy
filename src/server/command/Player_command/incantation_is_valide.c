@@ -7,17 +7,19 @@
 
 #include "server.h"
 
-static int nb_player_at_level(players_list_t *player_list, int level,
+int nb_player_at_level(players_list_t *player_list, int level,
     int x, int y)
 {
     int nb = 0;
 
     for (players_list_t *tmp = player_list; tmp != NULL; tmp = tmp->next) {
-        if (tmp->player_info->level == level) {
+        if (tmp->player_info->level == level &&
+            tmp->player_info->is_on_incantation == false &&
+            x == tmp->player_info->pos_x && y == tmp->player_info->pos_y) {
             nb++;
         }
     }
-    return nb;
+    return (nb);
 }
 
 static bool valide_level_2(tile_info_t *tile_info,

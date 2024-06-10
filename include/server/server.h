@@ -78,8 +78,9 @@ int get_time_action(char *command);
 void execute_gui_command(core_t *core, char *command, int fd);
 bool is_know_player_command(char *command);
 void check_player_command(core_t *core);
+void check_food_players(core_t *core);
 
-void incantation(core_t *core, int fd, char **command);
+void incantation(core_t *core, incantation_info_t *incantation_info);
 bool incantation_is_valide(tile_info_t *info, players_list_t *players_list,
     int level);
 void incantation_destroy_stone(tile_info_t *info, int level);

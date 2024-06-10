@@ -50,7 +50,7 @@ static player_info_t *init_player_info(int fd, char *team_name,
     info->last_action = NULL;
     info->last_feed = 126;
     info->level = 1;
-    info->incantation_info = NULL;
+    info->is_on_incantation = false;
     while (rand_number == 0) {
         rand_number = rand() % 4;
     }

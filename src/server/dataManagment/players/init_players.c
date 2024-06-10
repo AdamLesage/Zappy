@@ -14,4 +14,5 @@ void init_players(players_t *players, arguments_t *arguments)
     players->nb_teams = arguments->nb_teams;
     players->players_list = NULL;
     players->current_id = 0;
+    players->incantation_list = NULL;
 }

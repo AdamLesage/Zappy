@@ -96,7 +96,6 @@ int get_player_k(player_info_t *player_info, int x, int y,
     int *vector = find_shortest_path(player_info, x, y, arguments);
     int *orientation = get_player_orientation(player_info->orientation);
     float angle = 0;
-    float angle2 = 22.5;
     int k = -1;
 
     if (vector == NULL || orientation == NULL)
