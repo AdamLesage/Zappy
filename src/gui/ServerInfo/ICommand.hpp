@@ -17,6 +17,7 @@
 
 std::vector<std::string> my_str_to_word_array(const char *str);
 std::vector<std::string> my_str_to_line_array(char *str);
+std::vector<std::string> my_str_to_word_array_separator(const char *str, char separator);
 
 namespace Zappy {
     class Inventory;
@@ -36,8 +37,8 @@ namespace Zappy {
                                     std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                     std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
                                     std::vector<std::string> &teams,
-                                    int timeUnit,
-                                bool isRunning
+                                    int &timeUnit,
+                                    bool &isRunning
             ) = 0;
         protected:
         private:

@@ -21,8 +21,8 @@ void Zappy::EBO::applyChanges(std::vector<std::string> parsedData,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
                                 std::vector<std::string> &teams,
-                                int timeUnit,
-                                bool isRunning
+                                int &timeUnit,
+                                bool &isRunning
 ) 
 {
     (void)size_map; // unused
@@ -44,6 +44,7 @@ void Zappy::EBO::applyChanges(std::vector<std::string> parsedData,
                 player->setTeamName(egg->getTeamName());
                 player->setPlayerLevel(1);
                 player->setOrientation(0);
+                player->setMessage("");
                 players.push_back(player);
                 eggs.erase(std::remove(eggs.begin(), eggs.end(), egg), eggs.end());
                 break;

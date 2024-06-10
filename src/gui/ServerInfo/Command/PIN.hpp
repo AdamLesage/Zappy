@@ -24,8 +24,8 @@ namespace Zappy {
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
                                 std::vector<std::string> &teams,
-                                int timeUnit,
-                                bool isRunning
+                                int &timeUnit,
+                                bool &isRunning
             ) override;
         protected:
         private:

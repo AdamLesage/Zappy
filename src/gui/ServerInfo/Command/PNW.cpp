@@ -21,8 +21,8 @@ void Zappy::PNW::applyChanges(std::vector<std::string> parsedData,
                                 std::vector<std::shared_ptr<Zappy::Player>> &players, 
                                 std::vector<std::shared_ptr<Zappy::Egg>> &eggs,
                                 std::vector<std::string> &teams,
-                                int timeUnit,
-                                bool isRunning
+                                int &timeUnit,
+                                bool &isRunning
 )
 {
     (void)size_map;
@@ -40,5 +40,6 @@ void Zappy::PNW::applyChanges(std::vector<std::string> parsedData,
     player->setOrientation(std::stoi(parsedData[4]));
     player->setPlayerLevel(std::stoi(parsedData[5]));
     player->setTeamName(parsedData[6]);
+    player->setMessage("");
     players.push_back(player);
 }

@@ -34,7 +34,16 @@
 #include "../../src/gui/ServerInfo/Command/PBC.hpp"
 #include "../../src/gui/ServerInfo/Command/PIC.hpp"
 #include "../../src/gui/ServerInfo/Command/PIE.hpp"
-
+#include "../../src/gui/ServerInfo/Command/ENW.hpp"
+#include "../../src/gui/ServerInfo/Command/SMG.hpp"
+#include "../../src/gui/ServerInfo/Command/SBP.hpp"
+#include "../../src/gui/ServerInfo/Command/SUC.hpp"
+#include "../../src/gui/ServerInfo/Command/PEX.hpp"
+#include "../../src/gui/ServerInfo/Command/EBO.hpp"
+#include "../../src/gui/ServerInfo/Command/EDI.hpp"
+#include "../../src/gui/ServerInfo/Command/MCT.hpp"
+#include "../../src/gui/ServerInfo/Command/SEG.hpp"
+#include "../../src/gui/ServerInfo/Command/SST.hpp"
 
 
 #endif /* !GUI_INCLUDE_HPP_ */
