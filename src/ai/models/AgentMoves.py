@@ -39,10 +39,10 @@ class Moves():
         itemPosition = 0
         pos = 0
 
-        inv = inv.replace("[ ", "")
-        inv = inv.replace(" ]", "")
-        inv = inv.replace("[", "")
-        inv = inv.replace("]", "")
+        lookResult = lookResult.replace("[ ", "")
+        lookResult = lookResult.replace(" ]", "")
+        lookResult = lookResult.replace("[", "")
+        lookResult = lookResult.replace("]", "")
         for item in lookResult.split(","):
             if itemToReach in item:
                 break
@@ -50,7 +50,7 @@ class Moves():
         if itemPosition in midTiles:
             for i in midTiles:
                 if itemPosition == i:
-                    movements.append("Take object\n")
+                    movements.append(f"Take {itemToReach}\n")
                     return (movements)
                 movements.append("Forward\n")
         if itemPosition in leftTiles:
@@ -63,7 +63,7 @@ class Moves():
             while posIndice != itemPosition:
                 movements.append("Forward\n")
                 posIndice -= 1
-            movements.append("Take object\n")
+            movements.append(f"Take {itemToReach}\n")
             return (movements)
         if itemPosition in rightTiles:
             while itemPosition > midTiles[pos + 1]:
@@ -74,7 +74,7 @@ class Moves():
             while posIndice != itemPosition:
                 movements.append("Forward\n")
                 posIndice += 1
-            movements.append("Take object\n")
+            movements.append(f"Take {itemToReach}\n")
             return (movements)
         
     def searchItem(self, itemToSearch: str, lookResult: str, needReaching: bool = True):
