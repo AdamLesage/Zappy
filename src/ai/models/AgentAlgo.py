@@ -179,8 +179,7 @@ class AgentAlgo():
         """
         Play the game, search for resources, level up, incantation, etc
         """
-        alerts = self.alerts.checkAlerts()
-
+        self.updateClientStatus()
         if self.getReturnCommand()[0] == "Inventory\n":
             self.updateInventory(self.getReturnCommand()[1])
             for item, qt in self.agentInfo.inventory.items():
@@ -197,17 +196,16 @@ class AgentAlgo():
         #    return None
         self.round += 1
         
-        #self.updateClientStatus()
-        #if self.status == "Incantation" or self.status == "Dead" or self.status == "End":
-        #    return # If the agent is in incantation, dead or end state, do nothing
-        #self.clientPlayLevel1()
-        #self.clientPlayLevel2()
-        #self.clientPlayLevel3()
-        #self.clientPlayLevel4()
-        #self.clientPlayLevel5()
-        #self.clientPlayLevel6()
-        #self.clientPlayLevel7()
-        #self.clientPlayLevel8()
+        if self.status == "Incantation" or self.status == "Dead" or self.status == "End":
+            return # If the agent is in incantation, dead or end state, do nothing
+        self.clientPlayLevel1()
+        self.clientPlayLevel2()
+        self.clientPlayLevel3()
+        self.clientPlayLevel4()
+        self.clientPlayLevel5()
+        self.clientPlayLevel6()
+        self.clientPlayLevel7()
+        self.clientPlayLevel8()
         return
 
     def send_to_server(self) -> None:
