@@ -157,6 +157,7 @@ void init_players(players_t *players, arguments_t *arguments);
 bool add_player(map_t *map, players_t *players, int fd,
     char *team_name);
 player_info_t *find_player(players_t *player, int fd);
+player_info_t *find_player_by_id(players_t *player, int id);
 bool delete_player(map_t *map, players_t *players, int fd);
 void move_player(map_t *map, players_t *player, int fd);
 void move_player2(map_t *map, players_t *player, int fd,
