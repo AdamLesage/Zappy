@@ -25,6 +25,7 @@ from command.TakeCommand import TakeCommand
 from command.EjectCommand import EjectCommand
 
 # Import libraries
+import random
 from collections import deque
 import socket
 
@@ -162,6 +163,8 @@ class AgentAlgo():
         """
         Update the inventory of the agent
         """
+        inv = inv.replace("[ ", "")
+        inv = inv.replace(" ]", "")
         inv = inv.replace("[", "")
         inv = inv.replace("]", "")
         for idx, char in enumerate(inv):
@@ -173,7 +176,21 @@ class AgentAlgo():
             if self.agentInfo.inventory[item[0]] == int(item[1]):
                 continue
             self.agentInfo.addInventory(item[0], item[1])
+        self
+        self.agentInfo.setTimeUnits(self.agentInfo.getInventory("food") * 126)
         return
+
+    def foodMode(self) -> None:
+        actions = ["Forward\n", "Right\n", "Forward\n", "Left\n"] # More chance to go forward (x2)
+
+        buf = self.getReturnCommand()[1]
+        if self.agentMoves.checkItem(self.getReturnCommand()[1], "food"):
+            self.agentInfo.movements = self.agentMoves.reachItemList("food", buf)
+            return
+        else:
+            finalAction = random.choice(actions)
+            self.agentInfo.addCommandsToSend(finalAction)
+            return
 
     def play(self, data: str) -> str:
         """
@@ -185,17 +202,28 @@ class AgentAlgo():
             for item, qt in self.agentInfo.inventory.items():
                 print(f"{item}: {qt}")
             return
-        if self.round % 2 == 0: # Frequency of inventory check
+        if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
+            print("Looking for food")
+            self.foodMode()
+            return
+        if self.agentInfo.movements != []:
+            self.agentInfo.addCommandsToSend(self.agentInfo.movements.pop(0))
+            return
+        if self.round == 10: # Frequency of inventory check
             print("list of commands to send: ", self.agentInfo.commandsToSend)
             self.agentInfo.commandsToSend.insert(0, "Inventory\n")
-            self.round += 1
+            self.round = 0
             return
         #if self.agentMentality == "Incantation":
         #    return
         #if self.agentMentality == "Hungry":
         #    return None
         self.round += 1
-        
+        #print(f"Status: {self.status}")
+        if self.status == "Food":
+            self.agentInfo.commandsToSend.clear()
+            self.agentInfo.commandsToSend.insert(0, "Look\n")
+            return
         if self.status == "Incantation" or self.status == "Dead" or self.status == "End":
             return # If the agent is in incantation, dead or end state, do nothing
         self.clientPlayLevel1()
