@@ -38,7 +38,7 @@ class AgentAlgo():
         self.agentInfo = agentInfo
         self.agentMoves = Moves()
         self.client = client
-
+        self.status = "Continue"
         self.availableCommands = {"connect_nbr\n": ConnectCommand(), "forward\n": ForwardCommand(),
                                 "right\n": RightCommand(), "left\n": LeftCommand(),
                                 "look\n": LookCommand(), "inventory\n": InventoryCommand(),
@@ -50,23 +50,32 @@ class AgentAlgo():
     def updateAgentInfo(self, info: AgentInfo):
         self.agentInfo = info
 
+    def updateClientStatus(self) -> None:
+        """
+        Update the client status.
+        State could be: Continue, End, Dead, Incantation
+        """
+        if len(self.alerts.checkAlerts()) == 0:
+            return
+        alert = self.alerts.checkAlerts().pop()
+        if alert.startswith("incantation"):
+            self.addCommandToExecuteInList(f"Broadcast {alert}\n")
+            self.status = "Incantation"
+            return
+        if alert == "food":
+            self.status = "Continue"
+            return
+        self.status = "Continue"
+
     def play(self, agentInfo: AgentInfo, data: str) -> str:
         """
         Play the game, search for resources, level up, incantation, etc
         Return the current state of the game: Continue, End, Dead, Incantation
         """
-        alerts = self.alerts.checkAlerts()
 
         # TODO: Check if current game state (Continue, End, Dead, Incantation) is still available (Food -> if food is still on the map, etc...)
-        for alert in alerts:
-            if alert.startswith("incantation"):
-                self.addCommandToExecuteInList(f"Broadcast {alert}\n")
-                return "Incantation"
-            if alert == "food":
-                return "Continue"
-
+        self.updateClientStatus()
         # TODO: from current alert, do an action to reach the target
-        return "Continue"
 
     def send_to_server(self) -> None:
         """Send a message to the server"""
