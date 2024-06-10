@@ -125,3 +125,24 @@ Test(mct, test_mct, .init = cr_redirect_stdout)
 //     pin(&core, 1, command);
 //     cr_assert_stdout_eq_str(expected);
 // }
+
+Test(ppo, test_ppo, .init = cr_redirect_stdout)
+{
+    core_t core;
+    char *command[] = {"ppo", "1", NULL};
+    char *expected = "ppo 1 0 0 1\n";
+
+    core.map.width = 10;
+    core.map.height = 10;
+    players_list_t player;
+    player.fd = 1;
+    inventory_t inventory = {0, 0, 0, 0, 0, 0, 0};
+    player_info_t player_info = {0, 0, 1, &inventory, {NULL}, NULL, 0, N, 1, "team1", 0, NULL, 1};
+
+    player.player_info = &player_info;
+    player.next = NULL;
+    core.players.players_list = &player;
+    
+    ppo(&core, 1, command);
+    cr_assert_stdout_eq_str(expected);
+}
