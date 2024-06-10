@@ -9,6 +9,7 @@
 #include "../ServerInfo/GuiConnect.hpp"
 #include "../Entity/Player.hpp"
 #include "../Entity/Tile.hpp"
+#include "InterfaceError.hpp"
 #include <iostream>
 #include <thread>
 #include <array>
@@ -33,6 +34,7 @@ namespace Zappy {
             void set_mape_size(std::array<int, 2> mape_size) { _mape_size = mape_size; }
             void set_map();
             void check_event();
+            void print_resssource();
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
@@ -44,6 +46,10 @@ namespace Zappy {
             std::vector<sf::RectangleShape> _rect;
             std::array<int, 2> _mape_size;
             std::vector<std::vector<sf::Sprite>> map_sprites;
+            std::vector<sf::Texture> map_textures;
+            std::vector<std::vector<std::vector<sf::Sprite>>> ressource_sprite;
+            std::vector<sf::Sprite> ressource_sprite_;
+            std::vector<sf::Texture> ressource_texture;
             sf::Sprite sprite;
             sf::Texture texture;
             std::vector<sf::Texture> textures;
