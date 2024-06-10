@@ -9,5 +9,24 @@
 
 void ppo(core_t *core, int fd, char **command)
 {
-    printf("ppo\n");
+    int player_id = atoi(command[1]);
+    player_info_t *player_info = find_player_by_id(&core->players, player_id);
+
+    if (len_array(command) != 2) {
+        send_response("sbp\n", fd);
+        return;
+    }
+    if (player_info == NULL) {
+        send_response("sbp\n", fd);
+        return;
+    }
+    send_response("ppo ", fd);
+    send_response_int(player_info->id, fd);
+    send_response(" ", fd);
+    send_response_int(player_info->pos_x, fd);
+    send_response(" ", fd);
+    send_response_int(player_info->pos_x, fd);
+    send_response(" ", fd);
+    send_response_int(player_info->orientation, fd);
+    send_response("\n", fd);
 }
