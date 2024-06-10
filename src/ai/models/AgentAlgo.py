@@ -67,14 +67,102 @@ class AgentAlgo():
             return
         self.status = "Continue"
 
-    def play(self, agentInfo: AgentInfo) -> str:
+    def clientPlayLevel1(self) -> None:
+        """
+        If the agent is level 1, do the actions for level 1
+        Actions such as: search for food, search for resources, level up, etc
+        """
+        if self.agentInfo.getLevel() != 1:
+            return
+        pass
+
+    def clientPlayLevel2(self) -> None:
+        """
+        If the agent is level 2, do the actions for level 2
+        Actions such as: search for food, search for resources, level up, etc
+        """
+        if self.agentInfo.getLevel() != 2:
+            return
+        pass
+
+    def clientPlayLevel3(self) -> None:
+        """
+        If the agent is level 3, do the actions for level 3
+        Actions such as: search for food, help agent level 1 to upgrade to level 2, level up, etc
+        """
+        if self.agentInfo.getLevel() != 3:
+            return
+        pass
+
+    def clientPlayLevel4(self) -> None:
+        """
+        If the agent is level 4, do the actions for level 4
+        Actions such as: search for food, help agent level 2 to upgrade to level 3, level up, etc
+        Once level 4 is reached, agent is considered as a "helper" agent
+        Then once there is enough agents to reach level 5, he will join or start an incantation to level 5
+        """
+        if self.agentInfo.getLevel() != 4:
+            return
+        pass
+
+    def clientPlayLevel5(self) -> None:
+        """
+        If the agent is level 5, do the actions for level 5
+        Actions such as: search for food, help agent level 3 to upgrade to level 4, level up, etc
+        """
+        if self.agentInfo.getLevel() != 5:
+            return
+        pass
+
+    def clientPlayLevel6(self) -> None:
+        """
+        If the agent is level 6, do the actions for level 6
+        Actions such as: search for food, help agent level 4 and level 5 to upgrade to level 6, level up, etc
+        The goal of agent level 6 if to help other agents to level up so incantation will be easier
+        """
+        if self.agentInfo.getLevel() != 6:
+            return
+        pass
+
+    def clientPlayLevel7(self) -> None:
+        """
+        If the agent is level 7, do the actions for level 7
+        Actions such as: search for food, help agent and level 4, level 5 and level 6 to upgrade to level 7, level up, etc
+        The goal of agent level 7 if to help other agents to level up so incantation will be easier
+        """
+        if self.agentInfo.getLevel() != 7:
+            return
+        pass
+
+    def clientPlayLevel8(self) -> None:
+        """
+        If the agent is level 8, do the actions for level 8
+        Actions such as: search for food, help agent and level 4, level 5, level 6 and level 7 to upgrade to level 8, level up, etc
+        The goal of agent level 8 if to help other agents to level up so incantation will be easier
+        """
+        if self.agentInfo.getLevel() != 8:
+            return
+        pass
+
+
+    def play(self, agentInfo: AgentInfo) -> None:
         """
         Play the game, search for resources, level up, incantation, etc
-        Return the current state of the game: Continue, End, Dead, Incantation
+        Do an action according to the current state of the game: Continue, End, Dead, Incantation
         """
 
         # TODO: Check if current game state (Continue, End, Dead, Incantation) is still available (Food -> if food is still on the map, etc...)
         self.updateClientStatus()
+        if self.status == "Incantation" or self.status == "Dead" or self.status == "End":
+            return # If the agent is in incantation, dead or end state, do nothing
+        self.clientPlayLevel1()
+        self.clientPlayLevel2()
+        self.clientPlayLevel3()
+        self.clientPlayLevel4()
+        self.clientPlayLevel5()
+        self.clientPlayLevel6()
+        self.clientPlayLevel7()
+        self.clientPlayLevel8()
         # TODO: from current alert, do an action to reach the target
 
     def send_to_server(self) -> None:
