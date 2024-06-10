@@ -21,7 +21,6 @@ class Agent():
         self.client = None
         self.agentInfo = AgentInfo()
         self.agentAction = AgentAction(self.agentInfo)
-        self.agentAlgo = AgentAlgo(self.agentInfo, 100)
         self.agentAlgo = None
         self.port = port
         self.team_name = team_name

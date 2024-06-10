@@ -13,7 +13,7 @@ from unittest.mock import patch
 import importlib.util
 
 # test imports
-#from tests.test_Agent import TestAgent
+from tests.test_Agent import *
 from tests.test_AgentInfo import *
 from tests.test_Commands import *
 from tests.test_AgentAction import *

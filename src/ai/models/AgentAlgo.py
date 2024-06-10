@@ -40,7 +40,7 @@ class AgentAlgo():
         self.client = client
         self.round = 0
         self.agentMentality = "None" #Hungry, Incantation, Mining, None
-
+        self.status = "Continue"
         self.availableCommands = {"connect_nbr\n": ConnectCommand(), "forward\n": ForwardCommand(),
                                 "right\n": RightCommand(), "left\n": LeftCommand(),
                                 "look\n": LookCommand(), "inventory\n": InventoryCommand(),
@@ -51,6 +51,100 @@ class AgentAlgo():
 
     def updateAgentInfo(self, info: AgentInfo):
         self.agentInfo = info
+
+    def updateClientStatus(self) -> None:
+        """
+        Update the client status.
+        State could be: Continue, End, Dead, Incantation
+        """
+        if len(self.alerts.checkAlerts()) == 0:
+            return
+        alert = self.alerts.checkAlerts().pop()
+        if alert.startswith("incantation"):
+            self.addCommandToExecuteInList(f"Broadcast {alert}\n")
+            self.status = "Incantation"
+            return
+        if alert == "food":
+            self.status = "Continue"
+            return
+        self.status = "Continue"
+
+    def clientPlayLevel1(self) -> None:
+        """
+        If the agent is level 1, do the actions for level 1
+        Actions such as: search for food, search for resources, level up, etc
+        """
+        if self.agentInfo.getLevel() != 1:
+            return
+        pass
+
+    def clientPlayLevel2(self) -> None:
+        """
+        If the agent is level 2, do the actions for level 2
+        Actions such as: search for food, search for resources, level up, etc
+        """
+        if self.agentInfo.getLevel() != 2:
+            return
+        pass
+
+    def clientPlayLevel3(self) -> None:
+        """
+        If the agent is level 3, do the actions for level 3
+        Actions such as: search for food, help agent level 1 to upgrade to level 2, level up, etc
+        """
+        if self.agentInfo.getLevel() != 3:
+            return
+        pass
+
+    def clientPlayLevel4(self) -> None:
+        """
+        If the agent is level 4, do the actions for level 4
+        Actions such as: search for food, help agent level 2 to upgrade to level 3, level up, etc
+        Once level 4 is reached, agent is considered as a "helper" agent
+        Then once there is enough agents to reach level 5, he will join or start an incantation to level 5
+        """
+        if self.agentInfo.getLevel() != 4:
+            return
+        pass
+
+    def clientPlayLevel5(self) -> None:
+        """
+        If the agent is level 5, do the actions for level 5
+        Actions such as: search for food, help agent level 3 to upgrade to level 4, level up, etc
+        """
+        if self.agentInfo.getLevel() != 5:
+            return
+        pass
+
+    def clientPlayLevel6(self) -> None:
+        """
+        If the agent is level 6, do the actions for level 6
+        Actions such as: search for food, help agent level 4 and level 5 to upgrade to level 6, level up, etc
+        The goal of agent level 6 if to help other agents to level up so incantation will be easier
+        """
+        if self.agentInfo.getLevel() != 6:
+            return
+        pass
+
+    def clientPlayLevel7(self) -> None:
+        """
+        If the agent is level 7, do the actions for level 7
+        Actions such as: search for food, help agent and level 4, level 5 and level 6 to upgrade to level 7, level up, etc
+        The goal of agent level 7 if to help other agents to level up so incantation will be easier
+        """
+        if self.agentInfo.getLevel() != 7:
+            return
+        pass
+
+    def clientPlayLevel8(self) -> None:
+        """
+        If the agent is level 8, do the actions for level 8
+        Actions such as: search for food, help agent and level 4, level 5, level 6 and level 7 to upgrade to level 8, level up, etc
+        The goal of agent level 8 if to help other agents to level up so incantation will be easier
+        """
+        if self.agentInfo.getLevel() != 8:
+            return
+        pass
     
     #def defineFoodAlert(self, agentInfo: AgentInfo) -> None:
     #    """
