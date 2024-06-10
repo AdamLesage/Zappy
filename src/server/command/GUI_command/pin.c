@@ -7,42 +7,28 @@
 
 #include "server.h"
 
-players_list_t *get_player(core_t *core, int fd)
-{
-    players_list_t *player = core->players.players_list;
-
-    while (player != NULL) {
-        if (player->fd == fd) {
-            return player;
-        }
-        player = player->next;
-    }
-    return NULL;
-}
-
 void pin(core_t *core, int fd, char **command)
 {
     int player_fd = atoi(command[1]);
-    players_list_t *player = get_player(core, player_fd);
+    player_info_t *player_info = find_player(&core->players, player_fd);
 
     if (len_array(command) != 2) {
         send_response("sbp\n", fd);
         return;
     }
-    if (player != NULL) {
-        pin_two(core, fd, player);
+    if (player_info != NULL) {
+        pin_two(core, fd, player_info);
     } else {
         send_response("sbp\n", fd);
     }
 }
 
-void pin_two(core_t *core, int fd, players_list_t *player)
+void pin_two(core_t *core, int fd, player_info_t *player_info)
 {
-    player_info_t *player_info = player->player_info;
     inventory_t *inventory = player_info->inventory;
 
     send_response("pin ", fd);
-    send_response_int(player->fd, fd);
+    send_response_int(player_info->fd, fd);
     send_response(" ", fd);
     send_response_int(player_info->pos_x, fd);
     send_response(" ", fd);
@@ -56,13 +42,11 @@ void pin_two(core_t *core, int fd, players_list_t *player)
     send_response(" ", fd);
     send_response_int(inventory->nb_sibur, fd);
     send_response(" ", fd);
-    pin_three(core, fd, player);
+    pin_three(core, fd, inventory);
 }
 
-void pin_three(core_t *core, int fd, players_list_t *player)
+void pin_three(core_t *core, int fd, inventory_t *inventory)
 {
-    inventory_t *inventory = player->player_info->inventory;
-
     send_response_int(inventory->nb_mendiane, fd);
     send_response(" ", fd);
     send_response_int(inventory->nb_phiras, fd);
