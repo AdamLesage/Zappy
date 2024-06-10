@@ -30,7 +30,7 @@ class AgentAlerts(AgentInfo):
         """
         playerLevel = self.agent.getLevel()
         
-        if self.agent.getTimeUnits() < self.minTimeU:
+        if self.agent.getTimeUnits() <= self.minTimeU:
             """Need to eat"""
             self.alerts.append("food")
             # send broadcast with crypted data
