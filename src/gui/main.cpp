@@ -50,11 +50,18 @@ int main(int ac, char **av)
     }
     std::array<std::string, 2> args = recup_args(ac, av);
     try {
+        printf("test\n");
         Zappy::Interface interface;
+        printf("test\n");
         std::shared_ptr<GuiConnect> gui_connect = std::make_shared<GuiConnect>(args[0], args[1]);
+        printf("test\n");
         gui_connect->send("GRAPHIC\n");
+        printf("test\n");
         interface.loop(gui_connect);
     } catch (const Zappy::ConnectError &e) {
+        std::cerr << "Error: " << e.what() << std::endl << "Location: " << e.where() << std::endl;
+        return 84;
+    } catch (const Zappy::InterfaceError &e) {
         std::cerr << "Error: " << e.what() << std::endl << "Location: " << e.where() << std::endl;
         return 84;
     }
