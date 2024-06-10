@@ -124,11 +124,11 @@ class AgentInfo():
         """Add an item to the inventory"""
         if type not in ["food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]:
             raise ValueError(f"Invalid item {type}")
-        self.inventory[type] += quantity
+        self.inventory[type] = self.inventory.get(type, 0) + int(quantity)
 
     def addPlayers(self, level: str, quantity: int) -> None:
         """Set the number of players in the team"""
         available_levels = ["level1", "level2", "level3", "level4", "level5", "level6", "level7", "level8"]
         if level not in available_levels:
             raise ValueError(f"Invalid level {level}")
-        self.teamPlayers[level] += quantity
+        self.teamPlayers[level] = self.teamPlayers.get(level, 0) + int(quantity)
