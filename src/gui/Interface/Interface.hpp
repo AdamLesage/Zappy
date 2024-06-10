@@ -35,6 +35,7 @@ namespace Zappy {
             void set_map();
             void check_event();
             void print_resssource();
+            void print_eggs();
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;

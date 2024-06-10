@@ -64,19 +64,19 @@ Zappy::Interface::Interface()
     for (int i = 0; i < 7; i++)
         ressource_sprite_.push_back(sf::Sprite());
     ressource_sprite_[0].setTexture(ressource_texture[0]);
-    ressource_sprite_[0].setScale(0.1, 0.1);
+    ressource_sprite_[0].setScale(0.05, 0.05);
     ressource_sprite_[1].setTexture(ressource_texture[1]);
-    ressource_sprite_[1].setScale(0.1, 0.1);
+    ressource_sprite_[1].setScale(0.015, 0.015);
     ressource_sprite_[2].setTexture(ressource_texture[2]);
-    ressource_sprite_[2].setScale(0.05, 0.05);
+    ressource_sprite_[2].setScale(0.025, 0.025);
     ressource_sprite_[3].setTexture(ressource_texture[3]);
-    ressource_sprite_[3].setScale(0.1, 0.1);
+    ressource_sprite_[3].setScale(0.05, 0.05);
     ressource_sprite_[4].setTexture(ressource_texture[4]);
-    ressource_sprite_[4].setScale(0.1, 0.1);
+    ressource_sprite_[4].setScale(0.05, 0.05);
     ressource_sprite_[5].setTexture(ressource_texture[5]);
-    ressource_sprite_[5].setScale(0.1, 0.1);
+    ressource_sprite_[5].setScale(0.05, 0.05);
     ressource_sprite_[6].setTexture(ressource_texture[6]);
-    ressource_sprite_[6].setScale(0.1, 0.1);
+    ressource_sprite_[6].setScale(0.05, 0.05);
     // view.move(100, 100);
     // view.setRotation(20);
     // view.rotate(5);
@@ -127,39 +127,48 @@ void Zappy::Interface::print_resssource()
         for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
             if (i < ressource_sprite.size() && j < ressource_sprite[i].size()) {
                 ressource_sprite[i][j][6].setPosition(110 + (i * 102.4), 160 + (j * 102.4));
-                printf("i = %d, j = %d\n", i, j);
-                printf("ressource = %d\n", _gui_connect->_tiles[i][j]->_inventory->get("Food"));
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Food") > 0) {
+                    ressource_sprite[i][j][6].setScale(0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Food")), 0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Food")));
                     window->draw(ressource_sprite[i][j][6]);
                 }
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Linemate") > 0) {
                     ressource_sprite[i][j][0].setPosition(130 + (i * 102.4), 160 + (j * 102.4));
+                    ressource_sprite[i][j][0].setScale(0.015 * (_gui_connect->_tiles[i][j]->_inventory->get("Linemate")), 0.015 * (_gui_connect->_tiles[i][j]->_inventory->get("Linemate")));
                     window->draw(ressource_sprite[i][j][0]);
                 }
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Deraumere") > 0) {
                     ressource_sprite[i][j][1].setPosition(160 + (i * 102.4), 160 + (j * 102.4));
+                    ressource_sprite[i][j][1].setScale(0.025 * (_gui_connect->_tiles[i][j]->_inventory->get("Deraumere")), 0.025 * (_gui_connect->_tiles[i][j]->_inventory->get("Deraumere")));
                     window->draw(ressource_sprite[i][j][1]);
                 }
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Sibur") > 0) {
                     ressource_sprite[i][j][2].setPosition(160 + (i * 102.4), 200 + (j * 102.4));
+                    ressource_sprite[i][j][2].setScale(0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Sibur")), 0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Sibur")));
                     window->draw(ressource_sprite[i][j][2]);
                 }
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Mendiane") > 0) {
                     ressource_sprite[i][j][3].setPosition(110 + (i * 102.4), 200 + (j * 102.4));
+                    ressource_sprite[i][j][3].setScale(0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Mendiane")), 0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Mendiane")));
                     window->draw(ressource_sprite[i][j][3]);
                 }
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Phiras") > 0) {
                     ressource_sprite[i][j][4].setPosition(120 + (i * 102.4), 200 + (j * 102.4));
+                    ressource_sprite[i][j][4].setScale(0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Phiras")), 0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Phiras")));
                     window->draw(ressource_sprite[i][j][4]);
                 }
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Thystame") > 0) {
                     ressource_sprite[i][j][5].setPosition(140 + (i * 102.4), 200 + (j * 102.4));
+                    ressource_sprite[i][j][5].setScale(0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Thystame")), 0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Thystame")));
                     window->draw(ressource_sprite[i][j][5]);
                 }
-                printf("test\n");
             }
         }
     }
+}
+
+void Zappy::Interface::print_eggs()
+{
+    
 }
 
 void Zappy::Interface::check_event()
@@ -168,10 +177,10 @@ void Zappy::Interface::check_event()
         if (event.type == sf::Event::Closed)
             window->close();
         if (event.type == sf::Event::MouseWheelScrolled) {
-            if (event.mouseWheelScroll.delta > 0 && view.getSize().x > 960 && view.getSize().y > 540) {
+            if (event.mouseWheelScroll.delta > 0 && view.getSize().x > 1920 / 4 && view.getSize().y > 1080 / 4) {
                 view.zoom(0.9);
                 zoom += 1;
-            } else if (view.getSize().x < 1920 * 3 && view.getSize().y < 1080 * 3) {
+            } else if (event.mouseWheelScroll.delta < 0 && view.getSize().x < 1920 * 3 && view.getSize().y < 1080 * 3) {
                 view.zoom(1.1);
                 zoom -= 1;
             }
