@@ -55,6 +55,10 @@ namespace Zappy {
             sf::Texture texture;
             std::vector<sf::Texture> textures;
             std::vector<std::shared_ptr<Player>> players;
+            std::vector<sf::Sprite> player_sprites;
+            std::vector<sf::Texture> player_textures;
+            std::vector<sf::Sprite> egg_sprites;
+            sf::Texture egg_texture;
             sf::Font font;
             std::vector<sf::Text> Texts;
             sf::Sprite sound;

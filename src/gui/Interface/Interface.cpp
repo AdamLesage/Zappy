@@ -77,9 +77,7 @@ Zappy::Interface::Interface()
     ressource_sprite_[5].setScale(0.05, 0.05);
     ressource_sprite_[6].setTexture(ressource_texture[6]);
     ressource_sprite_[6].setScale(0.05, 0.05);
-    // view.move(100, 100);
-    // view.setRotation(20);
-    // view.rotate(5);
+    egg_texture.loadFromFile("./asset/spirte/egg.png");
 }
 
 Zappy::Interface::~Interface()
@@ -168,7 +166,14 @@ void Zappy::Interface::print_resssource()
 
 void Zappy::Interface::print_eggs()
 {
-    
+    printf("eggs size: %lu\n", _gui_connect->_eggs.size());
+    for (int i = 0; i < _gui_connect->_eggs.size(); i++) {
+        egg_sprites.push_back(sf::Sprite());
+        egg_sprites[i].setTexture(egg_texture);
+        egg_sprites[i].setScale(0.5, 0.5);
+        egg_sprites[i].setPosition(_gui_connect->_eggs[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_eggs[i]->getPosition()[1] * 102.4 + 150);
+        window->draw(egg_sprites[i]);
+    }
 }
 
 void Zappy::Interface::check_event()
@@ -226,6 +231,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
             }
         }
         print_resssource();
+        print_eggs();
         window->setView(window->getDefaultView());
         for (size_t i = 0; i < _rect.size(); i++)
             window->draw(_rect[i]);
