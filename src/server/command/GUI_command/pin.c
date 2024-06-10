@@ -9,8 +9,8 @@
 
 void pin(core_t *core, int fd, char **command)
 {
-    int player_fd = atoi(command[1]);
-    player_info_t *player_info = find_player(&core->players, player_fd);
+    int player_id = atoi(command[1]);
+    player_info_t *player_info = find_player_by_id(&core->players, player_id);
 
     if (len_array(command) != 2) {
         send_response("sbp\n", fd);
@@ -28,7 +28,7 @@ void pin_two(core_t *core, int fd, player_info_t *player_info)
     inventory_t *inventory = player_info->inventory;
 
     send_response("pin ", fd);
-    send_response_int(player_info->fd, fd);
+    send_response_int(player_info->id, fd);
     send_response(" ", fd);
     send_response_int(player_info->pos_x, fd);
     send_response(" ", fd);
