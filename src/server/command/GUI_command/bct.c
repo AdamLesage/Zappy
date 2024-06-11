@@ -77,6 +77,8 @@ void bct_event(core_t *core, int x, int y)
 
     for (players_list_t *tmp = core->players.players_list;
         tmp != NULL; tmp = tmp->next) {
-        bct_two(tmp->fd, tiles_list);
+        if (strcmp(tmp->player_info->team_name, "GRAPHIC") == 0) {
+            bct_two(tmp->fd, tiles_list);
+        }
     }
 }
