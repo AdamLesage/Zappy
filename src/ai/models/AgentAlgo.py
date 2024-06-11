@@ -65,10 +65,27 @@ class AgentAlgo():
             self.addCommandToExecuteInList(f"Broadcast {alert}\n")
             self.status = "Incantation"
             return
-        if alert == "food":
+        if self.agentMentality == "Hungry" and self.updateFoodAlert() == True:
+            self.agentMentality == None
+            return
+        if self.agentMentality == "Hungry":
             self.status = "Food"
             return
+        if alert == "food":
+            self.status = "Food"
+            self.agentMentality = "Hungry"
+            return
         self.status = "Continue"
+    
+    def updateFoodAlert(self) -> bool:
+        """
+        Update the food level of the agent
+        """
+        self.agentInfo.setTimeUnits(self.agentInfo.getInventory("food") * 126)
+        print(f"Time units: {self.agentInfo.getTimeUnits()}")
+        if self.agentInfo.getTimeUnits() > 1260:
+            return True
+        return False
 
     def clientPlayLevel1(self) -> None:
         """
@@ -79,8 +96,8 @@ class AgentAlgo():
             return
         if self.status == "Food":
             self.foodMode() # Search for food
-        else:
-            self.miningMode()
+        #else:
+        #    self.miningMode()
 
     def clientPlayLevel2(self) -> None:
         """
