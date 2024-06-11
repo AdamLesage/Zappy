@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-static void send_enw_info(int player_id, eggs_t *eggs, int fd)
+void send_enw_info(int player_id, eggs_t *eggs, int fd)
 {
     send_response("enw ", fd);
     send_response_int(eggs->egg_id, fd);

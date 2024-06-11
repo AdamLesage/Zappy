@@ -26,3 +26,12 @@ void plv(core_t *core, int fd, char **command)
     send_response_int(player_info->level, fd);
     send_response("\n", fd);
 }
+
+void plv_start(int fd, player_info_t *player_info)
+{
+    send_response("plv ", fd);
+    send_response_int(player_info->id, fd);
+    send_response(" ", fd);
+    send_response_int(player_info->level, fd);
+    send_response("\n", fd);
+}

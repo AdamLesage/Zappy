@@ -47,11 +47,21 @@ void player_authentification(core_t *core, char *command, int fd)
 void graphic_authentification(core_t *core, char *command, int fd)
 {
     add_player(&core->map, &core->players, fd, command);
-    send_response("msz", fd);
-    send_response(int_to_str(core->arguments.width), fd);
-    send_response(" ", fd);
-    send_response(int_to_str(core->arguments.height), fd);
-    send_response("\n", fd);
+    msz_start(core, fd);
+    sgt_start(core, fd);
+    mct_start(core, fd);
+    tna_start(core, fd);
+    for (players_list_t *tmp = core->players.players_list;
+        tmp != NULL; tmp = tmp->next) {
+        if (strcmp(tmp->player_info->team_name, "GRAPHIC") != 0) {
+            send_pnw_info(tmp->player_info, fd);
+            pin_two(fd, tmp->player_info);
+            plv_start(fd, tmp->player_info);
+        }
+    }
+    for (eggs_t *tmp = core->map.eggs; tmp != NULL; tmp = tmp->next) {
+        send_enw_info(-1, tmp, fd);
+    }
 }
 
 void authentification(core_t *core, char *command, int fd)

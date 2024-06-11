@@ -20,3 +20,13 @@ void mct(core_t *core, int fd, char **command)
         current_tile = current_tile->next;
     }
 }
+
+void mct_start(core_t *core, int fd)
+{
+    tiles_list_t *current_tile = core->map.tiles_list;
+
+    while (current_tile != NULL) {
+        bct_two(fd, current_tile);
+        current_tile = current_tile->next;
+    }
+}
