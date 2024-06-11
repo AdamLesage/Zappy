@@ -81,35 +81,3 @@ bool remove_eggs(map_t *map, int x, int y, char *team_name)
     }
     return delete_eggs(team_name, map, x, y);
 }
-
-static bool delete_eggs_at(map_t *map, int x, int y, bool is_deleted)
-{
-    eggs_t *deleted_eggs = NULL;
-
-    for (eggs_t *tmp = map->eggs; tmp->next != NULL; tmp = tmp->next) {
-        if (tmp->next->pos_x == x && tmp->next->pos_y == y) {
-            deleted_eggs = tmp->next;
-            tmp->next = tmp->next->next;
-            free(deleted_eggs);
-            is_deleted = true;
-        }
-    }
-    return (is_deleted);
-}
-
-bool remove_eggs_at(map_t *map, int x, int y)
-{
-    eggs_t *deleted_eggs = NULL;
-    bool is_deleted = false;
-
-    if (map == NULL || map->eggs == NULL) {
-        return (false);
-    }
-    if (map->eggs->pos_x == x && map->eggs->pos_y == y) {
-        deleted_eggs = map->eggs;
-        map->eggs = map->eggs->next;
-        free(deleted_eggs);
-        is_deleted = true;
-    }
-    return delete_eggs_at(map, x, y, is_deleted);
-}
