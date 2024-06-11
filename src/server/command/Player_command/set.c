@@ -34,11 +34,16 @@ void set(core_t *core, int fd, char **command)
 {
     int *pos = get_pos(&core->players, fd);
     enum Object object = string_to_object(command[1]);
+    player_info_t *info = NULL;
 
     if (remove_from_inventory(&core->players, object, fd) == false) {
         send_response("ko\n", fd);
         return;
     }
+    info = find_player(&core->players, fd);
     set_on_map(pos, object, &core->map);
     send_response("ok\n", fd);
+    pdr(&core->players, info->id, object);
+    pin_event(&core->players, info);
+    bct_event(core, pos[0], pos[1]);
 }

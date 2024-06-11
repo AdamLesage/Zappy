@@ -70,3 +70,13 @@ void bct_three(int fd, tiles_list_t *current_tile)
     send_response_int(tile_info->nb_thystame, fd);
     send_response("\n", fd);
 }
+
+void bct_event(core_t *core, int x, int y)
+{
+    tiles_list_t *tiles_list = get_current_tile(core, x, y);
+
+    for (players_list_t *tmp = core->players.players_list;
+        tmp != NULL; tmp = tmp->next) {
+        bct_two(tmp->fd, tiles_list);
+    }
+}
