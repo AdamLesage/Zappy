@@ -96,6 +96,8 @@ class AgentAlgo():
             return
         if self.status == "Food":
             self.foodMode() # Search for food
+        elif self.status == "Incantation":
+            return # If the agent is in incantation, do nothing because broadcast has been sent, need to wait for other agents
         #else:
         #    self.miningMode()
 
@@ -106,7 +108,12 @@ class AgentAlgo():
         """
         if self.agentInfo.getLevel() != 2:
             return
-        pass
+        if self.status == "Food":
+            self.foodMode() # Search for food
+        elif self.status == "Incantation":
+            return # If the agent is in incantation, do nothing because broadcast has been sent, need to wait for other agents
+        else:
+            self.miningMode()
 
     def clientPlayLevel3(self) -> None:
         """
@@ -115,7 +122,12 @@ class AgentAlgo():
         """
         if self.agentInfo.getLevel() != 3:
             return
-        pass
+        if self.status == "Food":
+            self.foodMode() # Search for food
+        elif self.status == "Incantation":
+            return # If the agent is in incantation, do nothing because broadcast has been sent, need to wait for other agents
+        else:
+            self.miningMode()
 
     def clientPlayLevel4(self) -> None:
         """
