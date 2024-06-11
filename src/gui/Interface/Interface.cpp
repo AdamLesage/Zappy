@@ -78,6 +78,24 @@ Zappy::Interface::Interface()
     ressource_sprite_[6].setTexture(ressource_texture[6]);
     ressource_sprite_[6].setScale(0.05, 0.05);
     egg_texture.loadFromFile("./asset/spirte/egg.png");
+    for (int i = 0; i < 8; i++)
+        player_textures.push_back(sf::Texture());
+    if (player_textures[0].loadFromFile("./asset/spirte/rank/rank1.png") == false)
+        throw InterfaceError("Error: rank1.png not found", "Interface");
+    if (player_textures[1].loadFromFile("./asset/spirte/rank/rank2.png") == false)
+        throw InterfaceError("Error: rank2.png not found", "Interface");
+    if (player_textures[2].loadFromFile("./asset/spirte/rank/rank3.png") == false)
+        throw InterfaceError("Error: rank3.png not found", "Interface");
+    if (player_textures[3].loadFromFile("./asset/spirte/rank/rank4.png") == false)
+        throw InterfaceError("Error: rank4.png not found", "Interface");
+    if (player_textures[4].loadFromFile("./asset/spirte/rank/rank5.png") == false)
+        throw InterfaceError("Error: rank5.png not found", "Interface");
+    if (player_textures[5].loadFromFile("./asset/spirte/rank/rank6.png") == false)
+        throw InterfaceError("Error: rank6.png not found", "Interface");
+    if (player_textures[6].loadFromFile("./asset/spirte/rank/rank7.png") == false)
+        throw InterfaceError("Error: rank7.png not found", "Interface");
+    if (player_textures[7].loadFromFile("./asset/spirte/rank/rank8.png") == false)
+        throw InterfaceError("Error: rank8.png not found", "Interface");
 }
 
 Zappy::Interface::~Interface()
@@ -126,37 +144,58 @@ void Zappy::Interface::print_resssource()
             if (i < ressource_sprite.size() && j < ressource_sprite[i].size()) {
                 ressource_sprite[i][j][6].setPosition(110 + (i * 102.4), 160 + (j * 102.4));
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Food") > 0) {
-                    ressource_sprite[i][j][6].setScale(0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Food")), 0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Food")));
+                    if (_gui_connect->_tiles[i][j]->_inventory->get("Food") > 1)
+                        ressource_sprite[i][j][6].setScale(0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Food")), 0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Food")));
+                    else
+                        ressource_sprite[i][j][6].setScale(0.05, 0.05);
                     window->draw(ressource_sprite[i][j][6]);
                 }
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Linemate") > 0) {
                     ressource_sprite[i][j][0].setPosition(130 + (i * 102.4), 160 + (j * 102.4));
-                    ressource_sprite[i][j][0].setScale(0.015 * (_gui_connect->_tiles[i][j]->_inventory->get("Linemate")), 0.015 * (_gui_connect->_tiles[i][j]->_inventory->get("Linemate")));
+                    if (_gui_connect->_tiles[i][j]->_inventory->get("Linemate") > 1)
+                        ressource_sprite[i][j][0].setScale(0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Linemate")) * 0.5), 0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Linemate")) * 0.5));
+                    else
+                        ressource_sprite[i][j][0].setScale(0.05, 0.05);
                     window->draw(ressource_sprite[i][j][0]);
                 }
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Deraumere") > 0) {
                     ressource_sprite[i][j][1].setPosition(160 + (i * 102.4), 160 + (j * 102.4));
-                    ressource_sprite[i][j][1].setScale(0.025 * (_gui_connect->_tiles[i][j]->_inventory->get("Deraumere")), 0.025 * (_gui_connect->_tiles[i][j]->_inventory->get("Deraumere")));
+                    if (_gui_connect->_tiles[i][j]->_inventory->get("Deraumere") > 1)
+                        ressource_sprite[i][j][1].setScale(0.025 * ((_gui_connect->_tiles[i][j]->_inventory->get("Deraumere")) * 0.75), 0.025 * ((_gui_connect->_tiles[i][j]->_inventory->get("Deraumere")) * 0.75));
+                    else
+                        ressource_sprite[i][j][1].setScale(0.025, 0.025);
                     window->draw(ressource_sprite[i][j][1]);
                 }
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Sibur") > 0) {
                     ressource_sprite[i][j][2].setPosition(160 + (i * 102.4), 200 + (j * 102.4));
-                    ressource_sprite[i][j][2].setScale(0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Sibur")), 0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Sibur")));
+                    if (_gui_connect->_tiles[i][j]->_inventory->get("Sibur") > 1)
+                        ressource_sprite[i][j][2].setScale(0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Sibur")) * 0.75), 0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Sibur")) * 0.75));
+                    else
+                        ressource_sprite[i][j][6].setScale(0.05, 0.05);
                     window->draw(ressource_sprite[i][j][2]);
                 }
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Mendiane") > 0) {
                     ressource_sprite[i][j][3].setPosition(110 + (i * 102.4), 200 + (j * 102.4));
-                    ressource_sprite[i][j][3].setScale(0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Mendiane")), 0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Mendiane")));
+                    if (_gui_connect->_tiles[i][j]->_inventory->get("Mendiane") > 1)
+                        ressource_sprite[i][j][3].setScale(0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Mendiane")) * 0.75), 0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Mendiane")) * 0.75));
+                    else
+                        ressource_sprite[i][j][6].setScale(0.05, 0.05);
                     window->draw(ressource_sprite[i][j][3]);
                 }
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Phiras") > 0) {
                     ressource_sprite[i][j][4].setPosition(120 + (i * 102.4), 200 + (j * 102.4));
-                    ressource_sprite[i][j][4].setScale(0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Phiras")), 0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Phiras")));
+                    if (_gui_connect->_tiles[i][j]->_inventory->get("Phiras") > 1)
+                        ressource_sprite[i][j][4].setScale(0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Phiras")) * 0.75), 0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Phiras")) * 0.75));
+                    else
+                        ressource_sprite[i][j][6].setScale(0.05, 0.05);
                     window->draw(ressource_sprite[i][j][4]);
                 }
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Thystame") > 0) {
                     ressource_sprite[i][j][5].setPosition(140 + (i * 102.4), 200 + (j * 102.4));
-                    ressource_sprite[i][j][5].setScale(0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Thystame")), 0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Thystame")));
+                    if (_gui_connect->_tiles[i][j]->_inventory->get("Thystame") > 1)
+                        ressource_sprite[i][j][5].setScale(0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Thystame")) * 0.75), 0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Thystame")) * 0.75));
+                    else
+                        ressource_sprite[i][j][6].setScale(0.05, 0.05);
                     window->draw(ressource_sprite[i][j][5]);
                 }
             }
@@ -166,13 +205,25 @@ void Zappy::Interface::print_resssource()
 
 void Zappy::Interface::print_eggs()
 {
-    printf("eggs size: %lu\n", _gui_connect->_eggs.size());
     for (int i = 0; i < _gui_connect->_eggs.size(); i++) {
-        egg_sprites.push_back(sf::Sprite());
+        if (egg_sprites.size() < _gui_connect->_eggs.size())
+            egg_sprites.push_back(sf::Sprite());
         egg_sprites[i].setTexture(egg_texture);
-        egg_sprites[i].setScale(0.5, 0.5);
-        egg_sprites[i].setPosition(_gui_connect->_eggs[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_eggs[i]->getPosition()[1] * 102.4 + 150);
+        egg_sprites[i].setScale(0.05, 0.05);
+        egg_sprites[i].setPosition(_gui_connect->_eggs[i]->getPosition()[0] * 102.4 + 135, _gui_connect->_eggs[i]->getPosition()[1] * 102.4 + 217);
         window->draw(egg_sprites[i]);
+    }
+}
+
+void Zappy::Interface::print_players()
+{
+    for (int i = 0; i < _gui_connect->_players.size(); i++) {
+        if (player_sprites.size() < _gui_connect->_players.size())
+            player_sprites.push_back(sf::Sprite());
+        player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel() - 1]);
+        player_sprites[i].setScale(0.5, 0.5);
+        player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
+        window->draw(player_sprites[i]);
     }
 }
 
