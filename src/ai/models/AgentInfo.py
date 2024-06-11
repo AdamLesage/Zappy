@@ -11,13 +11,15 @@ class AgentInfo():
     """AgentInfo class for the Zappy project"""
     def __init__(self):
         """Ctor of the AgentInfo class"""
-        self.commandsToSend = deque(maxlen=10)
-        self.commandsReturned = deque(maxlen=10)
+        self.commandsToSend = deque(maxlen=10) # Defined as a deque with a max length of 8 because we need to execute Look and Inventory commands every 8 rounds
+        #self.commandsReturned = deque(maxlen=8)
+        self.commandsReturned = [None, None]
         self.commandWaitingList = []
         self.inventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.client_num = 0
         self.world_width = 0
         self.world_height = 0
+        self.movements = []
         self.agentStatus = "Alive" # Alive, Dead, Incantation, Fork
         self.level = 1
         self.numberingVision = 1
@@ -82,7 +84,7 @@ class AgentInfo():
             return self.teamPlayers[level]
         return sum(self.teamPlayers.values()) # Return the sum of all players, so the total number of players in the team
 
-    # Setters
+    # Setters  
     def setTimeUnits(self, tu: int) -> None:
         """Set the number of time Units"""
         self.timeUnits = tu
@@ -123,11 +125,11 @@ class AgentInfo():
         """Add an item to the inventory"""
         if type not in ["food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]:
             raise ValueError(f"Invalid item {type}")
-        self.inventory[type] += quantity
+        self.inventory[type] = int(quantity)
 
     def addPlayers(self, level: str, quantity: int) -> None:
         """Set the number of players in the team"""
         available_levels = ["level1", "level2", "level3", "level4", "level5", "level6", "level7", "level8"]
         if level not in available_levels:
             raise ValueError(f"Invalid level {level}")
-        self.teamPlayers[level] += quantity
+        self.teamPlayers[level] = self.teamPlayers.get(level, 0) + int(quantity)

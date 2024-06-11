@@ -104,3 +104,11 @@ class TestAgentAlert(unittest.TestCase):
         agent.addInventory("thystame", 1)
         agentAlert.checkAlerts()
         self.assertEqual(agentAlert.alerts, ["incantationNeeded_8"])
+
+    def test10_clearAlerts(self):
+        agent = AgentInfo()
+        agentAlert = AgentAlerts(agent, 100)
+        agentAlert.alerts.append("food")
+        self.assertEqual(agentAlert.alerts, ["food"])
+        agentAlert.clearAlerts()
+        self.assertEqual(agentAlert.alerts, [])

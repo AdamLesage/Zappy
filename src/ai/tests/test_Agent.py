@@ -96,8 +96,29 @@ class TestAgent(unittest.TestCase):
         try:
             agent = Agent(port, "Team1")
             agent.agentInfo.addCommandsToSend("look\n")
+            time.sleep(1)
             agent.connect_to_server()
         finally:
-            self.assertEqual(agent.agentInfo.commandsToSend, deque(maxlen=10)) # Check if the command was sent and queue is empty
+            commands = agent.agentInfo.commandsToSend
+            self.assertEqual(len(commands), 1)
+            command = commands.popleft()
+            self.assertTrue(command in ["Forward\n", "Right\n", "Left\n"])
             server_thread.stop()
             agent.client.close()
+
+    def test06_retrieveClientNumber_none_data(self):
+        """Test the retrieval of an unexisting client number"""
+        agent = Agent(4242, "Team1")
+        try:
+            agent.retrieveClientNumber(None)
+        except Exception as e:
+            self.fail(f"An unexpected exception occurred: {e}")
+
+    def test06_retrieveClientNumber_not_zero(self):
+        """Test the retrieval of an unexisting client number"""
+        agent = Agent(4242, "Team1")
+        try:
+            agent.agentInfo.client_num = 1
+            agent.retrieveClientNumber("0\n15 15\n")
+        except Exception as e:
+            self.fail(f"An unexpected exception occurred: {e}")
