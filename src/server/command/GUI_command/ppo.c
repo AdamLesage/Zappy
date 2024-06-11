@@ -34,8 +34,8 @@ void ppo(core_t *core, int fd, char **command)
 void ppo_event(core_t *core, int fd, int player_id)
 {
     player_info_t *player_info = find_player_by_id(&core->players, player_id);
-    player_id = player_info->id;
 
+    player_id = player_info->id;
     if (player_info == NULL) {
         send_response("sbp\n", fd);
         return;
