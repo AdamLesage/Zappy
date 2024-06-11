@@ -103,6 +103,7 @@ void bct_three(int fd, tiles_list_t *current_tile);
 void mct(core_t *core, int fd, char **command);
 void msz(core_t *core, int fd, char **command);
 void pin(core_t *core, int fd, char **command);
+void pin_event(players_t *players, player_info_t *player_info);
 void pin_two(int fd, player_info_t *player_info);
 void pin_three(int fd, inventory_t *inventory);
 void plv(core_t *core, int fd, char **command);

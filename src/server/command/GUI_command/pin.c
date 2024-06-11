@@ -23,6 +23,16 @@ void pin(core_t *core, int fd, char **command)
     }
 }
 
+void pin_event(players_t *players, player_info_t *player_info)
+{
+    for (players_list_t *tmp = players->players_list;
+        tmp != NULL; tmp = tmp->next) {
+        if (strcmp(tmp->player_info->team_name, "GRAPHIC") == 0) {
+            pin_two(tmp->fd, player_info);
+        }
+    }
+}
+
 void pin_two(int fd, player_info_t *player_info)
 {
     inventory_t *inventory = player_info->inventory;
