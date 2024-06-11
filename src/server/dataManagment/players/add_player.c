@@ -74,6 +74,7 @@ static void add_graphic_player(players_t *players, int fd,
         new_player->fd = fd;
         new_player->player_info = init_player_info(fd, team_name,
             0, 0);
+        new_player->player_info->id = -1;
         new_player->next = players->players_list;
         players->players_list = new_player;
     }

@@ -31,11 +31,8 @@ void ppo(core_t *core, int fd, char **command)
     send_response("\n", fd);
 }
 
-void ppo_event(core_t *core, int fd, int player_id)
+void ppo_event(int fd, player_info_t *player_info)
 {
-    player_info_t *player_info = find_player_by_id(&core->players, player_id);
-
-    player_id = player_info->id;
     if (player_info == NULL) {
         send_response("sbp\n", fd);
         return;
@@ -51,12 +48,12 @@ void ppo_event(core_t *core, int fd, int player_id)
     send_response("\n", fd);
 }
 
-void send_ppo(core_t *core, players_t *players)
+void send_ppo(core_t *core, player_info_t *player_info)
 {
-    for (players_list_t *tmp = players->players_list;
+    for (players_list_t *tmp = core->players.players_list;
         tmp != NULL; tmp = tmp->next) {
         if (strcmp(tmp->player_info->team_name, "GRAPHIC") == 0) {
-            ppo_event(core, tmp->fd, tmp->player_info->id);
+            ppo_event(tmp->fd, player_info);
         }
     }
 }
