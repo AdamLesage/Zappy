@@ -117,4 +117,4 @@ class TestAgentAlgo(unittest.TestCase):
         agent.addInventory("phiras", 1)
         agent.addInventory("thystame", 1)
         agentAlgo = AgentAlgo(agent, 100)
-        self.assertEqual(agentAlgo.findBestItemToTake(playerLevel=1), "linemate")
+        self.assertEqual(agentAlgo.findBestItemToTake(playerLevel=1, itemsInPlayerVision=["linemate", "sibur", "mendiane", "phiras", "thystame"]), "linemate")
