@@ -25,7 +25,7 @@ void ppo(core_t *core, int fd, char **command)
     send_response(" ", fd);
     send_response_int(player_info->pos_x, fd);
     send_response(" ", fd);
-    send_response_int(player_info->pos_x, fd);
+    send_response_int(player_info->pos_y, fd);
     send_response(" ", fd);
     send_response_int(player_info->orientation, fd);
     send_response("\n", fd);
@@ -45,7 +45,7 @@ void ppo_event(core_t *core, int fd, int player_id)
     send_response(" ", fd);
     send_response_int(player_info->pos_x, fd);
     send_response(" ", fd);
-    send_response_int(player_info->pos_x, fd);
+    send_response_int(player_info->pos_y, fd);
     send_response(" ", fd);
     send_response_int(player_info->orientation, fd);
     send_response("\n", fd);

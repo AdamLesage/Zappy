@@ -111,6 +111,7 @@ void pin_three(int fd, inventory_t *inventory);
 void plv(core_t *core, int fd, char **command);
 void plv_start(int fd, player_info_t *player_info);
 void ppo(core_t *core, int fd, char **command);
+void send_ppo(core_t *core, players_t *players);
 void sgt(core_t *core, int fd, char **command);
 void sgt_start(core_t *core, int fd);
 void sst(core_t *core, int fd, char **command);
