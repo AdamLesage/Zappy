@@ -120,6 +120,7 @@ static void incantation_end_success(tile_info_t *tile_info,
             send_response_int(info->level, info->fd);
             send_response("\n", info->fd);
         }
+        pie(&core->players, tile_info->pos_x, tile_info->pos_y, true);
     }
 }
 
@@ -133,6 +134,8 @@ static void incantation_end_failure(incantation_info_t *incantation_info,
         if (info != NULL)
             send_response("ko\n", info->fd);
     }
+    pie(&core->players, incantation_info->pos_x, incantation_info->pos_y,
+        false);
 }
 
 void incantation(core_t *core, incantation_info_t *incantation_info)
