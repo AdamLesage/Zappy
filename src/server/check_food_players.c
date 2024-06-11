@@ -16,7 +16,9 @@ static void eat_food(player_info_t *info, players_t *players, map_t *map)
             pdi(players, info->id);
             delete_player(map, players, info->fd);
             enw(players, -1, map->eggs);
+            return;
         }
+        pin_event(players, info);
     } else {
         info->last_feed--;
     }
