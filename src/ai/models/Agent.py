@@ -65,12 +65,12 @@ class Agent():
             tmp = 0
             self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.client.connect((self.ip, self.port))
-            self.agentAlgo = AgentAlgo(self.agentInfo, 378, self.client)
+            self.agentAlgo = AgentAlgo(self.agentInfo, 1000, self.client)
             while True:
                 self.client.setblocking(0)
                 try:
                     self.receive_from_server = self.client.recv(1024).decode()
-                    print(f"tmp {tmp} | {self.receive_from_server}")
+                    print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}")
                     tmp += 1
                 except BlockingIOError:
                     self.receive_from_server = None
@@ -97,7 +97,7 @@ class Agent():
 
     def disconnect_from_server(self, data: str) -> bool:
         """Disconnect from the server"""
-        if data == "ko\n" or data == "dead\n": # If the server sends "ko\n" or "dead\n", close the connection
+        if data == "dead\n": # If the server sends "ko\n" or "dead\n", close the connection
             self.client.close()
             return True
         return False
