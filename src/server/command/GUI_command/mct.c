@@ -30,3 +30,13 @@ void mct_start(core_t *core, int fd)
         current_tile = current_tile->next;
     }
 }
+
+void mct_event(core_t *core)
+{
+    for (players_list_t *tmp = core->players.players_list;
+        tmp != NULL; tmp = tmp->next) {
+        if (strcmp(tmp->player_info->team_name, "GRAPHIC") == 0) {
+            mct_start(core, tmp->fd);
+        }
+    }
+}

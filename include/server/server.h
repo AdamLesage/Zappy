@@ -79,6 +79,7 @@ void execute_gui_command(core_t *core, char *command, int fd);
 bool is_know_player_command(char *command);
 void check_player_command(core_t *core);
 void check_food_players(core_t *core);
+void refill_map(core_t *core);
 
 void incantation(core_t *core, incantation_info_t *incantation_info);
 bool incantation_is_valide(tile_info_t *info, players_list_t *players_list,
@@ -103,6 +104,7 @@ void bct_two(int fd, tiles_list_t *current_tile);
 void bct_three(int fd, tiles_list_t *current_tile);
 void mct(core_t *core, int fd, char **command);
 void mct_start(core_t *core, int fd);
+void mct_event(core_t *core);
 void msz(core_t *core, int fd, char **command);
 void msz_start(core_t *core, int fd);
 void pin(core_t *core, int fd, char **command);

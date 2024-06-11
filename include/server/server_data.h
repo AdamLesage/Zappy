@@ -149,7 +149,6 @@ bool remove_mendiane(map_t *map, int x, int y);
 bool remove_phiras(map_t *map, int x, int y);
 bool remove_thystame(map_t *map, int x, int y);
 bool remove_eggs(map_t *map, int x, int y, char *team_name);
-void refill_map(map_t *map);
 int find_number_eggs_on_team(eggs_t *eggs, char *team);
 
 void init_players(players_t *players, arguments_t *arguments);

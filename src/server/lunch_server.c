@@ -28,7 +28,7 @@ static void manage_select_notif(core_t *core, int retval)
         check_food_players(core);
         core->map.last_refille--;
         if (core->map.last_refille == 0) {
-            refill_map(&core->map);
+            refill_map(core);
         }
     }
 }
