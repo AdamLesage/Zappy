@@ -26,5 +26,6 @@ void broadcast(core_t *core, int fd, char **command)
             send_response(command[1], tmp->fd);
             send_response("\n", tmp->fd);
         }
+        pbc(&core->players, info->id, command[1]);
     }
 }
