@@ -38,6 +38,9 @@ void set_player_command(core_t *core, player_info_t *info, char *command)
             start_incantation(core, info->fd);
             return;
         }
+        if (strcmp(command, "Fork") == 0) {
+            pfk(&core->players, info->id);
+        }
         info->timer_action = get_time_action(command);
     }
     add_action_in_queue(&core->players, info->fd, command);

@@ -16,6 +16,9 @@ void next_player_command(player_info_t *info, core_t *core)
             start_incantation(core, info->fd);
             return;
         }
+        if (strcmp(info->action_queue[0], "Fork") == 0) {
+            pfk(&core->players, info->id);
+        }
         info->timer_action = get_time_action(info->action_queue[0]);
     }
 }
