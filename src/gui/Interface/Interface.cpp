@@ -267,6 +267,15 @@ void Zappy::Interface::check_event()
                 isPanning = true;
                 lastMousePos = sf::Mouse::getPosition(*window);
             }
+            sf::Vector2f mousePos = window->mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y), view);
+            for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
+                for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
+                    sf::FloatRect tileBounds(100 + (i * 102.4), 150 + (j * 102.4), 102.4, 102.4);
+                    if (tileBounds.contains(mousePos)) {
+                        printf("Tile %d %d\n", i, j);
+                    }
+                }
+            }
         }
         if (event.type == sf::Event::MouseButtonReleased) {
             if (event.mouseButton.button == sf::Mouse::Left) {
