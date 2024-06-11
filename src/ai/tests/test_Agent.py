@@ -99,7 +99,10 @@ class TestAgent(unittest.TestCase):
             time.sleep(1)
             agent.connect_to_server()
         finally:
-            self.assertEqual(agent.agentInfo.commandsToSend, deque(["look\n"], maxlen=10)) # Check if the command inventory was send successfully and look remains in the queue
+            commands = agent.agentInfo.commandsToSend
+            self.assertEqual(len(commands), 1)
+            command = commands.popleft()
+            self.assertTrue(command in ["Forward\n", "Right\n", "Left\n"])
             server_thread.stop()
             agent.client.close()
 

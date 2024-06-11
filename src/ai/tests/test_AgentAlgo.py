@@ -108,3 +108,13 @@ class TestAgentAlgo(unittest.TestCase):
             agentAlgo.updateInventory(elem)
         self.assertEqual(agent.getInventory("phiras"), 0)
 
+    def test09_findBestItemToTake(self):
+        agent = AgentInfo()
+        # list_items = ["food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]
+        agent.inventory["linemate"] = 0
+        agent.addInventory("sibur", 1)
+        agent.addInventory("mendiane", 1)
+        agent.addInventory("phiras", 1)
+        agent.addInventory("thystame", 1)
+        agentAlgo = AgentAlgo(agent, 100)
+        self.assertEqual(agentAlgo.findBestItemToTake(playerLevel=1), "linemate")
