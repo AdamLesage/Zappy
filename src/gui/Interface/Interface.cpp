@@ -96,6 +96,39 @@ Zappy::Interface::Interface()
         throw InterfaceError("Error: rank7.png not found", "Interface");
     if (player_textures[7].loadFromFile("./asset/spirte/rank/rank8.png") == false)
         throw InterfaceError("Error: rank8.png not found", "Interface");
+    for (int i = 0; i < 4; i++) {
+        player_orientation.push_back(std::array<sf::IntRect, 4>());
+    }
+    player_orientation[0][0] = sf::IntRect(250, 0, 250, 250);
+    player_orientation[0][1] = sf::IntRect(250, 250, 250, 250);
+    player_orientation[0][2] = sf::IntRect(250, 500, 250, 250);
+    player_orientation[0][3] = sf::IntRect(250, 750, 250, 250);
+    player_orientation[1][0] = sf::IntRect(35, 0, 35, 35);
+    player_orientation[1][1] = sf::IntRect(35, 35, 30, 30);
+    player_orientation[1][2] = sf::IntRect(30, 65, 35, 35);
+    player_orientation[1][3] = sf::IntRect(30, 100, 35, 35);
+}
+
+void Zappy::Interface::set_scale_of_player(int i)
+{
+    if (_gui_connect->_players[i]->getLevel() == 1)
+        player_sprites[i].setScale(0.4, 0.4);
+    else if (_gui_connect->_players[i]->getLevel() == 2)
+        player_sprites[i].setScale(1, 1);
+}
+
+void Zappy::Interface::print_players()
+{
+    for (int i = 0; i < _gui_connect->_players.size(); i++) {
+        if (player_sprites.size() < _gui_connect->_players.size())
+            player_sprites.push_back(sf::Sprite());
+        player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel()]);
+        player_sprites[i].setScale(2, 2);
+        player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
+        player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel()][_gui_connect->_players[i]->getOrientation()]);
+        printf("Player %d is at %d %d and is level %d\n", i, _gui_connect->_players[i]->getPosition()[0], _gui_connect->_players[i]->getPosition()[1], _gui_connect->_players[i]->getLevel());
+        window->draw(player_sprites[i]);
+    }
 }
 
 Zappy::Interface::~Interface()
@@ -215,18 +248,6 @@ void Zappy::Interface::print_eggs()
     }
 }
 
-void Zappy::Interface::print_players()
-{
-    for (int i = 0; i < _gui_connect->_players.size(); i++) {
-        if (player_sprites.size() < _gui_connect->_players.size())
-            player_sprites.push_back(sf::Sprite());
-        player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel() - 1]);
-        player_sprites[i].setScale(0.5, 0.5);
-        player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
-        window->draw(player_sprites[i]);
-    }
-}
-
 void Zappy::Interface::check_event()
 {
     while (window->pollEvent(event)) {
@@ -283,6 +304,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         }
         print_resssource();
         print_eggs();
+        print_players();
         window->setView(window->getDefaultView());
         for (size_t i = 0; i < _rect.size(); i++)
             window->draw(_rect[i]);

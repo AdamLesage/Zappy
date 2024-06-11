@@ -37,6 +37,7 @@ namespace Zappy {
             void print_resssource();
             void print_eggs();
             void print_players();
+            void set_scale_of_player(int i);
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
@@ -57,6 +58,7 @@ namespace Zappy {
             std::vector<sf::Texture> textures;
             std::vector<std::shared_ptr<Player>> players;
             std::vector<sf::Sprite> player_sprites;
+            std::vector<std::array<sf::IntRect, 4>> player_orientation;
             std::vector<sf::Texture> player_textures;
             std::vector<sf::Sprite> egg_sprites;
             sf::Texture egg_texture;
