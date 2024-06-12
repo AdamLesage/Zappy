@@ -47,7 +47,7 @@ namespace Zappy {
             int tick;
             float zoom;
             float last_zoom;
-            int sound_volume;
+            float sound_volume;
             std::vector<sf::RectangleShape> _rect;
             std::array<int, 2> _mape_size;
             std::vector<std::vector<sf::Sprite>> map_sprites;

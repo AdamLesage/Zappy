@@ -396,6 +396,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
         sound_volume = bars[0]->checkClick(window);
+        backgroundMusic.setVolume(sound_volume);
         check_event();
         window->setView(view); 
         if (isOverTile)
