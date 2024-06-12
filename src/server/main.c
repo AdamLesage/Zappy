@@ -7,8 +7,6 @@
 
 #include "../../include/server/server.h"
 
-static volatile int keepRunning = 1;
-
 void signal_handler(int sig)
 {
     sig = sig;
