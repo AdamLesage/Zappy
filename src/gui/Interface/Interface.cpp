@@ -37,7 +37,7 @@ Zappy::Interface::Interface()
         tile_sprite_.push_back(sf::Sprite());
         tile_sprite_[i].setTexture(tile_texture_[i]);
         tile_sprite_[i].setScale(0.32, 0.32);
-        tile_sprite_[i].setColor(sf::Color(255, 255, 255, 150));
+        tile_sprite_[i].setColor(sf::Color(255, 255, 255, 200));
     }
     for (int i = 0; i < 6; i++)
         tile_iso_texture.push_back(sf::Texture());
@@ -57,7 +57,7 @@ Zappy::Interface::Interface()
         tile_iso_sprite.push_back(sf::Sprite());
         tile_iso_sprite[i].setTexture(tile_iso_texture[i]);
         tile_iso_sprite[i].setScale(0.32, 0.32);
-        tile_iso_sprite[i].setColor(sf::Color(255, 255, 255, 75));
+        tile_iso_sprite[i].setColor(sf::Color(255, 255, 255, 200));
     }
     font.loadFromFile("./asset/gui/Pacifico.ttf");
     if (font.loadFromFile("./asset/gui/Pacifico.ttf") == false)
