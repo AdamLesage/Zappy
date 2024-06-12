@@ -146,11 +146,11 @@ void init_map(map_t *map, arguments_t *arguments)
     map->width = arguments->width;
     map->last_refille = 0;
     map->eggs = NULL;
+    map->current_eggs_id = 0;
     create_tiles_list(map);
     add_eggs_on_map(map, arguments);
     array = get_map_info(map);
     for (int i = 0; array[i] != NULL; i++) {
         free(array[i]);
     }
-    refill_map(map);
 }

@@ -19,6 +19,5 @@ const command_list_t commands_player_list[] = {
     {"Eject", &eject, 1, 7},
     {"Take", &take, 2, 7},
     {"Set", &set, 2, 7},
-    {"Incantation", &incantation, 1, 300},
     {NULL, NULL, 0, 0}
 };
