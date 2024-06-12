@@ -26,6 +26,7 @@ class Agent():
         self.team_name = team_name
         self.receive_from_server = None
         self.ip = ip
+        self.broadcast_received = None
 
     def retrieveWorldDimensions(self, data: str) -> None:
         """Retrieve the world dimensions"""
@@ -87,6 +88,8 @@ class Agent():
                 if firstConnexion == False and tmp >= 2:
                     if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None:
                         continue
+                    if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server != None and self.receive_from_server.startswith("Broadcast"): # Receive a broadcast
+                        self.agentInfo.broadcast_received = self.receive_from_server.split(' ')[1]
                     self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
                     self.agentAlgo.play(self.receive_from_server)
                     self.agentAlgo.clearReturnCommand()

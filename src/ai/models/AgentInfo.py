@@ -37,6 +37,15 @@ class AgentInfo():
         """Return True if there is no more time units"""
         return (self.timeUnits <= 0)
 
+    def manageBroadcastReceived(self) -> None:
+        """Do something with the broadcast received"""
+        if self.broadcast_received.startswith("message"):
+            incantation_orientation = self.broadcast_received.split(" ")[1].replace(",", "")
+            incantation_message = self.broadcast_received.split(" ")[2]
+            if incantation_message.startswith("incantation_success_level_"):
+                self.teamPlayers[f"level{incantation_message.split('_')[-1]}"] += 1
+            self.broadcast_received = None
+
     # Getters
     def getTimeUnits(self) -> int:
         """Returns the number of time units"""

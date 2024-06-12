@@ -118,3 +118,47 @@ class TestAgentAlgo(unittest.TestCase):
         agent.addInventory("thystame", 1)
         agentAlgo = AgentAlgo(agent, 100)
         self.assertEqual(agentAlgo.findBestItemToTake(playerLevel=1, itemsInPlayerVision=["linemate", "sibur", "mendiane", "phiras", "thystame"]), "linemate")
+
+    def test10_updateClientStatus(self):
+        agent = AgentInfo()
+        agentAlgo = AgentAlgo(agent, 100)
+        agentAlgo.alerts.alerts.append("food")
+        agentAlgo.agentMentality = "Hungry"
+        agentAlgo.agentInfo.inventory["food"] = 50
+        agentAlgo.updateClientStatus()
+        self.assertEqual(agentAlgo.agentMentality, None)
+
+    def test11_updateClientStatus(self):
+        agent = AgentInfo()
+        agentAlgo = AgentAlgo(agent, 100)
+        agentAlgo.alerts.alerts.append("food")
+        agentAlgo.agentMentality = "Hungry"
+        agentAlgo.agentInfo.inventory["food"] = 0
+        agentAlgo.updateClientStatus()
+        self.assertEqual(agentAlgo.agentMentality, "Hungry")
+
+    def test12_playLevel1_invalid_level(self):
+        agent = AgentInfo()
+        agentAlgo = AgentAlgo(agent, 100)
+        agentAlgo.status = "Mining"
+        agentAlgo.agentInfo.setLevel(2)
+        agentAlgo.clientPlayLevel1()
+        agentAlgo.agentInfo.setLevel(1)
+        agentAlgo.clientPlayLevel2()
+        agentAlgo.clientPlayLevel3()
+        agentAlgo.clientPlayLevel4()
+        agentAlgo.clientPlayLevel5()
+        agentAlgo.clientPlayLevel6()
+        agentAlgo.clientPlayLevel7()
+        agentAlgo.clientPlayLevel8()
+        self.assertEqual(agentAlgo.status, "Mining")
+
+    def test13_clientPlayLevel1(self):
+        agent = AgentInfo()
+        agentAlgo = AgentAlgo(agent, 100)
+        agentAlgo.agentInfo.inventory["food"] = 1
+        agentAlgo.status = "Food"
+        agentAlgo.agentInfo.setLevel(1)
+        agentAlgo.setReturnCommandAnswer("Look\n")
+        agentAlgo.clientPlayLevel1()
+        self.assertEqual(agentAlgo.status, "Food")

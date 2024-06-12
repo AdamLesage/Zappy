@@ -218,7 +218,7 @@ class AgentAlgo():
         """
         The agent is in mining mode, it will search for resources
         """
-        actions = ["Forward\n", "Right\n", "Forward\n", "Left\n"] # More chance to go forward (x2)
+        actions = ["Forward\n", "Right\n", "Left\n"] # More chance to go forward (x2)
         buf = self.getReturnCommand()[1]
         if buf != None and self.agentMoves.checkItems(buf, ["linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]) != []: # If there are resources to take
             availables_resources = self.agentMoves.checkItems(buf, ["linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"])
@@ -229,12 +229,31 @@ class AgentAlgo():
             finalAction = random.choice(actions)
             self.agentInfo.addCommandsToSend(finalAction)
             return
+        
+    def incantationManagement(self) -> None:
+        if self.status != "Incantation":
+            self.round += 1 # Increment the round
+            return
+        if self.hasAskedIncantation == False:
+            self.hasAskedIncantation = True
+            self.agentInfo.commandsToSend.clear()
+            self.agentInfo.commandsToSend.append("Set linemate\n")
+            self.agentInfo.commandsToSend.append("Incantation\n")
+        if len(self.getReturnCommand()) == 2 and self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("Current level:"):
+            self.hasAskedIncantation = False
+            self.status = "Mining"
+            self.agentInfo.setLevel(self.agentInfo.getLevel() + 1)
+            self.agentInfo.commandsToSend.clear()
+            self.agentInfo.commandsToSend.append("Broadcast incantation_success_level_" + str(self.agentInfo.getLevel()) + "\n")
+            self.agentInfo.commandsToSend.append("Look\n")
+            self.round = 0
 
     def play(self, data: str) -> str:
         """
         Play the game, search for resources, level up, incantation, etc
         """
         print(f"Status: {self.status}, level {self.agentInfo.getLevel()}")
+        self.agentInfo.manageBroadcastReceived()
         self.updateClientStatus()
         if self.getReturnCommand()[0] == "Inventory\n":
             self.updateInventory(self.getReturnCommand()[1])
@@ -251,22 +270,7 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.insert(0, "Inventory\n")
             self.round = 0
             return
-        if self.status != "Incantation":
-            self.round += 1
-        if self.status == "Incantation":
-            if self.hasAskedIncantation == False:
-                self.hasAskedIncantation = True
-                self.agentInfo.commandsToSend.clear()
-                self.agentInfo.commandsToSend.append("Set linemate\n")
-                self.agentInfo.commandsToSend.append("Incantation\n")
-            if len(self.getReturnCommand()) == 2 and self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("Current level:"):
-                self.hasAskedIncantation = False
-                self.status = "Mining"
-                self.agentInfo.setLevel(self.agentInfo.getLevel() + 1)
-                self.agentInfo.commandsToSend.clear()
-                self.agentInfo.commandsToSend.append("Look\n")
-                self.round = 0
-                return
+        self.incantationManagement()
         if self.status == "Food":
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.insert(0, "Look\n")
