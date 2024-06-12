@@ -66,7 +66,7 @@ class Agent():
             tmp = 0
             self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.client.connect((self.ip, self.port))
-            self.agentAlgo = AgentAlgo(self.agentInfo, 1000, self.client)
+            self.agentAlgo = AgentAlgo(self.agentInfo, 1260, self.client)
             while True:
                 self.client.setblocking(0)
                 try:
