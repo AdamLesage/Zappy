@@ -392,7 +392,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     sleep(5);
     set_map();
     view.zoom(0.5);
-    playBackgroundMusic("../../../asset/music/music.mp3");
+    playBackgroundMusic("../../asset/music/music.mp3");
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
         sound_volume = bars[0]->checkClick(window);
