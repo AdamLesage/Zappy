@@ -14,10 +14,10 @@ Zappy::Interface::Interface()
     window->create(sf::VideoMode(1920, 1080), "Zappy");
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 125), sf::Color(150, 150, 150), 5, sf::Color::Black));
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 325), sf::Color(150, 150, 150), 5, sf::Color::Black));
-    texture.loadFromFile("./asset/spirte/tiles/tile1.png");
+    texture.loadFromFile("./asset/spirte/decoration/tiles.png");
     textures.push_back(texture);
     sprite.setTexture(texture);
-    sprite.setScale(0.22, 0.22);
+    sprite.setScale(0.1, 0.1);
     font.loadFromFile("./asset/gui/Pacifico.ttf");
     Texts.push_back(sf::Text("tick", font, 50));
     Texts.push_back(sf::Text("Team: ", font, 50));
