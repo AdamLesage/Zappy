@@ -48,8 +48,8 @@ void lunch_server(core_t *core)
         retval = select(core->select_info.max_fd + 1,
             &core->select_info.temp_fds, NULL, NULL, &core->select_info.tv);
         if (retval == -1) {
-            perror("error select");
-            exit(84);
+            close_server(core);
+            exit(0);
         }
         manage_select_notif(core, retval);
     }

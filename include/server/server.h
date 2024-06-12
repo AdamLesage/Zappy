@@ -19,6 +19,7 @@
     #include <unistd.h>
     #include <stdbool.h>
     #include <math.h>
+    #include <signal.h>
     #include "server_data.h"
 
 typedef struct select_info_s {
