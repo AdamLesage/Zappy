@@ -18,7 +18,7 @@ Zappy::Interface::Interface()
         throw InterfaceError("Error: tile1.png not found", "Interface");
     sprite.setTexture(texture);
     sprite.setScale(0.32, 0.32);
-    sprite.setColor(sf::Color(255, 255, 255, 150));
+    // sprite.setColor(sf::Color(255, 255, 255, 150));
     for (int i = 0; i < 6; i++)
         tile_texture_.push_back(sf::Texture());
     if (tile_texture_[0].loadFromFile("./asset/spirte/tiles/tile1.png") == false)
@@ -37,7 +37,7 @@ Zappy::Interface::Interface()
         tile_sprite_.push_back(sf::Sprite());
         tile_sprite_[i].setTexture(tile_texture_[i]);
         tile_sprite_[i].setScale(0.32, 0.32);
-        tile_sprite_[i].setColor(sf::Color(255, 255, 255, 200));
+        // tile_sprite_[i].setColor(sf::Color(255, 255, 255, 200));
     }
     for (int i = 0; i < 6; i++)
         tile_iso_texture.push_back(sf::Texture());
@@ -57,7 +57,7 @@ Zappy::Interface::Interface()
         tile_iso_sprite.push_back(sf::Sprite());
         tile_iso_sprite[i].setTexture(tile_iso_texture[i]);
         tile_iso_sprite[i].setScale(0.32, 0.32);
-        tile_iso_sprite[i].setColor(sf::Color(255, 255, 255, 200));
+        tile_iso_sprite[i].setColor(sf::Color(255, 255, 255, 230));
     }
     font.loadFromFile("./asset/gui/Pacifico.ttf");
     if (font.loadFromFile("./asset/gui/Pacifico.ttf") == false)

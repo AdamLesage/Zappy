@@ -169,7 +169,6 @@ Test(put_sibur, put_on_invalide_tile)
 Test(put_mendiane, put_on_valide_tile)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -283,7 +282,6 @@ Test(put_thystame, put_on_invalide_tile)
 Test(put_eggs, put_on_valide_tile)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -295,7 +293,6 @@ Test(put_eggs, put_on_valide_tile)
 
     init_map(&map, &arguments);
     return_value = put_eggs(&map, 5, 4, "name1");
-    info = find_tile(&map, 5, 4);
 
     cr_assert_str_eq(map.eggs->team_name, "name1");
     cr_assert_eq(find_number_eggs_on_team(map.eggs, "name1"), 1);

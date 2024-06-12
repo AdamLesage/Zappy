@@ -25,9 +25,10 @@ static void manage_select_notif(core_t *core, int retval)
             &core->socket_config.server_socket);
     } else {
         check_player_command(core);
+        check_food_players(core);
         core->map.last_refille--;
         if (core->map.last_refille == 0) {
-            refill_map(&core->map);
+            refill_map(core);
         }
     }
 }
@@ -47,8 +48,8 @@ void lunch_server(core_t *core)
         retval = select(core->select_info.max_fd + 1,
             &core->select_info.temp_fds, NULL, NULL, &core->select_info.tv);
         if (retval == -1) {
-            perror("error select");
-            exit(84);
+            close_server(core);
+            exit(0);
         }
         manage_select_notif(core, retval);
     }
