@@ -25,6 +25,7 @@ from command.TakeCommand import TakeCommand
 from command.EjectCommand import EjectCommand
 
 # Import libraries
+import random
 from collections import deque
 import socket
 
@@ -38,7 +39,9 @@ class AgentAlgo():
         self.agentInfo = agentInfo
         self.agentMoves = Moves()
         self.client = client
-
+        self.round = 0
+        self.agentMentality = "None" #Hungry, Incantation, Mining, None
+        self.status = "Continue"
         self.availableCommands = {"connect_nbr\n": ConnectCommand(), "forward\n": ForwardCommand(),
                                 "right\n": RightCommand(), "left\n": LeftCommand(),
                                 "look\n": LookCommand(), "inventory\n": InventoryCommand(),
@@ -50,27 +53,250 @@ class AgentAlgo():
     def updateAgentInfo(self, info: AgentInfo):
         self.agentInfo = info
 
-    def play(self, agentInfo: AgentInfo, data: str) -> str:
+    def updateClientStatus(self) -> None:
+        """
+        Update the client status.
+        State could be: Continue, End, Dead, Incantation, Food
+        """
+        if len(self.alerts.checkAlerts()) == 0:
+            return
+        alert = self.alerts.checkAlerts().pop()
+        if alert.startswith("incantation"):
+            self.addCommandToExecuteInList(f"Broadcast {alert}\n")
+            self.status = "Incantation"
+            return
+        if self.agentMentality == "Hungry" and self.updateFoodAlert() == True:
+            self.agentMentality == None
+            return
+        if self.agentMentality == "Hungry":
+            self.status = "Food"
+            return
+        if alert == "food":
+            self.status = "Food"
+            self.agentMentality = "Hungry"
+            return
+        self.status = "Continue"
+    
+    def updateFoodAlert(self) -> bool:
+        """
+        Update the food level of the agent
+        """
+        self.agentInfo.setTimeUnits(self.agentInfo.getInventory("food") * 126)
+        print(f"Time units: {self.agentInfo.getTimeUnits()}")
+        if self.agentInfo.getTimeUnits() > 1260:
+            return True
+        return False
+
+    def clientPlayLevel1(self) -> None:
+        """
+        If the agent is level 1, do the actions for level 1
+        Actions such as: search for food, search for resources, level up, etc
+        """
+        if self.agentInfo.getLevel() != 1:
+            return
+        if self.status == "Food":
+            self.foodMode() # Search for food
+        elif self.status == "Incantation":
+            return # If the agent is in incantation, do nothing because broadcast has been sent, need to wait for other agents
+        #else:
+        #    self.miningMode()
+
+    def clientPlayLevel2(self) -> None:
+        """
+        If the agent is level 2, do the actions for level 2
+        Actions such as: search for food, search for resources, level up, etc
+        """
+        if self.agentInfo.getLevel() != 2:
+            return
+        if self.status == "Food":
+            self.foodMode() # Search for food
+        elif self.status == "Incantation":
+            return # If the agent is in incantation, do nothing because broadcast has been sent, need to wait for other agents
+        else:
+            self.miningMode()
+
+    def clientPlayLevel3(self) -> None:
+        """
+        If the agent is level 3, do the actions for level 3
+        Actions such as: search for food, help agent level 1 to upgrade to level 2, level up, etc
+        """
+        if self.agentInfo.getLevel() != 3:
+            return
+        if self.status == "Food":
+            self.foodMode() # Search for food
+        elif self.status == "Incantation":
+            return # If the agent is in incantation, do nothing because broadcast has been sent, need to wait for other agents
+        else:
+            self.miningMode()
+
+    def clientPlayLevel4(self) -> None:
+        """
+        If the agent is level 4, do the actions for level 4
+        Actions such as: search for food, help agent level 2 to upgrade to level 3, level up, etc
+        Once level 4 is reached, agent is considered as a "helper" agent
+        Then once there is enough agents to reach level 5, he will join or start an incantation to level 5
+        """
+        if self.agentInfo.getLevel() != 4:
+            return
+        pass
+
+    def clientPlayLevel5(self) -> None:
+        """
+        If the agent is level 5, do the actions for level 5
+        Actions such as: search for food, help agent level 3 to upgrade to level 4, level up, etc
+        """
+        if self.agentInfo.getLevel() != 5:
+            return
+        pass
+
+    def clientPlayLevel6(self) -> None:
+        """
+        If the agent is level 6, do the actions for level 6
+        Actions such as: search for food, help agent level 4 and level 5 to upgrade to level 6, level up, etc
+        The goal of agent level 6 if to help other agents to level up so incantation will be easier
+        """
+        if self.agentInfo.getLevel() != 6:
+            return
+        pass
+
+    def clientPlayLevel7(self) -> None:
+        """
+        If the agent is level 7, do the actions for level 7
+        Actions such as: search for food, help agent and level 4, level 5 and level 6 to upgrade to level 7, level up, etc
+        The goal of agent level 7 if to help other agents to level up so incantation will be easier
+        """
+        if self.agentInfo.getLevel() != 7:
+            return
+        pass
+
+    def clientPlayLevel8(self) -> None:
+        """
+        If the agent is level 8, do the actions for level 8
+        Actions such as: search for food, help agent and level 4, level 5, level 6 and level 7 to upgrade to level 8, level up, etc
+        The goal of agent level 8 if to help other agents to level up so incantation will be easier
+        """
+        if self.agentInfo.getLevel() != 8:
+            return
+        pass
+    
+    #def defineFoodAlert(self, agentInfo: AgentInfo) -> None:
+    #    """
+    #    It will define the alert threshold for food,
+    #    based on the player's level.
+    #    It's updated every 10 rounds.
+    #    """
+    #    if self.round % 10 != 0:
+    #        return
+    #    agentInfo.commandsToSend.insert(0, "Inventory")
+    #    agentInfo.commandsToSend.insert(1, "Look")
+    #    return
+
+    def updateInventory(self, inv: str) -> None:
+        """
+        Update the inventory of the agent
+        """
+        inv = inv.replace("[ ", "")
+        inv = inv.replace(" ]", "")
+        inv = inv.replace("[", "")
+        inv = inv.replace("]", "")
+        for idx, char in enumerate(inv):
+            if char == "," and inv[idx + 1] == " ":
+                inv = inv.replace(", ", ",")
+        splitedInf = inv.split(',')
+        for item in splitedInf:
+            item = item.split(' ')
+            if self.agentInfo.inventory[item[0]] == int(item[1]):
+                continue
+            self.agentInfo.addInventory(item[0], item[1])
+        self
+        self.agentInfo.setTimeUnits(self.agentInfo.getInventory("food") * 126)
+        return
+
+    def foodMode(self) -> None:
+        """
+        The agent is in food mode, it will search for food
+        """
+        actions = ["Forward\n", "Right\n", "Forward\n", "Left\n"] # More chance to go forward (x2)
+
+        buf = self.getReturnCommand()[1]
+        if self.agentMoves.checkItem(self.getReturnCommand()[1], "food"):
+            self.agentInfo.movements = self.agentMoves.reachItemList("food", buf)
+            return
+        else:
+            finalAction = random.choice(actions)
+            self.agentInfo.addCommandsToSend(finalAction)
+            return
+
+    def miningMode(self) -> None:
+        """
+        The agent is in mining mode, it will search for resources
+        """
+        actions = ["Forward\n", "Right\n", "Forward\n", "Left\n"] # More chance to go forward (x2)
+        buf = self.getReturnCommand()[1]
+        availables_resources = self.agentMoves.checkItems(buf, ["linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"])
+        if availables_resources != []: # If there are resources to take
+            item = self.findBestItemToTake(self.agentInfo.getLevel(), availables_resources)
+            self.agentInfo.movements = self.agentMoves.reachItemList(item, buf)
+            return
+        else:
+            finalAction = random.choice(actions)
+            self.agentInfo.addCommandsToSend(finalAction)
+            return
+
+    def play(self, data: str) -> str:
         """
         Play the game, search for resources, level up, incantation, etc
-        Return the current state of the game: Continue, End, Dead, Incantation
         """
-        alerts = self.alerts.checkAlerts()
-
-        for alert in alerts:
-            if alert.startswith("incantation"):
-                self.addCommandToExecuteInList(f"Broadcast {alert}\n")
-                return "Incantation"
-            if alert == "food":
-                return "Continue"
-        return "Continue"
+        self.updateClientStatus()
+        if self.getReturnCommand()[0] == "Inventory\n":
+            self.updateInventory(self.getReturnCommand()[1])
+            for item, qt in self.agentInfo.inventory.items():
+                print(f"{item}: {qt}")
+            return
+        if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
+            print("Looking for food")
+            self.foodMode()
+            return
+        if self.agentInfo.movements != []:
+            self.agentInfo.addCommandsToSend(self.agentInfo.movements.pop(0))
+            return
+        if self.round == 10: # Frequency of inventory check
+            print("list of commands to send: ", self.agentInfo.commandsToSend)
+            self.agentInfo.commandsToSend.insert(0, "Inventory\n")
+            self.round = 0
+            return
+        #if self.agentMentality == "Incantation":
+        #    return
+        #if self.agentMentality == "Hungry":
+        #    return None
+        self.round += 1
+        #print(f"Status: {self.status}")
+        if self.status == "Food":
+            self.agentInfo.commandsToSend.clear()
+            self.agentInfo.commandsToSend.insert(0, "Look\n")
+            return
+        if self.status == "Incantation" or self.status == "Dead" or self.status == "End":
+            return # If the agent is in incantation, dead or end state, do nothing
+        self.clientPlayLevel1()
+        self.clientPlayLevel2()
+        self.clientPlayLevel3()
+        self.clientPlayLevel4()
+        self.clientPlayLevel5()
+        self.clientPlayLevel6()
+        self.clientPlayLevel7()
+        self.clientPlayLevel8()
+        return
 
     def send_to_server(self) -> None:
         """Send a message to the server"""
+        if self.agentInfo.commandsReturned[0] != None:
+            return None
         if self.agentInfo.commandsToSend == deque([]) or self.client == None: # If there are no commands to send, get out of the function
-            return
-        command_to_send = self.agentInfo.commandsToSend.popleft() # Get the first command to send and remove it from the list
+            return None
+        command_to_send = self.agentInfo.commandsToSend.popleft()
         self.client.send(command_to_send.encode())
+        tmp = [command_to_send, ""]
+        self.agentInfo.commandsReturned = tmp
         # Add first command from waiting list to the commandsToSend list
         if self.agentInfo.commandWaitingList != []:
             self.agentInfo.commandsToSend.append(self.agentInfo.commandWaitingList.pop(0))
@@ -89,3 +315,85 @@ class AgentAlgo():
             self.agentInfo.addCommandsToSend(command) # Add the command to the list of commands to send
         else:
             self.agentInfo.commandWaitingList.append(command)
+
+    def setReturnCommandAnswer(self, serverAnswer: str) -> None:
+        """Set the command to return"""
+        self.agentInfo.commandsReturned[1] = serverAnswer
+    
+    def getReturnCommand(self) -> str:
+        """Get the command to return"""
+        return self.agentInfo.commandsReturned
+    
+    def clearReturnCommand(self) -> None:
+        """Clear the command to return"""
+        self.agentInfo.commandsReturned = [None, None]
+
+    def findBestItemToTake(self, playerLevel: int, itemsInPlayerVision: list) -> str:
+        """
+        Find the best item to take according to the player level
+        """
+        # If there are multiple items with the same quantity, choose best item for player level
+        if playerLevel == 1:
+            return "linemate"
+        elif playerLevel == 2:
+            if self.agentInfo.inventory["linemate"] < 2 and "linemate" in itemsInPlayerVision:
+                return "linemate"
+            if self.agentInfo.inventory["deraumere"] < 1 and "deraumere" in itemsInPlayerVision:
+                return "deraumere"
+            if self.agentInfo.inventory["sibur"] < 1 and "sibur" in itemsInPlayerVision:
+                return "sibur"
+            return random.choice(itemsInPlayerVision)
+        elif playerLevel == 3:
+            if self.agentInfo.inventory["phiras"] < 2 and "phiras" in itemsInPlayerVision:
+                return "phiras"
+            if self.agentInfo.inventory["linemate"] < 2 and "linemate" in itemsInPlayerVision:
+                return "linemate"
+            if self.agentInfo.inventory["sibur"] < 1 and "sibur" in itemsInPlayerVision:
+                "sibur"
+            return random.choice(itemsInPlayerVision)
+        elif playerLevel == 4:
+            if self.agentInfo.inventory["sibur"] < 2 and "sibur" in itemsInPlayerVision:
+                return "sibur"
+            if self.agentInfo.inventory["phiras"] < 1 and "phiras" in itemsInPlayerVision:
+                return "phiras"
+            if self.agentInfo.inventory["deraumere"] < 1 and "deraumere" in itemsInPlayerVision:
+                return "deraumere"
+            if self.agentInfo.inventory["linemate"] < 1 and "linemate" in itemsInPlayerVision:
+                return "linemate"
+            return random.choice(itemsInPlayerVision)
+        elif playerLevel == 5:
+            if self.agentInfo.inventory["mendiane"] < 3 and "mendiane" in itemsInPlayerVision:
+                return "mendiane"
+            if self.agentInfo.inventory["sibur"] < 1 and "sibur" in itemsInPlayerVision:
+                return "sibur"
+            if self.agentInfo.inventory["deraumere"] < 1 and "deraumere" in itemsInPlayerVision:
+                return "deraumere"
+            if self.agentInfo.inventory["linemate"] < 1 and "linemate" in itemsInPlayerVision:
+                return "linemate"
+            return random.choice(itemsInPlayerVision)
+        elif playerLevel == 6:
+            if self.agentInfo.inventory["sibur"] < 3 and "sibur" in itemsInPlayerVision:
+                return "sibur"
+            if self.agentInfo.inventory["phiras"] < 1 and "phiras" in itemsInPlayerVision:
+                return "phiras"
+            if self.agentInfo.inventory["deraumere"] < 2 and "deraumere" in itemsInPlayerVision:
+                return "deraumere"
+            if self.agentInfo.inventory["linemate"] < 1 and "linemate" in itemsInPlayerVision:
+                return "linemate"
+            return random.choice(itemsInPlayerVision)
+        elif playerLevel == 7:
+            if self.agentInfo.inventory["phiras"] < 2 and "phiras" in itemsInPlayerVision:
+                return "phiras"
+            if self.agentInfo.inventory["thystame"] < 1 and "thystame" in itemsInPlayerVision:
+                return "thystame"
+            if self.agentInfo.inventory["mendiane"] < 2 and "mendiane" in itemsInPlayerVision:
+                return "mendiane"
+            if self.agentInfo.inventory["sibur"] < 2 and "sibur" in itemsInPlayerVision:
+                return "sibur"
+            if self.agentInfo.inventory["deraumere"] < 2 and "deraumere" in itemsInPlayerVision:
+                return "deraumere"
+            if self.agentInfo.inventory["linemate"] < 1 and "linemate" in itemsInPlayerVision:
+                return "linemate"
+            return random.choice(itemsInPlayerVision)
+        else:
+            return random.choice(itemsInPlayerVision)
