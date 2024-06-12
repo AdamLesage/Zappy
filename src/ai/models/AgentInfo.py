@@ -28,6 +28,7 @@ class AgentInfo():
         self.lifeUnits = 10
         self.timeUnits = 1260
         self.teamPlayers = {"level1": 0, "level2": 0, "level3": 0, "level4": 0, "level5": 0, "level6": 0, "level7": 0, "level8": 0}
+        self.broadcast_received = None
 
     def noLifeUnits(self) -> bool:
         """Return True if there is no more life units"""
@@ -39,7 +40,7 @@ class AgentInfo():
 
     def manageBroadcastReceived(self) -> None:
         """Do something with the broadcast received"""
-        if self.broadcast_received.startswith("message"):
+        if self.broadcast_received != None and self.broadcast_received.startswith("message"):
             incantation_orientation = self.broadcast_received.split(" ")[1].replace(",", "")
             incantation_message = self.broadcast_received.split(" ")[2]
             if incantation_message.startswith("incantation_success_level_"):

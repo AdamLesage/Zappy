@@ -229,7 +229,42 @@ class AgentAlgo():
             finalAction = random.choice(actions)
             self.agentInfo.addCommandsToSend(finalAction)
             return
-        
+
+    def goToBroadcast(self, orientation: str) -> None:
+        self.agentInfo.commandsToSend.clear()
+        if orientation == "0": # Player is on the broadcast position
+            return
+        elif orientation == "1": # Broadcast position is on the north of the player
+            self.agentInfo.commandsToSend.append("Forward\n")
+        elif orientation == "2": # Broadcast position is on north-west of the player
+            self.agentInfo.commandsToSend.append("Forward\n")
+            self.agentInfo.commandsToSend.append("Left\n")
+            self.agentInfo.commandsToSend.append("Forward\n")
+        elif orientation == "3": # Broadcast position is on the west of the player
+            self.agentInfo.commandsToSend.append("Left\n")
+            self.agentInfo.commandsToSend.append("Forward\n")
+        elif orientation == "4": # Broadcast position is on the north-west of the player
+            self.agentInfo.commandsToSend.append("Left\n")
+            self.agentInfo.commandsToSend.append("Forward\n")
+            self.agentInfo.commandsToSend.append("Left\n")
+            self.agentInfo.commandsToSend.append("Forward\n")
+        elif orientation == "5": # Broadcast position is on the south of the player
+            self.agentInfo.commandsToSend.append("Left\n")
+            self.agentInfo.commandsToSend.append("Left\n")
+            self.agentInfo.commandsToSend.append("Forward\n")
+        elif orientation == "6": # Broadcast position is on the south-east of the player
+            self.agentInfo.commandsToSend.append("Right\n")
+            self.agentInfo.commandsToSend.append("Forward\n")
+            self.agentInfo.commandsToSend.append("Right\n")
+            self.agentInfo.commandsToSend.append("Forward\n")
+        elif orientation == "7": # Broadcast position is on the east of the player
+            self.agentInfo.commandsToSend.append("Right\n")
+            self.agentInfo.commandsToSend.append("Forward\n")
+        elif orientation == "8": # Broadcast position is on the north-east of the player
+            self.agentInfo.commandsToSend.append("Forward\n")
+            self.agentInfo.commandsToSend.append("Right\n")
+            self.agentInfo.commandsToSend.append("Forward\n")
+
     def incantationManagement(self) -> None:
         if self.status != "Incantation":
             self.round += 1 # Increment the round
@@ -247,6 +282,24 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.append("Broadcast incantation_success_level_" + str(self.agentInfo.getLevel()) + "\n")
             self.agentInfo.commandsToSend.append("Look\n")
             self.round = 0
+
+    def forkAgent(self, round: int) -> None:
+        """
+        Will check if the agent can fork.
+        If yes, it will fork the agent.
+        """
+        if self.alerts.checkAlerts() != 0:
+            alert = self.alerts.checkAlerts().pop()
+            if alert == "food":
+                return
+        if self.getReturnCommand()[0] == "Connect_nbr\n" and self.getReturnCommand()[1] != 0:
+            self.agentInfo.addCommandsToSend("Fork\n")
+            self.status = "Fork"
+        elif round == 5:
+            self.agentInfo.addCommandsToSend("Connect_nbr\n")
+        else:
+            self.status = "Mining"
+        return
 
     def play(self, data: str) -> str:
         """
