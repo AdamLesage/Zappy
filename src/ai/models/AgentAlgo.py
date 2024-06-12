@@ -58,18 +58,21 @@ class AgentAlgo():
         Update the client status.
         State could be: Continue, End, Dead, Incantation, Food
         """
-        if len(self.alerts.checkAlerts()) == 0:
-            return
-        alert = self.alerts.checkAlerts().pop()
-        if alert.startswith("incantation"):
-            self.addCommandToExecuteInList(f"Broadcast {alert}\n")
-            self.status = "Incantation"
-            return
         if self.agentMentality == "Hungry" and self.updateFoodAlert() == True:
-            self.agentMentality == None
+            self.agentMentality = None
+            self.status = "Continue"
             return
         if self.agentMentality == "Hungry":
             self.status = "Food"
+            return
+        if len(self.alerts.checkAlerts()) == 0:
+            self.status = "Continue"
+            return
+        alert = self.alerts.checkAlerts().pop()
+        print(f"Alert: {alert}")
+        if alert.startswith("incantation"):
+            self.addCommandToExecuteInList(f"Broadcast {alert}\n")
+            self.status = "Incantation"
             return
         if alert == "food":
             self.status = "Food"
@@ -248,10 +251,17 @@ class AgentAlgo():
         Play the game, search for resources, level up, incantation, etc
         """
         self.updateClientStatus()
+        self.round += 1
+        print(f"Status: {self.status}")
         if self.getReturnCommand()[0] == "Inventory\n":
             self.updateInventory(self.getReturnCommand()[1])
             for item, qt in self.agentInfo.inventory.items():
                 print(f"{item}: {qt}")
+            return
+        if self.round == 10: # Frequency of inventory check
+            print("list of commands to send: ", self.agentInfo.commandsToSend)
+            self.agentInfo.commandsToSend.insert(0, "Inventory\n")
+            self.round = 0
             return
         if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
             print("Looking for food")
@@ -260,16 +270,10 @@ class AgentAlgo():
         if self.agentInfo.movements != []:
             self.agentInfo.addCommandsToSend(self.agentInfo.movements.pop(0))
             return
-        if self.round == 10: # Frequency of inventory check
-            print("list of commands to send: ", self.agentInfo.commandsToSend)
-            self.agentInfo.commandsToSend.insert(0, "Inventory\n")
-            self.round = 0
-            return
         #if self.agentMentality == "Incantation":
         #    return
         #if self.agentMentality == "Hungry":
         #    return None
-        self.round += 1
         #print(f"Status: {self.status}")
         if self.status == "Food":
             self.agentInfo.commandsToSend.clear()
