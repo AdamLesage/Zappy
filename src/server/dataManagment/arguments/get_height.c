@@ -19,8 +19,8 @@ int get_height(const char **argv, int *index)
         print_usage("height must be a number");
     }
     height = atoi(argv[*index]);
-    if (height <= 1) {
-        print_usage("height must be > 1");
+    if (height < 10 || height > 30) {
+        print_usage("height must be > 10 and < 30");
     }
     return (height);
 }

@@ -34,10 +34,16 @@ void take(core_t *core, int fd, char **command)
 {
     int *pos = get_pos(&core->players, fd);
     enum Object object = string_to_object(command[1]);
+    player_info_t *info = NULL;
 
     if (take_on_map(pos, object, &core->map) == false) {
         send_response("ko\n", fd);
+        return;
     }
     put_on_inventory(&core->players, object, fd);
     send_response("ok\n", fd);
+    info = find_player(&core->players, fd);
+    pgt(&core->players, info->id, object);
+    pin_event(&core->players, info);
+    bct_event(core, pos[0], pos[1]);
 }

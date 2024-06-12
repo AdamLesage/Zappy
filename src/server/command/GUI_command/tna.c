@@ -19,3 +19,12 @@ void tna(core_t *core, int fd, char **command)
         send_response("\n", fd);
     }
 }
+
+void tna_start(core_t *core, int fd)
+{
+    for (int i = 0; i < core->arguments.nb_teams; i++) {
+        send_response("tna ", fd);
+        send_response(core->arguments.name_teams[i], fd);
+        send_response("\n", fd);
+    }
+}

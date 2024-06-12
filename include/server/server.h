@@ -18,6 +18,8 @@
     #include <string.h>
     #include <unistd.h>
     #include <stdbool.h>
+    #include <math.h>
+    #include <signal.h>
     #include "server_data.h"
 
 typedef struct select_info_s {
@@ -77,8 +79,14 @@ int get_time_action(char *command);
 void execute_gui_command(core_t *core, char *command, int fd);
 bool is_know_player_command(char *command);
 void check_player_command(core_t *core);
+void check_food_players(core_t *core);
+void refill_map(core_t *core);
 
-void incantation(core_t *core, int fd, char **command);
+void incantation(core_t *core, incantation_info_t *incantation_info);
+bool incantation_is_valide(tile_info_t *info, players_list_t *players_list,
+    int level);
+void incantation_destroy_stone(tile_info_t *info, int level);
+void start_incantation(core_t *core, int fd);
 void broadcast(core_t *core, int fd, char **command);
 void connect_nbr(core_t *core, int fd, char **command);
 void eject(core_t *core, int fd, char **command);
@@ -92,13 +100,43 @@ void set(core_t *core, int fd, char **command);
 void take(core_t *core, int fd, char **command);
 
 void bct(core_t *core, int fd, char **command);
+void bct_event(core_t *core, int x, int y);
+void bct_two(int fd, tiles_list_t *current_tile);
+void bct_three(int fd, tiles_list_t *current_tile);
 void mct(core_t *core, int fd, char **command);
+void mct_start(core_t *core, int fd);
+void mct_event(core_t *core);
 void msz(core_t *core, int fd, char **command);
+void msz_start(core_t *core, int fd);
 void pin(core_t *core, int fd, char **command);
+void pin_event(players_t *players, player_info_t *player_info);
+void pin_two(int fd, player_info_t *player_info);
+void pin_three(int fd, inventory_t *inventory);
 void plv(core_t *core, int fd, char **command);
+void plv_start(int fd, player_info_t *player_info);
 void ppo(core_t *core, int fd, char **command);
+void send_ppo(core_t *core, player_info_t *player_info);
 void sgt(core_t *core, int fd, char **command);
+void sgt_start(core_t *core, int fd);
 void sst(core_t *core, int fd, char **command);
 void tna(core_t *core, int fd, char **command);
+void tna_start(core_t *core, int fd);
+
+void pnw(players_t *players, player_info_t *player_info);
+void send_pnw_info(player_info_t *player_info, int fd);
+void pex(players_t *players, player_info_t *player_info);
+void pbc(players_t *players, int id, char *message);
+void pic(players_t *players, incantation_info_t *info);
+void pie(players_t *players, int x, int y, bool state);
+void pfk(players_t *players, int id);
+void pdr(players_t *players, int id, enum Object object);
+void pgt(players_t *players, int id, enum Object object);
+void pdi(players_t *players, int id);
+void enw(players_t *players, int player_id, eggs_t *eggs);
+void send_enw_info(int player_id, eggs_t *eggs, int fd);
+void ebo(players_t *players, int egg_id);
+void edi(players_t *players, int egg_id);
+void seg(players_t *players, char *team_name);
+void smg(players_t *players, char *message);
 
 #endif /* !SERVER_H_ */
