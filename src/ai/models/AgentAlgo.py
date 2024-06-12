@@ -67,7 +67,7 @@ class AgentAlgo():
             self.status = "Incantation"
             return
         if self.agentMentality == "Hungry" and self.updateFoodAlert() == True:
-            self.agentMentality == None
+            self.agentMentality = None
             return
         if self.agentMentality == "Hungry":
             self.status = "Food"
