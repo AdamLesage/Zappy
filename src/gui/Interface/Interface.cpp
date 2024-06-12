@@ -18,6 +18,7 @@ Zappy::Interface::Interface()
     textures.push_back(texture);
     sprite.setTexture(texture);
     sprite.setScale(0.32, 0.32);
+    sprite.setColor(sf::Color(255, 255, 255, 150));
     font.loadFromFile("./asset/gui/Pacifico.ttf");
     Texts.push_back(sf::Text("tick", font, 50));
     Texts.push_back(sf::Text("Team: ", font, 50));
