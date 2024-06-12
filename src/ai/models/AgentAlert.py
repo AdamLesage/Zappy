@@ -30,6 +30,7 @@ class AgentAlerts(AgentInfo):
         """
         playerLevel = self.agent.getLevel()
         
+        # print(f"Time units: {self.agent.getTimeUnits()}, minTimeU: {self.minTimeU}")
         if self.agent.getTimeUnits() <= self.minTimeU:
             """Need to eat"""
             self.alerts.append("food")
@@ -41,12 +42,12 @@ class AgentAlerts(AgentInfo):
             self.alerts.append("incantation")
             # send broadcast with crypted data
         
-        if playerLevel == 1 and self.agent.getInventory("linemate") >= 1 and self.agent.getLifeUnits() >= 6:
+        if playerLevel == 1 and self.agent.getInventory("linemate") >= 1 and self.agent.getLifeUnits() >= 6 and self.alerts.count("incantationNeeded_2") == 0:
             """Incantation lvl 1 -> 2 needed"""
             self.alerts.append("incantationNeeded_2")
             # send broadcast with crypted data
         
-        if (playerLevel == 2 and self.agent.getInventory("linemate") >= 1 and self.agent.getLifeUnits() >= 6 and
+        if (playerLevel == 2 and self.agent.getInventory("linemate") >= 1 and self.agent.getLifeUnits() >= 6 and self.alerts.count("incantationNeeded_3") == 0 and
             self.agent.getInventory("deraumere") >= 1 and
             self.agent.getInventory("sibur") >= 1):
                 """Incantation lvl 2 -> 3 needed"""

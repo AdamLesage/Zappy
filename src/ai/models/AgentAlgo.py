@@ -42,6 +42,7 @@ class AgentAlgo():
         self.round = 0
         self.agentMentality = "None" #Hungry, Incantation, Mining, None
         self.status = "Mining"
+        self.hasAskedIncantation = False
         self.availableCommands = {"connect_nbr\n": ConnectCommand(), "forward\n": ForwardCommand(),
                                 "right\n": RightCommand(), "left\n": LeftCommand(),
                                 "look\n": LookCommand(), "inventory\n": InventoryCommand(),
@@ -61,7 +62,6 @@ class AgentAlgo():
         if len(self.alerts.checkAlerts()) == 0:
             return
         alert = self.alerts.checkAlerts().pop()
-        print(f"Alert: {alert}")
         if alert.startswith("incantation"):
             self.addCommandToExecuteInList(f"Broadcast {alert}\n")
             self.status = "Incantation"
@@ -83,7 +83,7 @@ class AgentAlgo():
         Update the food level of the agent
         """
         self.agentInfo.setTimeUnits(self.agentInfo.getInventory("food") * 126)
-        print(f"Time units: {self.agentInfo.getTimeUnits()}")
+        # print(f"Time units: {self.agentInfo.getTimeUnits()}")
         if self.agentInfo.getTimeUnits() > 1260:
             return True
         return False
@@ -93,13 +93,10 @@ class AgentAlgo():
         If the agent is level 1, do the actions for level 1
         Actions such as: search for food, search for resources, level up, etc
         """
-        if self.agentInfo.getLevel() != 1:
+        if self.agentInfo.getLevel() != 1 or self.status == "Incantation":
             return
-        print(f"Status: {self.status}")
         if self.status == "Food":
             self.foodMode() # Search for food
-        elif self.status == "Incantation":
-            return # If the agent is in incantation, do nothing because broadcast has been sent, need to wait for other agents
         else:
             self.miningMode()
 
@@ -108,12 +105,10 @@ class AgentAlgo():
         If the agent is level 2, do the actions for level 2
         Actions such as: search for food, search for resources, level up, etc
         """
-        if self.agentInfo.getLevel() != 2:
+        if self.agentInfo.getLevel() != 2 or self.status == "Incantation":
             return
         if self.status == "Food":
             self.foodMode() # Search for food
-        elif self.status == "Incantation":
-            return # If the agent is in incantation, do nothing because broadcast has been sent, need to wait for other agents
         else:
             self.miningMode()
 
@@ -180,38 +175,27 @@ class AgentAlgo():
         if self.agentInfo.getLevel() != 8:
             return
         pass
-    
-    #def defineFoodAlert(self, agentInfo: AgentInfo) -> None:
-    #    """
-    #    It will define the alert threshold for food,
-    #    based on the player's level.
-    #    It's updated every 10 rounds.
-    #    """
-    #    if self.round % 10 != 0:
-    #        return
-    #    agentInfo.commandsToSend.insert(0, "Inventory")
-    #    agentInfo.commandsToSend.insert(1, "Look")
-    #    return
 
     def updateInventory(self, inv: str) -> None:
         """
         Update the inventory of the agent
         """
+        # return if there is not digit in the inv string
+        if any(char.isdigit() for char in inv) == False:
+            return
         inv = inv.replace("[ ", "")
         inv = inv.replace(" ]", "")
         inv = inv.replace("[", "")
         inv = inv.replace("]", "")
-        for idx, char in enumerate(inv):
-            if char == "," and inv[idx + 1] == " ":
-                inv = inv.replace(", ", ",")
+        inv = inv.replace(", ", ",")
         splitedInf = inv.split(',')
+
         for item in splitedInf:
             item = item.split(' ')
             if self.agentInfo.inventory[item[0]] == int(item[1]):
                 continue
             self.agentInfo.addInventory(item[0], item[1])
         self.agentInfo.setTimeUnits(self.agentInfo.getInventory("food") * 126)
-        return
 
     def foodMode(self) -> None:
         """
@@ -251,7 +235,6 @@ class AgentAlgo():
         Play the game, search for resources, level up, incantation, etc
         """
         print(f"Status: {self.status}, level {self.agentInfo.getLevel()}")
-        hasAskedIncantation = False
         self.updateClientStatus()
         if self.getReturnCommand()[0] == "Inventory\n":
             self.updateInventory(self.getReturnCommand()[1])
@@ -259,31 +242,31 @@ class AgentAlgo():
                 print(f"{item}: {qt}")
             return
         if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
-            print("Looking for food")
             self.foodMode()
             return
         if self.agentInfo.movements != []:
             self.agentInfo.addCommandsToSend(self.agentInfo.movements.pop(0))
             return
-        if self.round == 10: # Frequency of inventory check
-            print("list of commands to send: ", self.agentInfo.commandsToSend)
+        if self.round == 10 and self.status != "Incantation": # Frequency of inventory check, avoid to check inventory if incantation is in progress
             self.agentInfo.commandsToSend.insert(0, "Inventory\n")
             self.round = 0
             return
-        #if self.agentMentality == "Incantation":
-        #    return
-        #if self.agentMentality == "Hungry":
-        #    return None
-        self.round += 1
-        #print(f"Status: {self.status}")
+        if self.status != "Incantation":
+            self.round += 1
         if self.status == "Incantation":
-            if hasAskedIncantation == True:
+            if self.hasAskedIncantation == False:
+                self.hasAskedIncantation = True
+                self.agentInfo.commandsToSend.clear()
+                self.agentInfo.commandsToSend.append("Set linemate\n")
+                self.agentInfo.commandsToSend.append("Incantation\n")
+            if len(self.getReturnCommand()) == 2 and self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("Current level:"):
+                self.hasAskedIncantation = False
+                self.status = "Mining"
+                self.agentInfo.setLevel(self.agentInfo.getLevel() + 1)
+                self.agentInfo.commandsToSend.clear()
+                self.agentInfo.commandsToSend.append("Look\n")
+                self.round = 0
                 return
-            self.agentInfo.commandsToSend.clear()
-            self.agentInfo.commandsToSend.insert(0, "Look\n")
-            hasAskedIncantation = True
-        else:
-            hasAskedIncantation = False
         if self.status == "Food":
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.insert(0, "Look\n")
@@ -291,8 +274,6 @@ class AgentAlgo():
         if self.status == "Mining":
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.insert(0, "Look\n")
-        # if self.status == "Incantation" or self.status == "Dead" or self.status == "End":
-        #     return # If the agent is in incantation, dead or end state, do nothing
         self.clientPlayLevel1()
         self.clientPlayLevel2()
         self.clientPlayLevel3()
@@ -301,7 +282,6 @@ class AgentAlgo():
         self.clientPlayLevel6()
         self.clientPlayLevel7()
         self.clientPlayLevel8()
-        return
 
     def send_to_server(self) -> None:
         """Send a message to the server"""
