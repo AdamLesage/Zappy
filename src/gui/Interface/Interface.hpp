@@ -78,7 +78,8 @@ namespace Zappy {
             sf::Vector2i lastMousePos;
             bool isPanning;
             std::vector<sf::Text> info;
-
+            sf::RectangleShape rect;
+            bool isOverTile;
         private:
     };
 }
