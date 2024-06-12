@@ -71,10 +71,10 @@ namespace Zappy {
             sf::View view;
             sf::Vector2i lastMousePos;
             bool isPanning;
+            std::vector<sf::Text> info;
 
         private:
     };
 }
 
 #endif /* !INTERFACE_HPP_ */
-
