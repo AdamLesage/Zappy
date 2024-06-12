@@ -39,6 +39,7 @@ namespace Zappy {
             void print_players();
             void print_map_iso();
             void set_scale_of_player(int i);
+            void playBackgroundMusic(const std::string& filename);
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
@@ -46,7 +47,7 @@ namespace Zappy {
             int tick;
             float zoom;
             float last_zoom;
-            int sound_volume;
+            float sound_volume;
             std::vector<sf::RectangleShape> _rect;
             std::array<int, 2> _mape_size;
             std::vector<std::vector<sf::Sprite>> map_sprites;
@@ -78,6 +79,9 @@ namespace Zappy {
             sf::Vector2i lastMousePos;
             bool isPanning;
             std::vector<sf::Text> info;
+            sf::RectangleShape rect;
+            bool isOverTile;
+            sf::Music backgroundMusic;
 
         private:
     };

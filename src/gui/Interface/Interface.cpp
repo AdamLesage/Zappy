@@ -89,7 +89,6 @@ Zappy::Interface::Interface()
     _rect[3].setFillColor(sf::Color(255, 255, 255));
     _rect[3].setPosition(0, 1080 - 300);
     zoom = 100;
-
     last_zoom = 100;
     view.setSize(1920, 1080);
     isPanning = false;
@@ -156,6 +155,9 @@ Zappy::Interface::Interface()
     player_orientation[1][1] = sf::IntRect(35, 35, 30, 30);
     player_orientation[1][2] = sf::IntRect(30, 65, 35, 35);
     player_orientation[1][3] = sf::IntRect(30, 100, 35, 35);
+
+    rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
+    rect.setFillColor(sf::Color(150, 150, 150, 200));
 }
 
 void Zappy::Interface::set_scale_of_player(int i)
@@ -346,6 +348,17 @@ void Zappy::Interface::check_event()
                 }
             }
         }
+        sf::Vector2f mousePos2 = window->mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y), view);
+        for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
+            for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
+                sf::FloatRect tileBounds2(100 + (i * 102.4), 150 + (j * 102.4), 102.4, 102.4);
+                if (tileBounds2.contains(mousePos2)) {
+                    rect.setPosition(tileBounds2.left, (tileBounds2.top - rect.getSize().y) + 102.4);
+                    isOverTile = true;
+                }
+            }
+        }
+
         if (event.type == sf::Event::MouseButtonReleased) {
             if (event.mouseButton.button == sf::Mouse::Left) {
                 isPanning = false;
@@ -379,11 +392,15 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     sleep(5);
     set_map();
     view.zoom(0.5);
+    playBackgroundMusic("../../../asset/music/music.mp3");
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
-        check_event();
         sound_volume = bars[0]->checkClick(window);
+        backgroundMusic.setVolume(sound_volume);
+        check_event();
         window->setView(view); 
+        if (isOverTile)
+            window->draw(rect);
         for (double i = 0; i < _gui_connect->get_size_map()[0]; i++) {
             for (double j = 0; j < _gui_connect->get_size_map()[1]; j++) {
                 map_sprites[i][j].setPosition(100 + (i * 102.4), 150 + (j * 102.4));
@@ -415,7 +432,16 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     }
 }
 
-
 void Zappy::Interface::command_handler()
 {
+}
+
+void Zappy::Interface::playBackgroundMusic(const std::string& filename)
+{
+    if (!backgroundMusic.openFromFile(filename)) {
+        std::cerr << "Error loading music file: " << filename << std::endl;
+        return;
+    }
+    backgroundMusic.setLoop(true);
+    backgroundMusic.play();
 }
