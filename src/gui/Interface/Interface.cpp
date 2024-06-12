@@ -61,6 +61,10 @@ Zappy::Interface::Interface()
     font.loadFromFile("./asset/gui/Pacifico.ttf");
     Texts.push_back(sf::Text("tick", font, 50));
     Texts.push_back(sf::Text("Team: ", font, 50));
+    for (int i = 0; i < 20; i++) {
+        info.push_back(sf::Text("", font, 45));
+        info[i].setFillColor(sf::Color::Black);
+    }
     Texts[0].setFillColor(sf::Color::Black);
     Texts[1].setFillColor(sf::Color::Black);
     Texts[0].setPosition(1750, 225);
@@ -312,7 +316,24 @@ void Zappy::Interface::check_event()
                 for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
                     sf::FloatRect tileBounds(100 + (i * 102.4), 150 + (j * 102.4), 102.4, 102.4);
                     if (tileBounds.contains(mousePos)) {
-                        printf("Tile %d %d\n", i, j);
+                        info[0].setString("Tile: x " + std::to_string(i + 1) + " y " + std::to_string(j + 1));
+                        info[1].setString("Player: " + std::to_string(_gui_connect->_tiles[i][j]->_players.size()));
+                        info[2].setString("Food: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Food")));
+                        info[3].setString("Linemate: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Linemate")));
+                        info[4].setString("Deraumere: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Deraumere")));
+                        info[5].setString("Sibur: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Sibur")));
+                        info[6].setString("Mendiane: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Mendiane")));
+                        info[7].setString("Phiras: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Phiras")));
+                        info[8].setString("Thystame: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Thystame")));
+                        info[0].setPosition(230, 1080 - 300);
+                        info[1].setPosition(230, 1080 - 250);
+                        info[2].setPosition(230, 1080 - 200);
+                        info[3].setPosition(1230, 1080 - 300);
+                        info[4].setPosition(1230, 1080 - 250);
+                        info[5].setPosition(1230, 1080 - 200);
+                        info[6].setPosition(730, 1080 - 300);
+                        info[7].setPosition(730, 1080 - 250);
+                        info[8].setPosition(730, 1080 - 200);
                     }
                 }
             }
@@ -368,6 +389,8 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         bars[0]->displayBar(window);
         bars[1]->displayBar(window);
         window->draw(sound);
+        for (int k = 0; k < 9; k++)
+            window->draw(info[k]);
         print_sound();
         window->display();
     }
