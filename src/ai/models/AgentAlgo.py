@@ -59,21 +59,18 @@ class AgentAlgo():
         Update the client status.
         State could be: Continue, End, Dead, Incantation, Food
         """
-        if self.agentMentality == "Hungry" and self.updateFoodAlert() == True:
-            self.agentMentality = None
-            self.status = "Continue"
-            return
-        if self.agentMentality == "Hungry":
-            self.status = "Food"
-            return
         if len(self.alerts.checkAlerts()) == 0:
-            self.status = "Continue"
             return
         alert = self.alerts.checkAlerts().pop()
-        print(f"Alert: {alert}")
         if alert.startswith("incantation"):
             self.addCommandToExecuteInList(f"Broadcast {alert}\n")
             self.status = "Incantation"
+            return
+        if self.agentMentality == "Hungry" and self.updateFoodAlert() == True:
+            self.agentMentality == None
+            return
+        if self.agentMentality == "Hungry":
+            self.status = "Food"
             return
         if alert == "food":
             self.status = "Food"
@@ -239,17 +236,10 @@ class AgentAlgo():
         """
         print(f"Status: {self.status}, level {self.agentInfo.getLevel()}")
         self.updateClientStatus()
-        self.round += 1
-        print(f"Status: {self.status}")
         if self.getReturnCommand()[0] == "Inventory\n":
             self.updateInventory(self.getReturnCommand()[1])
             for item, qt in self.agentInfo.inventory.items():
                 print(f"{item}: {qt}")
-            return
-        if self.round == 10: # Frequency of inventory check
-            print("list of commands to send: ", self.agentInfo.commandsToSend)
-            self.agentInfo.commandsToSend.insert(0, "Inventory\n")
-            self.round = 0
             return
         if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
             self.foodMode()
@@ -277,11 +267,6 @@ class AgentAlgo():
                 self.agentInfo.commandsToSend.append("Look\n")
                 self.round = 0
                 return
-        #if self.agentMentality == "Incantation":
-        #    return
-        #if self.agentMentality == "Hungry":
-        #    return None
-        #print(f"Status: {self.status}")
         if self.status == "Food":
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.insert(0, "Look\n")
