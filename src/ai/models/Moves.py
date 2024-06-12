@@ -49,7 +49,7 @@ class Moves():
                     return (movements)
                 movements.append("Forward")
         if itemPosition in leftTiles:
-            print(itemPosition)
+            # print(itemPosition)
             while itemPosition > midTiles[pos]:
                 movements.append("Forward")
                 pos += 1
