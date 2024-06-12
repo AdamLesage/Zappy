@@ -38,6 +38,26 @@ Zappy::Interface::Interface()
         tile_sprite_[i].setScale(0.32, 0.32);
         tile_sprite_[i].setColor(sf::Color(255, 255, 255, 150));
     }
+    for (int i = 0; i < 6; i++)
+        tile_iso_texture.push_back(sf::Texture());
+    if (tile_iso_texture[0].loadFromFile("./asset/spirte/tiles/tile1w.png") == false)
+        throw InterfaceError("Error: tile1w.png not found", "Interface");
+    if (tile_iso_texture[1].loadFromFile("./asset/spirte/tiles/tile2w.png") == false)
+        throw InterfaceError("Error: tile2w.png not found", "Interface");
+    if (tile_iso_texture[2].loadFromFile("./asset/spirte/tiles/tile3w.png") == false)
+        throw InterfaceError("Error: tile3w.png not found", "Interface");
+    if (tile_iso_texture[3].loadFromFile("./asset/spirte/tiles/tile4w.png") == false)
+        throw InterfaceError("Error: tile4w.png not found", "Interface");
+    if (tile_iso_texture[4].loadFromFile("./asset/spirte/tiles/tile5w.png") == false)
+        throw InterfaceError("Error: tile5w.png not found", "Interface");
+    if (tile_iso_texture[5].loadFromFile("./asset/spirte/tiles/tile6w.png") == false)
+        throw InterfaceError("Error: tile6w.png not found", "Interface");
+    for (int i = 0; i < 6; i++) {
+        tile_iso_sprite.push_back(sf::Sprite());
+        tile_iso_sprite[i].setTexture(tile_iso_texture[i]);
+        tile_iso_sprite[i].setScale(0.32, 0.32);
+        tile_iso_sprite[i].setColor(sf::Color(255, 255, 255, 150));
+    }
     font.loadFromFile("./asset/gui/Pacifico.ttf");
     Texts.push_back(sf::Text("tick", font, 50));
     Texts.push_back(sf::Text("Team: ", font, 50));
@@ -132,7 +152,7 @@ Zappy::Interface::Interface()
 void Zappy::Interface::set_scale_of_player(int i)
 {
     if (_gui_connect->_players[i]->getLevel() == 1)
-        player_sprites[i].setScale(0.4, 0.4);
+        player_sprites[i].setScale(0.2, 0.2);
     else if (_gui_connect->_players[i]->getLevel() == 2)
         player_sprites[i].setScale(1, 1);
 }
@@ -146,7 +166,6 @@ void Zappy::Interface::print_players()
         player_sprites[i].setScale(2, 2);
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
         player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel()][_gui_connect->_players[i]->getOrientation()]);
-        printf("Player %d is at %d %d and is level %d\n", i, _gui_connect->_players[i]->getPosition()[0], _gui_connect->_players[i]->getPosition()[1], _gui_connect->_players[i]->getLevel());
         window->draw(player_sprites[i]);
     }
 }

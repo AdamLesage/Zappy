@@ -55,6 +55,8 @@ namespace Zappy {
             std::vector<sf::Texture> ressource_texture;
             std::vector<sf::Texture> tile_texture_;
             std::vector<sf::Sprite> tile_sprite_;
+            std::vector<sf::Texture> tile_iso_texture;
+            std::vector<sf::Sprite> tile_iso_sprite;
             sf::Sprite sprite;
             sf::Texture texture;
             std::vector<sf::Texture> textures;
