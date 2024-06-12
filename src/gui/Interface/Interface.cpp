@@ -15,10 +15,29 @@ Zappy::Interface::Interface()
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 125), sf::Color(150, 150, 150), 5, sf::Color::Black));
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 325), sf::Color(150, 150, 150), 5, sf::Color::Black));
     texture.loadFromFile("./asset/spirte/tiles/tile1.png");
-    textures.push_back(texture);
     sprite.setTexture(texture);
     sprite.setScale(0.32, 0.32);
     sprite.setColor(sf::Color(255, 255, 255, 150));
+    for (int i = 0; i < 6; i++)
+        tile_texture_.push_back(sf::Texture());
+    if (tile_texture_[0].loadFromFile("./asset/spirte/tiles/tile1.png") == false)
+        throw InterfaceError("Error: tile1.png not found", "Interface");
+    if (tile_texture_[1].loadFromFile("./asset/spirte/tiles/tile2.png") == false)
+        throw InterfaceError("Error: tile2.png not found", "Interface");
+    if (tile_texture_[2].loadFromFile("./asset/spirte/tiles/tile3.png") == false)
+        throw InterfaceError("Error: tile3.png not found", "Interface");
+    if (tile_texture_[3].loadFromFile("./asset/spirte/tiles/tile4.png") == false)
+        throw InterfaceError("Error: tile4.png not found", "Interface");
+    if (tile_texture_[4].loadFromFile("./asset/spirte/tiles/tile5.png") == false)
+        throw InterfaceError("Error: tile5.png not found", "Interface");
+    if (tile_texture_[5].loadFromFile("./asset/spirte/tiles/tile6.png") == false)
+        throw InterfaceError("Error: tile6.png not found", "Interface");
+    for (int i = 0; i < 6; i++) {
+        tile_sprite_.push_back(sf::Sprite());
+        tile_sprite_[i].setTexture(tile_texture_[i]);
+        tile_sprite_[i].setScale(0.32, 0.32);
+        tile_sprite_[i].setColor(sf::Color(255, 255, 255, 150));
+    }
     font.loadFromFile("./asset/gui/Pacifico.ttf");
     Texts.push_back(sf::Text("tick", font, 50));
     Texts.push_back(sf::Text("Team: ", font, 50));
@@ -161,7 +180,8 @@ void Zappy::Interface::set_map()
         std::vector<std::vector<sf::Sprite>> tmp_ressource_sprite;
         for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
             tmp.push_back(std::make_shared<Tile>(sf::Vector2f(i, j), std::make_shared<Inventory>()));
-            tmp_sprite.push_back(sprite);
+            int random_index = rand() % 6;
+            tmp_sprite.push_back(tile_sprite_[random_index]);
             tmp_sprite[j].setPosition(i + 100, j + 100);
             tmp_ressource_sprite.push_back(ressource_sprite_);
         }
