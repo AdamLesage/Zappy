@@ -14,7 +14,8 @@ Zappy::Interface::Interface()
     window->create(sf::VideoMode(1920, 1080), "Zappy");
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 125), sf::Color(150, 150, 150), 5, sf::Color::Black));
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 325), sf::Color(150, 150, 150), 5, sf::Color::Black));
-    texture.loadFromFile("./asset/spirte/tiles/tile1.png");
+    if (texture.loadFromFile("./asset/spirte/tiles/tile1.png") == false)
+        throw InterfaceError("Error: tile1.png not found", "Interface");
     sprite.setTexture(texture);
     sprite.setScale(0.32, 0.32);
     sprite.setColor(sf::Color(255, 255, 255, 150));
@@ -38,7 +39,8 @@ Zappy::Interface::Interface()
         tile_sprite_[i].setScale(0.32, 0.32);
         tile_sprite_[i].setColor(sf::Color(255, 255, 255, 150));
     }
-    font.loadFromFile("./asset/gui/Pacifico.ttf");
+    if (font.loadFromFile("./asset/gui/Pacifico.ttf") == false)
+        throw InterfaceError("Error: Pacifico.ttf not found", "Interface");
     Texts.push_back(sf::Text("tick", font, 50));
     Texts.push_back(sf::Text("Team: ", font, 50));
     for (int i = 0; i < 20; i++) {
@@ -49,7 +51,8 @@ Zappy::Interface::Interface()
     Texts[1].setFillColor(sf::Color::Black);
     Texts[0].setPosition(1750, 225);
     Texts[1].setPosition(10, 50);
-    sound_.loadFromFile("./asset/gui/logo_son.jpg");
+    if (sound_.loadFromFile("./asset/gui/logo_son.jpg") == false)
+        throw InterfaceError("Error: logo_son.jpg not found", "Interface");
     sound.setTexture(sound_);
     sound.setPosition(1725, 10);
     sound.setScale(0.3, 0.3);
@@ -101,7 +104,8 @@ Zappy::Interface::Interface()
     ressource_sprite_[5].setScale(0.05, 0.05);
     ressource_sprite_[6].setTexture(ressource_texture[6]);
     ressource_sprite_[6].setScale(0.05, 0.05);
-    egg_texture.loadFromFile("./asset/spirte/egg.png");
+    if (egg_texture.loadFromFile("./asset/spirte/egg.png") == false)
+        throw InterfaceError("Error: egg.png not found", "Interface");
     for (int i = 0; i < 8; i++)
         player_textures.push_back(sf::Texture());
     if (player_textures[0].loadFromFile("./asset/spirte/rank/rank1.png") == false)
