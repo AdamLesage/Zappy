@@ -37,6 +37,7 @@ namespace Zappy {
             void print_resssource();
             void print_eggs();
             void print_players();
+            void print_map_iso();
             void set_scale_of_player(int i);
         protected:
             std::shared_ptr<sf::RenderWindow> window;
@@ -49,6 +50,7 @@ namespace Zappy {
             std::vector<sf::RectangleShape> _rect;
             std::array<int, 2> _mape_size;
             std::vector<std::vector<sf::Sprite>> map_sprites;
+            std::vector<std::vector<sf::Sprite>> map_iso_sprites;
             std::vector<sf::Texture> map_textures;
             std::vector<std::vector<std::vector<sf::Sprite>>> ressource_sprite;
             std::vector<sf::Sprite> ressource_sprite_;

@@ -56,7 +56,7 @@ Zappy::Interface::Interface()
         tile_iso_sprite.push_back(sf::Sprite());
         tile_iso_sprite[i].setTexture(tile_iso_texture[i]);
         tile_iso_sprite[i].setScale(0.32, 0.32);
-        tile_iso_sprite[i].setColor(sf::Color(255, 255, 255, 150));
+        tile_iso_sprite[i].setColor(sf::Color(255, 255, 255, 75));
     }
     font.loadFromFile("./asset/gui/Pacifico.ttf");
     Texts.push_back(sf::Text("tick", font, 50));
@@ -200,16 +200,19 @@ void Zappy::Interface::set_map()
     for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
         std::vector<std::shared_ptr<Tile>> tmp;
         std::vector<sf::Sprite> tmp_sprite;
+        std::vector<sf::Sprite> tmp_iso_sprite;
         std::vector<std::vector<sf::Sprite>> tmp_ressource_sprite;
         for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
             tmp.push_back(std::make_shared<Tile>(sf::Vector2f(i, j), std::make_shared<Inventory>()));
             int random_index = rand() % 6;
             tmp_sprite.push_back(tile_sprite_[random_index]);
+            tmp_iso_sprite.push_back(tile_iso_sprite[random_index]);
             tmp_sprite[j].setPosition(i + 100, j + 100);
             tmp_ressource_sprite.push_back(ressource_sprite_);
         }
         _gui_connect->_tiles.push_back(tmp);
         map_sprites.push_back(tmp_sprite);
+        map_iso_sprites.push_back(tmp_iso_sprite);
         ressource_sprite.push_back(tmp_ressource_sprite);
     }
 }
@@ -354,6 +357,16 @@ void Zappy::Interface::check_event()
     }
 }
 
+void Zappy::Interface::print_map_iso()
+{
+    for (double i = 0; i < _gui_connect->get_size_map()[0]; i++) {
+        for (double j = 0; j < _gui_connect->get_size_map()[1]; j++) {
+            map_iso_sprites[i][j].setPosition(100 + (i * 102.4), 150 + (j * 102.4));
+            window->draw(map_iso_sprites[i][j]);
+        }
+    }
+}
+
 void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
 {
     _gui_connect = gui_connect;
@@ -375,6 +388,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         print_resssource();
         print_eggs();
         print_players();
+        print_map_iso();
         window->setView(window->getDefaultView());
         for (size_t i = 0; i < _rect.size(); i++)
             window->draw(_rect[i]);
