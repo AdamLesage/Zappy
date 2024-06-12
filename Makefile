@@ -346,7 +346,7 @@ NAMETEST 	=	unit_tests
 
 CFLAGS		= 	-Wall -Wextra -Wshadow
 
-SFML		=	-lsfml-graphics -lsfml-window -lsfml-system
+SFML		=	-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 all:    $(Name)
 
