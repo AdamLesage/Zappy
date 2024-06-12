@@ -16,6 +16,7 @@
 
 std::vector<std::string> my_str_to_line_array(char *str);
 std::vector<std::string> my_str_to_word_array(const char *str);
+std::vector<std::string> split(std::string str, std::string separator);
 std::vector<std::string> my_str_to_word_array_separator(const char *str, char separator);
 
 GuiConnect::GuiConnect()
@@ -58,22 +59,59 @@ void GuiConnect::send(std::string message)
     }
 }
 
+void GuiConnect::readServer(std::string &buffer2, char *buffer)
+{
+    std::vector<std::string> pString;
+
+    for (int j = 0; j <= client_management.max_fd; j++) {
+        if (FD_ISSET(j, &client_management.temp_fds)) {
+            for (int c = 0; c != 100000; c++)
+                buffer[c] = '\0';
+            if (read(_socket, buffer, 100000) == -1) {
+                throw Zappy::ConnectError("Failed to receive message", "GuiConnect");
+            }
+            if (buffer2.empty()) {
+                buffer2 = buffer;
+            } else {
+                buffer2 += buffer;
+            }
+            if (buffer2.find('\n') == buffer2.npos) {
+                break;
+            }
+            pString = split(buffer2, "\n");
+            for (size_t i = 0; i < pString.size(); i++) {
+                std::vector<std::string> args = my_str_to_word_array(pString[i].c_str());
+                if (args.size() > 0) {
+                    executeCommandChanges(args[0], pString[i]);
+                    buffer2 = "";
+                }
+            }
+            pString.clear();
+        }
+    }
+}
+
 void GuiConnect::receive()
 {
-    char buffer[10000] = {0};
+    char buffer[100000] = {0};
+    std::string buffer2;
+    FD_ZERO(&(client_management.rfds));
+    FD_SET(_socket, &client_management.rfds);
+    int retval = 0;
 
+    client_management.max_fd = _socket;
+    if (read(_socket, buffer, 100000) == -1) {
+        throw Zappy::ConnectError("Failed to receive message", "GuiConnect");
+    }
     send("GRAPHIC\n");
     while (Running) {
-        if (read(_socket, buffer, 10000) == -1) {
-            throw Zappy::ConnectError("Failed to receive message", "GuiConnect");
+        client_management.temp_fds = client_management.rfds;
+        retval = select(client_management.max_fd + 1, &client_management.temp_fds, NULL, NULL, NULL);
+        if (retval == -1) {
+            throw Zappy::ConnectError("Select error", "GuiConnect");
         }
-        printf("Received: [%s]\n", buffer);
-        std::vector<std::string> pString = my_str_to_line_array(buffer);
-        for (size_t i = 0; i < pString.size(); i++) {
-            std::vector<std::string> args = my_str_to_word_array(pString[i].c_str());
-            if (args.size() > 0) {
-                executeCommandChanges(args[0], pString[i]);
-            }
+        if (retval >= 0) {
+            readServer(buffer2, buffer);
         }
     }
 }
