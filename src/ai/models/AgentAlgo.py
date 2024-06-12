@@ -229,6 +229,24 @@ class AgentAlgo():
             finalAction = random.choice(actions)
             self.agentInfo.addCommandsToSend(finalAction)
             return
+        
+    def forkAgent(self, round: int) -> None:
+        """
+        Will check if the agent can fork.
+        If yes, it will fork the agent.
+        """
+        if self.alerts.checkAlerts() != 0:
+            alert = self.alerts.checkAlerts().pop()
+            if alert == "food":
+                return
+        if self.getReturnCommand()[0] == "Connect_nbr\n" and self.getReturnCommand()[1] != 0:
+            self.agentInfo.addCommandsToSend("Fork\n")
+            self.status = "Fork"
+        elif round == 5:
+            self.agentInfo.addCommandsToSend("Connect_nbr\n")
+        else:
+            self.status = "Mining"
+        return
 
     def play(self, data: str) -> str:
         """
