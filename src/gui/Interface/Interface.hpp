@@ -39,6 +39,7 @@ namespace Zappy {
             void print_players();
             void print_map_iso();
             void set_scale_of_player(int i);
+            void playBackgroundMusic(const std::string& filename);
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
@@ -80,6 +81,8 @@ namespace Zappy {
             std::vector<sf::Text> info;
             sf::RectangleShape rect;
             bool isOverTile;
+            sf::Music backgroundMusic;
+
         private:
     };
 }
