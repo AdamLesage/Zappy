@@ -64,7 +64,7 @@ class TestAgentAlgo(unittest.TestCase):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
         agentAlgo.updateClientStatus()
-        self.assertEqual(agentAlgo.status, "Continue")
+        self.assertEqual(agentAlgo.status, "Mining")
 
     def test08_updateClientStatusIncantation(self):
         agent = AgentInfo()
@@ -76,9 +76,9 @@ class TestAgentAlgo(unittest.TestCase):
     def test09_updateClientStatusContinue(self):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
-        agentAlgo.alerts.alerts.append("Continue")
+        agentAlgo.alerts.alerts.append("Mining")
         agentAlgo.updateClientStatus()
-        self.assertEqual(agentAlgo.status, "Continue")
+        self.assertEqual(agentAlgo.status, "Mining")
     
     def test05_testUpdateInventory(self):
         agent = AgentInfo()
