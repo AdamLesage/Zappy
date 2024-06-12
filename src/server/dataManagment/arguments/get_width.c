@@ -19,8 +19,8 @@ int get_width(const char **argv, int *index)
         print_usage("width must be a number");
     }
     width = atoi(argv[*index]);
-    if (width <= 1) {
-        print_usage("width must be > 1");
+    if (width < 10 || width > 30) {
+        print_usage("width must be >= 10 and <= 30");
     }
     return (width);
 }

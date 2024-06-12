@@ -31,16 +31,19 @@ char *get_command(core_t *core, int fd_client)
     return (strdup(buf));
 }
 
-void set_player_command(players_t *players, player_info_t *info, char *command)
+void set_player_command(core_t *core, player_info_t *info, char *command)
 {
-    if (!is_know_player_command(command)) {
-        send_response("ko\n", info->fd);
-    } else {
-        if (info->action_queue[0] == NULL) {
-            info->timer_action = get_time_action(command);
+    if (info->action_queue[0] == NULL) {
+        if (strcmp(command, "Incantation") == 0) {
+            start_incantation(core, info->fd);
+            return;
         }
-        add_action_in_queue(players, info->fd, command);
+        if (strcmp(command, "Fork") == 0) {
+            pfk(&core->players, info->id);
+        }
+        info->timer_action = get_time_action(command);
     }
+    add_action_in_queue(&core->players, info->fd, command);
 }
 
 void check_command(core_t *core, int fd, char *command)
@@ -55,7 +58,7 @@ void check_command(core_t *core, int fd, char *command)
     } else if (strcmp(get_player_team(&core->players, fd), "GRAPHIC") == 0) {
         execute_gui_command(core, command, fd);
     } else {
-        set_player_command(&core->players, info, command);
+        set_player_command(core, info, command);
     }
 }
 
