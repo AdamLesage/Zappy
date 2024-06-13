@@ -43,7 +43,7 @@ Test(TNA, applyChanges_invalid_args)
 Test(TNA, applyChanges)
 {
     Zappy::TNA tna;
-    std::vector<std::string> parsedData = {"tna", "team1", "team2"};
+    std::vector<std::string> parsedData = {"team1", "team2"};
     std::array<int, 2> size_map = {0, 0};
     std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> tiles;
     std::vector<std::shared_ptr<Zappy::Player>> players;
@@ -62,7 +62,7 @@ Test(TNA, applyChanges)
 Test(TNA, applyChangesErrorThrow)
 {
     Zappy::TNA tna;
-    std::vector<std::string> parsedData = {"tna", "team1", "team2"};
+    std::vector<std::string> parsedData = {"team1", "team2"};
     std::array<int, 2> size_map = {0, 0};
     std::vector<std::vector<std::shared_ptr<Zappy::Tile>>> tiles;
     std::vector<std::shared_ptr<Zappy::Player>> players;
