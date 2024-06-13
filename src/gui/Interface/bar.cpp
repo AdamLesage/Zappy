@@ -31,7 +31,7 @@ Zappy::Bar::~Bar()
 {
 }
 
-float Zappy::Bar::checkClick(std::shared_ptr<sf::RenderWindow> window)
+int Zappy::Bar::checkClick(std::shared_ptr<sf::RenderWindow> window)
 {
     sf::Mouse mouse;
     sf::Vector2f mousPos;
@@ -51,11 +51,9 @@ float Zappy::Bar::checkClick(std::shared_ptr<sf::RenderWindow> window)
             }
         }
     }
-    if (newPos.x - _pos.x > 0) {
-        float volume = ((newPos.x - _pos.x) / barSize) * 100.0f;
-        return volume;
-    }
-    return 0.0f;
+    if (newPos.x - _pos.x > 0)
+        return(newPos.x - _pos.x);
+    return (0);
 }
 
 bool Zappy::Bar::checkClick2(std::shared_ptr<sf::RenderWindow> window)
