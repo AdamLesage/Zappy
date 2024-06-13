@@ -37,6 +37,7 @@ namespace Zappy {
             void print_resssource();
             void print_eggs();
             void print_players();
+            void print_evolution(int playerIndex);
             void print_map_iso();
             void set_scale_of_player(int i);
             void playBackgroundMusic(const std::string& filename);

@@ -212,7 +212,26 @@ void Zappy::Interface::print_players()
         std::cout << "player is in position: " << _gui_connect->_players[i]->getPosition()[0] << " " << _gui_connect->_players[i]->getPosition()[1] << std::endl;
         std::cout << "player is in orientation: " << _gui_connect->_players[i]->getOrientation() << std::endl;
         window->draw(player_sprites[i]);
+        // if (_gui_connect->_players[i]->isEvoluting()) {
+        //     print_evolution(i);
+        // }
     }
+}
+
+void Zappy::Interface::print_evolution(int current_player)
+{
+    sf::Sprite evolutionSprite;
+    sf::Texture evolutionTexture;
+
+    if (!evolutionTexture.loadFromFile("./sprite/animation/evo.png")) {
+        std::cerr << "Error loading texture" << std::endl;
+        return;
+    }
+    evolutionSprite.setTexture(evolutionTexture);
+    set_scale_of_player(current_player);
+    auto playerPosition = _gui_connect->_players[current_player]->getPosition();
+    evolutionSprite.setPosition(playerPosition[0] * 102.4 + 100, playerPosition[1] * 102.4 + 150);
+    window->draw(evolutionSprite);
 }
 
 Zappy::Interface::~Interface()
