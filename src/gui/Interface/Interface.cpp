@@ -10,6 +10,7 @@
 
 Zappy::Interface::Interface()
 {
+    info_ = false;
     sound_volume = 50;
     window = std::make_shared<sf::RenderWindow>();
     window->create(sf::VideoMode(1920, 1080), "Zappy");
@@ -371,6 +372,7 @@ void Zappy::Interface::check_event()
                         info[7].setPosition(730, 1080 - 250);
                         info_sprites[5].setPosition(630, 1080 - 200);
                         info[8].setPosition(730, 1080 - 200);
+                        info_ = true;
                     }
                 }
             }
@@ -454,8 +456,9 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->draw(sound);
         for (int k = 0; k < 9; k++)
             window->draw(info[k]);
-        for (int k = 0; k < 7; k++)
-            window->draw(info_sprites[k]);
+        if (info_) 
+           for (int k = 0; k < 6; k++)
+                window->draw(info_sprites[k]);
         print_sound();
         window->display();
     }

@@ -41,6 +41,7 @@ namespace Zappy {
             void set_scale_of_player(int i);
             void playBackgroundMusic(const std::string& filename);
         protected:
+            bool info_;
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
             std::vector<std::shared_ptr<Bar>> bars;
