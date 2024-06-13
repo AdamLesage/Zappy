@@ -24,7 +24,6 @@ void connect_client(select_info_t *select_info,
         FD_SET(fd_new_client, &select_info->rfds);
         if (fd_new_client > select_info->max_fd)
             select_info->max_fd = fd_new_client;
-        write(fd_new_client, "WELCOME\n", 9);
+        send_response("WELCOME\n", fd_new_client);
     }
 }
-// send_to_client("WELCOME\n");

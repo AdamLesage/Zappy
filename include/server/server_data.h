@@ -27,6 +27,20 @@ typedef struct inventory_s {
     int nb_food;
 } inventory_t;
 
+typedef struct incantation_info_s {
+    int pos_x;
+    int pos_y;
+    int *ids;
+    int nb_players;
+    int incantation_level;
+    int incantation_timer;
+} incantation_info_t;
+
+typedef struct incantation_list_s {
+    incantation_info_t *incantation_info;
+    struct incantation_list_s *next;
+} incantation_list_t;
+
 typedef struct player_info_s {
     int pos_x;
     int pos_y;
@@ -39,6 +53,8 @@ typedef struct player_info_s {
     int fd;
     char *team_name;
     int last_feed;
+    bool is_on_incantation;
+    int id;
 } player_info_t;
 
 typedef struct players_list_s {
@@ -51,12 +67,15 @@ typedef struct players_s {
     int nb_client;
     int nb_teams;
     players_list_t *players_list;
+    incantation_list_t *incantation_list;
+    int current_id;
 } players_t;
 
 typedef struct eggs_s {
     char *team_name;
     int pos_x;
     int pos_y;
+    int egg_id;
     struct eggs_s *next;
 } eggs_t;
 
@@ -86,6 +105,7 @@ typedef struct map_s {
     int last_refille;
     tiles_list_t *tiles_list;
     eggs_t *eggs;
+    int current_eggs_id;
 } map_t;
 
 typedef struct arguments_s {
@@ -99,14 +119,14 @@ typedef struct arguments_s {
 } arguments_t;
 
 enum Object {
-    Food,
-    Linemate,
-    Sibur,
-    Mendiane,
-    Phiras,
-    Thystame,
-    Deraumere,
-    None,
+    Food = 0,
+    Linemate = 1,
+    Deraumere = 2,
+    Sibur = 3,
+    Mendiane = 4,
+    Phiras = 5,
+    Thystame = 6,
+    None = 7,
 };
 
 void init_map(map_t *map, arguments_t *arguments);
@@ -129,15 +149,17 @@ bool remove_mendiane(map_t *map, int x, int y);
 bool remove_phiras(map_t *map, int x, int y);
 bool remove_thystame(map_t *map, int x, int y);
 bool remove_eggs(map_t *map, int x, int y, char *team_name);
-void refill_map(map_t *map);
 int find_number_eggs_on_team(eggs_t *eggs, char *team);
 
 void init_players(players_t *players, arguments_t *arguments);
 bool add_player(map_t *map, players_t *players, int fd,
     char *team_name);
 player_info_t *find_player(players_t *player, int fd);
+player_info_t *find_player_by_id(players_t *player, int id);
 bool delete_player(map_t *map, players_t *players, int fd);
 void move_player(map_t *map, players_t *player, int fd);
+void move_player2(map_t *map, players_t *player, int fd,
+    enum Orientation orientation);
 void turn_left(players_t *players, int fd);
 void turn_right(players_t *players, int fd);
 int *get_pos(players_t *players, int fd);
@@ -149,7 +171,12 @@ void add_action_in_queue(players_t *players, int fd, char *action);
 char *get_action_in_queue(players_t *players, int fd);
 bool put_on_inventory(players_t *players, enum Object object,
     int fd);
-bool remove_fom_inventory(players_t *players, enum Object object,
+bool remove_from_inventory(players_t *players, enum Object object,
     int fd);
+bool remove_from_inventory_2(player_info_t *info, enum Object object);
+int get_player_k(player_info_t *player_info, int x, int y,
+    arguments_t *arguments);
+int nb_player_at_level(players_list_t *player_list, int level,
+    int x, int y);
 
 #endif /* !SERVER_DATA_H_ */

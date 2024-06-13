@@ -44,17 +44,18 @@ static void reffil_object(map_t *map, int nb_object, float density,
     }
 }
 
-void refill_map(map_t *map)
+void refill_map(core_t *core)
 {
-    inventory_t *inventory = get_nb_object(map->tiles_list);
+    inventory_t *inventory = get_nb_object(core->map.tiles_list);
 
-    reffil_object(map, inventory->nb_food, 0.5, &put_food);
-    reffil_object(map, inventory->nb_linemate, 0.3, &put_linemate);
-    reffil_object(map, inventory->nb_deraumere, 0.15, &put_deraumere);
-    reffil_object(map, inventory->nb_sibur, 0.1, &put_sibur);
-    reffil_object(map, inventory->nb_mendiane, 0.1, &put_mendiane);
-    reffil_object(map, inventory->nb_phiras, 0.08, &put_phiras);
-    reffil_object(map, inventory->nb_thystame, 0.05, &put_thystame);
-    map->last_refille = 20;
+    reffil_object(&core->map, inventory->nb_food, 0.5, &put_food);
+    reffil_object(&core->map, inventory->nb_linemate, 0.3, &put_linemate);
+    reffil_object(&core->map, inventory->nb_deraumere, 0.15, &put_deraumere);
+    reffil_object(&core->map, inventory->nb_sibur, 0.1, &put_sibur);
+    reffil_object(&core->map, inventory->nb_mendiane, 0.1, &put_mendiane);
+    reffil_object(&core->map, inventory->nb_phiras, 0.08, &put_phiras);
+    reffil_object(&core->map, inventory->nb_thystame, 0.05, &put_thystame);
+    core->map.last_refille = 20;
+    mct_event(core);
     free(inventory);
 }
