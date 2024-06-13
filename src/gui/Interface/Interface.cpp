@@ -175,8 +175,10 @@ Zappy::Interface::Interface()
     player_orientation[4][1] = sf::IntRect(417, 180, 56, 31);
     player_orientation[4][2] = sf::IntRect(437, 301, 22, 45);
     player_orientation[4][3] = sf::IntRect(422, 436, 56, 31);
-    
-    
+    player_orientation[5][0] = sf::IntRect(432, 38, 29, 49);
+    player_orientation[5][1] = sf::IntRect(420, 170, 50, 30);
+    player_orientation[5][2] = sf::IntRect(433, 302, 30, 41);
+    player_orientation[5][3] = sf::IntRect(425, 426, 50, 40);
 
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
