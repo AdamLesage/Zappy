@@ -10,6 +10,7 @@
 
 Zappy::Interface::Interface()
 {
+    sound_volume = 50;
     window = std::make_shared<sf::RenderWindow>();
     window->create(sf::VideoMode(1920, 1080), "Zappy");
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 125), sf::Color(150, 150, 150), 5, sf::Color::Black));
@@ -147,14 +148,14 @@ Zappy::Interface::Interface()
     for (int i = 0; i < 4; i++) {
         player_orientation.push_back(std::array<sf::IntRect, 4>());
     }
-    player_orientation[0][0] = sf::IntRect(250, 0, 250, 250);
-    player_orientation[0][1] = sf::IntRect(250, 250, 250, 250);
-    player_orientation[0][2] = sf::IntRect(250, 500, 250, 250);
-    player_orientation[0][3] = sf::IntRect(250, 750, 250, 250);
-    player_orientation[1][0] = sf::IntRect(250, 0, 250, 250);
-    player_orientation[1][1] = sf::IntRect(250, 250, 250, 250);
-    player_orientation[2][2] = sf::IntRect(250, 500, 250, 250);
-    player_orientation[3][3] = sf::IntRect(250, 750, 250, 250);
+    player_orientation[0][0] = sf::IntRect(35, 0, 35, 35);
+    player_orientation[0][1] = sf::IntRect(35, 35, 30, 30);
+    player_orientation[0][2] = sf::IntRect(30, 65, 35, 35);
+    player_orientation[0][3] = sf::IntRect(30, 100, 35, 35);
+    player_orientation[1][0] = sf::IntRect(35, 0, 35, 35);
+    player_orientation[1][1] = sf::IntRect(35, 35, 30, 30);
+    player_orientation[1][2] = sf::IntRect(30, 65, 35, 35);
+    player_orientation[1][3] = sf::IntRect(30, 100, 35, 35);
 
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
@@ -178,6 +179,7 @@ void Zappy::Interface::print_players()
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
         player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation()]);
         std::cout << "player is in position: " << _gui_connect->_players[i]->getPosition()[0] << " " << _gui_connect->_players[i]->getPosition()[1] << std::endl;
+        std::cout << "player is in orientation: " << _gui_connect->_players[i]->getOrientation() << std::endl;
         window->draw(player_sprites[i]);
     }
 }
