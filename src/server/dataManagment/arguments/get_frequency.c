@@ -19,8 +19,8 @@ int get_frequency(const char **argv, int *index)
         print_usage("frequency must be a number");
     }
     frequency = atoi(argv[*index]);
-    if (frequency <= 1) {
-        print_usage("frequency must be > 1");
+    if (frequency <= 1 || frequency > 10000) {
+        print_usage("frequency must be > 1 and <= 10000");
     }
     return (frequency);
 }
