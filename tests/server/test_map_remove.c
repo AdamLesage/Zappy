@@ -147,7 +147,6 @@ Test(remove_of_map, remove_on_wrong_tile)
 {
     map_t map;
     arguments_t arguments;
-    bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
 
     arguments.height = 10;
@@ -156,29 +155,28 @@ Test(remove_of_map, remove_on_wrong_tile)
     arguments.name_teams = team_names;
 
     init_map(&map, &arguments);
-    return_value = remove_player(&map, 5, 4);
+    remove_player(&map, 5, 4);
     // cr_assert_eq(return_value, false);
-    return_value = remove_linemate(&map, 5, 4);
+    remove_linemate(&map, 5, 4);
     // cr_assert_eq(return_value, false);
-    return_value = remove_deraumere(&map, 5, 4);
+    remove_deraumere(&map, 5, 4);
     // cr_assert_eq(return_value, false);
-    return_value = remove_sibur(&map, 5, 4);
-    return_value = remove_mendiane(&map, 5, 4);
+    remove_sibur(&map, 5, 4);
+    remove_mendiane(&map, 5, 4);
     // cr_assert_eq(return_value, false);
-    return_value = remove_phiras(&map, 5, 4);
+    remove_phiras(&map, 5, 4);
     // cr_assert_eq(return_value, false);
-    return_value = remove_thystame(&map, 5, 4);
+    remove_thystame(&map, 5, 4);
     // cr_assert_eq(return_value, false);
-    return_value = remove_eggs(&map, 5, 4, "name1");
+    remove_eggs(&map, 5, 4, "name1");
     // cr_assert_eq(return_value, false);
-    return_value = remove_food(&map, 5, 4);
+    remove_food(&map, 5, 4);
     // cr_assert_eq(return_value, false);
 }
 
 Test(remove_eggs_of_map, basic)
 {
     map_t map;
-    tile_info_t *info;
     arguments_t arguments;
     bool return_value;
     char *team_names[] = {"team1", "team2", NULL};
@@ -192,7 +190,6 @@ Test(remove_eggs_of_map, basic)
     return_value = put_eggs(&map, 5, 4, "name1");
     return_value = put_eggs(&map, 5, 4, "name2");
     return_value = remove_eggs(&map, 5, 4, "name2");
-    info = find_tile(&map, 5, 4);
     cr_assert_str_eq(map.eggs->team_name, "name1");
     cr_assert_eq(return_value, true);
 }

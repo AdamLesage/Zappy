@@ -17,6 +17,13 @@
 #include "../Entity/Egg.hpp"
 #include "../Entity/Tile.hpp"
 
+typedef struct client_managment_s {
+    fd_set rfds;
+    fd_set temp_fds;
+    int max_fd;
+    struct timeval tv;
+} client_management_t;
+
 class GuiConnect {
     public:
         GuiConnect();
@@ -47,6 +54,7 @@ class GuiConnect {
         int getPlayerLevel(int playerNb);
         std::shared_ptr<Zappy::Player> getPlayerByNb(int playerNb);
         std::vector<std::shared_ptr<Zappy::Player>> findPlayersByCoords(std::pair<int, int> coords);
+        sf::Vector2f getVectorBetweenTwoPlayers(int playerNb1, int playerNb2);
 
         // Egg management
         void createEgg(std::vector<std::string> args);
@@ -71,7 +79,9 @@ class GuiConnect {
         int _socket;
         int _port;
         std::vector<std::string> _teams;
+        client_management_t client_management;
     private:
+        void readServer(std::string &buffer2, char *buffer);
 };
 
 #endif /* !GUI_CONNECT_HPP_ */
