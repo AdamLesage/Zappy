@@ -318,7 +318,7 @@ void Zappy::Interface::check_event()
         if (event.type == sf::Event::Closed)
             window->close();
         if (event.type == sf::Event::MouseWheelScrolled) {
-            if (event.mouseWheelScroll.delta > 0 && view.getSize().x > 1920 / 4 && view.getSize().y > 1080 / 4) {
+            if (event.mouseWheelScroll.delta > 0 && view.getSize().x > 1920 / 5 && view.getSize().y > 1080 / 5) {
                 view.zoom(0.9);
                 zoom += 1;
             } else if (event.mouseWheelScroll.delta < 0 && view.getSize().x < 1920 * 3 && view.getSize().y < 1080 * 3) {
@@ -438,7 +438,12 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         }
         for (size_t i = 0; i < Texts.size(); i++)
             window->draw(Texts[i]);
-        bars[1]->checkClick(window);
+        tick = bars[1]->checkClick(window);
+        if (tick > 2 && tick != last_tick) {
+            _gui_connect->setTimeUnit(std::to_string(tick));
+            last_tick = tick;
+        }
+        printf("timeUnit: %d\n", _gui_connect->_timeUnit);
         bars[0]->displayBar(window);
         bars[1]->displayBar(window);
         window->draw(sound);

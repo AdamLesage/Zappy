@@ -59,6 +59,11 @@ void GuiConnect::send(std::string message)
     }
 }
 
+void GuiConnect::setTimeUnit(std::string args)
+{
+    _commandFactory->askCommand("sst", {"SST", args});
+}
+
 void GuiConnect::readServer(std::string &buffer2, char *buffer)
 {
     std::vector<std::string> pString;
