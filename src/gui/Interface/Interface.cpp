@@ -15,24 +15,24 @@ Zappy::Interface::Interface()
     window->create(sf::VideoMode(1920, 1080), "Zappy");
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 125), sf::Color(150, 150, 150), 5, sf::Color::Black));
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 325), sf::Color(150, 150, 150), 5, sf::Color::Black));
-    if (texture.loadFromFile("./asset/spirte/tiles/tile1.png") == false)
+    if (texture.loadFromFile("./asset/sprite/tiles/tile1.png") == false)
         throw InterfaceError("Error: tile1.png not found", "Interface");
     sprite.setTexture(texture);
     sprite.setScale(0.32, 0.32);
     // sprite.setColor(sf::Color(255, 255, 255, 150));
     for (int i = 0; i < 6; i++)
         tile_texture_.push_back(sf::Texture());
-    if (tile_texture_[0].loadFromFile("./asset/spirte/tiles/tile1.png") == false)
+    if (tile_texture_[0].loadFromFile("./asset/sprite/tiles/tile1.png") == false)
         throw InterfaceError("Error: tile1.png not found", "Interface");
-    if (tile_texture_[1].loadFromFile("./asset/spirte/tiles/tile2.png") == false)
+    if (tile_texture_[1].loadFromFile("./asset/sprite/tiles/tile2.png") == false)
         throw InterfaceError("Error: tile2.png not found", "Interface");
-    if (tile_texture_[2].loadFromFile("./asset/spirte/tiles/tile3.png") == false)
+    if (tile_texture_[2].loadFromFile("./asset/sprite/tiles/tile3.png") == false)
         throw InterfaceError("Error: tile3.png not found", "Interface");
-    if (tile_texture_[3].loadFromFile("./asset/spirte/tiles/tile4.png") == false)
+    if (tile_texture_[3].loadFromFile("./asset/sprite/tiles/tile4.png") == false)
         throw InterfaceError("Error: tile4.png not found", "Interface");
-    if (tile_texture_[4].loadFromFile("./asset/spirte/tiles/tile5.png") == false)
+    if (tile_texture_[4].loadFromFile("./asset/sprite/tiles/tile5.png") == false)
         throw InterfaceError("Error: tile5.png not found", "Interface");
-    if (tile_texture_[5].loadFromFile("./asset/spirte/tiles/tile6.png") == false)
+    if (tile_texture_[5].loadFromFile("./asset/sprite/tiles/tile6.png") == false)
         throw InterfaceError("Error: tile6.png not found", "Interface");
     for (int i = 0; i < 6; i++) {
         tile_sprite_.push_back(sf::Sprite());
@@ -42,17 +42,17 @@ Zappy::Interface::Interface()
     }
     for (int i = 0; i < 6; i++)
         tile_iso_texture.push_back(sf::Texture());
-    if (tile_iso_texture[0].loadFromFile("./asset/spirte/tiles/tile1w.png") == false)
+    if (tile_iso_texture[0].loadFromFile("./asset/sprite/tiles/tile1w.png") == false)
         throw InterfaceError("Error: tile1w.png not found", "Interface");
-    if (tile_iso_texture[1].loadFromFile("./asset/spirte/tiles/tile2w.png") == false)
+    if (tile_iso_texture[1].loadFromFile("./asset/sprite/tiles/tile2w.png") == false)
         throw InterfaceError("Error: tile2w.png not found", "Interface");
-    if (tile_iso_texture[2].loadFromFile("./asset/spirte/tiles/tile3w.png") == false)
+    if (tile_iso_texture[2].loadFromFile("./asset/sprite/tiles/tile3w.png") == false)
         throw InterfaceError("Error: tile3w.png not found", "Interface");
-    if (tile_iso_texture[3].loadFromFile("./asset/spirte/tiles/tile4w.png") == false)
+    if (tile_iso_texture[3].loadFromFile("./asset/sprite/tiles/tile4w.png") == false)
         throw InterfaceError("Error: tile4w.png not found", "Interface");
-    if (tile_iso_texture[4].loadFromFile("./asset/spirte/tiles/tile5w.png") == false)
+    if (tile_iso_texture[4].loadFromFile("./asset/sprite/tiles/tile5w.png") == false)
         throw InterfaceError("Error: tile5w.png not found", "Interface");
-    if (tile_iso_texture[5].loadFromFile("./asset/spirte/tiles/tile6w.png") == false)
+    if (tile_iso_texture[5].loadFromFile("./asset/sprite/tiles/tile6w.png") == false)
         throw InterfaceError("Error: tile6w.png not found", "Interface");
     for (int i = 0; i < 6; i++) {
         tile_iso_sprite.push_back(sf::Sprite());
@@ -95,19 +95,19 @@ Zappy::Interface::Interface()
     isPanning = false;
     for (int i = 0; i < 7; i++)
         ressource_texture.push_back(sf::Texture());
-    if (ressource_texture[0].loadFromFile("./asset/spirte/ressource/bacon.png") == false)
+    if (ressource_texture[0].loadFromFile("./asset/sprite/ressource/bacon.png") == false)
         throw InterfaceError("Error: bacon.png not found", "Interface");
-    if (ressource_texture[1].loadFromFile("./asset/spirte/ressource/egg.png") == false)
+    if (ressource_texture[1].loadFromFile("./asset/sprite/ressource/egg.png") == false)
         throw InterfaceError("Error: egg.png not found", "Interface");
-    if (ressource_texture[2].loadFromFile("./asset/spirte/ressource/milk.png") == false)
+    if (ressource_texture[2].loadFromFile("./asset/sprite/ressource/milk.png") == false)
         throw InterfaceError("Error: milk.png not found", "Interface");
-    if (ressource_texture[3].loadFromFile("./asset/spirte/ressource/horseshoes.png") == false)
+    if (ressource_texture[3].loadFromFile("./asset/sprite/ressource/horseshoes.png") == false)
         throw InterfaceError("Error: horseshoes.png not found", "Interface");
-    if (ressource_texture[4].loadFromFile("./asset/spirte/ressource/rabbit_hide.png") == false)
+    if (ressource_texture[4].loadFromFile("./asset/sprite/ressource/rabbit_hide.png") == false)
         throw InterfaceError("Error: rabbit_hide.png not found", "Interface");
-    if (ressource_texture[5].loadFromFile("./asset/spirte/ressource/wool.png") == false)
+    if (ressource_texture[5].loadFromFile("./asset/sprite/ressource/wool.png") == false)
         throw InterfaceError("Error: wool.png not found", "Interface");
-    if (ressource_texture[6].loadFromFile("./asset/spirte/ressource/wheat.png") == false)
+    if (ressource_texture[6].loadFromFile("./asset/sprite/ressource/wheat.png") == false)
         throw InterfaceError("Error: wheat.png not found", "Interface");
     for (int i = 0; i < 7; i++) {
         ressource_sprite_.push_back(sf::Sprite());
@@ -131,37 +131,49 @@ Zappy::Interface::Interface()
         info_sprites[i].setTexture(ressource_texture[i]);
         info_sprites[i].setScale(ressource_sprite_[i].getScale().x * 3, ressource_sprite_[i].getScale().y * 3);
     }
-    if (egg_texture.loadFromFile("./asset/spirte/egg.png") == false)
+    if (egg_texture.loadFromFile("./asset/sprite/egg.png") == false)
         throw InterfaceError("Error: egg.png not found", "Interface");
     for (int i = 0; i < 8; i++)
         player_textures.push_back(sf::Texture());
-    if (player_textures[0].loadFromFile("./asset/spirte/rank/rank1.png") == false)
+    if (player_textures[0].loadFromFile("./asset/sprite/rank/rank3.png") == false)
         throw InterfaceError("Error: rank1.png not found", "Interface");
-    if (player_textures[1].loadFromFile("./asset/spirte/rank/rank2.png") == false)
+    if (player_textures[1].loadFromFile("./asset/sprite/rank/rank2.png") == false)
         throw InterfaceError("Error: rank2.png not found", "Interface");
-    if (player_textures[2].loadFromFile("./asset/spirte/rank/rank3.png") == false)
+    if (player_textures[2].loadFromFile("./asset/sprite/rank/rank3.png") == false)
         throw InterfaceError("Error: rank3.png not found", "Interface");
-    if (player_textures[3].loadFromFile("./asset/spirte/rank/rank4.png") == false)
+    if (player_textures[3].loadFromFile("./asset/sprite/rank/rank4.png") == false)
         throw InterfaceError("Error: rank4.png not found", "Interface");
-    if (player_textures[4].loadFromFile("./asset/spirte/rank/rank5.png") == false)
+    if (player_textures[4].loadFromFile("./asset/sprite/rank/rank5.png") == false)
         throw InterfaceError("Error: rank5.png not found", "Interface");
-    if (player_textures[5].loadFromFile("./asset/spirte/rank/rank6.png") == false)
+    if (player_textures[5].loadFromFile("./asset/sprite/rank/rank6.png") == false)
         throw InterfaceError("Error: rank6.png not found", "Interface");
-    if (player_textures[6].loadFromFile("./asset/spirte/rank/rank7.png") == false)
+    if (player_textures[6].loadFromFile("./asset/sprite/rank/rank7.png") == false)
         throw InterfaceError("Error: rank7.png not found", "Interface");
-    if (player_textures[7].loadFromFile("./asset/spirte/rank/rank8.png") == false)
+    if (player_textures[7].loadFromFile("./asset/sprite/rank/rank8.png") == false)
         throw InterfaceError("Error: rank8.png not found", "Interface");
     for (int i = 0; i < 4; i++) {
         player_orientation.push_back(std::array<sf::IntRect, 4>());
     }
+    player_orientation[0][0] = sf::IntRect(30, 100, 35, 35);
     player_orientation[0][0] = sf::IntRect(30, 65, 35, 35);
     player_orientation[0][1] = sf::IntRect(30, 100, 35, 35);
+    player_orientation[0][2] = sf::IntRect(30, 65, 35, 35);
     player_orientation[0][2] = sf::IntRect(35, 0, 35, 35);
     player_orientation[0][3] = sf::IntRect(35, 35, 30, 30);
     player_orientation[1][0] = sf::IntRect(30, 65, 35, 35);
     player_orientation[1][1] = sf::IntRect(30, 100, 35, 35);
     player_orientation[1][2] = sf::IntRect(35, 0, 35, 35);
     player_orientation[1][3] = sf::IntRect(35, 35, 30, 30);
+    player_orientation[2][0] = sf::IntRect(182, 137, 19, 29);
+    player_orientation[2][1] = sf::IntRect(178, 217, 27, 26);
+    player_orientation[2][2] = sf::IntRect(178, 51, 20, 27);
+    player_orientation[2][3] = sf::IntRect(207, 293, 28, 23);
+    player_orientation[3][0] = sf::IntRect(0, 0, 0, 0);
+    player_orientation[3][1] = sf::IntRect(0, 0, 0, 0);
+    player_orientation[3][2] = sf::IntRect(0, 0, 0, 0);
+    player_orientation[3][3] = sf::IntRect(0, 0, 0, 0);
+    
+    
 
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
