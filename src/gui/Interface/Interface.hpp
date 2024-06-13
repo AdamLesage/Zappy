@@ -9,6 +9,7 @@
 #include "../ServerInfo/GuiConnect.hpp"
 #include "../Entity/Player.hpp"
 #include "../Entity/Tile.hpp"
+#include "InterfaceError.hpp"
 #include <iostream>
 #include <thread>
 #include <array>
@@ -33,21 +34,42 @@ namespace Zappy {
             void set_mape_size(std::array<int, 2> mape_size) { _mape_size = mape_size; }
             void set_map();
             void check_event();
+            void print_resssource();
+            void print_eggs();
+            void print_players();
+            void print_map_iso();
+            void set_scale_of_player(int i);
+            void playBackgroundMusic(const std::string& filename);
         protected:
+            bool info_;
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
             std::vector<std::shared_ptr<Bar>> bars;
             int tick;
             float zoom;
             float last_zoom;
-            int sound_volume;
+            float sound_volume;
             std::vector<sf::RectangleShape> _rect;
             std::array<int, 2> _mape_size;
             std::vector<std::vector<sf::Sprite>> map_sprites;
+            std::vector<std::vector<sf::Sprite>> map_iso_sprites;
+            std::vector<sf::Texture> map_textures;
+            std::vector<std::vector<std::vector<sf::Sprite>>> ressource_sprite;
+            std::vector<sf::Sprite> ressource_sprite_;
+            std::vector<sf::Texture> ressource_texture;
+            std::vector<sf::Texture> tile_texture_;
+            std::vector<sf::Sprite> tile_sprite_;
+            std::vector<sf::Texture> tile_iso_texture;
+            std::vector<sf::Sprite> tile_iso_sprite;
             sf::Sprite sprite;
             sf::Texture texture;
             std::vector<sf::Texture> textures;
             std::vector<std::shared_ptr<Player>> players;
+            std::vector<sf::Sprite> player_sprites;
+            std::vector<std::array<sf::IntRect, 4>> player_orientation;
+            std::vector<sf::Texture> player_textures;
+            std::vector<sf::Sprite> egg_sprites;
+            sf::Texture egg_texture;
             sf::Font font;
             std::vector<sf::Text> Texts;
             sf::Sprite sound;
@@ -57,10 +79,14 @@ namespace Zappy {
             sf::View view;
             sf::Vector2i lastMousePos;
             bool isPanning;
+            std::vector<sf::Text> info;
+            sf::RectangleShape rect;
+            bool isOverTile;
+            sf::Music backgroundMusic;
+            std::vector<sf::Sprite> info_sprites;
 
         private:
     };
 }
 
 #endif /* !INTERFACE_HPP_ */
-
