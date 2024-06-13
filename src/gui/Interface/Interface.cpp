@@ -177,7 +177,7 @@ void Zappy::Interface::print_players()
         set_scale_of_player(i);
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
         player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation()]);
-        std::cout << "player is in position: " << _gui_connect->_players[i]->getPosition()[0] << " " << _gui_connect->_players[i]->getPosition()[1] << std::endl;
+        // std::cout << "player is in position: " << _gui_connect->_players[i]->getPosition()[0] << " " << _gui_connect->_players[i]->getPosition()[1] << std::endl;
         window->draw(player_sprites[i]);
     }
 }
