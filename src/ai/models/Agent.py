@@ -83,9 +83,14 @@ class Agent():
                     print(self.receive_from_server)
                     self.receive_from_server = None
                     continue
-                #self.retrieveClientNumber(self.receive_from_server)
-                #self.retrieveWorldDimensions(self.receive_from_server)
+                # self.retrieveClientNumber(self.receive_from_server)
+                # self.retrieveWorldDimensions(self.receive_from_server)
+                if tmp == 3 and len(self.agentInfo.commandsToSend) < 10: # retrieve number of team player by doing a Connect_nbr command
+                    self.agentInfo.commandsToSend.insert(0, "Connect_nbr\n")
                 if firstConnexion == False and tmp >= 2:
+                    if self.agentInfo.getCommandsReturned()[0] == "Connect_nbr\n" and self.receive_from_server != None and tmp < 10:
+                        # retrieve number of team player
+                        self.agentInfo.numberOfTeamPlayers = int(self.receive_from_server.split('\n')[0])
                     if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None:
                         continue
                     if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server != None and self.receive_from_server.startswith("Broadcast"): # Receive a broadcast

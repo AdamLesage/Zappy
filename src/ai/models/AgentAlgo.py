@@ -244,6 +244,9 @@ class AgentAlgo():
         return False
 
     def goToBroadcast(self, orientation: str) -> None:
+        """
+        Player will go to the broadcast position and add the movements to the movements list
+        """
         self.agentInfo.commandsToSend.clear()
         self.agentInfo.movements.clear()
         if orientation == "0": # Player is on the broadcast position
