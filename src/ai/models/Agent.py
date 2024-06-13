@@ -69,8 +69,7 @@ class Agent():
             # retrieve number of team player
             self.agentInfo.numberMaxOfTeamPlayers = int(self.receive_from_server.split('\n')[0]) + 1
         if self.agentInfo.getCommandsReturned()[0] == "Connect_nbr\n" and self.receive_from_server != None and tmp >= 10:
-            print(f"[{self.agentInfo.numberMaxOfTeamPlayers=}] ----------------- [{self.agentInfo.numberOfTeamPlayersConnected=}]") 
-            self.agentInfo.numberOfTeamPlayersConnected = self.agentInfo.numberMaxOfTeamPlayers - int(self.receive_from_server.split('\n')[0])
+            self.agentInfo.availableSlots = self.agentInfo.numberMaxOfTeamPlayers - self.agentInfo.numberOfTeamPlayersConnected
 
     def connect_to_server(self) -> None:
         """Connect to the server from the given ip and port"""

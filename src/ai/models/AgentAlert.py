@@ -42,7 +42,7 @@ class AgentAlerts(AgentInfo):
             self.alerts.append("incantation")
             # send broadcast with crypted data
         
-        if playerLevel == 1 and self.agent.getInventory("linemate") >= 1 and self.agent.getTimeUnits() >= 756 and self.alerts.count("incantationNeeded_2") == 0 and self.agent.numberOfTeamPlayersConnected >= 1:
+        if playerLevel == 1 and self.agent.getInventory("linemate") >= 1 and self.agent.getTimeUnits() >= 756 and self.alerts.count("incantationNeeded_2") == 0:
             """Incantation lvl 1 -> 2 needed"""
             self.alerts.append("incantationNeeded_2")
             # send broadcast with crypted data
