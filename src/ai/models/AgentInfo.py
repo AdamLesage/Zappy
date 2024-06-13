@@ -29,7 +29,8 @@ class AgentInfo():
         self.timeUnits = 1260
         self.teamPlayers = {"level1": 0, "level2": 0, "level3": 0, "level4": 0, "level5": 0, "level6": 0, "level7": 0, "level8": 0}
         self.broadcast_received = None
-        self.numberOfTeamPlayers = 0
+        self.numberMaxOfTeamPlayers = 0
+        self.numberOfTeamPlayersConnected = 0
 
     def noLifeUnits(self) -> bool:
         """Return True if there is no more life units"""

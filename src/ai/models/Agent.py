@@ -59,6 +59,19 @@ class Agent():
                 print("No available slots for the team")
                 exit(1)
 
+    def manageConnectNbr(self, tmp: int) -> None:
+        """
+        Manage the Connect_nbr command
+        retrieve number of team player
+        calculate each 10 rounds the number of team player connected for incantations
+        """
+        if self.agentInfo.getCommandsReturned()[0] == "Connect_nbr\n" and self.receive_from_server != None and tmp < 10:
+            # retrieve number of team player
+            self.agentInfo.numberMaxOfTeamPlayers = int(self.receive_from_server.split('\n')[0]) + 1
+        if self.agentInfo.getCommandsReturned()[0] == "Connect_nbr\n" and self.receive_from_server != None and tmp >= 10:
+            print(f"[{self.agentInfo.numberMaxOfTeamPlayers=}] ----------------- [{self.agentInfo.numberOfTeamPlayersConnected=}]") 
+            self.agentInfo.numberOfTeamPlayersConnected = self.agentInfo.numberMaxOfTeamPlayers - int(self.receive_from_server.split('\n')[0])
+
     def connect_to_server(self) -> None:
         """Connect to the server from the given ip and port"""
         try:
@@ -71,7 +84,7 @@ class Agent():
                 self.client.setblocking(0)
                 try:
                     self.receive_from_server = self.client.recv(1024).decode()
-                    print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}")
+                    print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
                     tmp += 1
                 except BlockingIOError:
                     self.receive_from_server = None
@@ -88,9 +101,7 @@ class Agent():
                 if tmp == 3 and len(self.agentInfo.commandsToSend) < 10: # retrieve number of team player by doing a Connect_nbr command
                     self.agentInfo.commandsToSend.insert(0, "Connect_nbr\n")
                 if firstConnexion == False and tmp >= 2:
-                    if self.agentInfo.getCommandsReturned()[0] == "Connect_nbr\n" and self.receive_from_server != None and tmp < 10:
-                        # retrieve number of team player
-                        self.agentInfo.numberOfTeamPlayers = int(self.receive_from_server.split('\n')[0])
+                    self.manageConnectNbr(tmp)
                     if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None:
                         continue
                     if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server != None and self.receive_from_server.startswith("Broadcast"): # Receive a broadcast

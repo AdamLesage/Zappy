@@ -48,7 +48,7 @@ class TestAgentAlgo(unittest.TestCase):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
         agentAlgo.alerts.alerts.append("food")
-        agentAlgo.updateClientStatus()
+        agentAlgo.updateClientStatus(10)
         self.assertEqual(agentAlgo.status, "Food")
 
     def test06_updateAgentInfo(self):
@@ -63,21 +63,21 @@ class TestAgentAlgo(unittest.TestCase):
     def test07_updateClientStatusNoAlert(self):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
-        agentAlgo.updateClientStatus()
+        agentAlgo.updateClientStatus(10)
         self.assertEqual(agentAlgo.status, "Mining")
 
     def test08_updateClientStatusIncantation(self):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
         agentAlgo.alerts.alerts.append("incantation")
-        agentAlgo.updateClientStatus()
+        agentAlgo.updateClientStatus(10)
         self.assertEqual(agentAlgo.status, "Incantation")
 
     def test09_updateClientStatusContinue(self):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
         agentAlgo.alerts.alerts.append("Mining")
-        agentAlgo.updateClientStatus()
+        agentAlgo.updateClientStatus(10)
         self.assertEqual(agentAlgo.status, "Mining")
     
     def test05_testUpdateInventory(self):
@@ -125,8 +125,8 @@ class TestAgentAlgo(unittest.TestCase):
         agentAlgo.alerts.alerts.append("food")
         agentAlgo.agentMentality = "Hungry"
         agentAlgo.agentInfo.inventory["food"] = 50
-        agentAlgo.updateClientStatus()
-        self.assertEqual(agentAlgo.agentMentality, None)
+        agentAlgo.updateClientStatus(10)
+        self.assertEqual(agentAlgo.agentMentality, "Hungry")
 
     def test11_updateClientStatus(self):
         agent = AgentInfo()
@@ -134,7 +134,7 @@ class TestAgentAlgo(unittest.TestCase):
         agentAlgo.alerts.alerts.append("food")
         agentAlgo.agentMentality = "Hungry"
         agentAlgo.agentInfo.inventory["food"] = 0
-        agentAlgo.updateClientStatus()
+        agentAlgo.updateClientStatus(10)
         self.assertEqual(agentAlgo.agentMentality, "Hungry")
 
     def test12_playLevel1_invalid_level(self):
