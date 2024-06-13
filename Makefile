@@ -103,6 +103,7 @@ SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/ServerInfo/GuiConnect.cpp								\
 			src/gui/lib/my_str_to_line_array.cpp							\
 			src/gui/lib/my_str_to_word_array.cpp							\
+			src/gui/lib/split.cpp											\
 			src/gui/Entity/Tile.cpp											\
 			src/gui/Entity/Inventory.cpp									\
 			src/gui/Entity/AInventory.cpp									\
@@ -239,6 +240,7 @@ SRC_TEST_GUI =  src/gui/Interface/Interface.cpp								\
 				src/gui/ServerInfo/GuiConnect.cpp							\
 				src/gui/lib/my_str_to_line_array.cpp						\
 				src/gui/lib/my_str_to_word_array.cpp						\
+				src/gui/lib/split.cpp										\
 				src/gui/Entity/Tile.cpp										\
 				src/gui/Entity/Inventory.cpp								\
 				src/gui/Entity/AInventory.cpp								\
@@ -346,7 +348,7 @@ NAMETEST 	=	unit_tests
 
 CFLAGS		= 	-Wall -Wextra -Wshadow
 
-SFML		=	-lsfml-graphics -lsfml-window -lsfml-system
+SFML		=	-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 all:    $(Name)
 

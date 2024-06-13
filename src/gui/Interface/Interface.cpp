@@ -392,9 +392,11 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     sleep(5);
     set_map();
     view.zoom(0.5);
+    playBackgroundMusic("../../asset/music/music.mp3");
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
         sound_volume = bars[0]->checkClick(window);
+        backgroundMusic.setVolume(sound_volume);
         check_event();
         window->setView(view); 
         for (double i = 0; i < _gui_connect->get_size_map()[0]; i++) {
@@ -430,7 +432,16 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     }
 }
 
-
 void Zappy::Interface::command_handler()
 {
+}
+
+void Zappy::Interface::playBackgroundMusic(const std::string& filename)
+{
+    if (!backgroundMusic.openFromFile(filename)) {
+        std::cerr << "Error loading music file: " << filename << std::endl;
+        return;
+    }
+    backgroundMusic.setLoop(true);
+    backgroundMusic.play();
 }
