@@ -159,7 +159,6 @@ Zappy::Interface::Interface()
     player_orientation[0][1] = sf::IntRect(30, 100, 35, 35);
     player_orientation[0][2] = sf::IntRect(30, 65, 35, 35);
     player_orientation[0][2] = sf::IntRect(35, 0, 35, 35);
-    player_orientation[0][3] = sf::IntRect(35, 35, 30, 30);
     player_orientation[1][0] = sf::IntRect(30, 65, 35, 35);
     player_orientation[1][1] = sf::IntRect(30, 100, 35, 35);
     player_orientation[1][2] = sf::IntRect(35, 0, 35, 35);
@@ -172,6 +171,10 @@ Zappy::Interface::Interface()
     player_orientation[3][1] = sf::IntRect(39, 935, 54, 51);
     player_orientation[3][2] = sf::IntRect(53, 538, 21, 66);
     player_orientation[3][3] = sf::IntRect(35, 678, 53, 51);
+    player_orientation[4][0] = sf::IntRect(437, 42, 22, 47);
+    player_orientation[4][1] = sf::IntRect(417, 180, 56, 31);
+    player_orientation[4][2] = sf::IntRect(437, 301, 22, 45);
+    player_orientation[4][3] = sf::IntRect(422, 436, 56, 31);
     
     
 
@@ -186,6 +189,8 @@ void Zappy::Interface::set_scale_of_player(int i)
     else if (_gui_connect->_players[i]->getLevel() == 2)
         player_sprites[i].setScale(2, 2);
     else if (_gui_connect->_players[i]->getLevel() == 4)
+        player_sprites[i].setScale(0.5, 0.5);
+    else if (_gui_connect->_players[i]->getLevel() == 5)
         player_sprites[i].setScale(0.5, 0.5);
 }
 
