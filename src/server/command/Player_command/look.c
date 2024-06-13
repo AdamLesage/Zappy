@@ -61,16 +61,22 @@ static void print_look_on_tile(core_t *core, int level,
 {
     int x = 0;
     int y = 0;
+    int number = 0;
     player_info_t *info = find_player(&core->players, fd);
 
-    for (int i = level * -1; i != level + 1; i++) {
+    if (orientation_x_y[0] == 0)
+        number = orientation_x_y[1];
+    else
+        number = orientation_x_y[0] * -1;
+    for (int i = level * (number * -1); i != (level + 1) * (number);
+        i += (number)) {
         x = (orientation_x_y[1] == 0) ? info->pos_x + i + level *
             orientation_x_y[1] : info->pos_x + level * orientation_x_y[1];
         y = (orientation_x_y[1] == 0) ? info->pos_y + level *
             orientation_x_y[0] : info->pos_y + i + level * orientation_x_y[0];
         check_pos_tile(&core->map, &y, &x);
         print_object_on_tile(&core->map, x, y, fd);
-        if (!(level == info->level && i == level))
+        if (!(level == info->level && i * (number) == level))
             send_response(",", fd);
     }
 }
@@ -80,6 +86,8 @@ void look(core_t *core, int fd, char **command)
     player_info_t *info = find_player(&core->players, fd);
     int *orientation_x_y = get_look_orientation(info->orientation);
 
+    if (command == NULL)
+        return;
     send_response("[", fd);
     for (int level = 0; level != info->level + 1; level++) {
         print_look_on_tile(core, level, orientation_x_y, fd);

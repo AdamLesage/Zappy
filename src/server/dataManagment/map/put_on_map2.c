@@ -50,7 +50,9 @@ bool put_eggs(map_t *map, int x, int y, char *team_name)
     new_eggs->team_name = strdup(team_name);
     new_eggs->pos_x = x;
     new_eggs->pos_y = y;
+    new_eggs->egg_id = map->current_eggs_id;
     new_eggs->next = map->eggs;
     map->eggs = new_eggs;
+    map->current_eggs_id++;
     return (true);
 }
