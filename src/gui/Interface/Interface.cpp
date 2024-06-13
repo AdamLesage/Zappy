@@ -136,7 +136,7 @@ Zappy::Interface::Interface()
         throw InterfaceError("Error: egg.png not found", "Interface");
     for (int i = 0; i < 8; i++)
         player_textures.push_back(sf::Texture());
-    if (player_textures[0].loadFromFile("./asset/sprite/rank/rank4.png") == false)
+    if (player_textures[0].loadFromFile("./asset/sprite/rank/rank1.png") == false)
         throw InterfaceError("Error: rank1.png not found", "Interface");
     if (player_textures[1].loadFromFile("./asset/sprite/rank/rank2.png") == false)
         throw InterfaceError("Error: rank2.png not found", "Interface");
