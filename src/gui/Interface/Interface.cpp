@@ -152,7 +152,7 @@ Zappy::Interface::Interface()
         throw InterfaceError("Error: rank7.png not found", "Interface");
     if (player_textures[7].loadFromFile("./asset/sprite/rank/rank8.png") == false)
         throw InterfaceError("Error: rank8.png not found", "Interface");
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 7; i++) {
         player_orientation.push_back(std::array<sf::IntRect, 4>());
     }
     player_orientation[0][0] = sf::IntRect(30, 65, 35, 35);
@@ -209,8 +209,8 @@ void Zappy::Interface::print_players()
         set_scale_of_player(i);
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
         player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation() + 1]);
-        std::cout << "player is in position: " << _gui_connect->_players[i]->getPosition()[0] << " " << _gui_connect->_players[i]->getPosition()[1] << std::endl;
-        std::cout << "player is in orientation: " << _gui_connect->_players[i]->getOrientation() << std::endl;
+        // std::cout << "player is in position: " << _gui_connect->_players[i]->getPosition()[0] << " " << _gui_connect->_players[i]->getPosition()[1] << std::endl;
+        // std::cout << "player is in orientation: " << _gui_connect->_players[i]->getOrientation() << std::endl;
         window->draw(player_sprites[i]);
         // if (_gui_connect->_players[i]->isEvoluting()) {
         //     print_evolution(i);
@@ -360,6 +360,7 @@ void Zappy::Interface::check_event()
     while (window->pollEvent(event)) {
         if (event.type == sf::Event::Closed)
             window->close();
+        _inventory->check_event(&event, player_sprites, view);
         if (event.type == sf::Event::MouseWheelScrolled) {
             if (event.mouseWheelScroll.delta > 0 && view.getSize().x > 1920 / 5 && view.getSize().y > 1080 / 5) {
                 view.zoom(0.9);
@@ -448,6 +449,7 @@ void Zappy::Interface::print_map_iso()
 void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
 {
     _gui_connect = gui_connect;
+    this->_inventory.reset(new InventoryDisplay(_gui_connect, window));
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
     sleep(5);
     set_map();
@@ -486,9 +488,10 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
             _gui_connect->setTimeUnit(std::to_string(tick));
             last_tick = tick;
         }
-        printf("timeUnit: %d\n", _gui_connect->_timeUnit);
+        // printf("timeUnit: %d\n", _gui_connect->_timeUnit);
         bars[0]->displayBar(window);
         bars[1]->displayBar(window);
+        this->_inventory->display();
         window->draw(sound);
         for (int k = 0; k < 9; k++)
             window->draw(info[k]);

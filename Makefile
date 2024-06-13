@@ -100,6 +100,7 @@ SRC_SEVER	=	src/server/main.c											\
 SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/Interface/Interface.cpp									\
 			src/gui/Interface/bar.cpp										\
+			src/gui/Interface/InventoryDisplay.cpp							\
 			src/gui/ServerInfo/GuiConnect.cpp								\
 			src/gui/lib/my_str_to_line_array.cpp							\
 			src/gui/lib/my_str_to_word_array.cpp							\
@@ -237,6 +238,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 
 SRC_TEST_GUI =  src/gui/Interface/Interface.cpp								\
 				src/gui/Interface/bar.cpp									\
+				src/gui/Interface/InventoryDisplay.cpp						\
 				src/gui/ServerInfo/GuiConnect.cpp							\
 				src/gui/lib/my_str_to_line_array.cpp						\
 				src/gui/lib/my_str_to_word_array.cpp						\
