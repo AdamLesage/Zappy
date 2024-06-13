@@ -82,6 +82,7 @@ namespace Zappy {
             sf::RectangleShape rect;
             bool isOverTile;
             sf::Music backgroundMusic;
+            std::vector<sf::Sprite> info_sprites;
 
         private:
     };
