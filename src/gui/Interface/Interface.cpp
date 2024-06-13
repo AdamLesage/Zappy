@@ -113,7 +113,7 @@ Zappy::Interface::Interface()
     ressource_sprite_[0].setTexture(ressource_texture[0]);
     ressource_sprite_[0].setScale(0.05, 0.05);
     ressource_sprite_[1].setTexture(ressource_texture[1]);
-    ressource_sprite_[1].setScale(0.015, 0.015);
+    ressource_sprite_[1].setScale(0.05, 0.05);
     ressource_sprite_[2].setTexture(ressource_texture[2]);
     ressource_sprite_[2].setScale(0.025, 0.025);
     ressource_sprite_[3].setTexture(ressource_texture[3]);
