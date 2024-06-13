@@ -148,10 +148,10 @@ Zappy::Interface::Interface()
     for (int i = 0; i < 4; i++) {
         player_orientation.push_back(std::array<sf::IntRect, 4>());
     }
-    player_orientation[0][0] = sf::IntRect(35, 0, 35, 35);
-    player_orientation[0][1] = sf::IntRect(35, 35, 30, 30);
+    player_orientation[0][0] = sf::IntRect(30, 100, 35, 35);
+    player_orientation[0][1] = sf::IntRect(30, 100, 35, 35);
     player_orientation[0][2] = sf::IntRect(30, 65, 35, 35);
-    player_orientation[0][3] = sf::IntRect(30, 100, 35, 35);
+    player_orientation[0][3] = sf::IntRect(35, 35, 30, 30);
     player_orientation[1][0] = sf::IntRect(35, 0, 35, 35);
     player_orientation[1][1] = sf::IntRect(35, 35, 30, 30);
     player_orientation[1][2] = sf::IntRect(30, 65, 35, 35);
