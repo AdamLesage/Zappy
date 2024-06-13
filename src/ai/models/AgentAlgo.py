@@ -308,6 +308,7 @@ class AgentAlgo():
                 os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
             return False
         if self.getReturnCommand()[0] == "Connect_nbr\n" and int(self.getReturnCommand()[1].replace("\n", "")) != 0:
+            print(f"Connect_nbr: {self.getReturnCommand()[1]}")
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.addCommandsToSend("Fork\n")
             return True
