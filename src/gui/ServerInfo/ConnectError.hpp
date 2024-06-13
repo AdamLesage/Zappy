@@ -5,8 +5,8 @@
 ** ConnectError
 */
 
-#ifndef SCENEERROR_HPP_
-#define SCENEERROR_HPP_
+#ifndef CONNECT_ERROR_HPP_
+#define CONNECT_ERROR_HPP_
 
 #include "../AError.hpp"
 
@@ -19,4 +19,4 @@ namespace Zappy {
     };
 }
 
-#endif /* !SCENEERROR_HPP_ */
+#endif /* !CONNECT_ERROR_HPP_ */

@@ -16,6 +16,7 @@ namespace Zappy {
             Egg();
             ~Egg();
 
+        int _eggNb;
         protected:
         private:
     };

@@ -133,3 +133,14 @@ std::vector<std::shared_ptr<Zappy::Player>> GuiConnect::findPlayersByCoords(std:
     }
     return players;
 }
+
+
+sf::Vector2f GuiConnect::getVectorBetweenTwoPlayers(int playerNb1, int playerNb2)
+{
+    std::shared_ptr<Zappy::Player> player1 = getPlayerByNb(playerNb1);
+    std::shared_ptr<Zappy::Player> player2 = getPlayerByNb(playerNb2);
+
+    if (player1 == nullptr || player2 == nullptr)
+        return sf::Vector2f(0, 0);
+    return sf::Vector2f(player2->getPosition()[0] - player1->getPosition()[0], player2->getPosition()[1] - player1->getPosition()[1]);
+}
