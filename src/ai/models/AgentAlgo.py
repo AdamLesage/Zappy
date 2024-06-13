@@ -230,45 +230,59 @@ class AgentAlgo():
             self.agentInfo.addCommandsToSend(finalAction)
             return
 
+    def checkInventory(self) -> bool:
+        """
+        Check the inventory of the agent every 10 rounds
+        """
+        if self.status == "Incantation":
+            self.round = 0
+            return False
+        if self.round == 10 and self.status != "Incantation": # Frequency of inventory check, avoid to check inventory if incantation is in progress
+            self.agentInfo.commandsToSend.insert(0, "Inventory\n")
+            self.round = 0
+            return True
+        return False
+
     def goToBroadcast(self, orientation: str) -> None:
         self.agentInfo.commandsToSend.clear()
+        self.agentInfo.movements.clear()
         if orientation == "0": # Player is on the broadcast position
             return
         elif orientation == "1": # Broadcast position is on the north of the player
-            self.agentInfo.commandsToSend.append("Forward\n")
+            self.agentInfo.movements.append("Forward\n")
         elif orientation == "2": # Broadcast position is on north-west of the player
-            self.agentInfo.commandsToSend.append("Forward\n")
-            self.agentInfo.commandsToSend.append("Left\n")
-            self.agentInfo.commandsToSend.append("Forward\n")
+            self.agentInfo.movements.append("Forward\n")
+            self.agentInfo.movements.append("Left\n")
+            self.agentInfo.movements.append("Forward\n")
         elif orientation == "3": # Broadcast position is on the west of the player
-            self.agentInfo.commandsToSend.append("Left\n")
-            self.agentInfo.commandsToSend.append("Forward\n")
+            self.agentInfo.movements.append("Left\n")
+            self.agentInfo.movements.append("Forward\n")
         elif orientation == "4": # Broadcast position is on the north-west of the player
-            self.agentInfo.commandsToSend.append("Left\n")
-            self.agentInfo.commandsToSend.append("Forward\n")
-            self.agentInfo.commandsToSend.append("Left\n")
-            self.agentInfo.commandsToSend.append("Forward\n")
+            self.agentInfo.movements.append("Left\n")
+            self.agentInfo.movements.append("Forward\n")
+            self.agentInfo.movements.append("Left\n")
+            self.agentInfo.movements.append("Forward\n")
         elif orientation == "5": # Broadcast position is on the south of the player
-            self.agentInfo.commandsToSend.append("Left\n")
-            self.agentInfo.commandsToSend.append("Left\n")
-            self.agentInfo.commandsToSend.append("Forward\n")
+            self.agentInfo.movements.append("Left\n")
+            self.agentInfo.movements.append("Left\n")
+            self.agentInfo.movements.append("Forward\n")
         elif orientation == "6": # Broadcast position is on the south-east of the player
-            self.agentInfo.commandsToSend.append("Right\n")
-            self.agentInfo.commandsToSend.append("Forward\n")
-            self.agentInfo.commandsToSend.append("Right\n")
-            self.agentInfo.commandsToSend.append("Forward\n")
+            self.agentInfo.movements.append("Right\n")
+            self.agentInfo.movements.append("Forward\n")
+            self.agentInfo.movements.append("Right\n")
+            self.agentInfo.movements.append("Forward\n")
         elif orientation == "7": # Broadcast position is on the east of the player
-            self.agentInfo.commandsToSend.append("Right\n")
-            self.agentInfo.commandsToSend.append("Forward\n")
+            self.agentInfo.movements.append("Right\n")
+            self.agentInfo.movements.append("Forward\n")
         elif orientation == "8": # Broadcast position is on the north-east of the player
-            self.agentInfo.commandsToSend.append("Forward\n")
-            self.agentInfo.commandsToSend.append("Right\n")
-            self.agentInfo.commandsToSend.append("Forward\n")
+            self.agentInfo.movements.append("Forward\n")
+            self.agentInfo.movements.append("Right\n")
+            self.agentInfo.movements.append("Forward\n")
 
     def incantationManagement(self) -> None:
         if self.status != "Incantation":
             self.round += 1 # Increment the round
-            return
+            return 
         if self.hasAskedIncantation == False:
             self.hasAskedIncantation = True
             self.agentInfo.commandsToSend.clear()
@@ -301,7 +315,7 @@ class AgentAlgo():
             self.status = "Mining"
         return
 
-    def play(self, data: str) -> str:
+    def play(self, data: str) -> None:
         """
         Play the game, search for resources, level up, incantation, etc
         """
@@ -319,9 +333,7 @@ class AgentAlgo():
         if self.agentInfo.movements != []:
             self.agentInfo.addCommandsToSend(self.agentInfo.movements.pop(0))
             return
-        if self.round == 10 and self.status != "Incantation": # Frequency of inventory check, avoid to check inventory if incantation is in progress
-            self.agentInfo.commandsToSend.insert(0, "Inventory\n")
-            self.round = 0
+        if self.checkInventory() == True:
             return
         self.incantationManagement()
         if self.status == "Food":
