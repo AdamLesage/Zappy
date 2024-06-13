@@ -151,10 +151,10 @@ Zappy::Interface::Interface()
     player_orientation[0][1] = sf::IntRect(250, 250, 250, 250);
     player_orientation[0][2] = sf::IntRect(250, 500, 250, 250);
     player_orientation[0][3] = sf::IntRect(250, 750, 250, 250);
-    player_orientation[1][0] = sf::IntRect(35, 0, 35, 35);
-    player_orientation[1][1] = sf::IntRect(35, 35, 30, 30);
-    player_orientation[1][2] = sf::IntRect(30, 65, 35, 35);
-    player_orientation[1][3] = sf::IntRect(30, 100, 35, 35);
+    player_orientation[1][0] = sf::IntRect(250, 0, 250, 250);
+    player_orientation[1][1] = sf::IntRect(250, 250, 250, 250);
+    player_orientation[2][2] = sf::IntRect(250, 500, 250, 250);
+    player_orientation[3][3] = sf::IntRect(250, 750, 250, 250);
 
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
@@ -177,7 +177,7 @@ void Zappy::Interface::print_players()
         set_scale_of_player(i);
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
         player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation()]);
-        // std::cout << "player is in position: " << _gui_connect->_players[i]->getPosition()[0] << " " << _gui_connect->_players[i]->getPosition()[1] << std::endl;
+        std::cout << "player is in position: " << _gui_connect->_players[i]->getPosition()[0] << " " << _gui_connect->_players[i]->getPosition()[1] << std::endl;
         window->draw(player_sprites[i]);
     }
 }
@@ -393,7 +393,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     sleep(5);
     set_map();
     view.zoom(0.5);
-    playBackgroundMusic("../../asset/music/music.mp3");
+    playBackgroundMusic("./asset/music/music.ogg");
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
         sound_volume = bars[0]->checkClick(window);
