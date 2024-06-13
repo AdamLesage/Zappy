@@ -11,6 +11,7 @@
 #include "ServerInfo/GuiConnect.hpp"
 #include <array>
 #include "ServerInfo/ConnectError.hpp"
+#include "ServerInfo/Command/CommandError.hpp"
 
 std::array<std::string, 2> recup_args(int ac, char **av)
 {
@@ -52,9 +53,11 @@ int main(int ac, char **av)
     try {
         Zappy::Interface interface;
         std::shared_ptr<GuiConnect> gui_connect = std::make_shared<GuiConnect>(args[0], args[1]);
-        gui_connect->send("GRAPHIC\n");
         interface.loop(gui_connect);
     } catch (const Zappy::ConnectError &e) {
+        std::cerr << "Error: " << e.what() << std::endl << "Location: " << e.where() << std::endl;
+        return 84;
+    } catch (const Zappy::InterfaceError &e) {
         std::cerr << "Error: " << e.what() << std::endl << "Location: " << e.where() << std::endl;
         return 84;
     }

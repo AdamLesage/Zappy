@@ -342,6 +342,8 @@ class AgentAlgo():
         print(f"Status: {self.status}, level {self.agentInfo.getLevel()}")
         self.updateClientStatus(self.round)
         self.round += 1
+        if self.round == 5:
+            self.agentInfo.commandsToSend.insert(0, "Connect_nbr\n")
         print(f"Round: {self.round}")
         print(f"time units: {self.agentInfo.getTimeUnits()}")
         if self.status != "Incantation":

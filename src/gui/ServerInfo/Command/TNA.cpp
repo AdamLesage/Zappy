@@ -63,10 +63,11 @@ void Zappy::TNA::applyChanges(std::vector<std::string> parsedData,
     (void)timeUnit; // unused
     (void)isRunning; // unused
     // parsedData vector { "tna", team1, team2, ... }
-    if (parsedData.size() < 2)
-        throw Zappy::CommandError("Invalid number of arguments for TNA command", "TNA");
+    if (parsedData.size() < 1) {
+        throw Zappy::CommandError("Invalid2 number of arguments for TNA command", "TNA");
+    }
 
-    for (std::size_t i = 1; i < parsedData.size(); i++) {
+    for (std::size_t i = 0; i < parsedData.size(); i++) {
         if (std::find(teams.begin(), teams.end(), parsedData[i]) == teams.end()) {
             teams.push_back(parsedData[i]);
         }
