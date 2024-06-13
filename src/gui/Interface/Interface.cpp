@@ -157,7 +157,7 @@ Zappy::Interface::Interface()
     player_orientation[1][3] = sf::IntRect(30, 100, 35, 35);
 
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
-    rect.setFillColor(sf::Color(150, 150, 150, 200));
+    rect.setFillColor(sf::Color(150, 150, 150, 150));
 }
 
 void Zappy::Interface::set_scale_of_player(int i)
@@ -173,10 +173,10 @@ void Zappy::Interface::print_players()
     for (int i = 0; i < _gui_connect->_players.size(); i++) {
         if (player_sprites.size() < _gui_connect->_players.size())
             player_sprites.push_back(sf::Sprite());
-        player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel()]);
-        player_sprites[i].setScale(2, 2);
+        player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel() - 1]);
+        set_scale_of_player(i);
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
-        player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel()][_gui_connect->_players[i]->getOrientation()]);
+        player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation()]);
         window->draw(player_sprites[i]);
     }
 }
@@ -397,14 +397,14 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         sound_volume = bars[0]->checkClick(window);
         check_event();
         window->setView(view); 
-        if (isOverTile)
-            window->draw(rect);
         for (double i = 0; i < _gui_connect->get_size_map()[0]; i++) {
             for (double j = 0; j < _gui_connect->get_size_map()[1]; j++) {
                 map_sprites[i][j].setPosition(100 + (i * 102.4), 150 + (j * 102.4));
                 window->draw(map_sprites[i][j]);
             }
         }
+        if (isOverTile)
+            window->draw(rect);
         print_resssource();
         print_eggs();
         print_players();
