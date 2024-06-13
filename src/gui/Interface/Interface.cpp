@@ -136,7 +136,7 @@ Zappy::Interface::Interface()
         throw InterfaceError("Error: egg.png not found", "Interface");
     for (int i = 0; i < 8; i++)
         player_textures.push_back(sf::Texture());
-    if (player_textures[0].loadFromFile("./asset/sprite/rank/rank1.png") == false)
+    if (player_textures[0].loadFromFile("./asset/sprite/rank/rank4.png") == false)
         throw InterfaceError("Error: rank1.png not found", "Interface");
     if (player_textures[1].loadFromFile("./asset/sprite/rank/rank2.png") == false)
         throw InterfaceError("Error: rank2.png not found", "Interface");
@@ -155,7 +155,6 @@ Zappy::Interface::Interface()
     for (int i = 0; i < 4; i++) {
         player_orientation.push_back(std::array<sf::IntRect, 4>());
     }
-    player_orientation[0][0] = sf::IntRect(30, 100, 35, 35);
     player_orientation[0][0] = sf::IntRect(30, 65, 35, 35);
     player_orientation[0][1] = sf::IntRect(30, 100, 35, 35);
     player_orientation[0][2] = sf::IntRect(30, 65, 35, 35);
@@ -169,10 +168,10 @@ Zappy::Interface::Interface()
     player_orientation[2][1] = sf::IntRect(178, 217, 27, 26);
     player_orientation[2][2] = sf::IntRect(178, 51, 20, 27);
     player_orientation[2][3] = sf::IntRect(207, 293, 28, 23);
-    player_orientation[3][0] = sf::IntRect(0, 0, 0, 0);
-    player_orientation[3][1] = sf::IntRect(0, 0, 0, 0);
-    player_orientation[3][2] = sf::IntRect(0, 0, 0, 0);
-    player_orientation[3][3] = sf::IntRect(0, 0, 0, 0);
+    player_orientation[3][0] = sf::IntRect(53, 801, 21, 55);
+    player_orientation[3][1] = sf::IntRect(39, 935, 54, 51);
+    player_orientation[3][2] = sf::IntRect(53, 538, 21, 66);
+    player_orientation[3][3] = sf::IntRect(35, 678, 53, 51);
     
     
 
@@ -186,6 +185,8 @@ void Zappy::Interface::set_scale_of_player(int i)
         player_sprites[i].setScale(2, 2);
     else if (_gui_connect->_players[i]->getLevel() == 2)
         player_sprites[i].setScale(2, 2);
+    else if (_gui_connect->_players[i]->getLevel() == 4)
+        player_sprites[i].setScale(0.5, 0.5);
 }
 
 void Zappy::Interface::print_players()
