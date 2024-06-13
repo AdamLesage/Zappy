@@ -7,6 +7,17 @@
 
 #include "../../include/server/server.h"
 
+static void disconnect_client(int readbite, int fd_client, core_t *core)
+{
+    if (readbite == 0) {
+        printf("Client %d disconnected\n", fd_client);
+    } else
+        perror("read");
+    close(fd_client);
+    delete_player(&core->map, &core->players, fd_client);
+    FD_CLR(fd_client, &core->select_info.rfds);
+}
+
 char *get_command(core_t *core, int fd_client)
 {
     size_t readbite;
@@ -14,15 +25,11 @@ char *get_command(core_t *core, int fd_client)
 
     if (fd_client == core->select_info.fd_socket_control)
         return (NULL);
+    for (int i = 0; i != 500; i++)
+        buf[i] = '\0';
     readbite = read(fd_client, buf, sizeof(buf));
     if (readbite <= 0) {
-        if (readbite == 0) {
-            printf("Client %d disconnected\n", fd_client);
-        } else
-            perror("read");
-        close(fd_client);
-        delete_player(&core->map, &core->players, fd_client);
-        FD_CLR(fd_client, &core->select_info.rfds);
+        disconnect_client(readbite, fd_client, core);
         return (NULL);
     } else {
         buf[readbite - 1] = '\0';
@@ -49,16 +56,21 @@ void set_player_command(core_t *core, player_info_t *info, char *command)
 void check_command(core_t *core, int fd, char *command)
 {
     player_info_t *info = find_player(&core->players, fd);
+    char *team_name = NULL;
 
     if (command == NULL) {
         return;
     }
     if (info == NULL) {
         authentification(core, command, fd);
-    } else if (strcmp(get_player_team(&core->players, fd), "GRAPHIC") == 0) {
-        execute_gui_command(core, command, fd);
     } else {
-        set_player_command(core, info, command);
+        team_name = get_player_team(&core->players, fd);
+        if (strcmp(team_name, "GRAPHIC") == 0) {
+            execute_gui_command(core, command, fd);
+        } else {
+            set_player_command(core, info, command);
+        }
+        free(team_name);
     }
 }
 
