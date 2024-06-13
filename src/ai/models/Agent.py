@@ -41,7 +41,6 @@ class Agent():
         if splited_x.isdigit() and splited_y.isdigit():
             self.agentInfo.world_width = int(splited_x)
             self.agentInfo.world_height = int(splited_y)
-            print(f"World dimensions: {self.agentInfo.world_width}x{self.agentInfo.world_height}")
 
     def retrieveClientNumber(self, data: str) -> None:
         """Retrieve the client number"""
@@ -83,7 +82,7 @@ class Agent():
                 self.client.setblocking(0)
                 try:
                     self.receive_from_server = self.client.recv(1024).decode()
-                    print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
+                    # print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
                     tmp += 1
                 except BlockingIOError:
                     self.receive_from_server = None
@@ -92,7 +91,6 @@ class Agent():
                 if self.receive_from_server == "WELCOME\n": # If the server sends "WELCOME\n", send the team name
                     self.client.send(f"{self.team_name}\n".encode())
                     firstConnexion = False
-                    print(self.receive_from_server)
                     self.receive_from_server = None
                     continue
                 # self.retrieveClientNumber(self.receive_from_server)
@@ -105,6 +103,7 @@ class Agent():
                         continue
                     if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server != None and self.receive_from_server.startswith("Broadcast"): # Receive a broadcast
                         self.agentInfo.broadcast_received = self.receive_from_server.split(' ')[1]
+                        print(f"========================================== Broadcast received: {self.agentInfo.broadcast_received} ==============================================")
                     self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
                     self.agentAlgo.play(self.receive_from_server)
                     self.agentAlgo.clearReturnCommand()

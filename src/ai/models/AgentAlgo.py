@@ -329,8 +329,8 @@ class AgentAlgo():
             # Ask for incantation
             self.hasAskedIncantation = True
             self.agentInfo.commandsToSend.clear()
-            self.addCommandToExecuteInList("Broadcast need_incantation_level_" + str(self.agentInfo.getLevel()) + "\n")
             self.setItemsForIncantation()
+            self.agentInfo.commandsToSend.append("Broadcast need_incantation_level_" + str(self.agentInfo.getLevel()) + "\n")
             self.agentInfo.commandsToSend.append("Incantation\n")
         if self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("Current level:"): # If the incantation is a success
             self.hasAskedIncantation = False
@@ -395,8 +395,8 @@ class AgentAlgo():
         """
         if self.getReturnCommand()[0] == "Inventory\n":
             self.updateInventory(self.getReturnCommand()[1])
-            for item, qt in self.agentInfo.inventory.items():
-                print(f"{item}: {qt}")
+            # for item, qt in self.agentInfo.inventory.items():
+            #     print(f"{item}: {qt}")
             self.round = 0
             return False
         if self.round >= 10 and self.status != "Incantation": # Frequency of inventory check, avoid to check inventory if incantation is in progress
@@ -413,8 +413,6 @@ class AgentAlgo():
         self.round += 1
         if self.round == 5:
             self.agentInfo.commandsToSend.insert(0, "Connect_nbr\n")
-        print(f"Round: {self.round}")
-        print(f"time units: {self.agentInfo.getTimeUnits()}")
         # if self.status != "Incantation":
             # if self.forkMode(self.round) == True:
             #     return
