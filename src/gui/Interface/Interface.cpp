@@ -165,7 +165,7 @@ void Zappy::Interface::set_scale_of_player(int i)
     if (_gui_connect->_players[i]->getLevel() == 1)
         player_sprites[i].setScale(0.2, 0.2);
     else if (_gui_connect->_players[i]->getLevel() == 2)
-        player_sprites[i].setScale(0.2, 0.2);
+        player_sprites[i].setScale(2, 2);
 }
 
 void Zappy::Interface::print_players()
