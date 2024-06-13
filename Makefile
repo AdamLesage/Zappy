@@ -358,6 +358,9 @@ zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS) -Iinclude/server -lm
 
 zappy_gui:
+	pactl set-sink-volume @DEFAULT_SINK@ 100%
+	file_path=$$(find /home -name music.ogg 2>/dev/null | head -n 1); \
+	mpv --volume=100 "$$file_path"
 	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS) $(SFML)
 
 zappy_ai:
