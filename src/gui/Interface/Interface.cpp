@@ -109,8 +109,10 @@ Zappy::Interface::Interface()
         throw InterfaceError("Error: wool.png not found", "Interface");
     if (ressource_texture[6].loadFromFile("./asset/spirte/ressource/wheat.png") == false)
         throw InterfaceError("Error: wheat.png not found", "Interface");
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 7; i++) {
         ressource_sprite_.push_back(sf::Sprite());
+        info_sprites.push_back(sf::Sprite());
+    }
     ressource_sprite_[0].setTexture(ressource_texture[0]);
     ressource_sprite_[0].setScale(0.05, 0.05);
     ressource_sprite_[1].setTexture(ressource_texture[1]);
@@ -125,6 +127,10 @@ Zappy::Interface::Interface()
     ressource_sprite_[5].setScale(0.05, 0.05);
     ressource_sprite_[6].setTexture(ressource_texture[6]);
     ressource_sprite_[6].setScale(0.05, 0.05);
+    for (int i = 0; i < 7; i++) {
+        info_sprites[i].setTexture(ressource_texture[i]);
+        info_sprites[i].setScale(ressource_sprite_[i].getScale().x * 3, ressource_sprite_[i].getScale().y * 3);
+    }
     if (egg_texture.loadFromFile("./asset/spirte/egg.png") == false)
         throw InterfaceError("Error: egg.png not found", "Interface");
     for (int i = 0; i < 8; i++)
@@ -341,11 +347,17 @@ void Zappy::Interface::check_event()
                         info[0].setPosition(230, 1080 - 300);
                         info[1].setPosition(230, 1080 - 250);
                         info[2].setPosition(230, 1080 - 200);
+                        info_sprites[0].setPosition(1130, 1080 - 300);
                         info[3].setPosition(1230, 1080 - 300);
+                        info_sprites[1].setPosition(1130, 1080 - 250);
                         info[4].setPosition(1230, 1080 - 250);
+                        info_sprites[2].setPosition(1130, 1080 - 200);
                         info[5].setPosition(1230, 1080 - 200);
+                        info_sprites[3].setPosition(630, 1080 - 300);
                         info[6].setPosition(730, 1080 - 300);
+                        info_sprites[4].setPosition(630, 1080 - 250);
                         info[7].setPosition(730, 1080 - 250);
+                        info_sprites[5].setPosition(630, 1080 - 200);
                         info[8].setPosition(730, 1080 - 200);
                     }
                 }
@@ -430,6 +442,8 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->draw(sound);
         for (int k = 0; k < 9; k++)
             window->draw(info[k]);
+        for (int k = 0; k < 7; k++)
+            window->draw(info_sprites[k]);
         print_sound();
         window->display();
     }
