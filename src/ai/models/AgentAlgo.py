@@ -9,6 +9,7 @@
 from models.AgentAlert import AgentAlerts
 from models.AgentInfo import AgentInfo
 from models.AgentMoves import Moves
+import os
 
 # Import all the commands
 from command.BroadcastCommand import BroadcastCommand
@@ -34,12 +35,15 @@ class AgentAlgo():
     This class is the main class for the agent's algorithm.
     It will handle the agent's actions and decisions.
     """
-    def __init__(self, agentInfo: AgentInfo, fTime: int, client: socket = None):
+    def __init__(self, agentInfo: AgentInfo, fTime: int, client: socket, ip: str, port: int, teamName: str):
         self.alerts = AgentAlerts(agentInfo, fTime)
         self.agentInfo = agentInfo
         self.agentMoves = Moves()
         self.client = client
         self.round = 0
+        self.ip = ip
+        self.port = port
+        self.teamName = teamName
         self.agentMentality = "None" #Hungry, Incantation, Mining, None
         self.status = "Mining"
         self.hasAskedIncantation = False
@@ -293,11 +297,22 @@ class AgentAlgo():
         if len(self.alerts.checkAlerts()) != 0:
             alert = self.alerts.checkAlerts().pop()
             if alert == "food":
-                return
-        if self.getReturnCommand()[0] == "Connect_nbr\n" and int(self.getReturnCommand()[1].replace("\n", "")) != 0:
-            self.agentInfo.addCommandsToSend("Fork\n")
+                return False
+        if self.getReturnCommand()[0] == "Fork\n":
+            pid = os.fork()
+            if pid > 0:
+                print(f"Parent process: {os.getpid()}") # Parent process
+            else:
+                print(f"Child process: {os.getpid()}")
+                self.agentInfo.commandsToSend.clear()
+                os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
             return False
-        elif round >= 5:
+        if self.getReturnCommand()[0] == "Connect_nbr\n" and int(self.getReturnCommand()[1].replace("\n", "")) != 0:
+            self.agentInfo.commandsToSend.clear()
+            self.agentInfo.addCommandsToSend("Fork\n")
+            return True
+        elif round == 5 and self.status == "Mining":
+            self.agentInfo.commandsToSend.clear()
             self.agentInfo.addCommandsToSend("Connect_nbr\n")
             return True
         return False
@@ -328,8 +343,9 @@ class AgentAlgo():
         self.round += 1
         print(f"Round: {self.round}")
         print(f"time units: {self.agentInfo.getTimeUnits()}")
-        #if self.forkMode(self.round) == True and self.status != "Incantation":
-        #    return
+        if self.status != "Incantation":
+            if self.forkMode(self.round) == True:
+                return
         if self.inventoryManagement():
             return
         if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
