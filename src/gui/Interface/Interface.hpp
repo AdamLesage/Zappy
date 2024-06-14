@@ -11,6 +11,7 @@
 #include "../Entity/Tile.hpp"
 #include "InventoryDisplay.hpp"
 #include "InfoDisplay.hpp"
+#include "Broadcast.hpp"
 #include "InterfaceError.hpp"
 #include <iostream>
 #include <thread>
@@ -88,10 +89,7 @@ namespace Zappy {
             sf::Music backgroundMusic;
             std::shared_ptr<InventoryDisplay> _inventory;
             std::shared_ptr<InfoDisplay> _info;
-            std::vector<sf::Sprite> broadcast_sprites;
-            std::vector<sf::Sprite> broadcast_send;
-            std::vector<sf::Texture> broadcast_textures;
-            std::vector<sf::Text> broadcast_texts;
+            std::shared_ptr<Broadcast> _broadcast;
             size_t _teamnbr;
             std::vector<sf::Color> color_list_team;
         private:

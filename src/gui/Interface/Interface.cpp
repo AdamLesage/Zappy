@@ -180,17 +180,6 @@ Zappy::Interface::Interface()
 
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
-    // broadcast_textures.push_back(sf::Texture());
-    // if (broadcast_textures[0].loadFromFile("./asset/sprite/broadcast/talk_buble.png") == false)
-    //     throw InterfaceError("Error: broadcast2.png not found", "Interface");
-    // broadcast_textures.push_back(sf::Texture());
-    // if (broadcast_textures[1].loadFromFile("./asset/sprite/broadcast/message.png") == false)
-    //     throw InterfaceError("Error: broadcast.png not found", "Interface");
-    // broadcast_sprites.push_back(sf::Sprite());
-    // broadcast_sprites.push_back(sf::Sprite());
-    // broadcast_sprites[0].setTexture(broadcast_textures[0]);
-    // broadcast_send[0].setTexture(broadcast_textures[1]);
-
 }
 
 void Zappy::Interface::set_scale_of_player(int i)
@@ -264,20 +253,9 @@ void Zappy::Interface::print_players()
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
         player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation() + 1]);
         window->draw(player_sprites[i]);
-        // if (_gui_connect->_players[i]->getMessage() != "") {
-        //     broadcast_texts.push_back(sf::Text(_gui_connect->_players[i]->getMessage(), font, 20));
-        //     if (broadcast_texts.size() > 1) {
-        //         broadcast_sprites.push_back(sf::Sprite());
-        //         broadcast_sprites[broadcast_sprites.size() - 1].setTexture(broadcast_textures[0]);
-        //         broadcast_sprites[broadcast_sprites.size() - 1].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 130);
-        //     }
-        //     broadcast_texts[broadcast_texts.size() - 1].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 130);
-        //     broadcast_texts[broadcast_texts.size() - 1].setFillColor(sf::Color::Black);
-        //     window->draw(broadcast_sprites[broadcast_sprites.size() - 1]);
-        //     window->draw(broadcast_texts[broadcast_texts.size() - 1]);
-        // }
         fill_color_team();
         print_player_team();
+        _broadcast->check_player_broadcast(i);
         // if (_gui_connect->_players[i]->isEvoluting()) {
         //     print_evolution(i);
         // }
@@ -486,6 +464,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     _gui_connect = gui_connect;
     this->_inventory.reset(new InventoryDisplay(_gui_connect, window));
     this->_info.reset(new InfoDisplay(_gui_connect, window, ressource_sprite_));
+    this->_broadcast.reset(new Broadcast(window, _gui_connect));
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
     sleep(5);
     set_map();
