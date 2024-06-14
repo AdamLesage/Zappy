@@ -210,6 +210,49 @@ void Zappy::Interface::set_scale_of_player(int i)
         player_sprites[i].setScale(0.5, 0.5);
 }
 
+void Zappy::Interface::print_player_team()
+{
+    std::vector<std::string> team_list;
+
+    for (int i = 0; i < _gui_connect->_players.size(); i++) {
+        std::string team_name = _gui_connect->_players[i]->getTeamName();
+        bool team_exists = false;
+        for (const std::string& team : team_list) {
+            if (team == team_name) {
+                team_exists = true;
+                break;
+            }
+        }
+        if (!team_exists) {
+            team_list.push_back(team_name);
+        }
+    }
+
+      for (const auto& player : _gui_connect->_players) {
+            sf::RectangleShape playerSquare(sf::Vector2f(2, 2));
+            std::string team_name = player->getTeamName();
+            int team_index = 0;
+            for (int i = 0; i < team_list.size(); i++) {
+                if (team_list[i] == team_name) {
+                    team_index = i;
+                    break;
+                }
+            }
+            playerSquare.setFillColor(color_list_team[team_index]);
+            playerSquare.setPosition(player->getPosition()[0] * 102.4 + 112, player->getPosition()[1] * 102.4 + 162);
+            window->draw(playerSquare);
+        }
+}
+
+void Zappy::Interface::fill_color_team()
+{
+    for (size_t i = 0; i <= _teamnbr; i++ and i <= color_list_team.size() ) {
+        sf::Color color;
+        color = sf::Color(rand() % 256, rand() % 256, rand() % 256);
+        color_list_team.push_back(color);
+    }
+}
+
 void Zappy::Interface::print_players()
 {
     for (int i = 0; i < _gui_connect->_players.size(); i++) {
@@ -220,6 +263,8 @@ void Zappy::Interface::print_players()
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
         player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation() + 1]);
         window->draw(player_sprites[i]);
+        fill_color_team();
+        print_player_team();
         // if (_gui_connect->_players[i]->isEvoluting()) {
         //     print_evolution(i);
         // }
@@ -477,6 +522,12 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         }
         if (isOverTile)
             window->draw(rect);
+        for (size_t i = 0; i < gui_connect->getTeamNames().size(); i++) {
+            Texts.push_back(sf::Text(gui_connect->getTeamNames()[i], font, 50));
+            Texts[2 + i].setFillColor(sf::Color::Black);
+            Texts[2 + i].setPosition(10, 50 + ((2 + i) * 50));
+        }
+        _teamnbr = gui_connect->getTeamNames().size();
         print_resssource();
         print_eggs();
         print_players();
@@ -484,11 +535,6 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->setView(window->getDefaultView());
         for (size_t i = 0; i < _rect.size(); i++)
             window->draw(_rect[i]);
-        for (size_t i = 0; i < gui_connect->getTeamNames().size(); i++) {
-            Texts.push_back(sf::Text(gui_connect->getTeamNames()[i], font, 50));
-            Texts[2 + i].setFillColor(sf::Color::Black);
-            Texts[2 + i].setPosition(10, 50 + ((2 + i) * 50));
-        }
         for (size_t i = 0; i < Texts.size(); i++)
             window->draw(Texts[i]);
         tick = bars[1]->checkClick(window);

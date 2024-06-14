@@ -39,6 +39,8 @@ namespace Zappy {
             void print_players();
             void print_evolution(int playerIndex);
             void print_map_iso();
+            void fill_color_team();
+            void print_player_team();
             void set_scale_of_player(int i);
             void playBackgroundMusic(const std::string& filename);
         protected:
@@ -87,7 +89,8 @@ namespace Zappy {
             sf::Music backgroundMusic;
             std::vector<sf::Sprite> info_sprites;
             std::shared_ptr<InventoryDisplay> _inventory;
-
+            size_t _teamnbr;
+            std::vector<sf::Color> color_list_team;
         private:
     };
 }
