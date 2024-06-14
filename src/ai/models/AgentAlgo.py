@@ -64,17 +64,16 @@ class AgentAlgo():
         State could be: Continue, End, Dead, Incantation, Food
         """
         if len(self.alerts.checkAlerts()) == 0:
-            self.status = "Mining"
             return
         alert = self.alerts.checkAlerts().pop()
-        if alert.startswith("incantation"):
-            self.addCommandToExecuteInList(f"Broadcast {alert}\n")
+        if alert.startswith("incantationNeeded"):
+            if alert != "incantationNeeded_2": # Not needed for incantation to level 2
+                self.addCommandToExecuteInList(f"Broadcast {alert}\n")
             self.status = "Incantation"
             return
         if alert == "food":
             self.status = "Food"
             return
-        self.status = "Mining"
 
     def clientPlayLevel1(self) -> None:
         """
@@ -190,7 +189,7 @@ class AgentAlgo():
         The agent is in food mode, it will search for food
         """
         actions = ["Forward\n", "Right\n", "Forward\n", "Left\n"] # More chance to go forward (x2)
-        if self.agentInfo.getInventory("food") > 50:
+        if self.agentInfo.getInventory("food") > 20:
             self.status = "Mining"
             return
         buf = self.getReturnCommand()[1]
@@ -225,7 +224,7 @@ class AgentAlgo():
         if self.status == "Incantation":
             self.round = 0
             return False
-        if self.round == 10 and self.status != "Incantation": # Frequency of inventory check, avoid to check inventory if incantation is in progress
+        if self.round == 10: # Frequency of inventory check, avoid to check inventory if incantation is in progress
             self.agentInfo.commandsToSend.insert(0, "Inventory\n")
             self.round = 0
             return True
@@ -324,13 +323,14 @@ class AgentAlgo():
     def incantationManagement(self) -> None:
         if self.status != "Incantation":
             self.round += 1 # Increment the round
-            return 
+            return
         if self.hasAskedIncantation == False:
             # Ask for incantation
             self.hasAskedIncantation = True
             self.agentInfo.commandsToSend.clear()
             self.setItemsForIncantation()
-            self.agentInfo.commandsToSend.append("Broadcast need_incantation_level_" + str(self.agentInfo.getLevel()) + "\n")
+            if self.agentInfo.getLevel() != 1:
+                self.agentInfo.commandsToSend.append("Broadcast need_incantation_level_" + str(self.agentInfo.getLevel()) + "\n")
             self.agentInfo.commandsToSend.append("Incantation\n")
         if self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("Current level:"): # If the incantation is a success
             self.hasAskedIncantation = False
@@ -349,9 +349,9 @@ class AgentAlgo():
                 os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
         elif self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("ko"): # If the incantation is a failure
             self.hasAskedIncantation = False
-            self.status = "Mining"
-            self.agentInfo.commandsToSend.clear()
-            self.agentInfo.commandsToSend.append("Look\n")
+            self.status = "Food"
+            print(f"Failure incantation for level {self.agentInfo.getLevel()}, going back to mining")
+            self.agentInfo.commandsToSend.append("Inventory\n")
             self.round = 0
 
     def forkMode(self, round: int) -> None:
@@ -410,9 +410,6 @@ class AgentAlgo():
         self.round += 1
         if self.round == 5:
             self.agentInfo.commandsToSend.insert(0, "Connect_nbr\n")
-        # if self.status != "Incantation":
-            # if self.forkMode(self.round) == True:
-            #     return
         if self.inventoryManagement():
             return
         if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
@@ -482,3 +479,31 @@ class AgentAlgo():
     def clearReturnCommand(self) -> None:
         """Clear the command to return"""
         self.agentInfo.commandsReturned = [None, None]
+
+    def broadcastManagement(self, data: str) -> None:
+        """
+        Manage the broadcast
+        Split data with ' ' ---> [""message", "K,", "text]
+        Agent can accept or refuse the incantation but need to broadcast answer
+        """
+        if data == None or data.startswith("message") == False:
+            return None
+        data = data.replace(",", "") # remove comma after K
+        data = data.replace("\n", "") # remove \n at the end of the string
+        incantationLevel = 0
+        try:
+            self.agentInfo.broadcast_orientation = data.split(' ')[1]
+            self.agentInfo.broadcast_received = data.split(' ')[2]
+
+            if self.agentInfo.broadcast_received.startswith("incantation_success_level_"):
+                incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1])
+                self.agentInfo.teamPlayers[f"level{incantationLevel}"] += 1
+            if self.agentInfo.broadcast_received.startswith("need_incantation_level_"):
+                incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1])
+                if self.agentInfo.getLevel() == incantationLevel - 1:
+                    self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{str(incantationLevel)}\n")
+                else:
+                    self.agentInfo.commandsToSend.append(f"Broadcast refuse_incantation_level_{str(incantationLevel)}\n")
+                print(f"Command to send {self.agentInfo.commandsToSend[-1]}")
+        except Exception as e:
+            print(f"Error from broadcast management: {e}")
