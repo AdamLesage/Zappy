@@ -26,7 +26,7 @@ class AgentInfo():
         self.teamInventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0} # Inventory of the team
         self.playerVision = [] # Vision of player, tiles around him
         self.lifeUnits = 10
-        self.timeUnits = 1260
+        self.timeUnits = 1260 
         self.broadcast_received = None
         self.numberMaxOfTeamPlayers = 0
         self.numberOfTeamPlayersConnected = 0

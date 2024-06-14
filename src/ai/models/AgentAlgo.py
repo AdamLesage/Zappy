@@ -72,9 +72,11 @@ class AgentAlgo():
             return
         alert = self.alerts.checkAlerts().pop()
         if alert.startswith("incantationNeeded"):
+            print(f"Alerts: {self.alerts.checkAlerts()}, current alert: {alert}")
             if alert != "incantationNeeded_2": # Not needed for incantation to level 2
                 self.addCommandToExecuteInList(f"Broadcast {alert}\n")
-            self.status = "Incantation"
+            else:
+                self.status = "Incantation" # Do not change status to incantation, need to wait for other agents except if player is level 1 
             return
         if alert == "food":
             self.status = "Food"
@@ -299,6 +301,7 @@ class AgentAlgo():
         if self.status != "Incantation":
             self.round += 1 # Increment the round
             return
+        self.countRoundForIncantation += 1
         if self.hasAskedIncantation == False:
             # Ask for incantation
             self.hasAskedIncantation = True
@@ -306,7 +309,9 @@ class AgentAlgo():
             if self.agentInfo.getLevel() != 1:
                 self.agentInfo.commandsToSend.append("Broadcast need_incantation_level_" + str(self.agentInfo.getLevel()) + "\n")
             self.countRoundForIncantation = 0
-            if self.playerOnSameTileForIncantation == self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
+            if self.playerOnSameTileForIncantation == self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
+                # TODO: fix change logic to start incantation
+                print(f"Player level {self.agentInfo.getLevel()} has asked for incantation")
                 self.setItemsForIncantation()
                 self.agentInfo.commandsToSend.append("Incantation\n")
                 self.playerOnSameTileForIncantation = 1
@@ -317,6 +322,7 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.append("Look\n")
             self.round = 0
+            self.countRoundForIncantation = 0
             self.createChild()
         elif self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("ko"): # If the incantation is a failure
             self.hasAskedIncantation = False
@@ -471,7 +477,16 @@ class AgentAlgo():
                     self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{str(incantationLevel)}\n")
                 else:
                     self.agentInfo.commandsToSend.append(f"Broadcast refuse_incantation_level_{str(incantationLevel)}\n")
+
                 if self.hasAskedIncantation == True: # If the agent has asked for incantation, look at responses received
+                    print(f"{self.countRoundForIncantation=}")
+                    if self.countRoundForIncantation >= 20: # If the agent has waited for 20 rounds, stop waiting
+                        self.hasAskedIncantation = False
+                        self.countRoundForIncantation = 0
+                        self.status = "Food"
+                        self.agentInfo.commandsToSend.append("Inventory\n")
+                        return
+
                     print(f"Player asked for incantation, waiting for responses")
                     if self.agentInfo.broadcast_received == f"accept_incantation_level_{str(self.agentInfo.getLevel() + 1)}":
                         print(f"A player accepted incantation level {self.agentInfo.getLevel() + 1}")
@@ -480,6 +495,7 @@ class AgentAlgo():
                             print(f"Enough players to evolve to level {self.agentInfo.getLevel() + 1}")
                             # wait until every players are ready and send incantation position with broadcast
                             self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{str(self.agentInfo.getLevel() + 1)}\n")
+
                     if self.agentInfo.broadcast_orientation == "0": # Player is on the same tile as agent
                         print(f"Player on the same tile as agent")
                         self.playerOnSameTileForIncantation += 1

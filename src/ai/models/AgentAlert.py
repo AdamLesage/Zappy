@@ -14,7 +14,7 @@ class AgentAlerts(AgentInfo):
         self.agent = agent_info
         self.alerts = []
         self.moves = Moves()
-        self.minTimeU = minTU
+        self.minTimeU = 20 * 126
         self.formerAlert = None
         pass
 
@@ -30,6 +30,7 @@ class AgentAlerts(AgentInfo):
         Example: ["food", "incantation"]
         """
         playerLevel = self.agent.getLevel()
+        minTimeUnitStartIncantation = 10 * 126
         
         if self.agent.getTimeUnits() <= self.minTimeU:
             """Need to eat"""
@@ -43,13 +44,13 @@ class AgentAlerts(AgentInfo):
             self.alerts.append("incantation")
             # send broadcast with crypted data
         
-        if playerLevel == 1 and self.agent.getInventory("linemate") >= 1 and self.agent.getTimeUnits() >= 756 and self.alerts.count("incantationNeeded_2") == 0 and self.formerAlert != "incantationNeeded_2":
+        if playerLevel == 1 and self.agent.getInventory("linemate") >= 1 and self.agent.getTimeUnits() >= minTimeUnitStartIncantation and self.alerts.count("incantationNeeded_2") == 0 and self.formerAlert != "incantationNeeded_2":
             """Incantation lvl 1 -> 2 needed"""
             self.alerts.append("incantationNeeded_2")
             self.formerAlert = "incantationNeeded_2"
             # send broadcast with crypted data
         
-        if (playerLevel == 2 and self.agent.getInventory("linemate") >= 1 and self.agent.getTimeUnits() >= 756 and self.alerts.count("incantationNeeded_3") == 0 and self.formerAlert != "incantationNeeded_3" and
+        if (playerLevel == 2 and self.agent.getInventory("linemate") >= 1 and self.agent.getTimeUnits() >= minTimeUnitStartIncantation and self.alerts.count("incantationNeeded_3") == 0 and self.formerAlert != "incantationNeeded_3" and
             self.agent.getInventory("deraumere") >= 1 and
             self.agent.getInventory("sibur") >= 1):
                 """Incantation lvl 2 -> 3 needed"""
@@ -57,7 +58,7 @@ class AgentAlerts(AgentInfo):
                 self.formerAlert = "incantationNeeded_3"
                 # send broadcast with crypted data
         
-        if (playerLevel == 3 and self.agent.getInventory("linemate") >= 2 and self.agent.getTimeUnits() >= 756 and self.alerts.count("incantationNeeded_4") == 0 and self.formerAlert != "incantationNeeded_4" and
+        if (playerLevel == 3 and self.agent.getInventory("linemate") >= 2 and self.agent.getTimeUnits() >= minTimeUnitStartIncantation and self.alerts.count("incantationNeeded_4") == 0 and self.formerAlert != "incantationNeeded_4" and
             self.agent.getInventory("sibur") >= 1 and
             self.agent.getInventory("phiras") >= 2):
                 """Incantation lvl 3 -> 4 needed"""
@@ -65,7 +66,7 @@ class AgentAlerts(AgentInfo):
                 self.formerAlert = "incantationNeeded_4"
                 # send broadcast with crypted data
         
-        if (playerLevel == 4 and self.agent.getInventory("linemate") >= 1 and self.agent.getTimeUnits() >= 756 and self.alerts.count("incantationNeeded_5") == 0 and self.formerAlert != "incantationNeeded_5" and
+        if (playerLevel == 4 and self.agent.getInventory("linemate") >= 1 and self.agent.getTimeUnits() >= minTimeUnitStartIncantation and self.alerts.count("incantationNeeded_5") == 0 and self.formerAlert != "incantationNeeded_5" and
             self.agent.getInventory("deraumere") >= 1 and 
             self.agent.getInventory("sibur") >= 2 and 
             self.agent.getInventory("phiras") >= 1):
@@ -74,7 +75,7 @@ class AgentAlerts(AgentInfo):
                 self.formerAlert = "incantationNeeded_5"
                 # send broadcast with crypted data
             
-        if (playerLevel == 5 and self.agent.getInventory("linemate") >= 1 and self.agent.getTimeUnits() >= 756 and self.alerts.count("incantationNeeded_6") == 0 and self.formerAlert != "incantationNeeded_6" and
+        if (playerLevel == 5 and self.agent.getInventory("linemate") >= 1 and self.agent.getTimeUnits() >= minTimeUnitStartIncantation and self.alerts.count("incantationNeeded_6") == 0 and self.formerAlert != "incantationNeeded_6" and
             self.agent.getInventory("deraumere") >= 2 and
             self.agent.getInventory("sibur") >= 1 and
             self.agent.getInventory("mendiane") >= 3):
@@ -83,7 +84,7 @@ class AgentAlerts(AgentInfo):
                 self.formerAlert = "incantationNeeded_6"
                 # send broadcast with crypted data
         
-        if (playerLevel == 6 and self.agent.getInventory("linemate") >= 1 and self.agent.getTimeUnits() >= 756 and self.alerts.count("incantationNeeded_7") == 0 and self.formerAlert != "incantationNeeded_7" and
+        if (playerLevel == 6 and self.agent.getInventory("linemate") >= 1 and self.agent.getTimeUnits() >= minTimeUnitStartIncantation and self.alerts.count("incantationNeeded_7") == 0 and self.formerAlert != "incantationNeeded_7" and
             self.agent.getInventory("deraumere") >= 2 and
             self.agent.getInventory("sibur") >= 3 and
             self.agent.getInventory("phiras") >= 1):
@@ -92,7 +93,7 @@ class AgentAlerts(AgentInfo):
                 self.formerAlert = "incantationNeeded_7"
                 # send broadcast with crypted data
         
-        if (playerLevel == 7 and self.agent.getInventory("linemate") >= 2 and self.agent.getTimeUnits() >= 756 and self.alerts.count("incantationNeeded_8") == 0 and self.formerAlert != "incantationNeeded_8" and
+        if (playerLevel == 7 and self.agent.getInventory("linemate") >= 2 and self.agent.getTimeUnits() >= minTimeUnitStartIncantation and self.alerts.count("incantationNeeded_8") == 0 and self.formerAlert != "incantationNeeded_8" and
             self.agent.getInventory("deraumere") >= 2 and
             self.agent.getInventory("sibur") >= 2 and
             self.agent.getInventory("mendiane") >= 2 and
