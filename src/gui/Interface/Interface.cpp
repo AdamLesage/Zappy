@@ -155,13 +155,13 @@ Zappy::Interface::Interface()
     for (int i = 0; i < 8; i++) {
         player_orientation.push_back(std::array<sf::IntRect, 4>());
     }
-    player_orientation[0][0] = sf::IntRect(30, 65, 35, 35);
+    player_orientation[0][0] = sf::IntRect(35, 0, 35, 35);
     player_orientation[0][1] = sf::IntRect(30, 100, 35, 35);
-    player_orientation[0][2] = sf::IntRect(35, 0, 35, 35);
+    player_orientation[0][2] = sf::IntRect(30, 65, 35, 35);
     player_orientation[0][3] = sf::IntRect(35, 35, 30, 30);
-    player_orientation[1][0] = sf::IntRect(30, 65, 35, 35);
+    player_orientation[1][0] = sf::IntRect(35, 0, 35, 35);
     player_orientation[1][1] = sf::IntRect(30, 100, 35, 35);
-    player_orientation[1][2] = sf::IntRect(35, 0, 35, 35);
+    player_orientation[1][2] = sf::IntRect(30, 65, 35, 35);
     player_orientation[1][3] = sf::IntRect(35, 35, 30, 30);
     player_orientation[2][0] = sf::IntRect(182, 137, 19, 29);
     player_orientation[2][1] = sf::IntRect(178, 217, 27, 26);
@@ -183,6 +183,10 @@ Zappy::Interface::Interface()
     player_orientation[6][1] = sf::IntRect(403, 171, 71, 44);
     player_orientation[6][2] = sf::IntRect(434, 300, 28, 58);
     player_orientation[6][3] = sf::IntRect(419, 427, 72, 44);
+    player_orientation[7][0] = sf::IntRect(83, 20, 25, 64);
+    player_orientation[7][1] = sf::IntRect(63, 108, 64, 62);
+    player_orientation[7][2] = sf::IntRect(84, 202, 22, 51);
+    player_orientation[7][3] = sf::IntRect(64, 278, 64, 61);
 
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
@@ -191,12 +195,18 @@ Zappy::Interface::Interface()
 void Zappy::Interface::set_scale_of_player(int i)
 {
     if (_gui_connect->_players[i]->getLevel() == 1)
-        player_sprites[i].setScale(2, 2);
+        player_sprites[i].setScale(1, 1);
     else if (_gui_connect->_players[i]->getLevel() == 2)
-        player_sprites[i].setScale(2, 2);
+        player_sprites[i].setScale(1, 1);
     else if (_gui_connect->_players[i]->getLevel() == 4)
         player_sprites[i].setScale(0.5, 0.5);
     else if (_gui_connect->_players[i]->getLevel() == 5)
+        player_sprites[i].setScale(0.5, 0.5);
+    else if (_gui_connect->_players[i]->getLevel() == 6)
+        player_sprites[i].setScale(0.5, 0.5);
+    else if (_gui_connect->_players[i]->getLevel() == 7)
+        player_sprites[i].setScale(0.5, 0.5);
+    else if (_gui_connect->_players[i]->getLevel() == 8)
         player_sprites[i].setScale(0.5, 0.5);
 }
 
@@ -209,8 +219,6 @@ void Zappy::Interface::print_players()
         set_scale_of_player(i);
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
         player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation() + 1]);
-        // std::cout << "player is in position: " << _gui_connect->_players[i]->getPosition()[0] << " " << _gui_connect->_players[i]->getPosition()[1] << std::endl;
-        // std::cout << "player is in orientation: " << _gui_connect->_players[i]->getOrientation() << std::endl;
         window->draw(player_sprites[i]);
         // if (_gui_connect->_players[i]->isEvoluting()) {
         //     print_evolution(i);
