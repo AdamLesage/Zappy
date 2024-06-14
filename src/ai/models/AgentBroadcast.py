@@ -16,7 +16,7 @@ class AgentBroadcast():
     Each agent can send and receive broadcast messages.
 
     List of broadcast messages (demands):
-    - "Need mate to reach level n"
+    - "Incantation level : n"
     - "Count mates"
     
     List of broadcast messages (answers):
