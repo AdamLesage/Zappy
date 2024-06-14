@@ -60,31 +60,41 @@ Zappy::Interface::Interface()
         tile_iso_sprite[i].setScale(0.32, 0.32);
         tile_iso_sprite[i].setColor(sf::Color(255, 255, 255, 230));
     }
-    font.loadFromFile("./asset/gui/Pacifico.ttf");
-    if (font.loadFromFile("./asset/gui/Pacifico.ttf") == false)
-        throw InterfaceError("Error: Pacifico.ttf not found", "Interface");
+    font.loadFromFile("./asset/gui/Farmhouse.otf");
+    if (font.loadFromFile("./asset/gui/Farmhouse.otf") == false)
+        throw InterfaceError("Error: Farmhouse.otf not found", "Interface");
     Texts.push_back(sf::Text("tick", font, 50));
     Texts.push_back(sf::Text("Team: ", font, 50));
     Texts[0].setFillColor(sf::Color::Black);
     Texts[1].setFillColor(sf::Color::Black);
     Texts[0].setPosition(1750, 225);
     Texts[1].setPosition(10, 50);
-    if (sound_.loadFromFile("./asset/gui/logo_son.jpg") == false)
-        throw InterfaceError("Error: logo_son.jpg not found", "Interface");
+    if (sound_.loadFromFile("./asset/gui/soundbar_logo.png") == false)
+        throw InterfaceError("Error: soundbar_logo.png not found", "Interface");
     sound.setTexture(sound_);
     sound.setPosition(1725, 10);
     sound.setScale(0.3, 0.3);
     sound.setTextureRect(sf::IntRect(0, 0, 450, 325));
+
+    if (interface_texture.loadFromFile("./asset/gui/grass.jpg") == false) {
+        throw InterfaceError("Error: bg_texture.png not found", "Interface");
+    }
     _rect.push_back(sf::RectangleShape(sf::Vector2f(230, 1080)));
-    _rect[0].setFillColor(sf::Color(255, 255, 255));
+    _rect[0].setFillColor(sf::Color(8, 105, 36));
     _rect.push_back(sf::RectangleShape(sf::Vector2f(1920, 75)));
-    _rect[1].setFillColor(sf::Color(255, 255, 255));
+    _rect[0].setTexture(&interface_texture);
+    _rect[1].setFillColor(sf::Color(8, 105, 36));
     _rect.push_back(sf::RectangleShape(sf::Vector2f(230, 1080)));
-    _rect[2].setFillColor(sf::Color(255, 255, 255));
+    _rect[1].setTexture(&interface_texture);
+    _rect[2].setFillColor(sf::Color(8, 105, 36));
     _rect[2].setPosition(1920 - 230, 0);
     _rect.push_back(sf::RectangleShape(sf::Vector2f(1920, 300)));
-    _rect[3].setFillColor(sf::Color(255, 255, 255));
+    _rect[2].setTexture(&interface_texture);
+    _rect[3].setFillColor(sf::Color(8, 105, 36));
     _rect[3].setPosition(0, 1080 - 300);
+    _rect[3].setTexture(&interface_texture);
+
+
     zoom = 100;
     last_zoom = 100;
     view.setSize(1920, 1080);

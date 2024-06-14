@@ -7,7 +7,7 @@
 
 #include "Button.hpp"
 
-RayTracer::Button::Button(sf::Vector2f size, sf::Vector2f pos, sf::Color color,
+Zappy::Button::Button(sf::Vector2f size, sf::Vector2f pos, sf::Color color,
     int outline, sf::Color outlineColor)
 {
     this->shape.setSize(size);
@@ -21,11 +21,11 @@ RayTracer::Button::Button(sf::Vector2f size, sf::Vector2f pos, sf::Color color,
     this->_characterSize = 0;
 }
 
-RayTracer::Button::~Button()
+Zappy::Button::~Button()
 {
 }
 
-bool RayTracer::Button::checkClick(std::shared_ptr<sf::RenderWindow> window)
+bool Zappy::Button::checkClick(std::shared_ptr<sf::RenderWindow> window)
 {
     sf::Mouse mouse;
     sf::Vector2f mousPos;
@@ -42,9 +42,9 @@ bool RayTracer::Button::checkClick(std::shared_ptr<sf::RenderWindow> window)
     return (false);
 }
 
-void RayTracer::Button::displayButton(std::shared_ptr<sf::RenderWindow> window)
+void Zappy::Button::displayButton(std::shared_ptr<sf::RenderWindow> window)
 {
-    std::string font_path("./asset/gui/Pacifico.ttf");
+    std::string font_path("./asset/gui/Farmhouse.otf");
     sf::Font font;
     sf::Color color = this->hoverSape.getFillColor();
 
@@ -72,29 +72,29 @@ void RayTracer::Button::displayButton(std::shared_ptr<sf::RenderWindow> window)
     window->draw(this->hoverSape);
 }
 
-void RayTracer::Button::setState(StateButton newState)
+void Zappy::Button::setState(StateButton newState)
 {
     this->state = newState;
 }
 
-void RayTracer::Button::setText(std::string newText, size_t size)
+void Zappy::Button::setText(std::string newText, size_t size)
 {
     this->text = newText;
     this->_characterSize = size;
 }
 
-void RayTracer::Button::setPosition(sf::Vector2f pos)
+void Zappy::Button::setPosition(sf::Vector2f pos)
 {
     this->shape.setPosition(pos);
     this->hoverSape.setPosition(pos);
 }
 
-std::string RayTracer::Button::getText() const
+std::string Zappy::Button::getText() const
 {
     return (this->text);
 }
 
-void RayTracer::Button::setSprite(sf::Sprite sprite)
+void Zappy::Button::setSprite(sf::Sprite sprite)
 {
     this->Texture.loadFromImage(sprite.getTexture()->copyToImage());
 }

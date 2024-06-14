@@ -88,6 +88,7 @@ namespace Zappy {
             bool isOverTile;
             sf::Music backgroundMusic;
             std::shared_ptr<InventoryDisplay> _inventory;
+            sf::Texture interface_texture;
             std::shared_ptr<InfoDisplay> _info;
             std::shared_ptr<Broadcast> _broadcast;
             size_t _teamnbr;
