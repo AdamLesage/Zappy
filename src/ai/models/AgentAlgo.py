@@ -359,15 +359,12 @@ class AgentAlgo():
         Will check if the agent can fork.
         If yes, it will fork the agent.
         """
-        if self.agentInfo.childAgentNumber >= 8:
-            return False
         print(f"Availables slots for the team: {self.agentInfo.availableSlots}")
         if len(self.alerts.checkAlerts()) != 0:
             alert = self.alerts.checkAlerts().pop()
             if alert == "food":
                 return False
         if self.getReturnCommand()[0] == "Fork\n":
-            self.agentInfo.childAgentNumber += 1
             pid = os.fork()
             if pid > 0:
                 print(f"Parent process: {os.getpid()}") # Parent process

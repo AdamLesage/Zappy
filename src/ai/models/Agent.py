@@ -26,7 +26,6 @@ class Agent():
         self.team_name = team_name
         self.receive_from_server = None
         self.ip = ip
-        self.broadcast_received = None
 
     def retrieveWorldDimensions(self, data: str) -> None:
         """Retrieve the world dimensions"""
@@ -70,6 +69,20 @@ class Agent():
         if self.agentInfo.getCommandsReturned()[0] == "Connect_nbr\n" and self.receive_from_server != None and tmp >= 10:
             self.agentInfo.availableSlots = self.agentInfo.numberMaxOfTeamPlayers - self.agentInfo.numberOfTeamPlayersConnected
 
+    def broadcastManagement(self, data: str) -> None:
+        """
+        Manage the broadcast
+        Split data with ' ' ---> [""message", "K,", "text]
+        """
+        if data != None and data.startswith("message"):
+            data.replace(",", "") # remove comma after K
+            try:
+                self.agentInfo.broadcast_orientation = data.split(' ')[1]
+                self.agentInfo.broadcast_received = data.split(' ')[2]
+                
+            except Exception as e:
+                print(f"Error: {e}")
+
     def connect_to_server(self) -> None:
         """Connect to the server from the given ip and port"""
         try:
@@ -82,6 +95,7 @@ class Agent():
                 self.client.setblocking(0)
                 try:
                     self.receive_from_server = self.client.recv(1024).decode()
+                    self.broadcastManagement(self.receive_from_server)
                     # print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
                     tmp += 1
                 except BlockingIOError:
@@ -101,9 +115,6 @@ class Agent():
                     self.manageConnectNbr(tmp)
                     if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None:
                         continue
-                    if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server != None and self.receive_from_server.startswith("Broadcast"): # Receive a broadcast
-                        self.agentInfo.broadcast_received = self.receive_from_server.split(' ')[1]
-                        print(f"========================================== Broadcast received: {self.agentInfo.broadcast_received} ==============================================")
                     self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
                     self.agentAlgo.play(self.receive_from_server)
                     self.agentAlgo.clearReturnCommand()

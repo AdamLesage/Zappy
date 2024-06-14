@@ -32,7 +32,8 @@ class AgentInfo():
         self.numberMaxOfTeamPlayers = 0
         self.numberOfTeamPlayersConnected = 0
         self.availableSlots = 0
-        self.childAgentNumber = 0
+        self.broadcast_received = None
+        self.broadcast_orientation = None
 
     def noLifeUnits(self) -> bool:
         """Return True if there is no more life units"""
