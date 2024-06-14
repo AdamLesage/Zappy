@@ -13,6 +13,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 #include "../ServerInfo/GuiConnect.hpp"
+#include "Button.hpp"
 #include <memory>
 #include "InterfaceError.hpp"
 
@@ -31,7 +32,12 @@ namespace Zappy {
 
             sf::Font font;
             sf::RectangleShape back;
+            sf::RectangleShape header;
             std::vector<sf::Text> playerInfo;
+            std::shared_ptr<Button> closeButton;
+            sf::RectangleShape SkinPlayer;
+            std::vector<sf::RectangleShape> _ressource_sprite;
+            std::vector<sf::Texture> ressource_texture;
         };
 };
 
