@@ -11,6 +11,7 @@ sys.path.append("..")
 from data_encryption import encrypt_data, decrypt_data
 from collections import deque
 import select
+import os
 
 from models.AgentInfo import AgentInfo
 from models.AgentAction import AgentAction
@@ -96,9 +97,10 @@ class Agent():
                     continue
                 # self.retrieveClientNumber(self.receive_from_server)
                 # self.retrieveWorldDimensions(self.receive_from_server)
-                if tmp == 3 and len(self.agentInfo.commandsToSend) < 10: # retrieve number of team player by doing a Connect_nbr command
-                    self.agentInfo.commandsToSend.insert(0, "Connect_nbr\n")
                 if firstConnexion == False and tmp >= 2:
+                    if self.receive_from_server == "dead\n":
+                        os.wait()
+                        break
                     self.manageConnectNbr(tmp)
                     if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None:
                         continue
