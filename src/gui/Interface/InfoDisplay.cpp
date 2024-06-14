@@ -12,7 +12,7 @@ Zappy::InfoDisplay::InfoDisplay(std::shared_ptr<GuiConnect> guiConnect, std::sha
     this->_window = window;
     this->_guiConnect = guiConnect;
     info_ = false;
-    font.loadFromFile("./asset/gui/Pacifico.ttf");
+    font.loadFromFile("./asset/gui/Farmhouse.otf");
     for (int i = 0; i < 20; i++) {
         info.push_back(sf::Text("", font, 45));
         info[i].setFillColor(sf::Color::Black);
@@ -61,21 +61,24 @@ void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
                 info[6].setString("Mendiane: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Mendiane")));
                 info[7].setString("Phiras: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Phiras")));
                 info[8].setString("Thystame: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Thystame")));
-                info[0].setPosition(230, 1080 - 300);
-                info[1].setPosition(230, 1080 - 250);
-                info[2].setPosition(230, 1080 - 200);
-                info_sprites[0].setPosition(1130, 1080 - 300);
-                info[3].setPosition(1230, 1080 - 300);
-                info_sprites[1].setPosition(1130, 1080 - 250);
-                info[4].setPosition(1230, 1080 - 250);
-                info_sprites[2].setPosition(1130, 1080 - 200);
-                info[5].setPosition(1230, 1080 - 200);
-                info_sprites[3].setPosition(630, 1080 - 300);
-                info[6].setPosition(730, 1080 - 300);
-                info_sprites[4].setPosition(630, 1080 - 250);
-                info[7].setPosition(730, 1080 - 250);
-                info_sprites[5].setPosition(630, 1080 - 200);
-                info[8].setPosition(730, 1080 - 200);
+
+                float baseY = 1080 - 220;
+                float offsetY = 50;
+                info[0].setPosition(230, baseY);
+                info[1].setPosition(230, baseY + offsetY);
+                info[2].setPosition(230, baseY + 2 * offsetY);
+                info_sprites[0].setPosition(1130, baseY);
+                info[3].setPosition(1230, baseY);
+                info_sprites[1].setPosition(1130, baseY + offsetY);
+                info[4].setPosition(1230, baseY + offsetY);
+                info_sprites[2].setPosition(1130, baseY + 2 * offsetY);
+                info[5].setPosition(1230, baseY + 2 * offsetY);
+                info_sprites[3].setPosition(630, baseY);
+                info[6].setPosition(730, baseY);
+                info_sprites[4].setPosition(630, baseY + offsetY);
+                info[7].setPosition(730, baseY + offsetY);
+                info_sprites[5].setPosition(630, baseY + 2 * offsetY);
+                info[8].setPosition(730, baseY + 2 * offsetY);
                 info_ = true;
             }
         }
