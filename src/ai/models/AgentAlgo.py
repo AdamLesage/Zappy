@@ -9,6 +9,7 @@
 from models.AgentAlert import AgentAlerts
 from models.AgentInfo import AgentInfo
 from models.AgentMoves import Moves
+from models.AgentBroadcast import AgentBroadcast
 import os
 
 # Import all the commands
@@ -40,6 +41,7 @@ class AgentAlgo():
         self.alerts = AgentAlerts(agentInfo, fTime)
         self.agentInfo = agentInfo
         self.agentMoves = Moves()
+        self.agentBroadcast = AgentBroadcast()
         self.client = client
         self.round = 0
         self.ip = ip
