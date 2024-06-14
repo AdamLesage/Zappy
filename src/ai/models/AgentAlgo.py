@@ -67,7 +67,6 @@ class AgentAlgo():
             self.status = "Mining"
             return
         alert = self.alerts.checkAlerts().pop()
-        print(f"Alert: {alert}")
         if alert.startswith("incantation"):
             self.addCommandToExecuteInList(f"Broadcast {alert}\n")
             self.status = "Incantation"
@@ -271,21 +270,87 @@ class AgentAlgo():
             self.agentInfo.movements.append("Right\n")
             self.agentInfo.movements.append("Forward\n")
 
+    def setItemsForIncantation(self) -> None:
+        """
+        Set the items to take for the incantation
+        """
+        # TODO: look before setting everything to avoid to take the same item twice
+        self.agentInfo.commandsToSend.clear()
+        if self.agentInfo.getLevel() == 1:
+            self.agentInfo.commandsToSend.append("Set linemate\n")
+        elif self.agentInfo.getLevel() == 2:
+            self.agentInfo.commandsToSend.append("Set linemate\n")
+            self.agentInfo.commandsToSend.append("Set deraumere\n")
+            self.agentInfo.commandsToSend.append("Set sibur\n")
+        elif self.agentInfo.getLevel() == 3:
+            self.agentInfo.commandsToSend.append("Set linemate\n")
+            self.agentInfo.commandsToSend.append("Set linemate\n")
+            self.agentInfo.commandsToSend.append("Set sibur\n")
+            self.agentInfo.commandsToSend.append("Set phiras\n")
+            self.agentInfo.commandsToSend.append("Set phiras\n")
+        elif self.agentInfo.getLevel() == 4:
+            self.agentInfo.commandsToSend.append("Set linemate\n")
+            self.agentInfo.commandsToSend.append("Set deraumere\n")
+            self.agentInfo.commandsToSend.append("Set sibur\n")
+            self.agentInfo.commandsToSend.append("Set sibur\n")
+            self.agentInfo.commandsToSend.append("Set phiras\n")
+        elif self.agentInfo.getLevel() == 5:
+            self.agentInfo.commandsToSend.append("Set linemate\n")
+            self.agentInfo.commandsToSend.append("Set deraumere\n")
+            self.agentInfo.commandsToSend.append("Set deraumere\n")
+            self.agentInfo.commandsToSend.append("Set sibur\n")
+            self.agentInfo.commandsToSend.append("Set mendiane\n")
+            self.agentInfo.commandsToSend.append("Set mendiane\n")
+            self.agentInfo.commandsToSend.append("Set mendiane\n")
+        elif self.agentInfo.getLevel() == 6:
+            self.agentInfo.commandsToSend.append("Set linemate\n")
+            self.agentInfo.commandsToSend.append("Set deraumere\n")
+            self.agentInfo.commandsToSend.append("Set deraumere\n")
+            self.agentInfo.commandsToSend.append("Set sibur\n")
+            self.agentInfo.commandsToSend.append("Set sibur\n")
+            self.agentInfo.commandsToSend.append("Set phiras\n")
+        elif self.agentInfo.getLevel() == 7:
+            self.agentInfo.commandsToSend.append("Set linemate\n")
+            self.agentInfo.commandsToSend.append("Set linemate\n")
+            self.agentInfo.commandsToSend.append("Set deraumere\n")
+            self.agentInfo.commandsToSend.append("Set deraumere\n")
+            self.agentInfo.commandsToSend.append("Set sibur\n")
+            self.agentInfo.commandsToSend.append("Set sibur\n")
+            self.agentInfo.commandsToSend.append("Set mendiane\n")
+            self.agentInfo.commandsToSend.append("Set mendiane\n")
+            self.agentInfo.commandsToSend.append("Set phiras\n")
+            self.agentInfo.commandsToSend.append("Set thystame\n")
+
     def incantationManagement(self) -> None:
         if self.status != "Incantation":
             self.round += 1 # Increment the round
             return 
         if self.hasAskedIncantation == False:
+            # Ask for incantation
             self.hasAskedIncantation = True
             self.agentInfo.commandsToSend.clear()
-            self.agentInfo.commandsToSend.append("Set linemate\n")
+            self.setItemsForIncantation()
+            self.agentInfo.commandsToSend.append("Broadcast need_incantation_level_" + str(self.agentInfo.getLevel()) + "\n")
             self.agentInfo.commandsToSend.append("Incantation\n")
-        if len(self.getReturnCommand()) == 2 and self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("Current level:"):
+        if self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("Current level:"): # If the incantation is a success
             self.hasAskedIncantation = False
             self.status = "Mining"
             self.agentInfo.setLevel(self.agentInfo.getLevel() + 1)
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.append("Broadcast incantation_success_level_" + str(self.agentInfo.getLevel()) + "\n")
+            self.agentInfo.commandsToSend.append("Look\n")
+            self.round = 0
+            pid = os.fork()
+            if pid > 0:
+                print(f"Parent process: {os.getpid()}") # Parent process
+            else:
+                print(f"Child process: {os.getpid()}")
+                self.agentInfo.commandsToSend.clear()
+                os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
+        elif self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("ko"): # If the incantation is a failure
+            self.hasAskedIncantation = False
+            self.status = "Mining"
+            self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.append("Look\n")
             self.round = 0
 
@@ -294,6 +359,7 @@ class AgentAlgo():
         Will check if the agent can fork.
         If yes, it will fork the agent.
         """
+        print(f"Availables slots for the team: {self.agentInfo.availableSlots}")
         if len(self.alerts.checkAlerts()) != 0:
             alert = self.alerts.checkAlerts().pop()
             if alert == "food":
@@ -326,8 +392,8 @@ class AgentAlgo():
         """
         if self.getReturnCommand()[0] == "Inventory\n":
             self.updateInventory(self.getReturnCommand()[1])
-            for item, qt in self.agentInfo.inventory.items():
-                print(f"{item}: {qt}")
+            # for item, qt in self.agentInfo.inventory.items():
+            #     print(f"{item}: {qt}")
             self.round = 0
             return False
         if self.round >= 10 and self.status != "Incantation": # Frequency of inventory check, avoid to check inventory if incantation is in progress
@@ -339,7 +405,7 @@ class AgentAlgo():
         """
         Play the game, search for resources, level up, incantation, etc
         """
-        print(f"Status: {self.status}, level {self.agentInfo.getLevel()}")
+        # print(f"Status: {self.status}, level {self.agentInfo.getLevel()}")
         self.updateClientStatus(self.round)
         self.round += 1
         if self.round == 5:

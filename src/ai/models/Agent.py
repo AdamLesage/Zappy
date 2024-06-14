@@ -27,7 +27,6 @@ class Agent():
         self.team_name = team_name
         self.receive_from_server = None
         self.ip = ip
-        self.broadcast_received = None
 
     def retrieveWorldDimensions(self, data: str) -> None:
         """Retrieve the world dimensions"""
@@ -42,7 +41,6 @@ class Agent():
         if splited_x.isdigit() and splited_y.isdigit():
             self.agentInfo.world_width = int(splited_x)
             self.agentInfo.world_height = int(splited_y)
-            print(f"World dimensions: {self.agentInfo.world_width}x{self.agentInfo.world_height}")
 
     def retrieveClientNumber(self, data: str) -> None:
         """Retrieve the client number"""
@@ -70,8 +68,21 @@ class Agent():
             # retrieve number of team player
             self.agentInfo.numberMaxOfTeamPlayers = int(self.receive_from_server.split('\n')[0]) + 1
         if self.agentInfo.getCommandsReturned()[0] == "Connect_nbr\n" and self.receive_from_server != None and tmp >= 10:
-            print(f"[{self.agentInfo.numberMaxOfTeamPlayers=}] ----------------- [{self.agentInfo.numberOfTeamPlayersConnected=}]") 
-            self.agentInfo.numberOfTeamPlayersConnected = self.agentInfo.numberMaxOfTeamPlayers - int(self.receive_from_server.split('\n')[0])
+            self.agentInfo.availableSlots = self.agentInfo.numberMaxOfTeamPlayers - self.agentInfo.numberOfTeamPlayersConnected
+
+    def broadcastManagement(self, data: str) -> None:
+        """
+        Manage the broadcast
+        Split data with ' ' ---> [""message", "K,", "text]
+        """
+        if data != None and data.startswith("message"):
+            data.replace(",", "") # remove comma after K
+            try:
+                self.agentInfo.broadcast_orientation = data.split(' ')[1]
+                self.agentInfo.broadcast_received = data.split(' ')[2]
+                
+            except Exception as e:
+                print(f"Error: {e}")
 
     def connect_to_server(self) -> None:
         """Connect to the server from the given ip and port"""
@@ -85,7 +96,8 @@ class Agent():
                 self.client.setblocking(0)
                 try:
                     self.receive_from_server = self.client.recv(1024).decode()
-                    print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
+                    self.broadcastManagement(self.receive_from_server)
+                    # print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
                     tmp += 1
                 except BlockingIOError:
                     self.receive_from_server = None
@@ -94,7 +106,6 @@ class Agent():
                 if self.receive_from_server == "WELCOME\n": # If the server sends "WELCOME\n", send the team name
                     self.client.send(f"{self.team_name}\n".encode())
                     firstConnexion = False
-                    print(self.receive_from_server)
                     self.receive_from_server = None
                     continue
                 # self.retrieveClientNumber(self.receive_from_server)
@@ -106,8 +117,6 @@ class Agent():
                     self.manageConnectNbr(tmp)
                     if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None:
                         continue
-                    if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server != None and self.receive_from_server.startswith("Broadcast"): # Receive a broadcast
-                        self.agentInfo.broadcast_received = self.receive_from_server.split(' ')[1]
                     self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
                     self.agentAlgo.play(self.receive_from_server)
                     self.agentAlgo.clearReturnCommand()
