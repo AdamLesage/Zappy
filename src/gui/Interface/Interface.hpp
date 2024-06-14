@@ -40,6 +40,8 @@ namespace Zappy {
             void print_players();
             void print_evolution(int playerIndex);
             void print_map_iso();
+            void fill_color_team();
+            void print_player_team();
             void set_scale_of_player(int i);
             void playBackgroundMusic(const std::string& filename);
         protected:
@@ -90,6 +92,8 @@ namespace Zappy {
             std::vector<sf::Sprite> broadcast_send;
             std::vector<sf::Texture> broadcast_textures;
             std::vector<sf::Text> broadcast_texts;
+            size_t _teamnbr;
+            std::vector<sf::Color> color_list_team;
         private:
     };
 }
