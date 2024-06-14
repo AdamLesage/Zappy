@@ -11,7 +11,7 @@ Zappy::Broadcast::Broadcast(std::shared_ptr<sf::RenderWindow> window, std::share
 {
     _guiConnect = guiConnect;
     _window = window;
-    if (!font.loadFromFile("./asset/gui/Pacifico.ttf"))
+    if (!font.loadFromFile("./asset/gui/Farmhouse.otf"))
         throw InterfaceError("Error: font not found", "Interface");
     _broadcasts_textures.push_back(sf::Texture());
     if (_broadcasts_textures[0].loadFromFile("./asset/sprite/broadcast/talk_buble.png") == false)
