@@ -231,45 +231,6 @@ class AgentAlgo():
             return True
         return False
 
-    def goToBroadcast(self, orientation: str) -> None:
-        """
-        Player will go to the broadcast position and add the movements to the movements list
-        """
-        self.agentInfo.commandsToSend.clear()
-        self.agentInfo.movements.clear()
-        if orientation == "0": # Player is on the broadcast position
-            return
-        elif orientation == "1": # Broadcast position is on the north of the player
-            self.agentInfo.movements.append("Forward\n")
-        elif orientation == "2": # Broadcast position is on north-west of the player
-            self.agentInfo.movements.append("Forward\n")
-            self.agentInfo.movements.append("Left\n")
-            self.agentInfo.movements.append("Forward\n")
-        elif orientation == "3": # Broadcast position is on the west of the player
-            self.agentInfo.movements.append("Left\n")
-            self.agentInfo.movements.append("Forward\n")
-        elif orientation == "4": # Broadcast position is on the north-west of the player
-            self.agentInfo.movements.append("Left\n")
-            self.agentInfo.movements.append("Forward\n")
-            self.agentInfo.movements.append("Left\n")
-            self.agentInfo.movements.append("Forward\n")
-        elif orientation == "5": # Broadcast position is on the south of the player
-            self.agentInfo.movements.append("Left\n")
-            self.agentInfo.movements.append("Left\n")
-            self.agentInfo.movements.append("Forward\n")
-        elif orientation == "6": # Broadcast position is on the south-east of the player
-            self.agentInfo.movements.append("Right\n")
-            self.agentInfo.movements.append("Forward\n")
-            self.agentInfo.movements.append("Right\n")
-            self.agentInfo.movements.append("Forward\n")
-        elif orientation == "7": # Broadcast position is on the east of the player
-            self.agentInfo.movements.append("Right\n")
-            self.agentInfo.movements.append("Forward\n")
-        elif orientation == "8": # Broadcast position is on the north-east of the player
-            self.agentInfo.movements.append("Forward\n")
-            self.agentInfo.movements.append("Right\n")
-            self.agentInfo.movements.append("Forward\n")
-
     def setItemsForIncantation(self) -> None:
         """
         Set the items to take for the incantation
