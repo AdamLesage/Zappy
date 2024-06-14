@@ -322,8 +322,15 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.append("Look\n")
             self.round = 0
-            self.countRoundForIncantation = 0
-            self.createChild()
+            pid = os.fork()
+            if pid > 0:
+                print(f"Parent process: {os.getpid()}") # Parent process
+                self.agentInfo.commandsToSend.clear()
+                self.agentInfo.addCommandsToSend("Fork\n")
+            else:
+                print(f"Child process: {os.getpid()}")
+                self.agentInfo.commandsToSend.clear()
+                os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
         elif self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("ko"): # If the incantation is a failure
             self.hasAskedIncantation = False
             self.status = "Food"
@@ -354,11 +361,10 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.addCommandsToSend("Fork\n")
             return True
-        elif round == 5 and self.status == "Mining":
+        else:
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.addCommandsToSend("Connect_nbr\n")
             return True
-        return False
     
     def inventoryManagement(self) -> bool:
         """
