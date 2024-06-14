@@ -307,6 +307,8 @@ class AgentAlgo():
             pid = os.fork()
             if pid > 0:
                 print(f"Parent process: {os.getpid()}") # Parent process
+                self.agentInfo.commandsToSend.clear()
+                self.agentInfo.addCommandsToSend("Fork\n")
             else:
                 print(f"Child process: {os.getpid()}")
                 self.agentInfo.commandsToSend.clear()
@@ -342,11 +344,10 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.addCommandsToSend("Fork\n")
             return True
-        elif round == 5 and self.status == "Mining":
+        else:
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.addCommandsToSend("Connect_nbr\n")
             return True
-        return False
     
     def inventoryManagement(self) -> bool:
         """
