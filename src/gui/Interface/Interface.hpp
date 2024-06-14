@@ -9,6 +9,7 @@
 #include "../ServerInfo/GuiConnect.hpp"
 #include "../Entity/Player.hpp"
 #include "../Entity/Tile.hpp"
+#include "InventoryDisplay.hpp"
 #include "InterfaceError.hpp"
 #include <iostream>
 #include <thread>
@@ -17,7 +18,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
-
 
 #ifndef INTERFACE_HPP_
 #define INTERFACE_HPP_
@@ -37,6 +37,7 @@ namespace Zappy {
             void print_resssource();
             void print_eggs();
             void print_players();
+            void print_evolution(int playerIndex);
             void print_map_iso();
             void set_scale_of_player(int i);
             void playBackgroundMusic(const std::string& filename);
@@ -85,6 +86,7 @@ namespace Zappy {
             bool isOverTile;
             sf::Music backgroundMusic;
             std::vector<sf::Sprite> info_sprites;
+            std::shared_ptr<InventoryDisplay> _inventory;
 
         private:
     };
