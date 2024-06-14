@@ -16,6 +16,7 @@ import importlib.util
 from models.AgentAlert import AgentAlerts
 from models.AgentInfo import AgentInfo
 from models.AgentAlgo import AgentAlgo
+from models.AgentMoves import Moves
 
 class TestAgentAlgo(unittest.TestCase):
     def test01_setReturnCommansAnswer(self):
@@ -110,6 +111,7 @@ class TestAgentAlgo(unittest.TestCase):
 
     def test09_findBestItemToTake(self):
         agent = AgentInfo()
+        moves = Moves()
         # list_items = ["food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]
         agent.inventory["linemate"] = 0
         agent.addInventory("sibur", 1)
@@ -117,7 +119,7 @@ class TestAgentAlgo(unittest.TestCase):
         agent.addInventory("phiras", 1)
         agent.addInventory("thystame", 1)
         agentAlgo = AgentAlgo(agent, 100)
-        self.assertEqual(agentAlgo.findBestItemToTake(playerLevel=1, itemsInPlayerVision=["linemate", "sibur", "mendiane", "phiras", "thystame"]), "linemate")
+        self.assertEqual(moves.findBestItemToTake(agent, playerLevel=1, itemsInPlayerVision=["linemate", "sibur", "mendiane", "phiras", "thystame"]), "linemate")
 
     def test10_updateClientStatus(self):
         agent = AgentInfo()

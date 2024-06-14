@@ -35,7 +35,8 @@ class AgentAlgo():
     This class is the main class for the agent's algorithm.
     It will handle the agent's actions and decisions.
     """
-    def __init__(self, agentInfo: AgentInfo, fTime: int, client: socket, ip: str, port: int, teamName: str):
+    def __init__(self, agentInfo: AgentInfo, fTime: int,
+            client: socket = None, ip: str = "0.0.0.0", port: int = 4242, teamName: str = "team"):
         self.alerts = AgentAlerts(agentInfo, fTime)
         self.agentInfo = agentInfo
         self.agentMoves = Moves()
