@@ -346,9 +346,9 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.insert(0, "Connect_nbr\n")
         print(f"Round: {self.round}")
         print(f"time units: {self.agentInfo.getTimeUnits()}")
-        if self.status != "Incantation":
-            if self.forkMode(self.round) == True:
-                return
+        #if self.status != "Incantation":
+        #    if self.forkMode(self.round) == True:
+        #        return
         if self.inventoryManagement():
             return
         if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
