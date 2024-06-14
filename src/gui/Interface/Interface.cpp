@@ -152,13 +152,13 @@ Zappy::Interface::Interface()
         throw InterfaceError("Error: rank7.png not found", "Interface");
     if (player_textures[7].loadFromFile("./asset/sprite/rank/rank8.png") == false)
         throw InterfaceError("Error: rank8.png not found", "Interface");
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 8; i++) {
         player_orientation.push_back(std::array<sf::IntRect, 4>());
     }
     player_orientation[0][0] = sf::IntRect(30, 65, 35, 35);
     player_orientation[0][1] = sf::IntRect(30, 100, 35, 35);
-    player_orientation[0][2] = sf::IntRect(30, 65, 35, 35);
-    player_orientation[0][3] = sf::IntRect(35, 0, 35, 35);
+    player_orientation[0][2] = sf::IntRect(35, 0, 35, 35);
+    player_orientation[0][3] = sf::IntRect(35, 35, 30, 30);
     player_orientation[1][0] = sf::IntRect(30, 65, 35, 35);
     player_orientation[1][1] = sf::IntRect(30, 100, 35, 35);
     player_orientation[1][2] = sf::IntRect(35, 0, 35, 35);
@@ -180,9 +180,9 @@ Zappy::Interface::Interface()
     player_orientation[5][2] = sf::IntRect(433, 302, 30, 41);
     player_orientation[5][3] = sf::IntRect(425, 426, 50, 40);
     player_orientation[6][0] = sf::IntRect(434, 39, 28, 71);
-    player_orientation[6][1] = sf::IntRect(403, 171, 0, 0);
-    player_orientation[6][2] = sf::IntRect(0, 0, 0, 0);
-    player_orientation[6][3] = sf::IntRect(0, 0, 0, 0);
+    player_orientation[6][1] = sf::IntRect(403, 171, 71, 44);
+    player_orientation[6][2] = sf::IntRect(434, 300, 28, 58);
+    player_orientation[6][3] = sf::IntRect(419, 427, 72, 44);
 
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
