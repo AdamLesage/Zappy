@@ -56,6 +56,8 @@ class AgentAlgo():
                                 "broadcast\n": BroadcastCommand(), "fork\n": ForkCommand(),
                                 "eject\n": EjectCommand(), "take\n": TakeCommand(), "set\n": SetCommand(),
                                 "incantation\n": IncantationCommand()}
+        self.countRoundForIncantation = 0
+        self.playerOnSameTileForIncantation = 1
         pass
 
     def updateAgentInfo(self, info: AgentInfo):
@@ -284,6 +286,15 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.append("Set phiras\n")
             self.agentInfo.commandsToSend.append("Set thystame\n")
 
+    def createChild(self) -> None:
+        pid = os.fork()
+        if pid > 0:
+            print(f"Parent process: {os.getpid()}") # Parent process
+        else:
+            print(f"Child process: {os.getpid()}")
+            self.agentInfo.commandsToSend.clear()
+            os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
+
     def incantationManagement(self) -> None:
         if self.status != "Incantation":
             self.round += 1 # Increment the round
@@ -292,29 +303,24 @@ class AgentAlgo():
             # Ask for incantation
             self.hasAskedIncantation = True
             self.agentInfo.commandsToSend.clear()
-            self.setItemsForIncantation()
             if self.agentInfo.getLevel() != 1:
                 self.agentInfo.commandsToSend.append("Broadcast need_incantation_level_" + str(self.agentInfo.getLevel()) + "\n")
-            self.agentInfo.commandsToSend.append("Incantation\n")
+            self.countRoundForIncantation = 0
+            if self.playerOnSameTileForIncantation == self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
+                self.setItemsForIncantation()
+                self.agentInfo.commandsToSend.append("Incantation\n")
+                self.playerOnSameTileForIncantation = 1
         if self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("Current level:"): # If the incantation is a success
             self.hasAskedIncantation = False
             self.status = "Mining"
             self.agentInfo.setLevel(self.agentInfo.getLevel() + 1)
             self.agentInfo.commandsToSend.clear()
-            self.agentInfo.commandsToSend.append("Broadcast incantation_success_level_" + str(self.agentInfo.getLevel()) + "\n")
             self.agentInfo.commandsToSend.append("Look\n")
             self.round = 0
-            pid = os.fork()
-            if pid > 0:
-                print(f"Parent process: {os.getpid()}") # Parent process
-            else:
-                print(f"Child process: {os.getpid()}")
-                self.agentInfo.commandsToSend.clear()
-                os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
+            self.createChild()
         elif self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("ko"): # If the incantation is a failure
             self.hasAskedIncantation = False
             self.status = "Food"
-            print(f"Failure incantation for level {self.agentInfo.getLevel()}, going back to mining")
             self.agentInfo.commandsToSend.append("Inventory\n")
             self.round = 0
 
@@ -459,15 +465,24 @@ class AgentAlgo():
             self.agentInfo.broadcast_orientation = data.split(' ')[1]
             self.agentInfo.broadcast_received = data.split(' ')[2]
 
-            if self.agentInfo.broadcast_received.startswith("incantation_success_level_"):
+            if self.agentInfo.broadcast_received.startswith("need_incantation_level_"): # If the agent receives a broadcast to ask for incantation
                 incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1])
-                self.agentInfo.teamPlayers[f"level{incantationLevel}"] += 1
-            if self.agentInfo.broadcast_received.startswith("need_incantation_level_"):
-                incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1])
-                if self.agentInfo.getLevel() == incantationLevel - 1:
+                if self.agentInfo.getLevel() == incantationLevel:
                     self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{str(incantationLevel)}\n")
                 else:
                     self.agentInfo.commandsToSend.append(f"Broadcast refuse_incantation_level_{str(incantationLevel)}\n")
+                if self.hasAskedIncantation == True: # If the agent has asked for incantation, look at responses received
+                    print(f"Player asked for incantation, waiting for responses")
+                    if self.agentInfo.broadcast_received == f"accept_incantation_level_{str(self.agentInfo.getLevel() + 1)}":
+                        print(f"A player accepted incantation level {self.agentInfo.getLevel() + 1}")
+                        self.agentInfo.incantationResponses += 1
+                        if self.agentInfo.incantationResponses == self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
+                            print(f"Enough players to evolve to level {self.agentInfo.getLevel() + 1}")
+                            # wait until every players are ready and send incantation position with broadcast
+                            self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{str(self.agentInfo.getLevel() + 1)}\n")
+                    if self.agentInfo.broadcast_orientation == "0": # Player is on the same tile as agent
+                        print(f"Player on the same tile as agent")
+                        self.playerOnSameTileForIncantation += 1
                 print(f"Command to send {self.agentInfo.commandsToSend[-1]}")
         except Exception as e:
             print(f"Error from broadcast management: {e}")

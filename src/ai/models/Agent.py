@@ -78,7 +78,7 @@ class Agent():
             tmp = 0
             self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.client.connect((self.ip, self.port))
-            self.agentAlgo = AgentAlgo(self.agentInfo, 2500, self.client, self.ip, self.port, self.team_name)
+            self.agentAlgo = AgentAlgo(self.agentInfo, 1260, self.client, self.ip, self.port, self.team_name)
             while True:
                 self.client.setblocking(0)
                 try:
