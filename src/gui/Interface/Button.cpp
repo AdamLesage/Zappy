@@ -44,7 +44,7 @@ bool RayTracer::Button::checkClick(std::shared_ptr<sf::RenderWindow> window)
 
 void RayTracer::Button::displayButton(std::shared_ptr<sf::RenderWindow> window)
 {
-    std::string font_path("./asset/gui/Pacifico.ttf");
+    std::string font_path("./asset/gui/Farmhouse.otf");
     sf::Font font;
     sf::Color color = this->hoverSape.getFillColor();
 

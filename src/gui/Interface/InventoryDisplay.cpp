@@ -13,8 +13,8 @@ Zappy::InventoryDisplay::InventoryDisplay(std::shared_ptr<GuiConnect> guiConnect
     this->_guiConnect = guiConnect;
     this->current_player_index = -1;
 
-    if (font.loadFromFile("./asset/gui/Pacifico.ttf") == false)
-        throw InterfaceError("Error: Pacifico.ttf not found", "Interface");
+    if (font.loadFromFile("./asset/gui/Farmhouse.otf") == false)
+        throw InterfaceError("Error: Farmhouse.otf not found", "Interface");
     for (int i = 0; i != 9; i++) {
         this->playerInfo.push_back(sf::Text("", font, 45));
         this->playerInfo[i].setFillColor(sf::Color::Black);

@@ -87,6 +87,7 @@ namespace Zappy {
             sf::Music backgroundMusic;
             std::vector<sf::Sprite> info_sprites;
             std::shared_ptr<InventoryDisplay> _inventory;
+            sf::Texture interface_texture;
 
         private:
     };
