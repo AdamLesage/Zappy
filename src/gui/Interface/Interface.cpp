@@ -10,7 +10,6 @@
 
 Zappy::Interface::Interface()
 {
-    info_ = false;
     sound_volume = 50;
     window = std::make_shared<sf::RenderWindow>();
     window->create(sf::VideoMode(1920, 1080), "Zappy");
@@ -66,10 +65,6 @@ Zappy::Interface::Interface()
         throw InterfaceError("Error: Farmhouse.otf not found", "Interface");
     Texts.push_back(sf::Text("tick", font, 50));
     Texts.push_back(sf::Text("Team: ", font, 50));
-    for (int i = 0; i < 20; i++) {
-        info.push_back(sf::Text("", font, 45));
-        info[i].setFillColor(sf::Color::Black);
-    }
     Texts[0].setFillColor(sf::Color::Black);
     Texts[1].setFillColor(sf::Color::Black);
     Texts[0].setPosition(1750, 225);
@@ -122,7 +117,6 @@ Zappy::Interface::Interface()
         throw InterfaceError("Error: wheat.png not found", "Interface");
     for (int i = 0; i < 7; i++) {
         ressource_sprite_.push_back(sf::Sprite());
-        info_sprites.push_back(sf::Sprite());
     }
     ressource_sprite_[0].setTexture(ressource_texture[0]);
     ressource_sprite_[0].setScale(0.05, 0.05);
@@ -138,10 +132,6 @@ Zappy::Interface::Interface()
     ressource_sprite_[5].setScale(0.05, 0.05);
     ressource_sprite_[6].setTexture(ressource_texture[6]);
     ressource_sprite_[6].setScale(0.05, 0.05);
-    for (int i = 0; i < 7; i++) {
-        info_sprites[i].setTexture(ressource_texture[i]);
-        info_sprites[i].setScale(ressource_sprite_[i].getScale().x * 3, ressource_sprite_[i].getScale().y * 3);
-    }
     if (egg_texture.loadFromFile("./asset/sprite/egg.png") == false)
         throw InterfaceError("Error: egg.png not found", "Interface");
     for (int i = 0; i < 8; i++)
@@ -200,6 +190,17 @@ Zappy::Interface::Interface()
 
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
+    // broadcast_textures.push_back(sf::Texture());
+    // if (broadcast_textures[0].loadFromFile("./asset/sprite/broadcast/talk_buble.png") == false)
+    //     throw InterfaceError("Error: broadcast2.png not found", "Interface");
+    // broadcast_textures.push_back(sf::Texture());
+    // if (broadcast_textures[1].loadFromFile("./asset/sprite/broadcast/message.png") == false)
+    //     throw InterfaceError("Error: broadcast.png not found", "Interface");
+    // broadcast_sprites.push_back(sf::Sprite());
+    // broadcast_sprites.push_back(sf::Sprite());
+    // broadcast_sprites[0].setTexture(broadcast_textures[0]);
+    // broadcast_send[0].setTexture(broadcast_textures[1]);
+
 }
 
 void Zappy::Interface::set_scale_of_player(int i)
@@ -220,6 +221,49 @@ void Zappy::Interface::set_scale_of_player(int i)
         player_sprites[i].setScale(0.5, 0.5);
 }
 
+void Zappy::Interface::print_player_team()
+{
+    std::vector<std::string> team_list;
+
+    for (int i = 0; i < _gui_connect->_players.size(); i++) {
+        std::string team_name = _gui_connect->_players[i]->getTeamName();
+        bool team_exists = false;
+        for (const std::string& team : team_list) {
+            if (team == team_name) {
+                team_exists = true;
+                break;
+            }
+        }
+        if (!team_exists) {
+            team_list.push_back(team_name);
+        }
+    }
+
+      for (const auto& player : _gui_connect->_players) {
+            sf::RectangleShape playerSquare(sf::Vector2f(2, 2));
+            std::string team_name = player->getTeamName();
+            int team_index = 0;
+            for (int i = 0; i < team_list.size(); i++) {
+                if (team_list[i] == team_name) {
+                    team_index = i;
+                    break;
+                }
+            }
+            playerSquare.setFillColor(color_list_team[team_index]);
+            playerSquare.setPosition(player->getPosition()[0] * 102.4 + 112, player->getPosition()[1] * 102.4 + 162);
+            window->draw(playerSquare);
+        }
+}
+
+void Zappy::Interface::fill_color_team()
+{
+    for (size_t i = 0; i <= _teamnbr; i++ and i <= color_list_team.size() ) {
+        sf::Color color;
+        color = sf::Color(rand() % 256, rand() % 256, rand() % 256);
+        color_list_team.push_back(color);
+    }
+}
+
 void Zappy::Interface::print_players()
 {
     for (int i = 0; i < _gui_connect->_players.size(); i++) {
@@ -230,6 +274,20 @@ void Zappy::Interface::print_players()
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
         player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation() + 1]);
         window->draw(player_sprites[i]);
+        // if (_gui_connect->_players[i]->getMessage() != "") {
+        //     broadcast_texts.push_back(sf::Text(_gui_connect->_players[i]->getMessage(), font, 20));
+        //     if (broadcast_texts.size() > 1) {
+        //         broadcast_sprites.push_back(sf::Sprite());
+        //         broadcast_sprites[broadcast_sprites.size() - 1].setTexture(broadcast_textures[0]);
+        //         broadcast_sprites[broadcast_sprites.size() - 1].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 130);
+        //     }
+        //     broadcast_texts[broadcast_texts.size() - 1].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 130);
+        //     broadcast_texts[broadcast_texts.size() - 1].setFillColor(sf::Color::Black);
+        //     window->draw(broadcast_sprites[broadcast_sprites.size() - 1]);
+        //     window->draw(broadcast_texts[broadcast_texts.size() - 1]);
+        // }
+        fill_color_team();
+        print_player_team();
         // if (_gui_connect->_players[i]->isEvoluting()) {
         //     print_evolution(i);
         // }
@@ -394,38 +452,7 @@ void Zappy::Interface::check_event()
                 lastMousePos = sf::Mouse::getPosition(*window);
             }
             sf::Vector2f mousePos = window->mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y), view);
-            for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
-                for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
-                    sf::FloatRect tileBounds(100 + (i * 102.4), 150 + (j * 102.4), 102.4, 102.4);
-                    if (tileBounds.contains(mousePos)) {
-                        info[0].setString("Tile: x " + std::to_string(i + 1) + " y " + std::to_string(j + 1));
-                        info[1].setString("Player: " + std::to_string(_gui_connect->_tiles[i][j]->_players.size()));
-                        info[2].setString("Food: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Food")));
-                        info[3].setString("Linemate: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Linemate")));
-                        info[4].setString("Deraumere: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Deraumere")));
-                        info[5].setString("Sibur: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Sibur")));
-                        info[6].setString("Mendiane: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Mendiane")));
-                        info[7].setString("Phiras: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Phiras")));
-                        info[8].setString("Thystame: " + std::to_string(_gui_connect->_tiles[i][j]->_inventory->get("Thystame")));
-                        info[0].setPosition(230, 1080 - 300);
-                        info[1].setPosition(230, 1080 - 250);
-                        info[2].setPosition(230, 1080 - 200);
-                        info_sprites[0].setPosition(1130, 1080 - 300);
-                        info[3].setPosition(1230, 1080 - 300);
-                        info_sprites[1].setPosition(1130, 1080 - 250);
-                        info[4].setPosition(1230, 1080 - 250);
-                        info_sprites[2].setPosition(1130, 1080 - 200);
-                        info[5].setPosition(1230, 1080 - 200);
-                        info_sprites[3].setPosition(630, 1080 - 300);
-                        info[6].setPosition(730, 1080 - 300);
-                        info_sprites[4].setPosition(630, 1080 - 250);
-                        info[7].setPosition(730, 1080 - 250);
-                        info_sprites[5].setPosition(630, 1080 - 200);
-                        info[8].setPosition(730, 1080 - 200);
-                        info_ = true;
-                    }
-                }
-            }
+            _info->Checkclick(mousePos);
         }
         sf::Vector2f mousePos2 = window->mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y), view);
         for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
@@ -468,6 +495,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
 {
     _gui_connect = gui_connect;
     this->_inventory.reset(new InventoryDisplay(_gui_connect, window));
+    this->_info.reset(new InfoDisplay(_gui_connect, window, ressource_sprite_));
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
     sleep(5);
     set_map();
@@ -487,6 +515,12 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         }
         if (isOverTile)
             window->draw(rect);
+        for (size_t i = 0; i < gui_connect->getTeamNames().size(); i++) {
+            Texts.push_back(sf::Text(gui_connect->getTeamNames()[i], font, 50));
+            Texts[2 + i].setFillColor(sf::Color::Black);
+            Texts[2 + i].setPosition(10, 50 + ((2 + i) * 50));
+        }
+        _teamnbr = gui_connect->getTeamNames().size();
         print_resssource();
         print_eggs();
         print_players();
@@ -494,11 +528,6 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->setView(window->getDefaultView());
         for (size_t i = 0; i < _rect.size(); i++)
             window->draw(_rect[i]);
-        for (size_t i = 0; i < gui_connect->getTeamNames().size(); i++) {
-            Texts.push_back(sf::Text(gui_connect->getTeamNames()[i], font, 50));
-            Texts[2 + i].setFillColor(sf::Color::Black);
-            Texts[2 + i].setPosition(10, 50 + ((2 + i) * 50));
-        }
         for (size_t i = 0; i < Texts.size(); i++)
             window->draw(Texts[i]);
         tick = bars[1]->checkClick(window);
@@ -506,16 +535,11 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
             _gui_connect->setTimeUnit(std::to_string(tick));
             last_tick = tick;
         }
-        // printf("timeUnit: %d\n", _gui_connect->_timeUnit);
         bars[0]->displayBar(window);
         bars[1]->displayBar(window);
         this->_inventory->display();
         window->draw(sound);
-        for (int k = 0; k < 9; k++)
-            window->draw(info[k]);
-        if (info_) 
-           for (int k = 0; k < 6; k++)
-                window->draw(info_sprites[k]);
+        _info->display();
         print_sound();
         window->display();
     }

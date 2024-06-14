@@ -10,6 +10,7 @@
 #include "../Entity/Player.hpp"
 #include "../Entity/Tile.hpp"
 #include "InventoryDisplay.hpp"
+#include "InfoDisplay.hpp"
 #include "InterfaceError.hpp"
 #include <iostream>
 #include <thread>
@@ -39,10 +40,11 @@ namespace Zappy {
             void print_players();
             void print_evolution(int playerIndex);
             void print_map_iso();
+            void fill_color_team();
+            void print_player_team();
             void set_scale_of_player(int i);
             void playBackgroundMusic(const std::string& filename);
         protected:
-            bool info_;
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
             std::vector<std::shared_ptr<Bar>> bars;
@@ -81,14 +83,18 @@ namespace Zappy {
             sf::View view;
             sf::Vector2i lastMousePos;
             bool isPanning;
-            std::vector<sf::Text> info;
             sf::RectangleShape rect;
             bool isOverTile;
             sf::Music backgroundMusic;
-            std::vector<sf::Sprite> info_sprites;
             std::shared_ptr<InventoryDisplay> _inventory;
             sf::Texture interface_texture;
-
+            std::shared_ptr<InfoDisplay> _info;
+            std::vector<sf::Sprite> broadcast_sprites;
+            std::vector<sf::Sprite> broadcast_send;
+            std::vector<sf::Texture> broadcast_textures;
+            std::vector<sf::Text> broadcast_texts;
+            size_t _teamnbr;
+            std::vector<sf::Color> color_list_team;
         private:
     };
 }
