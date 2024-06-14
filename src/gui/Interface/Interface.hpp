@@ -77,6 +77,7 @@ namespace Zappy {
             sf::Texture egg_texture;
             sf::Font font;
             std::vector<sf::Text> Texts;
+            std::vector<std::string> Texts_str;
             sf::Sprite sound;
             sf::Texture sound_;
             std::shared_ptr<GuiConnect> _gui_connect;

@@ -494,10 +494,14 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         }
         if (isOverTile)
             window->draw(rect);
-        for (size_t i = 0; i < gui_connect->getTeamNames().size(); i++) {
-            Texts.push_back(sf::Text(gui_connect->getTeamNames()[i], font, 50));
-            Texts[2 + i].setFillColor(sf::Color::Black);
-            Texts[2 + i].setPosition(10, 50 + ((2 + i) * 50));
+        std::vector<std::string> teamNames = gui_connect->getTeamNames();
+        for (size_t i = 0; i < teamNames.size(); i++) {
+            if (std::find(Texts_str.begin(), Texts_str.end(), teamNames[i]) == Texts_str.end()) {
+                Texts_str.push_back(teamNames[i]);
+                Texts.push_back(sf::Text(teamNames[i], font, 50));
+                Texts[2 + i].setFillColor(sf::Color::Black);
+                Texts[2 + i].setPosition(10, 50 + ((2 + i) * 50));
+            }
         }
         _teamnbr = gui_connect->getTeamNames().size();
         print_resssource();
