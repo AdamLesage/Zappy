@@ -14,6 +14,14 @@ class AgentBroadcast():
     """
     This class is used to manage the broadcast of the agent.
     Each agent can send and receive broadcast messages.
+
+    List of broadcast messages (demands):
+    - "Need mate to reach level n"
+    - "Count mates"
+    
+    List of broadcast messages (answers):
+    - "I am coming"
+    - "Present"
     """
     def __init__(self) -> None:
         pass
@@ -57,3 +65,6 @@ class AgentBroadcast():
             agentInfo.movements.append("Right\n")
             agentInfo.movements.append("Forward\n")
     
+    def receiveBroadcast(agentInfo: AgentInfo, broadcastMsg: str):
+        """Check the broadcast message and act accordingly"""
+        return
