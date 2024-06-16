@@ -30,10 +30,12 @@ class IEvolution {
     // Getters
     virtual std::pair<int, int> getPosition() const = 0;
     virtual sf::Clock getClock() const = 0;
+    virtual std::pair<int, int> getSize() const = 0;
 
     // Setters
     virtual void setPosition(int x, int y) = 0;
     virtual void setClock(sf::Clock clock) = 0;
+    virtual void setSize(int x, int y) = 0;
 
     // Member functions
 
