@@ -13,7 +13,10 @@ class Evolution : public IEvolution {
     public:
     // Ctor
         Evolution(std::pair<int, int> position, std::pair<int, int> size,
-            sf::Clock clock) : _position(position), _size(size), _clock(clock) {};
+            sf::Clock clock, std::string texture) : _position(position),
+            _size(size), _clock(clock)
+        {
+        };
     
     // Dtor
         ~Evolution();
