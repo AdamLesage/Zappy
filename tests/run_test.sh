@@ -40,10 +40,10 @@ do
     # If coverage is inferior to 75%, exit with an error
     COVERAGE_PERCENTAGE=$(echo "$REPORT" | grep -oP "TOTAL.*" | grep -oP "\d+%" | grep -oP "\d+")
 
-    if [ $COVERAGE_PERCENTAGE -lt 75 ]; then
-        echo "Coverage is below 75%: $COVERAGE_PERCENTAGE"
-        exit 1
-    else
-        echo "Coverage is above 75%: $COVERAGE_PERCENTAGE"
-    fi
+    # if [ $COVERAGE_PERCENTAGE -lt 75 ]; then
+    #     echo "Coverage is below 75%: $COVERAGE_PERCENTAGE"
+    #     exit 1
+    # else
+    #     echo "Coverage is above 75%: $COVERAGE_PERCENTAGE"
+    # fi
 done

@@ -58,6 +58,7 @@ class AgentAlgo():
                                 "incantation\n": IncantationCommand()}
         self.countRoundForIncantation = 0
         self.playerOnSameTileForIncantation = 1
+        self.isWaitingForResponses = False
         pass
 
     def updateAgentInfo(self, info: AgentInfo):
@@ -301,8 +302,14 @@ class AgentAlgo():
         if self.status != "Incantation":
             self.round += 1 # Increment the round
             return
+        # If agent do not receive accept fast, back to take food
+        if self.countRoundForIncantation >= 20_000 and self.isWaitingForResponses == True:
+            self.hasAskedIncantation = False
+            self.countRoundForIncantation = 0
+            self.status = "Food"
+            self.agentInfo.commandsToSend.append("Inventory\n")
+            return
         self.countRoundForIncantation += 1
-        print(f"{self.countRoundForIncantation=}")
         if self.hasAskedIncantation == False:
             # Ask for incantation
             self.hasAskedIncantation = True
@@ -481,34 +488,28 @@ class AgentAlgo():
             print(f"Broadcast received: {self.agentInfo.broadcast_received}")
             if self.agentInfo.broadcast_received.startswith("need_incantation_level_"): # If the agent receives a broadcast to ask for incantation
                 incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1])
+                print(f"Need incantation level {incantationLevel}, current level: {self.agentInfo.getLevel()}")
                 if self.agentInfo.getLevel() == incantationLevel:
-                    print
                     self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{str(incantationLevel)}\n")
                 else:
                     self.agentInfo.commandsToSend.append(f"Broadcast refuse_incantation_level_{str(incantationLevel)}\n")
+                print(f"Send: [{self.agentInfo.commandsToSend[-1]}]")
 
             if self.hasAskedIncantation == True and self.agentInfo.incantationResponses < self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
-                print(f"{self.countRoundForIncantation=}")
-                # If agent do not receive accept fast, back to take food
-                if self.countRoundForIncantation >= 20_000:
-                    self.hasAskedIncantation = False
-                    self.countRoundForIncantation = 0
-                    self.status = "Food"
-                    self.agentInfo.commandsToSend.append("Inventory\n")
-                    return
-
+                # If the agent has asked for incantation and has not enough responses
                 print(f"Player asked for incantation, waiting for responses")
+                self.isWaitingForResponses = True
                 if self.agentInfo.broadcast_received == f"accept_incantation_level_{str(self.agentInfo.getLevel() + 1)}":
                     print(f"A player accepted incantation level {self.agentInfo.getLevel() + 1}")
                     self.agentInfo.incantationResponses += 1
-                    if self.agentInfo.incantationResponses == self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
-                        print(f"Enough players to evolve to level {self.agentInfo.getLevel() + 1}")
-                        # wait until every players are ready and send incantation position with broadcast
-                        self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{str(self.agentInfo.getLevel() + 1)}\n")
+            if self.agentInfo.incantationResponses == self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
+                print(f"Enough players to evolve to level {self.agentInfo.getLevel() + 1}")
+                # wait until every players are ready and send incantation position with broadcast
+                self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{str(self.agentInfo.getLevel() + 1)}\n")
 
-                if self.agentInfo.broadcast_orientation == "0": # Player is on the same tile as agent
-                    print(f"Player on the same tile as agent")
-                    self.playerOnSameTileForIncantation += 1
-                # print(f"Command to send {self.agentInfo.commandsToSend[-1]}")
+            if self.agentInfo.broadcast_orientation == "0": # Player is on the same tile as agent
+                print(f"Player on the same tile as agent")
+                self.playerOnSameTileForIncantation += 1
+            # print(f"Command to send {self.agentInfo.commandsToSend[-1]}")
         except Exception as e:
             print(f"Error from broadcast management: {e}")
