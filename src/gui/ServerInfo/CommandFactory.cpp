@@ -98,6 +98,5 @@ void Zappy::CommandFactory::askCommand(std::string commandName, std::vector<std:
 {
     if (_commands.find(commandName) != _commands.end()) { // if command exists
         _commands[commandName]->askCommand(_serverSocket, args);
-        printf("Command %s sent\n", commandName.c_str());
     }
 }

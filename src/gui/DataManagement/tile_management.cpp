@@ -30,12 +30,10 @@ std::shared_ptr<Zappy::Tile> GuiConnect::getTileByCoords(std::pair<int, int> coo
             int y = tile->_position.y;
             if (x == coords.first && y == coords.second)
             {
-                printf("tile found x = %d, y = %d\n", x , y);
                 return tile;
             }
         }
     }
-    printf("tile not found\n");
     throw Zappy::ConnectError("Tile not found", "GuiConnect::getTileByCoords");
     return nullptr;
 }
