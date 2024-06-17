@@ -384,7 +384,6 @@ class AgentAlgo():
             if command_output[0] == "Inventory\n":
                 if command_output[1] == None or command_output[1].startswith("[") == False:
                     return False
-                # print(f"Inventory: {command_output[1]}")
                 self.updateInventory(command_output[1])
                 # for item, qt in self.agentInfo.inventory.items():
                 #     print(f"{item}: {qt}")
@@ -537,7 +536,6 @@ class AgentAlgo():
         if self.agentInfo.getLevel() == 1: # Player level 1 do not need to wait for responses
             return
         if self.agentInfo.incantationResponses == self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
-            print(f"Enough players to evolve to level {self.agentInfo.getLevel()}")
             # wait until every players are ready and send incantation position with broadcast
             self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}\n")
         pass
@@ -545,9 +543,11 @@ class AgentAlgo():
     def playerOnSameTile(self) -> None:
         try:
             if self.agentInfo.broadcast_received == "on_same_tile":
-                print(f"Player on the same tile as agent")
                 self.playerOnSameTileForIncantation += 1
-                if self.playerOnSameTileForIncantation == self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
+                next_level = self.agentInfo.getLevel() + 1
+                required_players = self.agentInfo.numberToEvolve[f"level{next_level}"]
+                if self.playerOnSameTileForIncantation >= required_players:
+                    print(f"Player can start an incantation level {next_level}")
                     self.agentInfo.commandsToSend.append(f"Incantation\n")
         except Exception as e:
             print(f"Error from playerOnSameTile broadcast received: {e}")
@@ -555,8 +555,10 @@ class AgentAlgo():
 
         try:
             # If player receive broadcast orientation with message "waiting_for_incantation_level_n"
-            if self.agentInfo.broadcast_orientation == "0" and self.agentInfo.broadcast_received.startswith("waiting_for_incantation_level_"): # Player is on the same tile as agent
-                print(f"Player on the same tile as agent")
+            if self.agentInfo.broadcast_orientation == "0" and self.agentInfo.broadcast_received.startswith("waiting_for_incantation_level_") and self.status != "Waiting player to start incantation":
+                # Player is on the same tile as agent and has not already asked for incantation
+                print(f"Orientation is 0")
+                self.agentInfo.movements.clear()
                 self.playerOnSameTileForIncantation += 1
                 self.agentInfo.commandsToSend.append("Broadcast on_same_tile\n")
                 self.status = "Waiting player to start incantation"
