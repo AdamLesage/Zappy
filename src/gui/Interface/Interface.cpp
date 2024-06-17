@@ -20,21 +20,31 @@ Zappy::Interface::Interface()
     sprite.setTexture(texture);
     sprite.setScale(0.32, 0.32);
     // sprite.setColor(sf::Color(255, 255, 255, 150));
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 2; i++)
         tile_texture_.push_back(sf::Texture());
     if (tile_texture_[0].loadFromFile("./asset/sprite/tiles/tile1.png") == false)
         throw InterfaceError("Error: tile1.png not found", "Interface");
     if (tile_texture_[1].loadFromFile("./asset/sprite/tiles/tile2.png") == false)
         throw InterfaceError("Error: tile2.png not found", "Interface");
-    if (tile_texture_[2].loadFromFile("./asset/sprite/tiles/tile3.png") == false)
-        throw InterfaceError("Error: tile3.png not found", "Interface");
-    if (tile_texture_[3].loadFromFile("./asset/sprite/tiles/tile4.png") == false)
-        throw InterfaceError("Error: tile4.png not found", "Interface");
-    if (tile_texture_[4].loadFromFile("./asset/sprite/tiles/tile5.png") == false)
-        throw InterfaceError("Error: tile5.png not found", "Interface");
-    if (tile_texture_[5].loadFromFile("./asset/sprite/tiles/tile6.png") == false)
-        throw InterfaceError("Error: tile6.png not found", "Interface");
-    for (int i = 0; i < 6; i++) {
+    // if (tile_texture_[2].loadFromFile("./asset/sprite/tiles/tile3.png") == false)
+    //     throw InterfaceError("Error: tile3.png not found", "Interface");
+    // if (tile_texture_[3].loadFromFile("./asset/sprite/tiles/tile4.png") == false)
+    //     throw InterfaceError("Error: tile4.png not found", "Interface");
+    // if (tile_texture_[4].loadFromFile("./asset/sprite/tiles/tile5.png") == false)
+    //     throw InterfaceError("Error: tile5.png not found", "Interface");
+    // if (tile_texture_[5].loadFromFile("./asset/sprite/tiles/tile6.png") == false)
+    //     throw InterfaceError("Error: tile6.png not found", "Interface");
+    // if (tile_texture_[6].loadFromFile("./asset/sprite/tiles/tile7.png") == false)
+    //     throw InterfaceError("Error: tile7.png not found", "Interface");
+    // if (tile_texture_[7].loadFromFile("./asset/sprite/tiles/tile8.png") == false)
+    //     throw InterfaceError("Error: tile8.png not found", "Interface");
+    // if (tile_texture_[8].loadFromFile("./asset/sprite/tiles/tile9.png") == false)
+    //     throw InterfaceError("Error: tile9.png not found", "Interface");
+    // if (tile_texture_[9].loadFromFile("./asset/sprite/tiles/tile10.png") == false)
+    //     throw InterfaceError("Error: tile10.png not found", "Interface");
+    // if (tile_texture_[10].loadFromFile("./asset/sprite/tiles/tile11.png") == false)
+    //     throw InterfaceError("Error: tile11.png not found", "Interface");
+    for (int i = 0; i < 2; i++) {
         tile_sprite_.push_back(sf::Sprite());
         tile_sprite_[i].setTexture(tile_texture_[i]);
         tile_sprite_[i].setScale(0.32, 0.32);
@@ -322,7 +332,7 @@ void Zappy::Interface::set_map()
         std::vector<std::vector<sf::Sprite>> tmp_ressource_sprite;
         for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
             tmp.push_back(std::make_shared<Tile>(sf::Vector2f(i, j), std::make_shared<Inventory>()));
-            int random_index = rand() % 6;
+            int random_index = rand() % 2;
             tmp_sprite.push_back(tile_sprite_[random_index]);
             tmp_iso_sprite.push_back(tile_iso_sprite[random_index]);
             tmp_sprite[j].setPosition(i + 100, j + 100);
@@ -511,7 +521,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         print_resssource();
         print_eggs();
         print_players();
-        print_map_iso();
+        // print_map_iso();
         window->setView(window->getDefaultView());
         for (size_t i = 0; i < _rect.size(); i++)
             window->draw(_rect[i]);
