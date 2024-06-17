@@ -11,6 +11,9 @@ Evolution::Evolution(std::pair<int, int> position, std::pair<int, int> size,
     sf::Clock clock, std::string texture) : _position(position), _size(size), _clock(clock)
 {
     _texture.loadFromFile(texture);
+    _sprite.setTexture(_texture);
+    _sprite.setPosition(_position.first, _position.second);
+    _sprite.setScale(_size.first, _size.second);
 }
 
 Evolution::~Evolution()
@@ -47,4 +50,9 @@ void Evolution::setSize(int x, int y)
 {
     _size.first = x;
     _size.second = y;
+}
+
+void Evolution::draw(sf::RenderWindow *window)
+{
+    window->draw(_sprite);
 }

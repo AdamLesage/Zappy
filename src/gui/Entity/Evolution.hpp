@@ -32,6 +32,7 @@ class Evolution : public IEvolution {
     void setSize(int x, int y);
 
     // Member functions
+    void draw(sf::RenderWindow *window);
 
     protected:
     private:

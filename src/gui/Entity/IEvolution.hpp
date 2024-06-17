@@ -39,6 +39,7 @@ class IEvolution {
     virtual void setSize(int x, int y) = 0;
 
     // Member functions
+    virtual void draw(sf::RenderWindow *window) = 0;
 
     protected:
     private:
