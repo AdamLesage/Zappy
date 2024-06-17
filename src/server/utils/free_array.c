@@ -17,3 +17,12 @@ void free_array(char **array)
         free(array);
     }
 }
+
+void free_array2(char **array)
+{
+    if (array != NULL) {
+        for (int i = 0; array[i] != NULL; i++) {
+            free(array[i]);
+        }
+    }
+}

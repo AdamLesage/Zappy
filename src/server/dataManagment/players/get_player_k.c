@@ -100,9 +100,14 @@ int get_player_k(player_info_t *player_info, int x, int y,
 
     if (vector == NULL || orientation == NULL)
         return (-1);
-    if (player_info->pos_x == x && player_info->pos_y == y)
+    if (player_info->pos_x == x && player_info->pos_y == y) {
+        free(vector);
+        free(orientation);
         return (0);
+    }
     angle = compute_angle(vector, orientation);
     k = angle_to_k(angle);
+    free(vector);
+    free(orientation);
     return (k);
 }
