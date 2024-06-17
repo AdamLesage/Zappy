@@ -32,8 +32,8 @@ class AgentBroadcast():
         """
         if agentInfo.broadcast_orientation == None or status != "Going to incantation" or len(agentInfo.movements) > 0:
             return
+        # print("Going to broadcast")
         agentInfo.commandsToSend.clear()
-        agentInfo.movements.clear()
         if orientation == "0": # Player is on the broadcast position
             return
         elif orientation == "1": # Broadcast position is on the north of the player
@@ -66,8 +66,7 @@ class AgentBroadcast():
             agentInfo.movements.append("Forward\n")
             agentInfo.movements.append("Right\n")
             agentInfo.movements.append("Forward\n")
-        print(f"Going to broadcast position with movements: {agentInfo.movements}")
-    
+
     def receiveBroadcast(agentInfo: AgentInfo, broadcastMsg: str):
         """Check the broadcast message and act accordingly"""
         return
