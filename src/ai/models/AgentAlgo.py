@@ -178,19 +178,27 @@ class AgentAlgo():
         # return if there is not digit in the inv string
         if any(char.isdigit() for char in inv) == False:
             return
-        inv = inv.replace("[ ", "")
-        inv = inv.replace(" ]", "")
-        inv = inv.replace("[", "")
-        inv = inv.replace("]", "")
-        inv = inv.replace(", ", ",")
-        splitedInf = inv.split(',')
+        # if inv contains "player" return
+        if "player" in inv:
+            self.agentInfo.commandsToSend.clear() # Clear the commands to send, because there is a problem of order
+            
+            return
+        try:
+            inv = inv.replace("[ ", "")
+            inv = inv.replace(" ]", "")
+            inv = inv.replace("[", "")
+            inv = inv.replace("]", "")
+            inv = inv.replace(", ", ",")
+            splitedInf = inv.split(',')
 
-        for item in splitedInf:
-            item = item.split(' ')
-            if self.agentInfo.inventory[item[0]] == int(item[1]):
-                continue
-            self.agentInfo.addInventory(item[0], item[1])
-        self.agentInfo.setTimeUnits(self.agentInfo.getInventory("food") * 126)
+            for item in splitedInf:
+                item = item.split(' ')
+                if self.agentInfo.inventory[item[0]] == int(item[1]):
+                    continue
+                self.agentInfo.addInventory(item[0], item[1])
+            self.agentInfo.setTimeUnits(self.agentInfo.getInventory("food") * 126)
+        except Exception as e:
+            print(f"Error from updateInventory: {e}")
 
     def foodMode(self) -> None:
         """
@@ -385,8 +393,6 @@ class AgentAlgo():
                 if command_output[1] == None or command_output[1].startswith("[") == False:
                     return False
                 self.updateInventory(command_output[1])
-                # for item, qt in self.agentInfo.inventory.items():
-                #     print(f"{item}: {qt}")
                 self.round = 0
                 return False
             
@@ -395,7 +401,7 @@ class AgentAlgo():
                 return True
             
             return False
-        except Exception as e:
+        except ValueError as e:
             print(f"Error from inventoryManagement: {e}")
             return False
 
@@ -472,7 +478,7 @@ class AgentAlgo():
         """Set the command to return"""
         self.agentInfo.commandsReturned[1] = serverAnswer
     
-    def getReturnCommand(self) -> str:
+    def getReturnCommand(self) -> list:
         """Get the command to return"""
         return self.agentInfo.commandsReturned
     
@@ -557,7 +563,7 @@ class AgentAlgo():
             # If player receive broadcast orientation with message "waiting_for_incantation_level_n"
             if self.agentInfo.broadcast_orientation == "0" and self.agentInfo.broadcast_received.startswith("waiting_for_incantation_level_") and self.status != "Waiting player to start incantation":
                 # Player is on the same tile as agent and has not already asked for incantation
-                print(f"Orientation is 0")
+                print(f"Orientation is 0 from broadcast {self.agentInfo.broadcast_received}")
                 self.agentInfo.movements.clear()
                 self.playerOnSameTileForIncantation += 1
                 self.agentInfo.commandsToSend.append("Broadcast on_same_tile\n")
