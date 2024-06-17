@@ -497,8 +497,17 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
     window->setFramerateLimit(120);
     window->draw(loading);
+    loadingBar.setSize(sf::Vector2f(1600, 40));
+    loadingBar.setFillColor(sf::Color(119 , 181 , 254));
+    loadingBar.setPosition(160, 900);
+    clock.restart();
+    while (clock.getElapsedTime().asSeconds() < 5) {
+        float progress = clock.getElapsedTime().asSeconds() / 5;
+        loadingBar.setSize(sf::Vector2f(1600 * progress, 60));
+        window->draw(loadingBar);
+        window->display();
+    }
     window->display();
-    sleep(5);
     set_map();
     view.zoom(0.5);
     playBackgroundMusic("./asset/music/music.ogg");

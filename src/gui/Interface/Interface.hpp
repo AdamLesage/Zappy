@@ -96,6 +96,8 @@ namespace Zappy {
             std::vector<sf::Color> color_list_team;
             sf::Texture loading_texture;
             sf::RectangleShape loading;
+            sf::Clock clock;
+            sf::RectangleShape loadingBar;
         private:
     };
 }
