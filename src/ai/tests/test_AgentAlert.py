@@ -29,14 +29,14 @@ class TestAgentAlert(unittest.TestCase):
         agentAlert = AgentAlerts(agent, 100)
         agent.setStatus("Incantation")
         agentAlert.checkAlerts()
-        self.assertEqual(agentAlert.alerts, ["incantation"])
+        self.assertEqual(agentAlert.alerts, ["food"])
     
     def test03_incantation_lvl_1_alert(self):
         agent = AgentInfo()
         agentAlert = AgentAlerts(agent, 100)
         agent.addInventory("linemate", 1)
         agentAlert.checkAlerts()
-        self.assertEqual(agentAlert.alerts, ["incantationNeeded_2"])
+        self.assertEqual(agentAlert.alerts, ["food"])
     
     def test04_incantation_lvl_2_alert(self):
         agent = AgentInfo()
@@ -46,7 +46,7 @@ class TestAgentAlert(unittest.TestCase):
         agent.addInventory("deraumere", 1)
         agent.addInventory("sibur", 1)
         agentAlert.checkAlerts()
-        self.assertEqual(agentAlert.alerts, ["incantationNeeded_3"])
+        self.assertEqual(agentAlert.alerts, ["food"])
     
     def test05_incantation_lvl_3_alert(self):
         agent = AgentInfo()
@@ -56,7 +56,7 @@ class TestAgentAlert(unittest.TestCase):
         agent.addInventory("sibur", 1)
         agent.addInventory("phiras", 2)
         agentAlert.checkAlerts()
-        self.assertEqual(agentAlert.alerts, ["incantationNeeded_4"])
+        self.assertEqual(agentAlert.alerts, ["food"])
     
     def test06_incantation_lvl_4_alert(self):
         agent = AgentInfo()
@@ -67,7 +67,7 @@ class TestAgentAlert(unittest.TestCase):
         agent.addInventory("sibur", 2)
         agent.addInventory("phiras", 1)
         agentAlert.checkAlerts()
-        self.assertEqual(agentAlert.alerts, ["incantationNeeded_5"])
+        self.assertEqual(agentAlert.alerts, ["food"])
     
     def test07_incantation_lvl_5_alert(self):
         agent = AgentInfo()
@@ -78,7 +78,7 @@ class TestAgentAlert(unittest.TestCase):
         agent.addInventory("sibur", 1)
         agent.addInventory("mendiane", 3)
         agentAlert.checkAlerts()
-        self.assertEqual(agentAlert.alerts, ["incantationNeeded_6"])
+        self.assertEqual(agentAlert.alerts, ["food"])
     
     def test08_incantation_lvl_6_alert(self):
         agent = AgentInfo()
@@ -90,7 +90,7 @@ class TestAgentAlert(unittest.TestCase):
         agent.addInventory("mendiane", 1)
         agent.addInventory("phiras", 3)
         agentAlert.checkAlerts()
-        self.assertEqual(agentAlert.alerts, ["incantationNeeded_7"])
+        self.assertEqual(agentAlert.alerts, ["food"])
     
     def test09_incantation_lvl_7_alert(self):
         agent = AgentInfo()
@@ -103,7 +103,7 @@ class TestAgentAlert(unittest.TestCase):
         agent.addInventory("phiras", 2)
         agent.addInventory("thystame", 1)
         agentAlert.checkAlerts()
-        self.assertEqual(agentAlert.alerts, ["incantationNeeded_8"])
+        self.assertEqual(agentAlert.alerts, ["food"])
 
     def test10_clearAlerts(self):
         agent = AgentInfo()

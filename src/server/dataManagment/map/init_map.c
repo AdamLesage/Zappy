@@ -98,6 +98,7 @@ static int len_tile_info(tile_info_t *tile_info)
         len += strlen(array[i]) + 1;
         free(array[i]);
     }
+    free(array);
     return (len);
 }
 
@@ -117,6 +118,7 @@ static char *get_tile_info(tile_info_t *tile_info)
         strcat(string_tile_info, array[i]);
         free(array[i]);
     }
+    free(array);
     strcat(string_tile_info, "\n");
     string_tile_info[len] = '\0';
     return (string_tile_info);
@@ -150,7 +152,5 @@ void init_map(map_t *map, arguments_t *arguments)
     create_tiles_list(map);
     add_eggs_on_map(map, arguments);
     array = get_map_info(map);
-    for (int i = 0; array[i] != NULL; i++) {
-        free(array[i]);
-    }
+    free_array(array);
 }

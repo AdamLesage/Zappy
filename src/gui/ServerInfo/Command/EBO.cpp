@@ -29,7 +29,8 @@ void Zappy::EBO::applyChanges(std::vector<std::string> parsedData,
     (void)tiles; // unused
     (void)timeUnit; // unused
     (void)isRunning; // unused
-    (void)teams; // unused    
+    (void)teams; // unused
+    (void)players; // unused
     // parsedData vector { "ebo", "eggNumber" }
 
     if (parsedData.size() != 2)
