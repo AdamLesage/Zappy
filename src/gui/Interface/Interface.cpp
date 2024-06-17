@@ -188,12 +188,15 @@ Zappy::Interface::Interface()
         throw InterfaceError("Error: rank8.png not found", "Interface");
     for (int i = 0; i < 8; i++) {
         player_rank.push_back(sf::Sprite());
-        player_rank_text.push_back(sf::Text("Level " + std::to_string(i), font, 30));
+        player_rank_text.push_back(sf::Text("Level " + std::to_string(i), font, 40));
         player_rank[i].setTexture(player_textures[i]);
         player_rank_text[i].setFillColor(sf::Color::White);
         player_rank[i].setPosition(10, 100 + i * 100);
         player_rank_text[i].setPosition(100, 100 + i * 100);
     }
+    player_rank[0].setScale(1.5, 1.5);
+    player_rank[1].setScale(1.5, 1.5);
+    player_rank[2].setScale(1.5, 1.5);
     for (int i = 0; i < 8; i++) {
         player_orientation.push_back(std::array<sf::IntRect, 4>());
     }
