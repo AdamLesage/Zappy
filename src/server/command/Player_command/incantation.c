@@ -80,6 +80,8 @@ static void delete_incantation2(core_t *core,
             tmp->next->incantation_info->incantation_timer == 0) {
             deleted_incantation = tmp->next;
             tmp->next = tmp->next->next;
+            free(deleted_incantation->incantation_info->ids);
+            free(deleted_incantation->incantation_info);
             free(deleted_incantation);
             return;
         }
@@ -93,6 +95,9 @@ static void delete_incantation(core_t *core,
     incantation_list_t *deleted_incantation = NULL;
     incantation_list_t *tmp = core->players.incantation_list;
 
+    if (tmp == NULL) {
+        return;
+    }
     if (tmp->incantation_info->incantation_level ==
         incantation_info->incantation_level &&
         tmp->incantation_info->pos_x == incantation_info->pos_x &&
@@ -100,6 +105,8 @@ static void delete_incantation(core_t *core,
         tmp->incantation_info->incantation_timer == 0) {
         deleted_incantation = core->players.incantation_list;
         core->players.incantation_list = core->players.incantation_list->next;
+        free(deleted_incantation->incantation_info->ids);
+        free(deleted_incantation->incantation_info);
         free(deleted_incantation);
         return;
     }

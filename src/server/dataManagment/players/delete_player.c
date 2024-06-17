@@ -7,6 +7,15 @@
 
 #include "server.h"
 
+static void free_player(players_list_t *deleted_player)
+{
+    free_array2(deleted_player->player_info->action_queue);
+    free(deleted_player->player_info->team_name);
+    free(deleted_player->player_info->inventory);
+    free(deleted_player->player_info);
+    free(deleted_player);
+}
+
 static bool delete_player2(map_t *map, players_t *players, int fd)
 {
     players_list_t *deleted_player = NULL;
@@ -21,7 +30,7 @@ static bool delete_player2(map_t *map, players_t *players, int fd)
             put_eggs(map, deleted_player->player_info->pos_x,
                 deleted_player->player_info->pos_y,
                 deleted_player->player_info->team_name);
-            free(deleted_player);
+            free_player(deleted_player);
             return (true);
         }
     }
@@ -42,7 +51,7 @@ bool delete_player(map_t *map, players_t *players, int fd)
         remove_player(map, player_info->pos_x, player_info->pos_y);
         put_eggs(map, player_info->pos_x, player_info->pos_y,
             player_info->team_name);
-        free(deleted_player);
+        free_player(deleted_player);
         return true;
     }
     return delete_player2(map, players, fd);

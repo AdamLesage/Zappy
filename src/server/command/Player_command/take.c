@@ -37,6 +37,7 @@ void take(core_t *core, int fd, char **command)
     player_info_t *info = NULL;
 
     if (take_on_map(pos, object, &core->map) == false) {
+        free(pos);
         send_response("ko\n", fd);
         return;
     }
@@ -46,4 +47,5 @@ void take(core_t *core, int fd, char **command)
     pgt(&core->players, info->id, object);
     pin_event(&core->players, info);
     bct_event(core, pos[0], pos[1]);
+    free(pos);
 }

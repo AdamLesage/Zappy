@@ -22,8 +22,7 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 
-namespace RayTracer
-{
+namespace Zappy {
     class Button {
         public:
             enum StateButton {

@@ -31,21 +31,14 @@ void Zappy::EBO::applyChanges(std::vector<std::string> parsedData,
     (void)isRunning; // unused
     (void)teams; // unused    
     // parsedData vector { "ebo", "eggNumber" }
+
     if (parsedData.size() != 2)
         throw Zappy::CommandError("Invalid number of arguments for PIC command", "EBO");
-
     try {
         std::shared_ptr<Zappy::Player> player = std::make_shared<Zappy::Player>();
 
         for (auto &egg : eggs) {
-            if (egg.get()->getPlayerNumber() == std::stoi(parsedData[1])) {
-                player->setPlayerNumber(egg->getPlayerNumber());
-                player->setPosition(egg->getPosition()[0], egg->getPosition()[1]);
-                player->setTeamName(egg->getTeamName());
-                player->setPlayerLevel(1);
-                player->setOrientation(0);
-                player->setMessage("");
-                players.push_back(player);
+            if (egg.get()->getEggNb() == std::stoi(parsedData[1])) {
                 eggs.erase(std::remove(eggs.begin(), eggs.end(), egg), eggs.end());
                 break;
             }
