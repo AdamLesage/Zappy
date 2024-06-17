@@ -30,9 +30,9 @@ class AgentBroadcast():
         """
         Player will go to the broadcast position and add the movements to the movements list
         """
-        if agentInfo.broadcast_orientation == None or status != "Going to incantation" or len(agentInfo.movements) > 0:
+        if orientation == None or status != "Going to incantation":
             return
-        # print("Going to broadcast")
+        agentInfo.movements.clear()
         agentInfo.commandsToSend.clear()
         if orientation == "0": # Player is on the broadcast position
             return

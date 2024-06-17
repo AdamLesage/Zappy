@@ -84,7 +84,7 @@ class Agent():
                     self.client.setblocking(0)
                     try:
                         self.receive_from_server = self.client.recv(1024).decode()
-                        self.agentAlgo.broadcastManagement(self.receive_from_server)
+                        self.agentAlgo.broadcastManagement(self.receive_from_server.replace("\n", ""))
                         # print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
                         tmp += 1
                     except BlockingIOError:
