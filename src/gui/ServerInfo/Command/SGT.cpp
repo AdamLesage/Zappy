@@ -37,7 +37,6 @@ void Zappy::SGT::applyChanges(std::vector<std::string> parsedData,
     (void)tiles; // unused
     (void)players; // unused
     (void)eggs; // unused
-    (void)timeUnit; // unused
     (void)isRunning; // unused
     (void)teams; // unused
     // parsedData vector { "sgt", "timeUnit" }

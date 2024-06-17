@@ -63,9 +63,8 @@ void check_player_command(core_t *core)
     check_end_incantation(core);
     for (players_list_t *tmp = core->players.players_list;
         tmp != NULL; tmp = tmp->next) {
-        if (tmp->player_info->is_on_incantation == true) {
+        if (tmp->player_info->is_on_incantation == true)
             continue;
-        }
         if (tmp->player_info->timer_action == 0 &&
             tmp->player_info->action_queue[0] != NULL) {
             command = get_action_in_queue(&core->players, tmp->fd);
@@ -73,6 +72,10 @@ void check_player_command(core_t *core)
             next_player_command(tmp->player_info, core);
         } else {
             tmp->player_info->timer_action--;
+        }
+        if (command != NULL) {
+            free(command);
+            command = NULL;
         }
     }
 }

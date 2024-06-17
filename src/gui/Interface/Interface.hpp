@@ -9,6 +9,9 @@
 #include "../ServerInfo/GuiConnect.hpp"
 #include "../Entity/Player.hpp"
 #include "../Entity/Tile.hpp"
+#include "InventoryDisplay.hpp"
+#include "InfoDisplay.hpp"
+#include "Broadcast.hpp"
 #include "InterfaceError.hpp"
 #include <iostream>
 #include <thread>
@@ -17,7 +20,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
-
 
 #ifndef INTERFACE_HPP_
 #define INTERFACE_HPP_
@@ -37,15 +39,18 @@ namespace Zappy {
             void print_resssource();
             void print_eggs();
             void print_players();
+            void print_evolution(int playerIndex);
             void print_map_iso();
+            void fill_color_team();
+            void print_player_team();
             void set_scale_of_player(int i);
             void playBackgroundMusic(const std::string& filename);
         protected:
-            bool info_;
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
             std::vector<std::shared_ptr<Bar>> bars;
             int tick;
+            int last_tick;
             float zoom;
             float last_zoom;
             float sound_volume;
@@ -72,6 +77,7 @@ namespace Zappy {
             sf::Texture egg_texture;
             sf::Font font;
             std::vector<sf::Text> Texts;
+            std::vector<std::string> Texts_str;
             sf::Sprite sound;
             sf::Texture sound_;
             std::shared_ptr<GuiConnect> _gui_connect;
@@ -79,12 +85,15 @@ namespace Zappy {
             sf::View view;
             sf::Vector2i lastMousePos;
             bool isPanning;
-            std::vector<sf::Text> info;
             sf::RectangleShape rect;
             bool isOverTile;
             sf::Music backgroundMusic;
-            std::vector<sf::Sprite> info_sprites;
-
+            std::shared_ptr<InventoryDisplay> _inventory;
+            sf::Texture interface_texture;
+            std::shared_ptr<InfoDisplay> _info;
+            std::shared_ptr<Broadcast> _broadcast;
+            size_t _teamnbr;
+            std::vector<sf::Color> color_list_team;
         private:
     };
 }
