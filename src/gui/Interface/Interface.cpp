@@ -10,6 +10,10 @@
 
 Zappy::Interface::Interface()
 {
+    if (loading_texture.loadFromFile("./asset/gui/loading-screen.jpg") == false)
+        throw InterfaceError("Error: loading-screen.png not found", "Interface");
+    loading.setSize(sf::Vector2f(1920, 1080));
+    loading.setTexture(&loading_texture);
     sound_volume = 50;
     window = std::make_shared<sf::RenderWindow>();
     window->create(sf::VideoMode(1920, 1080), "Zappy");
@@ -280,6 +284,7 @@ void Zappy::Interface::print_players()
         fill_color_team();
         print_player_team();
         _broadcast->check_player_broadcast(i);
+        _broadcast->display();
         // if (_gui_connect->_players[i]->isEvoluting()) {
         //     print_evolution(i);
         // }
@@ -490,6 +495,9 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     this->_info.reset(new InfoDisplay(_gui_connect, window, ressource_sprite_));
     this->_broadcast.reset(new Broadcast(window, _gui_connect));
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
+    window->setFramerateLimit(120);
+    window->draw(loading);
+    window->display();
     sleep(5);
     set_map();
     view.zoom(0.5);

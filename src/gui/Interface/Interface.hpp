@@ -94,6 +94,8 @@ namespace Zappy {
             std::shared_ptr<Broadcast> _broadcast;
             size_t _teamnbr;
             std::vector<sf::Color> color_list_team;
+            sf::Texture loading_texture;
+            sf::RectangleShape loading;
         private:
     };
 }
