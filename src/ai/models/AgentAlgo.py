@@ -75,7 +75,6 @@ class AgentAlgo():
             alert = self.alerts.checkAlerts().pop()
             if alert.startswith("incantationNeeded"):
                 if alert != "incantationNeeded_2": # Not needed for incantation to level 2
-                    self.agentInfo.commandsToSend.clear()
                     self.agentInfo.commandsToSend.append(f"Broadcast {alert}\n")
                 self.status = "Incantation" # Do not change status to incantation, need to wait for other agents except if player is level 1 
                 return
@@ -235,7 +234,7 @@ class AgentAlgo():
                 self.round = 0
                 return False
             if self.round == 10: # Frequency of inventory check, avoid to check inventory if incantation is in progress
-                self.agentInfo.commandsToSend.insert(0, "Inventory\n")
+                self.agentInfo.commandsToSend.append("Inventory\n")
                 self.round = 0
                 return True
             return False
@@ -300,7 +299,6 @@ class AgentAlgo():
             print(f"Parent process: {os.getpid()}") # Parent process
         else:
             print(f"Child process: {os.getpid()}")
-            self.agentInfo.commandsToSend.clear()
             os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
 
     def incantationManagement(self) -> None:
@@ -319,7 +317,6 @@ class AgentAlgo():
         if self.hasAskedIncantation == False:
             # Ask for incantation
             self.hasAskedIncantation = True
-            self.agentInfo.commandsToSend.clear()
             if self.agentInfo.getLevel() != 1:
                 self.agentInfo.commandsToSend.append("Broadcast need_incantation_level_" + str(self.agentInfo.getLevel()) + "\n")
                 print(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}")
@@ -335,16 +332,13 @@ class AgentAlgo():
             self.status = "Mining"
             self.agentInfo.setLevel(self.agentInfo.getLevel() + 1)
             self.countRoundForIncantation = 0
-            self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.append("Look\n")
             self.agentInfo.incantationResponses = 1
             self.round = 0
             pid = os.fork()
             if pid > 0:
-                self.agentInfo.commandsToSend.clear()
                 self.agentInfo.addCommandsToSend("Fork\n")
             else:
-                self.agentInfo.commandsToSend.clear()
                 os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
         elif self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("ko"): # If the incantation is a failure
             self.hasAskedIncantation = False
@@ -368,16 +362,13 @@ class AgentAlgo():
                 print(f"Parent process: {os.getpid()}") # Parent process
             else:
                 print(f"Child process: {os.getpid()}")
-                self.agentInfo.commandsToSend.clear()
                 os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
             return False
         if self.getReturnCommand()[0] == "Connect_nbr\n" and int(self.getReturnCommand()[1].replace("\n", "")) != 0:
             print(f"Connect_nbr: {self.getReturnCommand()[1]}")
-            self.agentInfo.commandsToSend.clear()
             self.agentInfo.addCommandsToSend("Fork\n")
             return True
         else:
-            self.agentInfo.commandsToSend.clear()
             self.agentInfo.addCommandsToSend("Connect_nbr\n")
             return True
     
@@ -388,19 +379,27 @@ class AgentAlgo():
         - Update the inventory of the agent.
         """
         try:
-            if self.getReturnCommand()[0] == "Inventory\n":
-                self.updateInventory(self.getReturnCommand()[1])
+            command_output = self.getReturnCommand()
+            
+            if command_output[0] == "Inventory\n":
+                if command_output[1] == None or command_output[1].startswith("[") == False:
+                    return False
+                # print(f"Inventory: {command_output[1]}")
+                self.updateInventory(command_output[1])
                 # for item, qt in self.agentInfo.inventory.items():
                 #     print(f"{item}: {qt}")
                 self.round = 0
                 return False
+            
             if self.round >= 10 and self.status != "Incantation": # Frequency of inventory check, avoid to check inventory if incantation is in progress
-                self.agentInfo.commandsToSend.insert(0, "Inventory\n")
+                self.agentInfo.commandsToSend.append("Inventory\n")
                 return True
+            
             return False
         except Exception as e:
             print(f"Error from inventoryManagement: {e}")
             return False
+
 
     def play(self, data: str) -> str:
         """
@@ -411,7 +410,7 @@ class AgentAlgo():
             self.updateClientStatus(self.round)
             self.round += 1
             if self.round == 5:
-                self.agentInfo.commandsToSend.insert(0, "Connect_nbr\n")
+                self.agentInfo.commandsToSend.append("Connect_nbr\n")
             if self.inventoryManagement():
                 return
             self.agentBroadcast.goToBroadcast(self.agentInfo.broadcast_orientation, self.agentInfo, self.status)
@@ -425,12 +424,10 @@ class AgentAlgo():
                 return
             self.incantationManagement()
             if self.status == "Food":
-                self.agentInfo.commandsToSend.clear()
-                self.agentInfo.commandsToSend.insert(0, "Look\n")
+                self.agentInfo.commandsToSend.append("Look\n")
                 return
             if self.status == "Mining":
-                self.agentInfo.commandsToSend.clear()
-                self.agentInfo.commandsToSend.insert(0, "Look\n")
+                self.agentInfo.commandsToSend.append("Look\n")
             self.clientPlayLevel1()
             self.clientPlayLevel2()
             self.clientPlayLevel3()
