@@ -14,7 +14,7 @@ class AgentAlerts(AgentInfo):
         self.agent = agent_info
         self.alerts = []
         self.moves = Moves()
-        self.minTimeU = 20 * 126
+        self.minTimeU = 15 * 126
         self.formerAlert = None
         pass
 
