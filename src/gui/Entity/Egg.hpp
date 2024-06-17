@@ -15,6 +15,7 @@ namespace Zappy {
         public:
             Egg();
             ~Egg();
+            int getEggNb() const { return _eggNb; }
 
         int _eggNb;
         protected:
