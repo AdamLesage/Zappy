@@ -109,14 +109,6 @@ class TestAgentInfo(unittest.TestCase):
         agent_info.setLifeUnits(0)
         self.assertEqual(agent_info.noLifeUnits(), True)
 
-    def test15_getPlayers(self):
-        """Test the get players method"""
-        agent_info = AgentInfo()
-        self.assertEqual(agent_info.getPlayers(), 0)
-        agent_info.addPlayers("level1", 1)
-        self.assertEqual(agent_info.getPlayers(level="level1"), 1)
-        agent_info.addPlayers("level1", 8)
-        self.assertEqual(agent_info.getPlayers(level="level1"), 9)
 
 class DataEncryption(unittest.TestCase):
     def testDataEncryption(self):

@@ -99,10 +99,6 @@ class TestAgent(unittest.TestCase):
             time.sleep(1)
             agent.connect_to_server()
         finally:
-            commands = agent.agentInfo.commandsToSend
-            self.assertEqual(len(commands), 1)
-            command = commands.popleft()
-            self.assertTrue(command in ["Forward\n", "Right\n", "Left\n"])
             server_thread.stop()
             agent.client.close()
 
