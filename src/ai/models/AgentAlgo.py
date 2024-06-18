@@ -117,12 +117,10 @@ class AgentAlgo():
         If the agent is level 3, do the actions for level 3
         Actions such as: search for food, help agent level 1 to upgrade to level 2, level up, etc
         """
-        if self.agentInfo.getLevel() != 3:
+        if self.agentInfo.getLevel() != 3 or self.status == "Incantation":
             return
         if self.status == "Food":
             self.foodMode() # Search for food
-        elif self.status == "Incantation":
-            return # If the agent is in incantation, do nothing because broadcast has been sent, need to wait for other agents
         else:
             self.miningMode()
 
@@ -133,18 +131,24 @@ class AgentAlgo():
         Once level 4 is reached, agent is considered as a "helper" agent
         Then once there is enough agents to reach level 5, he will join or start an incantation to level 5
         """
-        if self.agentInfo.getLevel() != 4:
+        if self.agentInfo.getLevel() != 4 or self.status == "Incantation":
             return
-        pass
+        if self.status == "Food":
+            self.foodMode() # Search for food
+        else:
+            self.miningMode()
 
     def clientPlayLevel5(self) -> None:
         """
         If the agent is level 5, do the actions for level 5
         Actions such as: search for food, help agent level 3 to upgrade to level 4, level up, etc
         """
-        if self.agentInfo.getLevel() != 5:
+        if self.agentInfo.getLevel() != 5 or self.status == "Incantation":
             return
-        pass
+        if self.status == "Food":
+            self.foodMode() # Search for food
+        else:
+            self.miningMode()
 
     def clientPlayLevel6(self) -> None:
         """
@@ -152,9 +156,12 @@ class AgentAlgo():
         Actions such as: search for food, help agent level 4 and level 5 to upgrade to level 6, level up, etc
         The goal of agent level 6 if to help other agents to level up so incantation will be easier
         """
-        if self.agentInfo.getLevel() != 6:
+        if self.agentInfo.getLevel() != 6 or self.status == "Incantation":
             return
-        pass
+        if self.status == "Food":
+            self.foodMode() # Search for food
+        else:
+            self.miningMode()
 
     def clientPlayLevel7(self) -> None:
         """
@@ -162,9 +169,12 @@ class AgentAlgo():
         Actions such as: search for food, help agent and level 4, level 5 and level 6 to upgrade to level 7, level up, etc
         The goal of agent level 7 if to help other agents to level up so incantation will be easier
         """
-        if self.agentInfo.getLevel() != 7:
+        if self.agentInfo.getLevel() != 7 or self.status == "Incantation":
             return
-        pass
+        if self.status == "Food":
+            self.foodMode() # Search for food
+        else:
+            self.miningMode()
 
     def clientPlayLevel8(self) -> None:
         """
@@ -172,9 +182,9 @@ class AgentAlgo():
         Actions such as: search for food, help agent and level 4, level 5, level 6 and level 7 to upgrade to level 8, level up, etc
         The goal of agent level 8 if to help other agents to level up so incantation will be easier
         """
-        if self.agentInfo.getLevel() != 8:
+        if self.agentInfo.getLevel() != 2 or self.status == "Incantation":
             return
-        pass
+        self.foodMode() # Search for food
 
     def updateInventory(self, inv: str) -> None:
         """
