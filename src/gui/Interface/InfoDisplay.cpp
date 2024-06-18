@@ -66,6 +66,7 @@ void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
                 float offsetY = 50;
                 info[0].setPosition(230, baseY);
                 info[1].setPosition(230, baseY + offsetY);
+                info_sprites[6].setPosition(200, baseY +  2 *offsetY);
                 info[2].setPosition(230, baseY + 2 * offsetY);
                 info_sprites[0].setPosition(1130, baseY);
                 info[3].setPosition(1230, baseY);
@@ -90,7 +91,7 @@ void Zappy::InfoDisplay::display()
     if (info_) {
         for (int k = 0; k < 9; k++)
             _window->draw(info[k]);
-        for (int k = 0; k < 6; k++)
+        for (int k = 0; k < 7; k++)
             _window->draw(info_sprites[k]);
     }
 }
