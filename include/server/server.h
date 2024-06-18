@@ -35,6 +35,13 @@ typedef struct socket_config_s {
     int sockfd;
 } socket_config_t;
 
+typedef struct look_info_s {
+    char *str;
+    int *look_orientation;
+    int level;
+    player_info_t *player_info;
+} look_info_t;
+
 typedef struct core_s {
     socket_config_t socket_config;
     select_info_t select_info;

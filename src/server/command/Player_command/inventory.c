@@ -45,7 +45,7 @@ static char *set_str_from_inventory_info(char **inventory_info,
 {
     char *str = NULL;
 
-    str = malloc(sizeof(char) * len_inventory);
+    str = malloc(sizeof(char) * len_inventory + 1);
     str[0] = '\0';
     strcat(str, "[ food ");
     strcat(str, inventory_info[0]);
