@@ -93,12 +93,15 @@ Zappy::Interface::Interface()
     font.loadFromFile("./asset/gui/Farmhouse.otf");
     if (font.loadFromFile("./asset/gui/Farmhouse.otf") == false)
         throw InterfaceError("Error: Farmhouse.otf not found", "Interface");
-    Texts.push_back(sf::Text("tick", font, 50));
+    Texts.push_back(sf::Text("tick: ", font, 50));
     Texts.push_back(sf::Text("Team: ", font, 50));
     Texts[0].setFillColor(sf::Color::Black);
     Texts[1].setFillColor(sf::Color::Black);
     Texts[0].setPosition(1750, 225);
     Texts[1].setPosition(10, 50);
+    tick_text = sf::Text("2", font, 50);
+    tick_text.setFillColor(sf::Color::Black);
+    tick_text.setPosition(1825, 225);
     if (sound_.loadFromFile("./asset/gui/soundbar_logo.png") == false)
         throw InterfaceError("Error: soundbar_logo.png not found", "Interface");
     sound.setTexture(sound_);
@@ -598,6 +601,10 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
             _gui_connect->setTimeUnit(std::to_string(tick));
             last_tick = tick;
         }
+        if (tick < 2)
+            tick = 2;
+        tick_text.setString(std::to_string(_gui_connect->getTimeUnit()));
+        window->draw(tick_text);
         bars[0]->displayBar(window);
         bars[1]->displayBar(window);
         this->_inventory->display();

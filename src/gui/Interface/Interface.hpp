@@ -51,6 +51,7 @@ namespace Zappy {
             sf::Event event;
             std::vector<std::shared_ptr<Bar>> bars;
             int tick;
+            sf::Text tick_text;
             int last_tick;
             float zoom;
             float last_zoom;

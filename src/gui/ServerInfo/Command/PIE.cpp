@@ -47,6 +47,7 @@ void Zappy::PIE::applyChanges(std::vector<std::string> parsedData,
                     // Incantation success
                 } else {
                     // Incantation fail
+                }
             }
         }
     } catch (std::exception &e) {
