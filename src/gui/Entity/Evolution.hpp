@@ -37,7 +37,7 @@ class Evolution : public IEvolution {
 
     // Member functions
     void draw(sf::RenderWindow *window);
-    void updateClock(int &currentFrame, float frameTime);
+    bool updateClock(int &currentFrame, float frameTime);
 
     protected:
     private:
