@@ -35,6 +35,10 @@ namespace Zappy {
             virtual void setOrientation(int orientation) = 0;
             virtual std::string getMessage() = 0;
             virtual void setMessage(std::string message) = 0;
+            virtual int getTravelled() = 0;
+            virtual void setTravelled(int travelled) = 0;
+            virtual std::array<int, 2> getLastPosition() = 0;
+            virtual void setLastPosition(int x, int y) = 0;
         protected:
         private:
     };
