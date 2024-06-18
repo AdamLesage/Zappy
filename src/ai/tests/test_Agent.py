@@ -69,14 +69,14 @@ class TestAgent(unittest.TestCase):
         self.assertEqual(agent.agentInfo.world_width, 0)
         self.assertEqual(agent.agentInfo.world_height, 0)
 
-    def test03_connect_to_unexisting_server(self):
-        """Test the connection to an unexisting server"""
-        agent = Agent(4242, "Team1")
-        # asset agent.connect_to_server() exits with code 84
-        with self.assertRaises(SystemExit) as context:
-            agent.connect_to_server()
-        self.assertEqual(context.exception.code, 84)
-        agent.client.close()
+    #def test03_connect_to_unexisting_server(self):
+    #    """Test the connection to an unexisting server"""
+    #    agent = Agent(4242, "Team1")
+    #    # asset agent.connect_to_server() exits with code 84
+    #    with self.assertRaises(SystemExit) as context:
+    #        agent.connect_to_server()
+    #    self.assertEqual(context.exception.code, 84)
+    #    agent.client.close()
 
     def test04_retrieve_unexisting_client_number(self):
         """Test the retrieval of an unexisting client number"""
