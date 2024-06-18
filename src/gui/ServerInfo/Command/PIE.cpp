@@ -43,8 +43,10 @@ void Zappy::PIE::applyChanges(std::vector<std::string> parsedData,
                 players[i]->getPosition()[1] == std::stoi(parsedData[2]) && // if playerY == incantationY
                 players[i]->isPlayerIncanting() == true) {
                 players[i]->setIsIncanting(false);
-                if (incantationResult == "ok") {
-                    players[i]->setPlayerLevel(players[i]->getLevel() + 1);
+                if (incantationResult == "1") {
+                    // Incantation success
+                } else {
+                    // Incantation fail
                 }
             }
         }
