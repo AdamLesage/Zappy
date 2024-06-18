@@ -14,7 +14,6 @@ class AgentInfo():
         self.commandsToSend = deque(maxlen=10) # Defined as a deque with a max length of 8 because we need to execute Look and Inventory commands every 8 rounds
         #self.commandsReturned = deque(maxlen=8)
         self.commandsReturned = [None, None]
-        self.commandWaitingList = []
         self.inventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.client_num = 0
         self.world_width = 0
@@ -22,47 +21,23 @@ class AgentInfo():
         self.movements = []
         self.agentStatus = "Alive" # Alive, Dead, Incantation, Fork
         self.level = 1
-        self.numberingVision = 1
         self.teamInventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0} # Inventory of the team
         self.playerVision = [] # Vision of player, tiles around him
         self.lifeUnits = 10
         self.timeUnits = 1260 
         self.broadcast_received = None
-        self.numberMaxOfTeamPlayers = 0
-        self.numberOfTeamPlayersConnected = 0
-        self.availableSlots = 0
-        self.broadcast_received = None
         self.broadcast_orientation = None
-        self.incantationResponses = 0
+        self.incantationResponses = 1
         self.numberToEvolve = {"level2": 1, "level3": 2, "level4": 2, "level5": 4, "level6": 4, "level7": 6, "level8": 6} # Number of players needed to evolve to the next level
 
     def noLifeUnits(self) -> bool:
         """Return True if there is no more life units"""
         return (self.lifeUnits <= 0)
 
-    def noTimeUnits(self) -> bool:
-        """Return True if there is no more time units"""
-        return (self.timeUnits <= 0)
-
-    def manageBroadcastReceived(self) -> None:
-        """Do something with the broadcast received"""
-        if self.broadcast_received != None and self.broadcast_received.startswith("message"):
-            incantation_orientation = self.broadcast_received.split(" ")[1].replace(",", "")
-            incantation_message = self.broadcast_received.split(" ")[2]
-            self.broadcast_received = None
-
     # Getters
     def getTimeUnits(self) -> int:
         """Returns the number of time units"""
-        return (self.timeUnits) 
-
-    def getLifeUnits(self) -> int:
-        """Returns the number of life units"""
-        return (self.lifeUnits)
-    
-    def getNumberingVision(self) -> int:
-        """Get the numbering vision"""
-        return (self.numberingVision)
+        return (self.timeUnits)
 
     def getAgentStatus(self) -> str:
         """Get the status of the agent: Alive, Dead, Incantation, Fork"""
@@ -97,10 +72,6 @@ class AgentInfo():
     def setLifeUnits(self, lu: int) -> None:
         """Set the number of life Units"""
         self.lifeUnits = lu
-
-    def setNumberingVision(self) -> None:
-        """Set the numbering vision"""
-        self.numberingVision += 2
     
     def addLifeUnits(self, lu: int) -> None:
         """Add the number of life Units"""

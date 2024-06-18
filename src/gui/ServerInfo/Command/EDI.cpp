@@ -38,7 +38,7 @@ void Zappy::EDI::applyChanges(std::vector<std::string> parsedData,
 
     try {
         for (auto &egg : eggs) {
-            if (egg->getPlayerNumber() == std::stoi(parsedData[1])) {
+            if (egg->getEggNb() == std::stoi(parsedData[1])) {
                 eggs.erase(std::remove(eggs.begin(), eggs.end(), egg), eggs.end());
                 break;
             }
