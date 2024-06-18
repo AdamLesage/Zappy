@@ -135,11 +135,13 @@ void Evolution::draw(sf::RenderWindow *window)
     window->draw(_sprite);
 }
 
-void Evolution::updateClock(int &currentFrame, float frameTime)
+bool Evolution::updateClock(int &currentFrame, float frameTime)
 {
     if (_clock.getElapsedTime().asSeconds() > frameTime) {
         currentFrame = (currentFrame + 1) % _nbrFrame;
         _sprite.setTextureRect(_frames[currentFrame]);
         _clock.restart();
+        return true;
     }
+    return false;
 }

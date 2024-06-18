@@ -311,26 +311,30 @@ void Zappy::Interface::print_players()
         print_player_team();
         _broadcast->check_player_broadcast(i);
         _broadcast->display();
-        // if (_gui_connect->_players[i]->isEvoluting()) {
-        //     print_evolution(i);
-        // }
+        if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
+            //print_evolution(i);
+        }
     }
 }
 
 void Zappy::Interface::print_evolution(int current_player)
 {
-    sf::Sprite evolutionSprite;
-    sf::Texture evolutionTexture;
+    std::pair<int, int> plPos {_gui_connect->_players[current_player].get()->getPosition()[0],
+        _gui_connect->_players[current_player].get()->getPosition()[1]};
+    Evolution plEvol(plPos, std::make_pair(1, 1), sf::Clock(),
+        "asset/sprite/animation/evolution1.png");
+    int currentFrame {0};
+    int countFrame {0};
 
-    if (!evolutionTexture.loadFromFile("./sprite/animation/evo.png")) {
-        std::cerr << "Error loading texture" << std::endl;
-        return;
+    plEvol.setFrameInfo(82, 67, 16, 2);
+    while (countFrame < 16) {
+        plEvol.updateClock(currentFrame, 0.1);
+        window->clear();
+        plEvol.draw(window.get());
+        window->display();
+        countFrame++;
     }
-    evolutionSprite.setTexture(evolutionTexture);
-    set_scale_of_player(current_player);
-    auto playerPosition = _gui_connect->_players[current_player]->getPosition();
-    evolutionSprite.setPosition(playerPosition[0] * 102.4 + 100, playerPosition[1] * 102.4 + 150);
-    window->draw(evolutionSprite);
+    return;
 }
 
 Zappy::Interface::~Interface()
