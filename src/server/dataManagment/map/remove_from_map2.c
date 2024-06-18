@@ -58,6 +58,7 @@ static bool delete_eggs(char *team_name, map_t *map, int x, int y)
             tmp->next->pos_x == x && tmp->next->pos_y == y) {
             deleted_eggs = tmp->next;
             tmp->next = tmp->next->next;
+            free(deleted_eggs->team_name);
             free(deleted_eggs);
             return (true);
         }
@@ -76,6 +77,7 @@ bool remove_eggs(map_t *map, int x, int y, char *team_name)
         map->eggs->pos_x == x && map->eggs->pos_y == y) {
         deleted_eggs = map->eggs;
         map->eggs = map->eggs->next;
+        free(deleted_eggs->team_name);
         free(deleted_eggs);
         return (true);
     }

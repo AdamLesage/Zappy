@@ -15,6 +15,8 @@ static void free_player(players_list_t *players)
     if (players->next != NULL) {
         free_player(players->next);
     }
+    free_array2(players->player_info->action_queue);
+    free(players->player_info->team_name);
     free(players->player_info->inventory);
     free(players->player_info);
     free(players);
@@ -29,6 +31,7 @@ static void free_incantation(incantation_list_t *incantation)
         free_incantation(incantation->next);
     }
     free(incantation->incantation_info);
+    free(incantation->incantation_info->ids);
     free(incantation);
 }
 
@@ -52,6 +55,7 @@ static void free_eggs(eggs_t *eggs)
     if (eggs->next != NULL) {
         free_eggs(eggs->next);
     }
+    free(eggs->team_name);
     free(eggs);
 }
 
@@ -62,6 +66,7 @@ void close_server(core_t *core)
     free_incantation(core->players.incantation_list);
     free_map(core->map.tiles_list);
     free_eggs(core->map.eggs);
+    free_array(core->arguments.name_teams);
     close(core->select_info.fd_socket_control);
     exit(0);
 }

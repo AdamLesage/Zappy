@@ -21,7 +21,7 @@ void Zappy::SST::askCommand(int fd, std::vector<std::string> args)
         throw Zappy::CommandError("Invalid number of arguments for SST command", "SST");
         // response format "SSt T\n"
     std::string timeUnit = args[1];
-    std::string message = "SST " + timeUnit + "\n";
+    std::string message = "sst " + timeUnit + "\n";
     write(fd, message.c_str(), message.size());
 }
 
@@ -39,7 +39,6 @@ void Zappy::SST::applyChanges(std::vector<std::string> parsedData,
     (void)tiles; // unused
     (void)players; // unused
     (void)eggs; // unused
-    (void)timeUnit; // unused
     (void)isRunning; // unused
     (void)teams; // unused
     // parsedData vector { "sst", "timeUnit" }
