@@ -63,6 +63,7 @@ class AgentAlgo():
         self.isPlayerConnected = False
         self.borntick = 0
         self.alReadyResponded = False
+        self.broadcastReceived = None # Broadcast received from the server
         pass
 
     def updateAgentInfo(self, info: AgentInfo):
@@ -183,14 +184,10 @@ class AgentAlgo():
         if any(char.isdigit() for char in inv) == False:
             return
         # if inv contains "player" return
-        if "player" in inv:
+        if "player" in inv or "message" in inv: # If the inventory contains "player" or "message"
             return
         try:
-            inv = inv.replace("[ ", "")
-            inv = inv.replace(" ]", "")
-            inv = inv.replace("[", "")
-            inv = inv.replace("]", "")
-            inv = inv.replace(", ", ",")
+            inv = inv.replace("[ ", "").replace(" ]", "").replace("[", "").replace("]", "").replace(", ", ",")
             splitedInf = inv.split(',')
 
             for item in splitedInf:
@@ -482,6 +479,7 @@ class AgentAlgo():
         """
         if data == None or data.startswith("message") == False:
             return False
+        self.broadcastReceived = data
         data = data.replace(",", "") # remove comma after K
         data = data.replace("\n", "") # remove \n at the end of the string
         try:
