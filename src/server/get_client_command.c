@@ -18,7 +18,7 @@ static void disconnect_client(int readbite, int fd_client, core_t *core)
     FD_CLR(fd_client, &core->select_info.rfds);
 }
 
-char *get_command(core_t *core, int fd_client)
+static char *get_command(core_t *core, int fd_client)
 {
     size_t readbite;
     char buf[500];
@@ -33,12 +33,12 @@ char *get_command(core_t *core, int fd_client)
         return (NULL);
     } else {
         buf[readbite - 1] = '\0';
-        printf("reiceive Command: %s\n", buf);
     }
     return (strdup(buf));
 }
 
-void set_player_command(core_t *core, player_info_t *info, char *command)
+static void set_player_command(core_t *core, player_info_t *info,
+    char *command)
 {
     if (info->action_queue[0] == NULL) {
         if (strcmp(command, "Incantation") == 0) {
@@ -53,10 +53,21 @@ void set_player_command(core_t *core, player_info_t *info, char *command)
     add_action_in_queue(&core->players, info->fd, command);
 }
 
+static void choose_type_command(char *command, player_info_t *info,
+    core_t *core, char *team_name)
+{
+    if (strcmp(team_name, "GRAPHIC") == 0) {
+        execute_gui_command(core, command, info->fd);
+    } else {
+        set_player_command(core, info, command);
+    }
+}
+
 void check_command(core_t *core, int fd, char *command)
 {
     player_info_t *info = find_player(&core->players, fd);
     char *team_name = NULL;
+    char **array_command = NULL;
 
     if (command == NULL) {
         return;
@@ -65,12 +76,12 @@ void check_command(core_t *core, int fd, char *command)
         authentification(core, command, fd);
     } else {
         team_name = get_player_team(&core->players, fd);
-        if (strcmp(team_name, "GRAPHIC") == 0) {
-            execute_gui_command(core, command, fd);
-        } else {
-            set_player_command(core, info, command);
+        array_command = my_str_to_word_array(command, '\n');
+        for (int i = 0; array_command[i] != NULL; i++) {
+            choose_type_command(array_command[i], info, core, team_name);
         }
         free(team_name);
+        free_array(array_command);
     }
 }
 

@@ -33,6 +33,7 @@ namespace Zappy {
             std::vector<sf::Sprite> _broadcasts_sprites;
             std::vector<sf::Sprite> _broadcasts_messages;
             std::vector<sf::Texture> _broadcasts_textures;
+            sf::Clock _clock;
         private:
     };
 }
