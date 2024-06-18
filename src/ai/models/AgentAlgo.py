@@ -353,31 +353,6 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.append("Inventory\n")
             self.round = 0
 
-    def forkMode(self, round: int) -> None:
-        """
-        Will check if the agent can fork.
-        If yes, it will fork the agent.
-        """
-        if len(self.alerts.checkAlerts()) != 0:
-            alert = self.alerts.checkAlerts().pop()
-            if alert == "food":
-                return False
-        if self.getReturnCommand()[0] == "Fork\n":
-            pid = os.fork()
-            if pid > 0:
-                print(f"Parent process: {os.getpid()}") # Parent process
-            else:
-                print(f"Child process: {os.getpid()}")
-                os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
-            return False
-        if self.getReturnCommand()[0] == "Connect_nbr\n" and int(self.getReturnCommand()[1].replace("\n", "")) != 0:
-            print(f"Connect_nbr: {self.getReturnCommand()[1]}")
-            self.agentInfo.addCommandsToSend("Fork\n")
-            return True
-        else:
-            self.agentInfo.addCommandsToSend("Connect_nbr\n")
-            return True
-    
     def inventoryManagement(self) -> bool:
         """
         Check the inventory of the agent:
@@ -447,6 +422,7 @@ class AgentAlgo():
         except Exception as e:
             print(f"Error from play: {e}")
             return
+
     def send_to_server(self) -> None:
         """Send a message to the server"""
         if self.agentInfo.commandsReturned[0] != None:
@@ -474,7 +450,7 @@ class AgentAlgo():
     def broadcastManagement(self, data: str) -> bool:
         """
         Manage the broadcast
-        Split data with ' ' ---> [""message", "K,", "text]
+        Split data with ' ' ---> ["message", "K,", "text"]
         Agent can accept or refuse the incantation but need to broadcast answer
         """
         if data == None or data.startswith("message") == False:
@@ -494,7 +470,6 @@ class AgentAlgo():
         except Exception as e:
             print(f"Error from broadcast management: {e}")
             return False
-        return False
 
 
     def acceptOrRefuseIncantation(self) -> None:
@@ -506,7 +481,7 @@ class AgentAlgo():
         incantationLevel = 0
         try:
             if self.agentInfo.broadcast_received.startswith("need_incantation_level_") and self.status != "Going to incantation": # If the agent receives a broadcast to ask for incantation
-                incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1])
+                incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1][0])
                 if self.agentInfo.getLevel() == incantationLevel and self.hasAskedIncantation == False and self.agentInfo.inventory["food"] > 10:
                     print(f"Accept incantation level {incantationLevel}")
                     self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{incantationLevel}\n")
@@ -529,7 +504,7 @@ class AgentAlgo():
             return
 
         if self.agentInfo.broadcast_received.startswith("need_incantation_level_"): # If the agent receives a broadcast to ask for incantation
-            incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1])
+            incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1][0])
             if self.agentInfo.getLevel() == incantationLevel:
                 print(f"Accept incantation level {incantationLevel}")
                 self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{str(incantationLevel)}\n")
@@ -545,8 +520,7 @@ class AgentAlgo():
         if self.agentInfo.broadcast_received == "yes_we_are_on_the_map" and self.isPlayerConnected == False:
             self.isPlayerConnected = True
             self.hasAskedPlayerConnected = True
-        
-    
+
     def waitingForkResponse(self) -> None:
         if self.hasAskedPlayerConnected == False:
             return
@@ -602,8 +576,6 @@ class AgentAlgo():
                 required_players = self.agentInfo.numberToEvolve[f"level{next_level}"]
                 if self.playerOnSameTileForIncantation >= required_players:
                     print(f"Player can start an incantation level {next_level}")
-                    self.clearReturnCommand()
-                    self.agentInfo.commandsToSend.clear()
                     self.agentInfo.commandsToSend.append(f"Incantation\n")
                     self.status = "Is on incantation"
         except Exception as e:

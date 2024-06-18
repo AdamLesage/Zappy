@@ -71,6 +71,8 @@ class Agent():
                     self.client.setblocking(0)
                     try:
                         self.receive_from_server = self.client.recv(1024).decode()
+                        if self.receive_from_server.count('\n') == 0:
+                            continue
                         if self.agentAlgo.broadcastManagement(self.receive_from_server.replace("\n", "")) == True:
                             continue
                         # print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
