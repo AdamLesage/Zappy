@@ -36,6 +36,7 @@ class AgentAlerts(AgentInfo):
             """Need to eat"""
             self.alerts.clear()
             self.alerts.append("food")
+            self.formerAlert = "food"
             return (self.alerts)
             # send broadcast with crypted data
         

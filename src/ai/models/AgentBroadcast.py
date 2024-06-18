@@ -30,9 +30,11 @@ class AgentBroadcast():
         """
         Player will go to the broadcast position and add the movements to the movements list
         """
-        if agentInfo.broadcast_orientation == None or status != "Going to incantation" or len(agentInfo.movements) > 0:
+        if status == "Waiting player to start incantation": # Player is waiting for the other players to start the incantation
+            print("Waiting for the other players to start the incantation")
             return
-        agentInfo.commandsToSend.clear()
+        if orientation == None or status != "Going to incantation":
+            return
         agentInfo.movements.clear()
         if orientation == "0": # Player is on the broadcast position
             return
@@ -66,8 +68,7 @@ class AgentBroadcast():
             agentInfo.movements.append("Forward\n")
             agentInfo.movements.append("Right\n")
             agentInfo.movements.append("Forward\n")
-        print(f"Going to broadcast position with movements: {agentInfo.movements}")
-    
+
     def receiveBroadcast(agentInfo: AgentInfo, broadcastMsg: str):
         """Check the broadcast message and act accordingly"""
         return
