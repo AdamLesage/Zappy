@@ -16,7 +16,7 @@ Zappy::InventoryDisplay::InventoryDisplay(std::shared_ptr<GuiConnect> guiConnect
     if (font.loadFromFile("./asset/gui/Farmhouse.otf") == false)
         throw InterfaceError("Error: Farmhouse.otf not found", "Interface");
     for (int i = 0; i != 12; i++) {
-        this->playerInfo.push_back(sf::Text("", font, 45));
+        this->playerInfo.push_back(sf::Text("", font, 30));
         this->playerInfo[i].setFillColor(sf::Color::Black);
     }
     for (int i = 0; i < 7; i++)
@@ -47,26 +47,26 @@ Zappy::InventoryDisplay::InventoryDisplay(std::shared_ptr<GuiConnect> guiConnect
     playerInfo[0].setPosition(window->getSize().x - 180, window->getSize().y / 2 + 30);
     playerInfo[1].setCharacterSize(30);
     playerInfo[1].setPosition(window->getSize().x - 180, window->getSize().y / 2 + 60);
-    playerInfo[2].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 150);
-    _ressource_sprite[0].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 155);
-    playerInfo[3].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 200);
-    _ressource_sprite[1].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 205);
-    playerInfo[4].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 250);
-    _ressource_sprite[2].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 255);
-    playerInfo[5].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 300);
-    _ressource_sprite[3].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 305);
-    playerInfo[6].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 350);
-    _ressource_sprite[4].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 355);
-    playerInfo[7].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 400);
-    _ressource_sprite[5].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 405);
-    playerInfo[8].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 450);
-    _ressource_sprite[6].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 455);
-    playerInfo[9].setCharacterSize(20);
+    playerInfo[2].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 200);
+    _ressource_sprite[0].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 205);
+    playerInfo[3].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 250);
+    _ressource_sprite[1].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 255);
+    playerInfo[4].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 300);
+    _ressource_sprite[2].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 305);
+    playerInfo[5].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 350);
+    _ressource_sprite[3].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 355);
+    playerInfo[6].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 400);
+    _ressource_sprite[4].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 405);
+    playerInfo[7].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 450);
+    _ressource_sprite[5].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 455);
+    playerInfo[8].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 500);
+    _ressource_sprite[6].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 505);
+    playerInfo[9].setCharacterSize(30);
     playerInfo[9].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 100);
-    playerInfo[10].setCharacterSize(20);
+    playerInfo[10].setCharacterSize(30);
     playerInfo[10].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 130);
-    // playerInfo[11].setCharacterSize(30);
-    // playerInfo[11].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 130);
+    playerInfo[11].setCharacterSize(30);
+    playerInfo[11].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 160);
 
 
     this->back.setPosition(window->getSize().x - 300, window->getSize().y / 2);

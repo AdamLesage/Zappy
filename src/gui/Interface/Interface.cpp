@@ -298,7 +298,7 @@ void Zappy::Interface::updatePlayersTravelled()
 
 void Zappy::Interface::print_players()
 {
-    
+    updatePlayersTravelled();
     for (int i = 0; i < _gui_connect->_players.size(); i++) {
         if (player_sprites.size() < _gui_connect->_players.size())
             player_sprites.push_back(sf::Sprite());
