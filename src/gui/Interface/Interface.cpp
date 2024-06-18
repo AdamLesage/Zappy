@@ -302,8 +302,8 @@ void Zappy::Interface::print_players()
     for (int i = 0; i < _gui_connect->_players.size(); i++) {
         if (player_sprites.size() < _gui_connect->_players.size())
             player_sprites.push_back(sf::Sprite());
-            Evolution plEvol(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png");
-            evolutions.push_back(plEvol);
+            // Evolution plEvol(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png");
+            // evolutions.push_back(plEvol);
         player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel() - 1]);
         set_scale_of_player(i);
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
