@@ -59,6 +59,10 @@ class AgentAlgo():
         self.countRoundForIncantation = 0
         self.playerOnSameTileForIncantation = 1
         self.isWaitingForResponses = False
+        self.hasAskedPlayerConnected = False
+        self.isPlayerConnected = False
+        self.borntick = 0
+        self.alReadyResponded = False
         pass
 
     def updateAgentInfo(self, info: AgentInfo):
@@ -395,12 +399,21 @@ class AgentAlgo():
         Play the game, search for resources, level up, incantation, etc
         """
         # print(f"Status: {self.status}, level {self.agentInfo.getLevel()}")
-        self.updateClientStatus(self.round)
+        self.updateClientStatus(self.borntick)
         self.round += 1
+        self.borntick += 1
         if self.round == 5:
             self.agentInfo.commandsToSend.insert(0, "Connect_nbr\n")
         if self.inventoryManagement():
             return
+        if self.borntick == 4:
+            self.AnybodyHere()
+        self.waitingForkResponse()
+        self.waitingForkResponseFinalStep()
+        if self.borntick == 18 and self.isPlayerConnected == False:
+            self.isPlayerConnected = True
+            self.createChild()
+
         self.agentBroadcast.goToBroadcast(self.agentInfo.broadcast_orientation, self.agentInfo, self.status)
         if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
             self.foodMode()
@@ -504,6 +517,28 @@ class AgentAlgo():
                 self.status = "Going to incantation"
             # else:
             #     print(f"Refuse incantation level {incantationLevel}")
+    
+    def waitingForkResponseFinalStep(self) -> None:
+        if self.hasAskedPlayerConnected == False:
+            return
+        if self.isPlayerConnected == True:
+            return
+        if self.agentInfo.broadcast_received == "yes_we_are_on_the_map" and self.isPlayerConnected == False:
+            self.isPlayerConnected = True
+            self.hasAskedPlayerConnected = True
+        
+    
+    def waitingForkResponse(self) -> None:
+        if self.hasAskedPlayerConnected == False:
+            return
+        if self.alReadyResponded == True:
+            return
+        if self.agentInfo.broadcast_received == "Anybody_on_the_map_?":
+            self.agentInfo.commandsToSend.append(f"Broadcast yes_we_are_on_the_map\n")
+            print(f"Broadcast yes_we_are_on_the_map")
+            self.alReadyResponded = True
+            self.isPlayerConnected = True
+            self.hasAskedPlayerConnected = True
 
     def waitingIncantationResponses(self) -> None:
         if self.hasAskedIncantation == True and self.agentInfo.incantationResponses < self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
@@ -519,6 +554,18 @@ class AgentAlgo():
             # wait until every players are ready and send incantation position with broadcast
             self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{str(self.agentInfo.getLevel() + 1)}\n")
 
+    def AnybodyHere(self) -> None:
+        """
+        Check if there are any other players on the map
+        """
+        if self.hasAskedPlayerConnected == True:
+            return
+        if self.isPlayerConnected == True:
+            return
+        self.agentInfo.commandsToSend.append(f"Broadcast Anybody_on_the_map_?\n")
+        print(f"Broadcast Anybody_on_the_map_?")
+        self.hasAskedPlayerConnected = True
+    
     def playerOnSameTile(self) -> None:
         if self.agentInfo.broadcast_received == "on_same_tile":
             print(f"Player on the same tile as agent")
