@@ -313,9 +313,10 @@ class AgentAlgo():
     def createChild(self) -> None:
         pid = os.fork()
         if pid > 0:
-            print(f"Parent process: {os.getpid()}") # Parent process
+            # print(f"Parent process: {os.getpid()}") # Parent process
+            pass # Maybe add fork command
         else:
-            print(f"Child process: {os.getpid()}")
+            # print(f"Child process: {os.getpid()}")
             os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
 
     def incantationManagement(self) -> None:
@@ -352,11 +353,7 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.append("Look\n")
             self.agentInfo.incantationResponses = 1
             self.round = 0
-            pid = os.fork()
-            if pid > 0:
-                self.agentInfo.addCommandsToSend("Fork\n")
-            else:
-                os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
+            self.createChild()
         elif self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("ko"): # If the incantation is a failure
             self.hasAskedIncantation = False
             self.status = "Food"
@@ -402,8 +399,8 @@ class AgentAlgo():
             self.updateClientStatus(self.round)
             self.round += 1
             # self.borntick += 1
-            if self.round == 5 and "incantation" not in self.status:
-                self.agentInfo.commandsToSend.append("Connect_nbr\n")
+            # if self.round == 5 and "incantation" not in self.status:
+            #     self.agentInfo.commandsToSend.append("Connect_nbr\n")
             if self.inventoryManagement():
                 return
             self.agentBroadcast.goToBroadcast(self.agentInfo.broadcast_orientation, self.agentInfo, self.status)
@@ -459,71 +456,6 @@ class AgentAlgo():
         """Clear the command to return"""
         self.agentInfo.commandsReturned = [None, None]
 
-    def broadcastManagement(self, data: str) -> bool:
-        """
-        Manage the broadcast
-        Split data with ' ' ---> ["message", "K,", "text"]
-        Agent can accept or refuse the incantation but need to broadcast answer
-        """
-        if data == None or data.startswith("message") == False:
-            return False
-        self.broadcastReceived = data
-        data = data.replace(",", "") # remove comma after K
-        data = data.replace("\n", "") # remove \n at the end of the string
-        try:
-            self.agentInfo.broadcast_received = data.split(' ')[2]
-            self.agentInfo.broadcast_orientation = data.split(' ')[1]
-
-            self.acceptOrRefuseIncantation()
-            self.playerOnSameTile()
-            return True
-
-            # print(f"Command to send {self.agentInfo.commandsToSend[-1]}")
-        except Exception as e:
-            print(f"Error from broadcast management: {e}")
-            return False
-
-
-    def acceptOrRefuseIncantation(self) -> None:
-        """
-        Accept or refuse the incantation, enter in this function only after receiving a broadcast
-        """
-        if self.agentInfo.getLevel() == 1: # Player level 1 do not need to wait for responses
-            return
-        incantationLevel = 0
-        try:
-            if self.agentInfo.broadcast_received.startswith("need_incantation_level_") and self.status != "Going to incantation": # If the agent receives a broadcast to ask for incantation
-                incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1][0])
-                if self.agentInfo.getLevel() == incantationLevel and self.hasAskedIncantation == False and self.agentInfo.inventory["food"] > 10:
-                    print(f"Accept incantation level {incantationLevel}")
-                    self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{incantationLevel}\n")
-                    self.status = "Going to incantation"
-        except Exception as e:
-            print(f"Error from acceptOrRefuseIncantation accept incantation: {e}")
-            return
-
-        try:
-            # If the agent receives a broadcast to wait for incantation
-            if self.hasAskedIncantation and self.agentInfo.incantationResponses < self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
-                # If the agent has asked for incantation and has not enough responses
-                self.isWaitingForResponses = True
-                # print(f"Broadcast received: [{self.agentInfo.broadcast_received}], waiting: [accept_incantation_level_{str(self.agentInfo.getLevel())}], {self.agentInfo.incantationResponses=}")
-                if self.agentInfo.broadcast_received == f"accept_incantation_level_{self.agentInfo.getLevel()}":
-                    self.agentInfo.incantationResponses += 1
-                    print(f"A player accepted incantation level {self.agentInfo.getLevel() + 1}, {self.agentInfo.incantationResponses=} --> need {self.agentInfo.numberToEvolve[f'level{self.agentInfo.getLevel() + 1}']}")
-        except Exception as e:
-            print(f"Error from acceptOrRefuseIncantation count accept: {e}")
-            return
-
-        if self.agentInfo.broadcast_received.startswith("need_incantation_level_"): # If the agent receives a broadcast to ask for incantation
-            incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1][0])
-            if self.agentInfo.getLevel() == incantationLevel:
-                print(f"Accept incantation level {incantationLevel}")
-                self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{str(incantationLevel)}\n")
-                self.status = "Going to incantation"
-            # else:
-            #     print(f"Refuse incantation level {incantationLevel}")
-    
     def waitingForkResponseFinalStep(self) -> None:
         if self.hasAskedPlayerConnected == False:
             return
@@ -555,14 +487,6 @@ class AgentAlgo():
         self.agentInfo.commandsToSend.append(f"Broadcast Anybody_on_the_map_?\n")
         self.hasAskedPlayerConnected = True
 
-    def waitingIncantationResponses(self) -> None:
-        if self.agentInfo.getLevel() == 1: # Player level 1 do not need to wait for responses
-            return
-        if self.agentInfo.incantationResponses >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
-            # wait until every players are ready and send incantation position with broadcast
-            self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}\n")
-        pass
-
     def AnybodyHere(self) -> None:
         """
         Check if there are any other players on the map
@@ -574,12 +498,88 @@ class AgentAlgo():
         self.agentInfo.commandsToSend.append(f"Broadcast Anybody_on_the_map_?\n")
         print(f"Broadcast Anybody_on_the_map_?")
         self.hasAskedPlayerConnected = True
-    
+
+    def broadcastManagement(self, data: str) -> bool:
+        """
+        Manage the broadcast
+        Split data with ' ' ---> ["message", "K,", "text"]
+        Agent can accept or refuse the incantation but need to broadcast answer
+        """
+        if data == None or data.startswith("message") == False:
+            return False
+        self.broadcastReceived = data
+        data = data.replace(",", "") # remove comma after K
+        data = data.replace("\n", "") # remove \n at the end of the string
+        try:
+            self.agentInfo.broadcast_received = data.split(' ')[2]
+            self.agentInfo.broadcast_orientation = data.split(' ')[1]
+
+            self.acceptOrRefuseIncantation()
+            self.playerOnSameTile()
+            return True
+
+            # print(f"Command to send {self.agentInfo.commandsToSend[-1]}")
+        except Exception as e:
+            print(f"Error from broadcast management: {e} from data: {data}")
+            return False
+
+
+    def acceptOrRefuseIncantation(self) -> None:
+        """
+        Accept or refuse the incantation, enter in this function only after receiving a broadcast
+        """
+        if self.agentInfo.getLevel() == 1: # Player level 1 do not need to wait for responses
+            return
+        incantationLevel = 0
+        try:
+            if self.agentInfo.broadcast_received.startswith("need_incantation_level_") and self.status != "Going to incantation": # If the agent receives a broadcast to ask for incantation
+                incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1][0])
+                if self.agentInfo.getLevel() == incantationLevel and self.hasAskedIncantation == False and self.agentInfo.inventory["food"] > 10:
+                    print(f"Accept incantation level {incantationLevel}")
+                    self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{incantationLevel}\n")
+                    self.status = "Going to incantation"
+        except Exception as e:
+            print(f"Error from acceptOrRefuseIncantation accept incantation: {e}")
+            return
+
+        try:
+            # If the agent receives a broadcast to wait for incantation
+            if self.hasAskedIncantation and self.agentInfo.incantationResponses < self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
+                # If the agent has asked for incantation and has not enough responses
+                self.isWaitingForResponses = True
+                # print(f"Broadcast received: [{self.agentInfo.broadcast_received}], waiting: [accept_incantation_level_{str(self.agentInfo.getLevel())}], {self.agentInfo.incantationResponses=}")
+                if self.agentInfo.broadcast_received.startswith(f"accept_incantation_level_{self.agentInfo.getLevel()}"):
+                    self.agentInfo.incantationResponses += 1
+                    print(f"A player accepted incantation level {self.agentInfo.getLevel() + 1}, {self.agentInfo.incantationResponses=} --> need {self.agentInfo.numberToEvolve[f'level{self.agentInfo.getLevel() + 1}']}")
+        except Exception as e:
+            print(f"Error from acceptOrRefuseIncantation count accept: {e}")
+            return
+
+        try:
+            if self.agentInfo.broadcast_received.startswith("need_incantation_level_"): # If the agent receives a broadcast to ask for incantation
+                incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1])
+                if self.agentInfo.getLevel() == incantationLevel:
+                    print(f"Accept incantation level {incantationLevel}")
+                    self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{str(incantationLevel)}\n")
+                    self.status = "Going to incantation"
+        except Exception as e:
+            print(f"Error from acceptOrRefuseIncantation accept incantation: {e}")
+
+
+    def waitingIncantationResponses(self) -> None:
+        if self.agentInfo.getLevel() == 1: # Player level 1 do not need to wait for responses
+            return
+        if self.agentInfo.incantationResponses >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
+            # wait until every players are ready and send incantation position with broadcast
+            self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}\n")
+        pass
+
+
     def playerOnSameTile(self) -> None:
         if self.agentInfo.getLevel() == 1: # Player level 1 do not need to wait for responses
             return
         try:
-            if self.agentInfo.broadcast_received == "on_same_tile":
+            if self.agentInfo.broadcast_received.startswith("on_same_tile"):
                 print(f"A player on same tile than incanter")
                 self.playerOnSameTileForIncantation += 1
                 next_level = self.agentInfo.getLevel() + 1
@@ -591,10 +591,10 @@ class AgentAlgo():
         except Exception as e:
             print(f"Error from playerOnSameTile broadcast received: {e}")
             return
-
         try:
+            # print(f"Orientation of broadcast {self.agentInfo.broadcast_orientation} | received: {self.agentInfo.broadcast_received}")
             # If player receive broadcast orientation with message "waiting_for_incantation_level_n"
-            if self.agentInfo.broadcast_orientation == "0" and self.agentInfo.broadcast_received == f"waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}\n":
+            if self.agentInfo.broadcast_orientation == "0" and self.agentInfo.broadcast_received.startswith(f"waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}"):
                 # Player is on the same tile as agent and has not already asked for incantation
                 print(f"Orientation is 0 from broadcast {self.agentInfo.broadcast_received}")
                 self.agentInfo.movements.clear()

@@ -72,8 +72,8 @@ class Agent():
                 try:
                     try:
                         self.receive_from_server = self.client.recv(1024).decode()
-                        if self.receive_from_server.count('\n') == 0:
-                            continue
+                        # if self.receive_from_server.count('\n') == 0:
+                        #     continue
                         if self.agentAlgo.broadcastManagement(self.receive_from_server.replace("\n", "")) == True:
                             continue
                         # print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
@@ -81,6 +81,7 @@ class Agent():
                     except BlockingIOError:
                         self.receive_from_server = None
 
+                    self.retrieveClientNumber(self.receive_from_server)
                     self.disconnect_from_server(self.receive_from_server)
                     if self.firstConnexionToServer() == True:
                         continue
