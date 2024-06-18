@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Kill all the running zappy_ai programs
+killall -9 python3 
+
 # Check if the correct number of arguments is provided
 if [ "$#" -ne 4 ]; then
     echo "Usage: $0 <number_of_times> <machine> <port> <teamName>"

@@ -14,7 +14,7 @@ class AgentAlerts(AgentInfo):
         self.agent = agent_info
         self.alerts = []
         self.moves = Moves()
-        self.minTimeU = 20 * 126
+        self.minTimeU = 10 * 126
         self.formerAlert = None
         pass
 
@@ -23,6 +23,9 @@ class AgentAlerts(AgentInfo):
     
     def setAgentInfo(self, agentInfo: AgentInfo) -> None:
         self.agent =  agentInfo
+    
+    def getFoodAlert(self) -> int:
+        return self.minTimeU
 
     def checkAlerts(self) -> list[str]:
         """
@@ -36,6 +39,7 @@ class AgentAlerts(AgentInfo):
             """Need to eat"""
             self.alerts.clear()
             self.alerts.append("food")
+            self.formerAlert = "food"
             return (self.alerts)
             # send broadcast with crypted data
         
