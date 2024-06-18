@@ -424,13 +424,6 @@ class AgentAlgo():
                 self.agentInfo.commandsToSend.append("Connect_nbr\n")
             if self.inventoryManagement():
                 return
-            # if self.borntick == 4:
-            #     self.AnybodyHere()
-            self.waitingForkResponse()
-            self.waitingForkResponseFinalStep()
-            # if self.borntick == 18 and self.isPlayerConnected == False:
-            #     self.isPlayerConnected = True
-            #     self.createChild()
             self.agentBroadcast.goToBroadcast(self.agentInfo.broadcast_orientation, self.agentInfo, self.status)
             if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
                 self.foodMode()
@@ -457,7 +450,6 @@ class AgentAlgo():
         except Exception as e:
             print(f"Error from play: {e}")
             return
-
     def send_to_server(self) -> None:
         """Send a message to the server"""
         if self.agentInfo.commandsReturned[0] != None:
@@ -586,6 +578,18 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}\n")
         pass
 
+    def AnybodyHere(self) -> None:
+        """
+        Check if there are any other players on the map
+        """
+        if self.hasAskedPlayerConnected == True:
+            return
+        if self.isPlayerConnected == True:
+            return
+        self.agentInfo.commandsToSend.append(f"Broadcast Anybody_on_the_map_?\n")
+        print(f"Broadcast Anybody_on_the_map_?")
+        self.hasAskedPlayerConnected = True
+    
     def playerOnSameTile(self) -> None:
         if self.agentInfo.getLevel() == 1: # Player level 1 do not need to wait for responses
             return
