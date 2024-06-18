@@ -27,6 +27,7 @@ class Agent():
         self.team_name = team_name
         self.receive_from_server = None
         self.ip = ip
+        self.firstConnexion = True
 
     def retrieveWorldDimensions(self, data: str) -> None:
         """Retrieve the world dimensions"""
@@ -61,14 +62,14 @@ class Agent():
     def connect_to_server(self) -> None:
         """Connect to the server from the given ip and port"""
         try:
-            firstConnexion = True
             tmp = 0
             self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.client.connect((self.ip, self.port))
             self.agentAlgo = AgentAlgo(self.agentInfo, 1260, self.client, self.ip, self.port, self.team_name)
+            self.client.setblocking(0) # Do not wait for the server to send data
+
             while True:
                 try:
-                    self.client.setblocking(0)
                     try:
                         self.receive_from_server = self.client.recv(1024).decode()
                         if self.receive_from_server.count('\n') == 0:
@@ -79,17 +80,12 @@ class Agent():
                         tmp += 1
                     except BlockingIOError:
                         self.receive_from_server = None
-                    if self.disconnect_from_server(self.receive_from_server):
-                        break
-                    if self.receive_from_server == "WELCOME\n": # If the server sends "WELCOME\n", send the team name
-                        self.client.send(f"{self.team_name}\n".encode())
-                        firstConnexion = False
-                        self.receive_from_server = None
+
+                    self.disconnect_from_server(self.receive_from_server)
+                    if self.firstConnexionToServer() == True:
                         continue
-                    if firstConnexion == False and tmp >= 2:
-                        if self.receive_from_server == "dead\n":
-                            os.wait()
-                            break
+
+                    if self.firstConnexion == False and tmp >= 2:
                         if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None: # If the server sends nothing, continue
                             continue
                         self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
@@ -102,9 +98,17 @@ class Agent():
         except Exception as e:
             print(f"Error: {e}")
 
-    def disconnect_from_server(self, data: str) -> bool:
+    def disconnect_from_server(self, data: str):
         """Disconnect from the server"""
         if data == "dead\n": # If the server sends "ko\n" or "dead\n", close the connection
             self.client.close()
+            exit(0)
+
+    def firstConnexionToServer(self) -> bool:
+        """First connexion to the server"""
+        if self.receive_from_server == "WELCOME\n": # If the server sends "WELCOME\n", send the team name
+            self.client.send(f"{self.team_name}\n".encode())
+            self.firstConnexion = False
+            self.receive_from_server = None
             return True
         return False

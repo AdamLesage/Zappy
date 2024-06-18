@@ -439,10 +439,12 @@ class AgentAlgo():
             self.clearReturnCommand()
         if self.agentInfo.commandsToSend == deque([]) or self.client == None: # If there are no commands to send, get out of the function
             return
+        # if self.agentInfo.commandsReturned[0] != None and self.agentInfo.commandsReturned[0] == None:
+        #     print(f"Must wait before sending command: {self.agentInfo.commandsReturned[0]}")
+        #     return
         command_to_send = self.agentInfo.commandsToSend.popleft()
         self.client.send(command_to_send.encode())
-        tmp = [command_to_send, None]
-        self.agentInfo.commandsReturned = tmp
+        self.agentInfo.commandsReturned = [command_to_send, None]
         # Add first command from waiting list to the commandsToSend list
 
     def setReturnCommandAnswer(self, serverAnswer: str) -> None:
@@ -538,7 +540,6 @@ class AgentAlgo():
             return
         if self.agentInfo.broadcast_received == "Anybody_on_the_map_?":
             self.agentInfo.commandsToSend.append(f"Broadcast yes_we_are_on_the_map\n")
-            print(f"Broadcast yes_we_are_on_the_map")
             self.alReadyResponded = True
             self.isPlayerConnected = True
             self.hasAskedPlayerConnected = True
@@ -552,7 +553,6 @@ class AgentAlgo():
         if self.isPlayerConnected == True:
             return
         self.agentInfo.commandsToSend.append(f"Broadcast Anybody_on_the_map_?\n")
-        print(f"Broadcast Anybody_on_the_map_?")
         self.hasAskedPlayerConnected = True
 
     def waitingIncantationResponses(self) -> None:
