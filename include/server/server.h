@@ -82,6 +82,7 @@ bool is_know_player_command(char *command);
 void check_player_command(core_t *core);
 void check_food_players(core_t *core);
 void refill_map(core_t *core);
+void check_win_game(core_t *core);
 
 void incantation(core_t *core, incantation_info_t *incantation_info);
 bool incantation_is_valide(tile_info_t *info, players_list_t *players_list,
