@@ -100,6 +100,10 @@ SRC_SEVER	=	src/server/main.c											\
 SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/Interface/Interface.cpp									\
 			src/gui/Interface/bar.cpp										\
+			src/gui/Interface/InventoryDisplay.cpp							\
+			src/gui/Interface/Button.cpp									\
+			src/gui/Interface/InfoDisplay.cpp								\
+			src/gui/Interface/Broadcast.cpp									\
 			src/gui/ServerInfo/GuiConnect.cpp								\
 			src/gui/lib/my_str_to_line_array.cpp							\
 			src/gui/lib/my_str_to_word_array.cpp							\
@@ -237,6 +241,8 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 
 SRC_TEST_GUI =  src/gui/Interface/Interface.cpp								\
 				src/gui/Interface/bar.cpp									\
+				src/gui/Interface/InventoryDisplay.cpp						\
+				src/gui/Interface/Button.cpp								\
 				src/gui/ServerInfo/GuiConnect.cpp							\
 				src/gui/lib/my_str_to_line_array.cpp						\
 				src/gui/lib/my_str_to_word_array.cpp						\
@@ -358,9 +364,6 @@ zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS) -Iinclude/server -lm
 
 zappy_gui:
-	pactl set-sink-volume @DEFAULT_SINK@ 100%
-	file_path=$$(find /home -name music.ogg 2>/dev/null | head -n 1); \
-	mpv --volume=100 "$$file_path"
 	g++ -o $(NAME_BINARY_GUI) $(SRC_GUI) $(CFLAGS) $(SFML)
 
 zappy_ai:

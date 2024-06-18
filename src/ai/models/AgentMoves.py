@@ -5,6 +5,9 @@
 ## Moves
 ##
 
+from models.AgentInfo import AgentInfo
+import random
+
 class Moves():
     """Moves class for the Zappy project"""
     def __init__(self) -> None:
@@ -99,5 +102,75 @@ class Moves():
         if self.checkItem(lookResult, itemToSearch) and needReaching == True:
             return self.reachItemList(itemToSearch, lookResult)
         return False
+    
+    def findBestItemToTake(self, agentInfo: AgentInfo, playerLevel: int, itemsInPlayerVision: list) -> str:
+        """
+        Find the best item to take according to the player level
+        """
+        # If there are multiple items with the same quantity, choose best item for player level
+        if playerLevel == 1:
+            return "linemate"
+        elif playerLevel == 2:
+            if agentInfo.inventory["linemate"] < 2 and "linemate" in itemsInPlayerVision:
+                return "linemate"
+            if agentInfo.inventory["deraumere"] < 1 and "deraumere" in itemsInPlayerVision:
+                return "deraumere"
+            if agentInfo.inventory["sibur"] < 1 and "sibur" in itemsInPlayerVision:
+                return "sibur"
+            return random.choice(itemsInPlayerVision)
+        elif playerLevel == 3:
+            if agentInfo.inventory["phiras"] < 2 and "phiras" in itemsInPlayerVision:
+                return "phiras"
+            if agentInfo.inventory["linemate"] < 2 and "linemate" in itemsInPlayerVision:
+                return "linemate"
+            if agentInfo.inventory["sibur"] < 1 and "sibur" in itemsInPlayerVision:
+                "sibur"
+            return random.choice(itemsInPlayerVision)
+        elif playerLevel == 4:
+            if agentInfo.inventory["sibur"] < 2 and "sibur" in itemsInPlayerVision:
+                return "sibur"
+            if agentInfo.inventory["phiras"] < 1 and "phiras" in itemsInPlayerVision:
+                return "phiras"
+            if agentInfo.inventory["deraumere"] < 1 and "deraumere" in itemsInPlayerVision:
+                return "deraumere"
+            if agentInfo.inventory["linemate"] < 1 and "linemate" in itemsInPlayerVision:
+                return "linemate"
+            return random.choice(itemsInPlayerVision)
+        elif playerLevel == 5:
+            if agentInfo.inventory["mendiane"] < 3 and "mendiane" in itemsInPlayerVision:
+                return "mendiane"
+            if agentInfo.inventory["sibur"] < 1 and "sibur" in itemsInPlayerVision:
+                return "sibur"
+            if agentInfo.inventory["deraumere"] < 1 and "deraumere" in itemsInPlayerVision:
+                return "deraumere"
+            if agentInfo.inventory["linemate"] < 1 and "linemate" in itemsInPlayerVision:
+                return "linemate"
+            return random.choice(itemsInPlayerVision)
+        elif playerLevel == 6:
+            if agentInfo.inventory["sibur"] < 3 and "sibur" in itemsInPlayerVision:
+                return "sibur"
+            if agentInfo.inventory["phiras"] < 1 and "phiras" in itemsInPlayerVision:
+                return "phiras"
+            if agentInfo.inventory["deraumere"] < 2 and "deraumere" in itemsInPlayerVision:
+                return "deraumere"
+            if agentInfo.inventory["linemate"] < 1 and "linemate" in itemsInPlayerVision:
+                return "linemate"
+            return random.choice(itemsInPlayerVision)
+        elif playerLevel == 7:
+            if agentInfo.inventory["phiras"] < 2 and "phiras" in itemsInPlayerVision:
+                return "phiras"
+            if agentInfo.inventory["thystame"] < 1 and "thystame" in itemsInPlayerVision:
+                return "thystame"
+            if agentInfo.inventory["mendiane"] < 2 and "mendiane" in itemsInPlayerVision:
+                return "mendiane"
+            if agentInfo.inventory["sibur"] < 2 and "sibur" in itemsInPlayerVision:
+                return "sibur"
+            if agentInfo.inventory["deraumere"] < 2 and "deraumere" in itemsInPlayerVision:
+                return "deraumere"
+            if agentInfo.inventory["linemate"] < 1 and "linemate" in itemsInPlayerVision:
+                return "linemate"
+            return random.choice(itemsInPlayerVision)
+        else:
+            return random.choice(itemsInPlayerVision)
 
 #[player,,,thystame,,food,,,,,thystame,,,,,,]

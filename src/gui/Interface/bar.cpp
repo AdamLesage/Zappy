@@ -82,7 +82,7 @@ bool Zappy::Bar::checkClick2(std::shared_ptr<sf::RenderWindow> window)
 
 void Zappy::Bar::displayBar(std::shared_ptr<sf::RenderWindow> window)
 {
-    std::string font_path("./asset/gui/Pacifico.ttf");
+    std::string font_path("./asset/gui/Farmhouse.otf");
     sf::Font font;
     sf::Color color = this->hoverSape.getFillColor();
 

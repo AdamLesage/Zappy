@@ -26,8 +26,15 @@ class AgentInfo():
         self.teamInventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0} # Inventory of the team
         self.playerVision = [] # Vision of player, tiles around him
         self.lifeUnits = 10
-        self.timeUnits = 1260
-        self.teamPlayers = {"level1": 0, "level2": 0, "level3": 0, "level4": 0, "level5": 0, "level6": 0, "level7": 0, "level8": 0}
+        self.timeUnits = 1260 
+        self.broadcast_received = None
+        self.numberMaxOfTeamPlayers = 0
+        self.numberOfTeamPlayersConnected = 0
+        self.availableSlots = 0
+        self.broadcast_received = None
+        self.broadcast_orientation = None
+        self.incantationResponses = 0
+        self.numberToEvolve = {"level2": 1, "level3": 2, "level4": 2, "level5": 4, "level6": 4, "level7": 6, "level8": 6} # Number of players needed to evolve to the next level
 
     def noLifeUnits(self) -> bool:
         """Return True if there is no more life units"""
@@ -36,6 +43,13 @@ class AgentInfo():
     def noTimeUnits(self) -> bool:
         """Return True if there is no more time units"""
         return (self.timeUnits <= 0)
+
+    def manageBroadcastReceived(self) -> None:
+        """Do something with the broadcast received"""
+        if self.broadcast_received != None and self.broadcast_received.startswith("message"):
+            incantation_orientation = self.broadcast_received.split(" ")[1].replace(",", "")
+            incantation_message = self.broadcast_received.split(" ")[2]
+            self.broadcast_received = None
 
     # Getters
     def getTimeUnits(self) -> int:
@@ -74,15 +88,6 @@ class AgentInfo():
     def getLevel(self) -> None:
         """Get the level of the target"""
         return (self.level)
-
-    def getPlayers(self, level: str = "all") -> int:
-        """Get the number of players in the team"""
-        available_levels = ["level1", "level2", "level3", "level4", "level5", "level6", "level7", "level8"]
-        if level not in available_levels and level != "all":
-            raise ValueError("Invalid level")
-        if level != "all": # Return the number of players at the specified level
-            return self.teamPlayers[level]
-        return sum(self.teamPlayers.values()) # Return the sum of all players, so the total number of players in the team
 
     # Setters  
     def setTimeUnits(self, tu: int) -> None:
@@ -126,10 +131,3 @@ class AgentInfo():
         if type not in ["food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]:
             raise ValueError(f"Invalid item {type}")
         self.inventory[type] = int(quantity)
-
-    def addPlayers(self, level: str, quantity: int) -> None:
-        """Set the number of players in the team"""
-        available_levels = ["level1", "level2", "level3", "level4", "level5", "level6", "level7", "level8"]
-        if level not in available_levels:
-            raise ValueError(f"Invalid level {level}")
-        self.teamPlayers[level] = self.teamPlayers.get(level, 0) + int(quantity)
