@@ -6,6 +6,7 @@
 */
 
 #include "bar.hpp"
+#include "../Entity/Evolution.hpp"
 #include "../ServerInfo/GuiConnect.hpp"
 #include "../Entity/Player.hpp"
 #include "../Entity/Tile.hpp"
