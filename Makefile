@@ -113,6 +113,7 @@ SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/Entity/AInventory.cpp									\
 			src/gui/Entity/Player.cpp										\
 			src/gui/Entity/Egg.cpp											\
+			src/gui/Entity/Evolution.cpp									\
 			src/gui/ServerInfo/ServerInfo.cpp								\
 			src/gui/ServerInfo/CommandFactory.cpp							\
 			src/gui/ServerInfo/ACommand.cpp									\
