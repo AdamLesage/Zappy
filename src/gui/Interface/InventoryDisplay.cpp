@@ -15,7 +15,7 @@ Zappy::InventoryDisplay::InventoryDisplay(std::shared_ptr<GuiConnect> guiConnect
 
     if (font.loadFromFile("./asset/gui/Farmhouse.otf") == false)
         throw InterfaceError("Error: Farmhouse.otf not found", "Interface");
-    for (int i = 0; i != 9; i++) {
+    for (int i = 0; i != 12; i++) {
         this->playerInfo.push_back(sf::Text("", font, 45));
         this->playerInfo[i].setFillColor(sf::Color::Black);
     }
@@ -61,6 +61,13 @@ Zappy::InventoryDisplay::InventoryDisplay(std::shared_ptr<GuiConnect> guiConnect
     _ressource_sprite[5].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 405);
     playerInfo[8].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 450);
     _ressource_sprite[6].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 455);
+    playerInfo[9].setCharacterSize(20);
+    playerInfo[9].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 100);
+    playerInfo[10].setCharacterSize(20);
+    playerInfo[10].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 130);
+    // playerInfo[11].setCharacterSize(30);
+    // playerInfo[11].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 130);
+
 
     this->back.setPosition(window->getSize().x - 300, window->getSize().y / 2);
     this->back.setSize(sf::Vector2f(300, window->getSize().y / 2));
@@ -108,6 +115,9 @@ void Zappy::InventoryDisplay::check_event(sf::Event *event, std::vector<sf::Spri
                 playerInfo[6].setString("Mendiane " + std::to_string(_guiConnect->_players[i]->getInventory()->_mendiane));
                 playerInfo[7].setString("Phiras " + std::to_string(_guiConnect->_players[i]->getInventory()->_phiras));
                 playerInfo[8].setString("Thystame " + std::to_string(_guiConnect->_players[i]->getInventory()->_thystame));
+                playerInfo[9].setString("Player " + std::to_string(_guiConnect->_players[i]->getPlayerNumber()));
+                playerInfo[10].setString("Orientation " + std::to_string(_guiConnect->_players[i]->getOrientation()));
+                playerInfo[11].setString("Travelled " + std::to_string(_guiConnect->_players[i]->getTravelled()));
                 this->SkinPlayer.setTexture(players_sprites[i].getTexture());
                 this->SkinPlayer.setTextureRect(players_sprites[i].getTextureRect());
             }
@@ -120,7 +130,7 @@ void Zappy::InventoryDisplay::display()
     if (current_player_index != -1) {
         this->_window->draw(this->back);
         this->_window->draw(this->header);
-        for (int i = 0; i != 9; i++) {
+        for (int i = 0; i != 12; i++) {
             this->_window->draw(this->playerInfo[i]);
         }
         for (int i = 0; i < 7; i++) {
