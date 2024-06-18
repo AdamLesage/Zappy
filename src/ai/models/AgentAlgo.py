@@ -474,14 +474,14 @@ class AgentAlgo():
         """Clear the command to return"""
         self.agentInfo.commandsReturned = [None, None]
 
-    def broadcastManagement(self, data: str) -> None:
+    def broadcastManagement(self, data: str) -> bool:
         """
         Manage the broadcast
         Split data with ' ' ---> [""message", "K,", "text]
         Agent can accept or refuse the incantation but need to broadcast answer
         """
         if data == None or data.startswith("message") == False:
-            return None
+            return False
         data = data.replace(",", "") # remove comma after K
         data = data.replace("\n", "") # remove \n at the end of the string
         try:
@@ -490,10 +490,13 @@ class AgentAlgo():
 
             self.acceptOrRefuseIncantation()
             self.playerOnSameTile()
+            return True
 
             # print(f"Command to send {self.agentInfo.commandsToSend[-1]}")
         except Exception as e:
             print(f"Error from broadcast management: {e}")
+            return False
+        return False
 
 
     def acceptOrRefuseIncantation(self) -> None:

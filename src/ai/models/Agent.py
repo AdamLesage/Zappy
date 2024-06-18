@@ -71,7 +71,7 @@ class Agent():
                     self.client.setblocking(0)
                     try:
                         self.receive_from_server = self.client.recv(1024).decode()
-                        self.agentAlgo.broadcastManagement(self.receive_from_server.replace("\n", ""))
+                        if self.agentg
                         # print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
                         tmp += 1
                     except BlockingIOError:
@@ -87,7 +87,7 @@ class Agent():
                         if self.receive_from_server == "dead\n":
                             os.wait()
                             break
-                        if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None:
+                        if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None: # If the server sends nothing, continue
                             continue
                         self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
                         self.agentAlgo.play(self.receive_from_server)
