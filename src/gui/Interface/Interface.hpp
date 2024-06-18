@@ -105,6 +105,7 @@ namespace Zappy {
             std::vector<std::shared_ptr<Button>> buttons;
             std::vector<sf::Sprite> player_rank;
             std::vector<sf::Text> player_rank_text;
+            std::vector<Evolution> evolutions;
         private:
     };
 }
