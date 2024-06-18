@@ -6,6 +6,7 @@
 */
 
 #include "bar.hpp"
+#include "../Entity/Evolution.hpp"
 #include "../ServerInfo/GuiConnect.hpp"
 #include "../Entity/Player.hpp"
 #include "../Entity/Tile.hpp"
@@ -94,6 +95,14 @@ namespace Zappy {
             std::shared_ptr<Broadcast> _broadcast;
             size_t _teamnbr;
             std::vector<sf::Color> color_list_team;
+            std::vector<sf::Texture> loading_texture;
+            sf::RectangleShape loading;
+            sf::Clock clock;
+            sf::RectangleShape loadingBar;
+            bool menu;
+            std::vector<std::shared_ptr<Button>> buttons;
+            std::vector<sf::Sprite> player_rank;
+            std::vector<sf::Text> player_rank_text;
         private:
     };
 }
