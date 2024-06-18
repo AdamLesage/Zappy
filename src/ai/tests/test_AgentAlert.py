@@ -112,3 +112,44 @@ class TestAgentAlert(unittest.TestCase):
         self.assertEqual(agentAlert.alerts, ["food"])
         agentAlert.clearAlerts()
         self.assertEqual(agentAlert.alerts, [])
+    
+    def test11_setFoodAlert(self):
+        agent = AgentInfo()
+        agentAlert = AgentAlerts(agent, 100)
+        agentAlert.setFoodAlert(256)
+        self.assertEqual(agentAlert.getFoodAlert(), 256)
+    
+    def test12_setFoodAlert(self):
+        agent = AgentInfo()
+        agentAlert = AgentAlerts(agent, 500)
+        agentAlert.setFoodAlert(100)
+        self.assertEqual(agentAlert.getFoodAlert(), 100)
+    
+    def test13_getFoodAlert(self):
+        agent = AgentInfo()
+        agentAlert = AgentAlerts(agent, 100)
+        self.assertEqual(agentAlert.getFoodAlert(), 1260)
+
+    def test14_setAgentInfo(self):
+        agent = AgentInfo()
+        agentAlert = AgentAlerts(agent, 100)
+        agent.setLifeUnits(256)
+        agentAlert.setAgentInfo(agent)
+        self.assertEqual(agentAlert.agent, agent)
+    
+    def test_setAgentInfo(self):
+        agent = AgentInfo()
+        agentAlert = AgentAlerts(agent, 100)
+        agent.setLifeUnits(256)
+        agent.setStatus("Incantation")
+        agentAlert.setAgentInfo(agent)
+        self.assertEqual(agentAlert.agent, agent)
+    
+    def test15_setAgentInfo(self):
+        agent = AgentInfo()
+        agentAlert = AgentAlerts(agent, 100)
+        agent.setLifeUnits(256)
+        agent.setLevel(5)
+        agent.setLevel(5)
+        agentAlert.setAgentInfo(agent)
+        self.assertEqual(agentAlert.agent, agent)

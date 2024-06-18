@@ -80,37 +80,40 @@ class Agent():
             self.client.connect((self.ip, self.port))
             self.agentAlgo = AgentAlgo(self.agentInfo, 1260, self.client, self.ip, self.port, self.team_name)
             while True:
-                self.client.setblocking(0)
                 try:
-                    self.receive_from_server = self.client.recv(1024).decode()
-                    self.agentAlgo.broadcastManagement(self.receive_from_server)
-                    # print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
-                    tmp += 1
-                except BlockingIOError:
-                    self.receive_from_server = None
-                if self.disconnect_from_server(self.receive_from_server):
-                    break
-                if self.receive_from_server == "WELCOME\n": # If the server sends "WELCOME\n", send the team name
-                    self.client.send(f"{self.team_name}\n".encode())
-                    firstConnexion = False
-                    self.receive_from_server = None
-                    continue
-                # self.retrieveClientNumber(self.receive_from_server)
-                # self.retrieveWorldDimensions(self.receive_from_server)
-                if firstConnexion == False and tmp >= 2:
-                    if self.receive_from_server == "dead\n":
-                        os.wait()
+                    self.client.setblocking(0)
+                    try:
+                        self.receive_from_server = self.client.recv(1024).decode()
+                        self.agentAlgo.broadcastManagement(self.receive_from_server.replace("\n", ""))
+                        # print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
+                        tmp += 1
+                    except BlockingIOError:
+                        self.receive_from_server = None
+                    if self.disconnect_from_server(self.receive_from_server):
                         break
-                    self.manageConnectNbr(tmp)
-                    if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None:
+                    if self.receive_from_server == "WELCOME\n": # If the server sends "WELCOME\n", send the team name
+                        self.client.send(f"{self.team_name}\n".encode())
+                        firstConnexion = False
+                        self.receive_from_server = None
                         continue
-                    self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
-                    self.agentAlgo.play(self.receive_from_server)
-                    self.agentAlgo.clearReturnCommand()
-                    self.agentAlgo.send_to_server()
+                    # self.retrieveClientNumber(self.receive_from_server)
+                    # self.retrieveWorldDimensions(self.receive_from_server)
+                    if firstConnexion == False and tmp >= 2:
+                        if self.receive_from_server == "dead\n":
+                            os.wait()
+                            break
+                        self.manageConnectNbr(tmp)
+                        if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None:
+                            continue
+                        self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
+                        self.agentAlgo.play(self.receive_from_server)
+                        self.agentAlgo.clearReturnCommand()
+                        self.agentAlgo.send_to_server()
+                except Exception as e:
+                    print(f"Error loop: {e}")
+                    continue
         except Exception as e:
             print(f"Error: {e}")
-            exit(84)
 
     def disconnect_from_server(self, data: str) -> bool:
         """Disconnect from the server"""

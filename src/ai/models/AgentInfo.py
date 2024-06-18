@@ -33,7 +33,7 @@ class AgentInfo():
         self.availableSlots = 0
         self.broadcast_received = None
         self.broadcast_orientation = None
-        self.incantationResponses = 0
+        self.incantationResponses = 1
         self.numberToEvolve = {"level2": 1, "level3": 2, "level4": 2, "level5": 4, "level6": 4, "level7": 6, "level8": 6} # Number of players needed to evolve to the next level
 
     def noLifeUnits(self) -> bool:
@@ -43,13 +43,6 @@ class AgentInfo():
     def noTimeUnits(self) -> bool:
         """Return True if there is no more time units"""
         return (self.timeUnits <= 0)
-
-    def manageBroadcastReceived(self) -> None:
-        """Do something with the broadcast received"""
-        if self.broadcast_received != None and self.broadcast_received.startswith("message"):
-            incantation_orientation = self.broadcast_received.split(" ")[1].replace(",", "")
-            incantation_message = self.broadcast_received.split(" ")[2]
-            self.broadcast_received = None
 
     # Getters
     def getTimeUnits(self) -> int:
