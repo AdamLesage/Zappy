@@ -35,3 +35,13 @@ void plv_start(int fd, player_info_t *player_info)
     send_response_int(player_info->level, fd);
     send_response("\n", fd);
 }
+
+void plv_event(players_t *players, player_info_t *player_info)
+{
+    for (players_list_t *tmp = players->players_list;
+        tmp != NULL; tmp = tmp->next) {
+        if (strcmp(tmp->player_info->team_name, "GRAPHIC") == 0) {
+            plv_start(tmp->fd, player_info);
+        }
+    }
+}
