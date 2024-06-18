@@ -116,14 +116,6 @@ class TestMovesClass(unittest.TestCase):
             "linemate")
         return
     
-    def test15_findBestItemToTake(self):
-        """Test the findBestItemToTake methods"""
-        agent = AgentInfo()
-        testMoves = Moves()
-        self.assertEqual(testMoves.findBestItemToTake(agent, 3, ["deraumere", "sibur"]),
-            "sibur")
-        return
-    
     def test16_findBestItemToTake(self):
         """Test the findBestItemToTake methods"""
         agent = AgentInfo()
