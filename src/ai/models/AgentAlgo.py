@@ -59,6 +59,10 @@ class AgentAlgo():
         self.countRoundForIncantation = 0
         self.playerOnSameTileForIncantation = 1
         self.isWaitingForResponses = False
+        self.hasAskedPlayerConnected = False
+        self.isPlayerConnected = False
+        self.borntick = 0
+        self.alReadyResponded = False
         pass
 
     def updateAgentInfo(self, info: AgentInfo):
@@ -415,10 +419,18 @@ class AgentAlgo():
                 return
             self.updateClientStatus(self.round)
             self.round += 1
+            # self.borntick += 1
             if self.round == 5 and "incantation" not in self.status:
                 self.agentInfo.commandsToSend.append("Connect_nbr\n")
             if self.inventoryManagement():
                 return
+            # if self.borntick == 4:
+            #     self.AnybodyHere()
+            self.waitingForkResponse()
+            self.waitingForkResponseFinalStep()
+            # if self.borntick == 18 and self.isPlayerConnected == False:
+            #     self.isPlayerConnected = True
+            #     self.createChild()
             self.agentBroadcast.goToBroadcast(self.agentInfo.broadcast_orientation, self.agentInfo, self.status)
             if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
                 self.foodMode()
@@ -523,6 +535,48 @@ class AgentAlgo():
             print(f"Error from acceptOrRefuseIncantation count accept: {e}")
             return
 
+        if self.agentInfo.broadcast_received.startswith("need_incantation_level_"): # If the agent receives a broadcast to ask for incantation
+            incantationLevel = int(self.agentInfo.broadcast_received.split('_')[-1])
+            if self.agentInfo.getLevel() == incantationLevel:
+                print(f"Accept incantation level {incantationLevel}")
+                self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{str(incantationLevel)}\n")
+                self.status = "Going to incantation"
+            # else:
+            #     print(f"Refuse incantation level {incantationLevel}")
+    
+    def waitingForkResponseFinalStep(self) -> None:
+        if self.hasAskedPlayerConnected == False:
+            return
+        if self.isPlayerConnected == True:
+            return
+        if self.agentInfo.broadcast_received == "yes_we_are_on_the_map" and self.isPlayerConnected == False:
+            self.isPlayerConnected = True
+            self.hasAskedPlayerConnected = True
+        
+    
+    def waitingForkResponse(self) -> None:
+        if self.hasAskedPlayerConnected == False:
+            return
+        if self.alReadyResponded == True:
+            return
+        if self.agentInfo.broadcast_received == "Anybody_on_the_map_?":
+            self.agentInfo.commandsToSend.append(f"Broadcast yes_we_are_on_the_map\n")
+            print(f"Broadcast yes_we_are_on_the_map")
+            self.alReadyResponded = True
+            self.isPlayerConnected = True
+            self.hasAskedPlayerConnected = True
+
+    def AnybodyHere(self) -> None:
+        """
+        Check if there are any other players on the map
+        """
+        if self.hasAskedPlayerConnected == True:
+            return
+        if self.isPlayerConnected == True:
+            return
+        self.agentInfo.commandsToSend.append(f"Broadcast Anybody_on_the_map_?\n")
+        print(f"Broadcast Anybody_on_the_map_?")
+        self.hasAskedPlayerConnected = True
 
     def waitingIncantationResponses(self) -> None:
         if self.agentInfo.getLevel() == 1: # Player level 1 do not need to wait for responses
@@ -530,7 +584,6 @@ class AgentAlgo():
         if self.agentInfo.incantationResponses >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
             # wait until every players are ready and send incantation position with broadcast
             self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}\n")
-            self.agentInfo.commandsToSend.append("Inventory\n")
         pass
 
     def playerOnSameTile(self) -> None:

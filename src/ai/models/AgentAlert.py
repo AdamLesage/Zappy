@@ -23,6 +23,9 @@ class AgentAlerts(AgentInfo):
     
     def setAgentInfo(self, agentInfo: AgentInfo) -> None:
         self.agent =  agentInfo
+    
+    def getFoodAlert(self) -> int:
+        return self.minTimeU
 
     def checkAlerts(self) -> list[str]:
         """

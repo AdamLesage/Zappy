@@ -32,6 +32,7 @@ class AgentBroadcast():
         """
         if orientation == None or status != "Going to incantation" or len(agentInfo.movements) > 0: # Player is already going to the incantation
             return False
+        print(f"{agentInfo.commandsReturned}")
         if orientation == "0": # Player is on the broadcast position
             return True
         elif orientation == "1": # Broadcast position is on the north of the player
