@@ -46,6 +46,7 @@ namespace Zappy {
             void print_player_team();
             void set_scale_of_player(int i);
             void playBackgroundMusic(const std::string& filename);
+            void updatePlayersTravelled();
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;

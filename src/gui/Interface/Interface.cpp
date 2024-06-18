@@ -283,8 +283,22 @@ void Zappy::Interface::fill_color_team()
     }
 }
 
+void Zappy::Interface::updatePlayersTravelled()
+{
+    for (int i = 0; i < _gui_connect->_players.size(); i++) {
+        if (_gui_connect->_players[i]->getLastPosition() != _gui_connect->_players[i]->getPosition()) {
+            _gui_connect->_players[i]->setTravelled(_gui_connect->_players[i]->getTravelled() + 1);
+        }
+    }
+     for (int i = 0; i < _gui_connect->_players.size(); i++) {
+        std::array<int, 2> playerPosition = _gui_connect->_players[i]->getPosition();
+        _gui_connect->_players[i]->setLastPosition(playerPosition[0], playerPosition[1]);
+    }
+}
+
 void Zappy::Interface::print_players()
 {
+    updatePlayersTravelled();
     for (int i = 0; i < _gui_connect->_players.size(); i++) {
         if (player_sprites.size() < _gui_connect->_players.size())
             player_sprites.push_back(sf::Sprite());
