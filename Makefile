@@ -288,6 +288,7 @@ SRC_TEST_GUI =  src/gui/Interface/Interface.cpp								\
 				src/gui/DataManagement/server_info_management.cpp			\
 
 TEST 		=	tests/server/test_arguments.c					\
+				tests/server/test_command_look.c				\
 				tests/server/test_player_function.c				\
 				tests/server/test_init_map.c					\
 				tests/server/test_init_players.c				\
@@ -300,7 +301,6 @@ TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_command_interact_player.c		\
 				tests/server/test_command_fork.c				\
 				tests/server/test_command_inventory.c			\
-				tests/server/test_command_look.c				\
 				tests/server/test_command_eject.c				\
 				tests/server/test_command_broadcast.c			\
 				tests/server/test_command_incantation.c			\

@@ -90,7 +90,7 @@ void get_client_command(core_t *core)
     char *command = NULL;
 
     for (int i = 0; i <= core->select_info.max_fd; i++) {
-        if (FD_ISSET(i, &core->select_info.temp_fds)) {
+        if (FD_ISSET(i, &core->select_info.read_fds)) {
             command = get_command(core, i);
             check_command(core, i, command);
         }
