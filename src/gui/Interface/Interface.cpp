@@ -27,36 +27,16 @@ Zappy::Interface::Interface()
         throw InterfaceError("Error: tile1.png not found", "Interface");
     sprite.setTexture(texture);
     sprite.setScale(0.32, 0.32);
-    // sprite.setColor(sf::Color(255, 255, 255, 150));
     for (int i = 0; i < 2; i++)
         tile_texture_.push_back(sf::Texture());
     if (tile_texture_[0].loadFromFile("./asset/sprite/tiles/tile1.png") == false)
         throw InterfaceError("Error: tile1.png not found", "Interface");
     if (tile_texture_[1].loadFromFile("./asset/sprite/tiles/tile2.png") == false)
         throw InterfaceError("Error: tile2.png not found", "Interface");
-    // if (tile_texture_[2].loadFromFile("./asset/sprite/tiles/tile3.png") == false)
-    //     throw InterfaceError("Error: tile3.png not found", "Interface");
-    // if (tile_texture_[3].loadFromFile("./asset/sprite/tiles/tile4.png") == false)
-    //     throw InterfaceError("Error: tile4.png not found", "Interface");
-    // if (tile_texture_[4].loadFromFile("./asset/sprite/tiles/tile5.png") == false)
-    //     throw InterfaceError("Error: tile5.png not found", "Interface");
-    // if (tile_texture_[5].loadFromFile("./asset/sprite/tiles/tile6.png") == false)
-    //     throw InterfaceError("Error: tile6.png not found", "Interface");
-    // if (tile_texture_[6].loadFromFile("./asset/sprite/tiles/tile7.png") == false)
-    //     throw InterfaceError("Error: tile7.png not found", "Interface");
-    // if (tile_texture_[7].loadFromFile("./asset/sprite/tiles/tile8.png") == false)
-    //     throw InterfaceError("Error: tile8.png not found", "Interface");
-    // if (tile_texture_[8].loadFromFile("./asset/sprite/tiles/tile9.png") == false)
-    //     throw InterfaceError("Error: tile9.png not found", "Interface");
-    // if (tile_texture_[9].loadFromFile("./asset/sprite/tiles/tile10.png") == false)
-    //     throw InterfaceError("Error: tile10.png not found", "Interface");
-    // if (tile_texture_[10].loadFromFile("./asset/sprite/tiles/tile11.png") == false)
-    //     throw InterfaceError("Error: tile11.png not found", "Interface");
     for (int i = 0; i < 2; i++) {
         tile_sprite_.push_back(sf::Sprite());
         tile_sprite_[i].setTexture(tile_texture_[i]);
         tile_sprite_[i].setScale(0.32, 0.32);
-        // tile_sprite_[i].setColor(sf::Color(255, 255, 255, 200));
     }
     loadingBar.setSize(sf::Vector2f(1600, 40));
     loadingBar.setFillColor(sf::Color(119 , 181 , 254));
