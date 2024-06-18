@@ -14,7 +14,6 @@ class AgentInfo():
         self.commandsToSend = deque(maxlen=10) # Defined as a deque with a max length of 8 because we need to execute Look and Inventory commands every 8 rounds
         #self.commandsReturned = deque(maxlen=8)
         self.commandsReturned = [None, None]
-        self.commandWaitingList = []
         self.inventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.client_num = 0
         self.world_width = 0
@@ -27,10 +26,6 @@ class AgentInfo():
         self.playerVision = [] # Vision of player, tiles around him
         self.lifeUnits = 10
         self.timeUnits = 1260 
-        self.broadcast_received = None
-        self.numberMaxOfTeamPlayers = 0
-        self.numberOfTeamPlayersConnected = 0
-        self.availableSlots = 0
         self.broadcast_received = None
         self.broadcast_orientation = None
         self.incantationResponses = 1

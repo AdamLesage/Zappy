@@ -58,19 +58,6 @@ class Agent():
                 print("No available slots for the team")
                 exit(1)
 
-    def manageConnectNbr(self, tmp: int) -> None:
-        """
-        Manage the Connect_nbr command
-        retrieve number of team player
-        calculate each 10 rounds the number of team player connected for incantations
-        """
-        if self.agentInfo.getCommandsReturned()[0] == "Connect_nbr\n" and self.receive_from_server != None and tmp < 10:
-            # retrieve number of team player
-            self.agentInfo.numberMaxOfTeamPlayers = int(self.receive_from_server.split('\n')[0]) + 1
-        if self.agentInfo.getCommandsReturned()[0] == "Connect_nbr\n" and self.receive_from_server != None and tmp >= 10:
-            self.agentInfo.availableSlots = self.agentInfo.numberMaxOfTeamPlayers - self.agentInfo.numberOfTeamPlayersConnected
-
-
     def connect_to_server(self) -> None:
         """Connect to the server from the given ip and port"""
         try:
@@ -96,13 +83,10 @@ class Agent():
                         firstConnexion = False
                         self.receive_from_server = None
                         continue
-                    # self.retrieveClientNumber(self.receive_from_server)
-                    # self.retrieveWorldDimensions(self.receive_from_server)
                     if firstConnexion == False and tmp >= 2:
                         if self.receive_from_server == "dead\n":
                             os.wait()
                             break
-                        self.manageConnectNbr(tmp)
                         if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None:
                             continue
                         self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
