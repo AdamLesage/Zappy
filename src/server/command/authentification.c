@@ -28,13 +28,9 @@ void player_authentification(core_t *core, char *command, int fd)
         if (strcmp(core->arguments.name_teams[i], command) == 0) {
             eggs_used = get_id_eggs(core->map.eggs, command);
             add_player(&core->map, &core->players, fd, command);
-            send_response_int(
-                find_number_eggs_on_team(core->map.eggs, command), fd);
-            send_response("\n", fd);
-            send_response_int(core->arguments.width, fd);
-            send_response(" ", fd);
-            send_response_int(core->arguments.height, fd);
-            send_response("\n", fd);
+            dprintf(fd, "%d\n%d %d\n",
+                find_number_eggs_on_team(core->map.eggs, command),
+                core->arguments.width, core->arguments.height);
             pnw(&core->players, core->players.players_list->player_info);
             pin_event(&core->players, core->players.players_list->player_info);
             ebo(&core->players, eggs_used);
