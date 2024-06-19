@@ -13,6 +13,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/init_server.c										\
 			src/server/lunch_server.c										\
 			src/server/check_food_players.c									\
+			src/server/check_win_game.c										\
 			src/server/dataManagment/arguments/get_arguments.c				\
 			src/server/dataManagment/arguments/get_port.c					\
 			src/server/dataManagment/arguments/get_width.c					\
@@ -157,6 +158,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/init_server.c										\
 			src/server/lunch_server.c										\
 			src/server/check_food_players.c									\
+			src/server/check_win_game.c										\
 			src/server/dataManagment/arguments/get_arguments.c				\
 			src/server/dataManagment/arguments/get_port.c					\
 			src/server/dataManagment/arguments/get_width.c					\
@@ -294,6 +296,7 @@ TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_find_tiles.c					\
 				tests/server/test_map_put.c						\
 				tests/server/test_map_remove.c					\
+				tests/server/test_check_win_game.c				\
 				tests/server/test_command_GUI.c					\
 				tests/server/test_command_move_player.c			\
 				tests/server/test_command_interact_player.c		\
