@@ -13,9 +13,9 @@ Zappy::Interface::Interface()
     loading_texture.push_back(sf::Texture());
     loading_texture.push_back(sf::Texture());
     if (loading_texture[0].loadFromFile("./asset/gui/loading-screen.jpg") == false)
-        throw InterfaceError("Error: loading-screen.png not found", "Interface");
+        throw InterfaceError("Error: loading-screen.jpg not found", "Interface");
     if (loading_texture[1].loadFromFile("./asset/gui/menu.png") == false)
-        throw InterfaceError("Error: loading-screen.png not found", "Interface");
+        throw InterfaceError("Error: menu.png not found", "Interface");
     loading.setSize(sf::Vector2f(1920, 1080));
     loading.setTexture(&loading_texture[0]);
     sound_volume = 50;
@@ -533,11 +533,16 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     this->_broadcast.reset(new Broadcast(window, _gui_connect));
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
     window->setFramerateLimit(120);
+    loading.setTexture(&loading_texture[0]);
+    window->clear();
     window->draw(loading);
+    window->display();
     clock.restart();
     while (clock.getElapsedTime().asSeconds() < 5) {
         float progress = clock.getElapsedTime().asSeconds() / 5;
         loadingBar.setSize(sf::Vector2f(1600 * progress, 60));
+        window->clear();
+        window->draw(loading);
         window->draw(loadingBar);
         window->display();
     }
