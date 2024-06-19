@@ -148,6 +148,7 @@ SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/DataManagement/player_management.cpp					\
 			src/gui/DataManagement/tile_management.cpp						\
 			src/gui/DataManagement/server_info_management.cpp				\
+			src/gui/Interface/PlayerPrint.cpp								\
 
 SRC_AI				=	src/ai/main.py										\
 

@@ -183,14 +183,14 @@ Zappy::Interface::Interface()
     for (int i = 0; i < 8; i++) {
         player_orientation.push_back(std::array<sf::IntRect, 4>());
     }
-    player_orientation[0][0] = sf::IntRect(35, 0, 35, 35);
-    player_orientation[0][1] = sf::IntRect(30, 100, 35, 35);
-    player_orientation[0][2] = sf::IntRect(30, 65, 35, 35);
-    player_orientation[0][3] = sf::IntRect(35, 35, 30, 30);
-    player_orientation[1][0] = sf::IntRect(35, 0, 35, 35);
-    player_orientation[1][1] = sf::IntRect(30, 100, 35, 35);
-    player_orientation[1][2] = sf::IntRect(30, 65, 35, 35);
-    player_orientation[1][3] = sf::IntRect(35, 35, 30, 30);
+    player_orientation[0][0] = sf::IntRect(35, 2, 23, 27);
+    player_orientation[0][1] = sf::IntRect(32, 103, 31, 24);
+    player_orientation[0][2] = sf::IntRect(37, 65, 21, 28);
+    player_orientation[0][3] = sf::IntRect(33, 38, 30, 25);
+    player_orientation[1][0] = sf::IntRect(35, 2, 23, 27);
+    player_orientation[1][1] = sf::IntRect(32, 103, 31, 24);
+    player_orientation[1][2] = sf::IntRect(37, 65, 21, 28);
+    player_orientation[1][3] = sf::IntRect(33, 38, 30, 25);
     player_orientation[2][0] = sf::IntRect(182, 137, 19, 29);
     player_orientation[2][1] = sf::IntRect(207, 293, 28, 23);
     player_orientation[2][2] = sf::IntRect(178, 51, 20, 27);
@@ -485,7 +485,6 @@ void Zappy::Interface::check_event()
             }
             sf::Vector2f mousePos = window->mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y), view);
             _info->Checkclick(mousePos);
-            printf("jesuisletest\n");
         }
         sf::Vector2f mousePos2 = window->mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y), view);
         for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
