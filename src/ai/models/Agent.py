@@ -56,7 +56,8 @@ class Agent():
                 print(f"Connected as client {client_num}")
                 self.agentInfo.client_num = client_num
             else:
-                print("No available slots for the team")
+                # TODO: check up sometimes to see if there is a slot available and fork if not
+                print(f"Player is not allowed to connect to the server with client number {client_num}")
                 exit(1)
 
     def connect_to_server(self) -> None:
@@ -90,6 +91,8 @@ class Agent():
                         if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None: # If the server sends nothing, continue
                             continue
                         self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
+                        self.agentAlgo.ConnectNbrManagement()
+                        self.agentAlgo.forkManagement()
                         self.agentAlgo.play(self.receive_from_server)
                         self.agentAlgo.clearReturnCommand()
                         self.agentAlgo.send_to_server()

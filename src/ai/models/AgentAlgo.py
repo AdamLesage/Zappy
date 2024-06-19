@@ -345,6 +345,7 @@ class AgentAlgo():
                 self.setItemsForIncantation()
                 self.agentInfo.commandsToSend.append("Incantation\n")
                 self.playerOnSameTileForIncantation = 1
+
         if self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("Current level:"): # If the incantation is a success
             self.hasAskedIncantation = False
             self.status = "Mining"
@@ -353,12 +354,15 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.append("Look\n")
             self.agentInfo.incantationResponses = 1
             self.round = 0
-            self.createChild()
+            self.agentInfo.commandsToSend.append("Connect_nbr\n")
+            print(f"Add connect_nbr command {self.agentInfo.commandsToSend}")
+            # self.createChild()
         elif self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("ko"): # If the incantation is a failure
             self.hasAskedIncantation = False
             self.status = "Food"
             self.agentInfo.commandsToSend.append("Inventory\n")
             self.round = 0
+
 
     def inventoryManagement(self) -> bool:
         """
@@ -499,6 +503,43 @@ class AgentAlgo():
         print(f"Broadcast Anybody_on_the_map_?")
         self.hasAskedPlayerConnected = True
 
+    def ConnectNbrManagement(self) -> None:
+        """
+        Manage the Connect_nbr command
+        Create a fork if there is no available slots
+        """
+        if self.agentInfo.commandsReturned[0] != "Connect_nbr\n":
+            # There is no Connect_nbr command to manage or response has not been received
+            return
+        if self.agentInfo.commandsReturned[1] == None:
+            # If the response has not been received
+            return
+        number_received = self.agentInfo.commandsReturned[1].replace("\n", "")
+        if number_received.isdigit() == False:
+            # If the response is not a digit
+            return
+        if int(number_received) < 3:
+            # If there is no available slots
+            print(f"Create a child process")
+            self.agentInfo.commandsToSend.append("Fork\n")
+        elif int(number_received) > 1:
+            self.createChild()
+
+    def forkManagement(self) -> None:
+        """
+        Manage the fork command
+        Create a child process
+        """
+        if self.agentInfo.commandsReturned[0] != "Fork\n" or self.agentInfo.commandsReturned[1] == None:
+            # There is no Fork command to manage or response has not been received
+            return
+        if self.agentInfo.commandsReturned[1].startswith("ok") == False:
+            # If the response is not "ok"
+            return
+        print(f"Fork response: {self.agentInfo.commandsReturned[1]}")
+        self.createChild()
+
+
     def broadcastManagement(self, data: str) -> bool:
         """
         Manage the broadcast
@@ -571,7 +612,8 @@ class AgentAlgo():
             return
         if self.agentInfo.incantationResponses >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
             # wait until every players are ready and send incantation position with broadcast
-            self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}\n")
+            if f"Broadcast waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}" not in self.agentInfo.commandsToSend: # check if boradcast waiting is not already sent in commandsToSend
+                self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}\n")
         pass
 
 
