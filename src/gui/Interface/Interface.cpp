@@ -183,6 +183,16 @@ Zappy::Interface::Interface()
     for (int i = 0; i < 8; i++) {
         player_orientation.push_back(std::array<sf::IntRect, 4>());
     }
+    for (int i = 0; i < 5; i++) {
+        player_anim_rank1.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank2.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank3.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank4.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank5.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank6.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank7.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank8.push_back(std::array<sf::IntRect, 4>());
+    }
     player_orientation[0][0] = sf::IntRect(35, 2, 23, 27);
     player_orientation[0][1] = sf::IntRect(32, 103, 31, 24);
     player_orientation[0][2] = sf::IntRect(37, 65, 21, 28);
