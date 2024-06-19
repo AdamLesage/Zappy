@@ -626,10 +626,11 @@ class AgentAlgo():
                 self.playerOnSameTileForIncantation += 1
                 next_level = self.agentInfo.getLevel() + 1
                 required_players = self.agentInfo.numberToEvolve[f"level{next_level}"]
-                if self.playerOnSameTileForIncantation >= required_players:
-                    print(f"Player can start an incantation level {next_level}")
-                    self.agentInfo.commandsToSend.append(f"Incantation\n")
-                    self.status = "Is on incantation"
+                # if self.playerOnSameTileForIncantation >= required_players:
+                #     print(f"Player can start an incantation level {next_level}")
+                #     self.setItemsForIncantation()
+                #     self.agentInfo.commandsToSend.append(f"Incantation\n")
+                #     self.status = "Is on incantation"
         except Exception as e:
             print(f"Error from playerOnSameTile broadcast received: {e}")
             return
