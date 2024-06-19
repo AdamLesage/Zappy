@@ -17,10 +17,10 @@ Zappy::InfoDisplay::InfoDisplay(std::shared_ptr<GuiConnect> guiConnect, std::sha
         info.push_back(sf::Text("", font, 45));
         info[i].setFillColor(sf::Color::Black);
     }
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 8; i++) {
         info_sprites.push_back(sf::Sprite());
     }
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 8; i++)
         ressource_texture.push_back(sf::Texture());
     if (ressource_texture[0].loadFromFile("./asset/sprite/ressource/bacon.png") == false)
         throw InterfaceError("Error: bacon.png not found", "Interface");
@@ -36,10 +36,14 @@ Zappy::InfoDisplay::InfoDisplay(std::shared_ptr<GuiConnect> guiConnect, std::sha
         throw InterfaceError("Error: wool.png not found", "Interface");
     if (ressource_texture[6].loadFromFile("./asset/sprite/ressource/wheat.png") == false)
         throw InterfaceError("Error: wheat.png not found", "Interface");
+    if (ressource_texture[7].loadFromFile("./asset/sprite/egg.png") == false)
+        throw InterfaceError("Error: wood.png not found", "Interface");
     for (int i = 0; i < 7; i++) {
         info_sprites[i].setTexture(ressource_texture[i]);
         info_sprites[i].setScale(ressource_sprite_[i].getScale().x * 3, ressource_sprite_[i].getScale().y * 3);
     }
+    info_sprites[7].setTexture(ressource_texture[7]);
+    info_sprites[7].setScale(0.075, 0.075);
     float baseY = 1080 - 220;
     float offsetY = 50;
     info[0].setPosition(230, baseY);
@@ -57,7 +61,9 @@ Zappy::InfoDisplay::InfoDisplay(std::shared_ptr<GuiConnect> guiConnect, std::sha
     info_sprites[4].setPosition(630, baseY + offsetY);
     info[7].setPosition(730, baseY + offsetY);
     info_sprites[5].setPosition(630, baseY + 2 * offsetY);
+    info_sprites[7].setPosition(1630, baseY + offsetY);
     info[8].setPosition(730, baseY + 2 * offsetY);
+    info[9].setPosition(1730, baseY + offsetY);
     info[0].setString("Map Size: x " + std::to_string(_guiConnect->get_size_map()[0]) + " y " + std::to_string(_guiConnect->get_size_map()[1]));
     info[1].setString("Player: " + std::to_string(_guiConnect->_players.size()));
     info[2].setString("Food: " + std::to_string(get_food()));
@@ -67,6 +73,7 @@ Zappy::InfoDisplay::InfoDisplay(std::shared_ptr<GuiConnect> guiConnect, std::sha
     info[6].setString("Mendiane: " + std::to_string(get_Mendiane()));
     info[7].setString("Phiras: " + std::to_string(get_Phiras()));
     info[8].setString("Thystame: " + std::to_string(get_Thystame()));
+    info[9].setString("Egg: " + std::to_string(_guiConnect->_eggs.size()));
 }
 
 Zappy::InfoDisplay::~InfoDisplay()
@@ -160,6 +167,16 @@ int Zappy::InfoDisplay::get_player(int x, int y)
     return (players);
 }
 
+int Zappy::InfoDisplay::get_eggs(int x, int y)
+{
+    int eggs = 0;
+    for (int i = 0; i < _guiConnect->_eggs.size(); i++) {
+        if (_guiConnect->_eggs[i]->getPosition()[0] == x && _guiConnect->_eggs[i]->getPosition()[1] == y)
+            eggs++;
+    }
+    return (eggs);
+}
+
 void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
 {
     for (int i = 0; i < _guiConnect->get_size_map()[0]; i++) {
@@ -175,6 +192,7 @@ void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
                 info[6].setString("Mendiane: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Mendiane")));
                 info[7].setString("Phiras: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Phiras")));
                 info[8].setString("Thystame: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Thystame")));
+                info[9].setString("Egg: " + std::to_string(get_eggs(i, j)));
                 info_ = true;
             }
         }
@@ -189,14 +207,15 @@ void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
         info[6].setString("Mendiane: " + std::to_string(get_Mendiane()));
         info[7].setString("Phiras: " + std::to_string(get_Phiras()));
         info[8].setString("Thystame: " + std::to_string(get_Thystame()));
+        info[9].setString("Egg: " + std::to_string(_guiConnect->_eggs.size()));
     }
     info_ = false;
 }
 
 void Zappy::InfoDisplay::display()
 {
-    for (int k = 0; k < 9; k++)
+    for (int k = 0; k < 10; k++)
         _window->draw(info[k]);
-    for (int k = 0; k < 7; k++)
+    for (int k = 0; k < 8; k++)
         _window->draw(info_sprites[k]);
 }

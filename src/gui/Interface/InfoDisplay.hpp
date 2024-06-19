@@ -30,6 +30,7 @@ namespace Zappy {
             int get_Phiras();
             int get_Thystame();
             int get_player(int x, int y);
+            int get_eggs(int x, int y);
         protected:
             bool info_;
             std::vector<sf::Text> info;

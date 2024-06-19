@@ -487,7 +487,6 @@ void Zappy::Interface::check_event()
             }
             sf::Vector2f mousePos = window->mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y), view);
             _info->Checkclick(mousePos);
-            printf("jesuisletest\n");
         }
         sf::Vector2f mousePos2 = window->mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y), view);
         for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
