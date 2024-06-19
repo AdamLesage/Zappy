@@ -221,6 +221,8 @@ Zappy::Interface::Interface()
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
     credit = std::make_shared<Credit>(window);
+    printf("Interface created\n");
+    printf("Interface created\n");
 }
 
 void Zappy::Interface::set_scale_of_player(int i)
@@ -530,9 +532,15 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     int frameTime = 0.1; // speed of the game
 
     _gui_connect = gui_connect;
-    this->_inventory.reset(new InventoryDisplay(_gui_connect, window));
-    this->_info.reset(new InfoDisplay(_gui_connect, window, ressource_sprite_));
-    this->_broadcast.reset(new Broadcast(window, _gui_connect));
+    try {
+        this->_inventory.reset(new InventoryDisplay(_gui_connect, window));
+        this->_info.reset(new InfoDisplay(_gui_connect, window, ressource_sprite_));
+        this->_broadcast.reset(new Broadcast(window, _gui_connect));
+        this->_teamPrint.reset(new TeamPrint(_gui_connect, window));
+    } catch (Zappy::InterfaceError &e) {
+        throw Zappy::InterfaceError(e.what(), "Interface");
+        return;
+    }
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
     window->setFramerateLimit(120);
     window->draw(loading);
@@ -594,16 +602,8 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         }
         if (isOverTile)
             window->draw(rect);
-        std::vector<std::string> teamNames = gui_connect->getTeamNames();
-        for (size_t i = 0; i < teamNames.size(); i++) {
-            if (std::find(Texts_str.begin(), Texts_str.end(), teamNames[i]) == Texts_str.end()) {
-                Texts_str.push_back(teamNames[i]);
-                Texts.push_back(sf::Text(teamNames[i], font, 50));
-                Texts[2 + i].setFillColor(sf::Color::Black);
-                Texts[2 + i].setPosition(10, 50 + ((2 + i) * 50));
-            }
-        }
         _teamnbr = gui_connect->getTeamNames().size();
+        _teamPrint->print_team();
         print_resssource();
         print_eggs();
         print_players();
@@ -611,6 +611,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->setView(window->getDefaultView());
         for (size_t i = 0; i < _rect.size(); i++)
             window->draw(_rect[i]);
+        _teamPrint->display();
         for (size_t i = 0; i < Texts.size(); i++)
             window->draw(Texts[i]);
         tick = bars[1]->checkClick(window);

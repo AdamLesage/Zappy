@@ -14,6 +14,7 @@
 #include "InventoryDisplay.hpp"
 #include "InfoDisplay.hpp"
 #include "Broadcast.hpp"
+#include "TeamPrint.hpp"
 #include "InterfaceError.hpp"
 #include <iostream>
 #include <thread>
@@ -81,7 +82,6 @@ namespace Zappy {
             sf::Texture egg_texture;
             sf::Font font;
             std::vector<sf::Text> Texts;
-            std::vector<std::string> Texts_str;
             sf::Sprite sound;
             sf::Texture sound_;
             std::shared_ptr<GuiConnect> _gui_connect;
@@ -108,6 +108,7 @@ namespace Zappy {
             std::vector<sf::Text> player_rank_text;
             std::shared_ptr<Credit> credit;
             std::vector<Evolution> evolutions;
+            std::shared_ptr<TeamPrint> _teamPrint;
         private:
     };
 }
