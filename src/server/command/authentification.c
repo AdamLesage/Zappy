@@ -20,20 +20,28 @@ static int get_id_eggs(eggs_t *eggs, char *team_name)
     return (-1);
 }
 
-void player_authentification(core_t *core, char *command, int fd)
+static void create_player(core_t *core, char *command, int fd)
 {
     int eggs_used = -1;
 
+    eggs_used = get_id_eggs(core->map.eggs, command);
+    if (add_player(&core->map, &core->players, fd, command)) {
+        dprintf(fd, "%d\n%d %d\n",
+            find_number_eggs_on_team(core->map.eggs, command),
+            core->arguments.width, core->arguments.height);
+        pnw(&core->players, core->players.players_list->player_info);
+        pin_event(&core->players, core->players.players_list->player_info);
+        ebo(&core->players, eggs_used);
+    } else {
+        send_response("ko\n", fd);
+    }
+}
+
+void player_authentification(core_t *core, char *command, int fd)
+{
     for (int i = 0; core->arguments.name_teams[i] != NULL; i++) {
         if (strcmp(core->arguments.name_teams[i], command) == 0) {
-            eggs_used = get_id_eggs(core->map.eggs, command);
-            add_player(&core->map, &core->players, fd, command);
-            dprintf(fd, "%d\n%d %d\n",
-                find_number_eggs_on_team(core->map.eggs, command),
-                core->arguments.width, core->arguments.height);
-            pnw(&core->players, core->players.players_list->player_info);
-            pin_event(&core->players, core->players.players_list->player_info);
-            ebo(&core->players, eggs_used);
+            create_player(core, command, fd);
             return;
         }
     }

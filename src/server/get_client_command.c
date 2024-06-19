@@ -9,13 +9,17 @@
 
 static void disconnect_client(int readbite, int fd_client, core_t *core)
 {
+    player_info_t *info = find_player(&core->players, fd_client);
+
     if (readbite == 0) {
         printf("Client %d disconnected\n", fd_client);
     } else
         perror("read");
     close(fd_client);
-    delete_player(&core->map, &core->players, fd_client);
     FD_CLR(fd_client, &core->select_info.rfds);
+    pdi(&core->players, info->id);
+    delete_player(&core->map, &core->players, fd_client);
+    enw(&core->players, -1, core->map.eggs);
 }
 
 static char *read_socket(core_t *core, int fd_client,
@@ -66,6 +70,15 @@ static char *update_buffer(char *buffer, int *readbite,
     return (buffer);
 }
 
+static void set_get_command_select_info(fd_set *read_select,
+    struct timeval *tv, int fd_client)
+{
+    FD_ZERO(read_select);
+    FD_SET(fd_client, read_select);
+    tv->tv_sec = 0;
+    tv->tv_usec = 0;
+}
+
 static char *get_command(core_t *core, int fd_client)
 {
     int readbite = 0;
@@ -74,9 +87,7 @@ static char *get_command(core_t *core, int fd_client)
     struct timeval tv;
 
     do {
-        FD_SET(fd_client, &read_select);
-        tv.tv_sec = 0;
-        tv.tv_usec = 0;
+        set_get_command_select_info(&read_select, &tv, fd_client);
         select(core->select_info.max_fd + 1,
             &read_select, NULL, NULL, &tv);
         readbite = 0;
@@ -85,6 +96,7 @@ static char *get_command(core_t *core, int fd_client)
         if (FD_ISSET(fd_client, &read_select) && buffer == NULL)
             return NULL;
     } while (readbite > 0);
+    FD_CLR(fd_client, &read_select);
     if (buffer != NULL)
         buffer[strlen(buffer) - 1] = '\0';
     return (buffer);
