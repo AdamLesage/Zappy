@@ -18,23 +18,76 @@ static void disconnect_client(int readbite, int fd_client, core_t *core)
     FD_CLR(fd_client, &core->select_info.rfds);
 }
 
+static char *read_socket(core_t *core, int fd_client,
+    char *buffer, int *readbite)
+{
+    char *buf = NULL;
+
+    buf = malloc(sizeof(char) * 2);
+    *readbite = read(fd_client, buf, 1);
+    if (*readbite <= 0) {
+        disconnect_client(*readbite, fd_client, core);
+        if (buffer != NULL) {
+            free(buffer);
+        }
+        free(buf);
+        return (NULL);
+    }
+    if (*readbite != 0) {
+        buf[1] = '\0';
+    }
+    return (buf);
+}
+
+static char *alloc_buffer(char *buffer)
+{
+    if (buffer == NULL) {
+        buffer = malloc(sizeof(char) * 2);
+        buffer[0] = '\0';
+    } else {
+        buffer = realloc(buffer, strlen(buffer) + 2);
+    }
+    return (buffer);
+}
+
+static char *update_buffer(char *buffer, int *readbite,
+    int fd_client, core_t *core)
+{
+    char *buf = NULL;
+
+    buffer = alloc_buffer(buffer);
+    buf = read_socket(core, fd_client, buffer, readbite);
+    if (buf == NULL) {
+        return (NULL);
+    }
+    strcat(buffer, buf);
+    free(buf);
+    buf = NULL;
+    return (buffer);
+}
+
 static char *get_command(core_t *core, int fd_client)
 {
-    size_t readbite;
-    char buf[500];
+    int readbite = 0;
+    char *buffer = NULL;
+    fd_set read_select;
+    struct timeval tv;
 
-    if (fd_client == core->select_info.fd_socket_control)
-        return (NULL);
-    for (int i = 0; i != 500; i++)
-        buf[i] = '\0';
-    readbite = read(fd_client, buf, sizeof(buf));
-    if (readbite <= 0) {
-        disconnect_client(readbite, fd_client, core);
-        return (NULL);
-    } else {
-        buf[readbite - 1] = '\0';
-    }
-    return (strdup(buf));
+    do {
+        FD_SET(fd_client, &read_select);
+        tv.tv_sec = 0;
+        tv.tv_usec = 0;
+        select(core->select_info.max_fd + 1,
+            &read_select, NULL, NULL, &tv);
+        readbite = 0;
+        if (FD_ISSET(fd_client, &read_select))
+            buffer = update_buffer(buffer, &readbite, fd_client, core);
+        if (FD_ISSET(fd_client, &read_select) && buffer == NULL)
+            return NULL;
+    } while (readbite > 0);
+    if (buffer != NULL)
+        buffer[strlen(buffer) - 1] = '\0';
+    return (buffer);
 }
 
 static void set_player_command(core_t *core, player_info_t *info,
@@ -50,6 +103,7 @@ static void set_player_command(core_t *core, player_info_t *info,
         }
         info->timer_action = get_time_action(command);
     }
+    printf("receive: %s\n", command);
     add_action_in_queue(&core->players, info->fd, command);
 }
 
@@ -69,7 +123,7 @@ void check_command(core_t *core, int fd, char *command)
     char *team_name = NULL;
     char **array_command = NULL;
 
-    if (command == NULL) {
+    if (command == NULL || command[0] == '\n') {
         return;
     }
     if (info == NULL) {
@@ -90,7 +144,8 @@ void get_client_command(core_t *core)
     char *command = NULL;
 
     for (int i = 0; i <= core->select_info.max_fd; i++) {
-        if (FD_ISSET(i, &core->select_info.read_fds)) {
+        if (FD_ISSET(i, &core->select_info.read_fds) &&
+            core->select_info.fd_socket_control != i) {
             command = get_command(core, i);
             check_command(core, i, command);
         }

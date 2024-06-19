@@ -123,9 +123,7 @@ static void incantation_end_success(tile_info_t *tile_info,
         info = find_player_by_id(&core->players, incantation_info->ids[i]);
         if (info != NULL) {
             info->level++;
-            send_response("Current level: ", info->fd);
-            send_response_int(info->level, info->fd);
-            send_response("\n", info->fd);
+            dprintf(info->fd, "Current level: %d\n", info->level);
         }
         plv_event(&core->players, info);
         pie(&core->players, tile_info->pos_x, tile_info->pos_y, true);
