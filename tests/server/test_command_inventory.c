@@ -19,6 +19,8 @@ Test (command_Inventory, command_Inventory_success, .init = cr_redirect_stdout)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
     info = find_player(&core.players, 1);
     info->orientation = N;
     info->pos_x = 5;
