@@ -24,6 +24,7 @@ static void manage_select_notif(core_t *core, int retval)
         connect_client(&core->select_info,
             &core->socket_config.server_socket);
     } else {
+        check_win_game(core);
         check_player_command(core);
         check_food_players(core);
         core->map.last_refille--;

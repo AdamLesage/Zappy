@@ -108,6 +108,7 @@ void Evolution::setPosition(int x, int y)
 {
     _position.first = x;
     _position.second = y;
+    _sprite.setPosition(_position.first, _position.second);
 }
 
 void Evolution::setClock(sf::Clock clock)

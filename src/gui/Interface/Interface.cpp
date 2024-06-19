@@ -13,9 +13,9 @@ Zappy::Interface::Interface()
     loading_texture.push_back(sf::Texture());
     loading_texture.push_back(sf::Texture());
     if (loading_texture[0].loadFromFile("./asset/gui/loading-screen.jpg") == false)
-        throw InterfaceError("Error: loading-screen.png not found", "Interface");
+        throw InterfaceError("Error: loading-screen.jpg not found", "Interface");
     if (loading_texture[1].loadFromFile("./asset/gui/menu.png") == false)
-        throw InterfaceError("Error: loading-screen.png not found", "Interface");
+        throw InterfaceError("Error: menu.png not found", "Interface");
     loading.setSize(sf::Vector2f(1920, 1080));
     loading.setTexture(&loading_texture[0]);
     sound_volume = 50;
@@ -183,14 +183,56 @@ Zappy::Interface::Interface()
     for (int i = 0; i < 8; i++) {
         player_orientation.push_back(std::array<sf::IntRect, 4>());
     }
-    player_orientation[0][0] = sf::IntRect(35, 0, 35, 35);
-    player_orientation[0][1] = sf::IntRect(30, 100, 35, 35);
-    player_orientation[0][2] = sf::IntRect(30, 65, 35, 35);
-    player_orientation[0][3] = sf::IntRect(35, 35, 30, 30);
-    player_orientation[1][0] = sf::IntRect(35, 0, 35, 35);
-    player_orientation[1][1] = sf::IntRect(30, 100, 35, 35);
-    player_orientation[1][2] = sf::IntRect(30, 65, 35, 35);
-    player_orientation[1][3] = sf::IntRect(35, 35, 30, 30);
+    for (int i = 0; i < 5; i++) {
+        player_anim_rank1.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank2.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank3.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank4.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank5.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank6.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank7.push_back(std::array<sf::IntRect, 4>());
+        player_anim_rank8.push_back(std::array<sf::IntRect, 4>());
+    }
+    player_anim_rank1[0][0] = sf::IntRect(5, 3, 21, 29);
+    player_anim_rank1[0][1] = sf::IntRect(69, 3, 21, 29);
+    player_anim_rank1[0][2] = sf::IntRect(5, 3, 21, 29);
+    player_anim_rank1[0][3] = sf::IntRect(69, 3, 21, 29);
+    player_anim_rank1[1][0] = sf::IntRect(0, 103, 31, 24);
+    player_anim_rank1[1][1] = sf::IntRect(63, 103, 32, 24);
+    player_anim_rank1[1][2] = sf::IntRect(0, 103, 31, 24);
+    player_anim_rank1[1][3] = sf::IntRect(63, 103, 32, 24);
+    player_anim_rank1[2][0] = sf::IntRect(5, 66, 21, 30);
+    player_anim_rank1[2][1] = sf::IntRect(69, 66, 21, 30);
+    player_anim_rank1[2][2] = sf::IntRect(5, 66, 21, 30);
+    player_anim_rank1[2][3] = sf::IntRect(69, 66, 21, 30);
+    player_anim_rank1[3][0] = sf::IntRect(0, 39, 30, 25);
+    player_anim_rank1[3][1] = sf::IntRect(64, 39, 30, 24);
+    player_anim_rank1[3][2] = sf::IntRect(0, 39, 32, 25);
+    player_anim_rank1[3][3] = sf::IntRect(64, 39, 30, 24);
+    player_anim_rank2[0][0] = sf::IntRect(5, 3, 21, 29);
+    player_anim_rank2[0][1] = sf::IntRect(69, 3, 21, 29);
+    player_anim_rank2[0][2] = sf::IntRect(5, 3, 21, 29);
+    player_anim_rank2[0][3] = sf::IntRect(69, 3, 21, 29);
+    player_anim_rank2[1][0] = sf::IntRect(0, 103, 31, 24);
+    player_anim_rank2[1][1] = sf::IntRect(63, 103, 32, 24);
+    player_anim_rank2[1][2] = sf::IntRect(0, 103, 31, 24);
+    player_anim_rank2[1][3] = sf::IntRect(63, 103, 32, 24);
+    player_anim_rank2[2][0] = sf::IntRect(5, 66, 21, 30);
+    player_anim_rank2[2][1] = sf::IntRect(69, 66, 21, 30);
+    player_anim_rank2[2][2] = sf::IntRect(5, 66, 21, 30);
+    player_anim_rank2[2][3] = sf::IntRect(69, 66, 21, 30);
+    player_anim_rank2[3][0] = sf::IntRect(0, 39, 30, 25);
+    player_anim_rank2[3][1] = sf::IntRect(64, 39, 30, 24);
+    player_anim_rank2[3][2] = sf::IntRect(0, 39, 32, 25);
+    player_anim_rank2[3][3] = sf::IntRect(64, 39, 30, 24);
+    player_orientation[0][0] = sf::IntRect(35, 2, 23, 27);
+    player_orientation[0][1] = sf::IntRect(32, 103, 31, 24);
+    player_orientation[0][2] = sf::IntRect(37, 65, 21, 28);
+    player_orientation[0][3] = sf::IntRect(33, 38, 30, 25);
+    player_orientation[1][0] = sf::IntRect(35, 2, 23, 27);
+    player_orientation[1][1] = sf::IntRect(32, 103, 31, 24);
+    player_orientation[1][2] = sf::IntRect(37, 65, 21, 28);
+    player_orientation[1][3] = sf::IntRect(33, 38, 30, 25);
     player_orientation[2][0] = sf::IntRect(182, 137, 19, 29);
     player_orientation[2][1] = sf::IntRect(207, 293, 28, 23);
     player_orientation[2][2] = sf::IntRect(178, 51, 20, 27);
@@ -305,8 +347,8 @@ void Zappy::Interface::print_players()
     for (int i = 0; i < _gui_connect->_players.size(); i++) {
         if (player_sprites.size() < _gui_connect->_players.size()) {
             player_sprites.push_back(sf::Sprite());
-            //evolutions.push_back(Evolution(std::make_pair(500, 500), std::make_pair(1.5, 1.5), sf::Clock(), "asset/sprite/animation/evolution1.png"));
-            //evolutions.back().setFrameInfo(82, 67, 16, 2);
+            // evolutions.push_back(std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png"));
+            // evolutions.back()->setFrameInfo(82, 67, 16, 2);
         }
         player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel() - 1]);
         set_scale_of_player(i);
@@ -317,12 +359,10 @@ void Zappy::Interface::print_players()
         print_player_team();
         _broadcast->check_player_broadcast(i);
         _broadcast->display();
-        //if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
-        //    //evolutions[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
-        //    evolutions[i].setPosition(500, 500);
-        //    window->draw(evolutions[i].getSprite());
-        //    //std::cout << "Player " << i << " is incanting" << std::endl;
-        //}
+        // if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
+        //     evolutions[i]->setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 70, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 125);
+        //     window->draw(evolutions[i]->getSprite());
+        // }
     }
 }
 
@@ -529,7 +569,7 @@ void Zappy::Interface::print_map_iso()
 
 void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
 {
-    int frameTime = 0.1; // speed of the game
+    float frameTime = 0.13; // speed of the game
 
     _gui_connect = gui_connect;
     try {
@@ -543,11 +583,16 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     }
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
     window->setFramerateLimit(120);
+    loading.setTexture(&loading_texture[0]);
+    window->clear();
     window->draw(loading);
+    window->display();
     clock.restart();
     while (clock.getElapsedTime().asSeconds() < 5) {
         float progress = clock.getElapsedTime().asSeconds() / 5;
         loadingBar.setSize(sf::Vector2f(1600 * progress, 60));
+        window->clear();
+        window->draw(loading);
         window->draw(loadingBar);
         window->display();
     }
@@ -586,9 +631,13 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
         if (clock.getElapsedTime().asSeconds() > frameTime) {
-            //for (auto &it : evolutions) {
-            //    it.updateFrame(currentFrame);
-            //}
+            int i = 0;
+            for (auto &it : evolutions) {
+                if (_gui_connect->_players[i].get()->isPlayerIncanting() == true)
+                    it->updateFrame(currentFrame);
+                i++;
+            }
+            clock.restart();
         }
         sound_volume = bars[0]->checkClick(window);
         backgroundMusic.setVolume(sound_volume);

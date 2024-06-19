@@ -77,6 +77,14 @@ namespace Zappy {
             std::vector<std::shared_ptr<Player>> players;
             std::vector<sf::Sprite> player_sprites;
             std::vector<std::array<sf::IntRect, 4>> player_orientation;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank1;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank2;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank3;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank4;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank5;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank6;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank7;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank8;
             std::vector<sf::Texture> player_textures;
             std::vector<sf::Sprite> egg_sprites;
             sf::Texture egg_texture;
@@ -107,7 +115,7 @@ namespace Zappy {
             std::vector<sf::Sprite> player_rank;
             std::vector<sf::Text> player_rank_text;
             std::shared_ptr<Credit> credit;
-            std::vector<Evolution> evolutions;
+            std::vector<std::shared_ptr<Evolution>> evolutions;
             std::shared_ptr<TeamPrint> _teamPrint;
         private:
     };
