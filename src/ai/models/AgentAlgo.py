@@ -56,7 +56,6 @@ class AgentAlgo():
                                 "broadcast\n": BroadcastCommand(), "fork\n": ForkCommand(),
                                 "eject\n": EjectCommand(), "take\n": TakeCommand(), "set\n": SetCommand(),
                                 "incantation\n": IncantationCommand()}
-        self.countRoundForIncantation = 0
         self.playerOnSameTileForIncantation = 1
         self.isWaitingForResponses = False
         self.hasAskedPlayerConnected = False
@@ -83,7 +82,7 @@ class AgentAlgo():
                 return
             alert = self.alerts.checkAlerts().pop()
             if alert.startswith("incantationNeeded"):
-                self.status = "Incantation" # Do not change status to incantation, need to wait for other agents except if player is level 1 
+                self.status = "Ask incantation" # Do not change status to incantation, need to wait for other agents except if player is level 1 
                 return
             if alert == "food":
                 self.status = "Food"
@@ -321,49 +320,49 @@ class AgentAlgo():
             # print(f"Child process: {os.getpid()}")
             os.execvp("./zappy_ai", ["./zappy_ai", "-p", str(self.port), "-n", self.teamName, "-h", self.ip])
 
-    def incantationManagement(self) -> None:
-        if self.status != "Incantation" and self.status != "Waiting player to start incantation" and self.status != "Is on incantation":
-            self.round += 1 # Increment the round
+    def askIncantation(self) -> None:
+        """
+        Ask for incantation if alert received change status to "Ask incantation"
+        """
+        if self.status != "Ask incantation":
             return
-        # If agent do not receive accept fast, back to take food
-        # if self.countRoundForIncantation >= 20_000 and self.isWaitingForResponses == True:
-        #     self.hasAskedIncantation = False
-        #     self.countRoundForIncantation = 0
-        #     self.status = "Food"
-        #     self.agentInfo.commandsToSend.append("Inventory\n")
-        #     return
-        self.waitingIncantationResponses()
-        self.countRoundForIncantation += 1
         if self.hasAskedIncantation == False:
             # Ask for incantation
             self.hasAskedIncantation = True
             if self.agentInfo.getLevel() != 1:
                 self.canStartCounting = True
-                self.agentInfo.commandsToSend.append("Broadcast need_incantation_level_" + str(self.agentInfo.getLevel()) + "\n")
+                self.agentInfo.commandsToSend.append(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}\n")
+
                 print(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}")
-            self.countRoundForIncantation = 0
-            if self.playerOnSameTileForIncantation >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
-                # TODO: fix change logic to start incantation
-                print(f"Player level {self.agentInfo.getLevel()} has asked for incantation")
-                self.setItemsForIncantation()
-                self.agentInfo.commandsToSend.append("Incantation\n")
-                self.playerOnSameTileForIncantation = 1
+        if self.playerOnSameTileForIncantation >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
+            # TODO: fix change logic to start incantation
+            print(f"Player level {self.agentInfo.getLevel()} has asked for incantation")
+            self.setItemsForIncantation()
+            self.status = "Incantation"
+            self.agentInfo.commandsToSend.append("Incantation\n")
+            self.playerOnSameTileForIncantation = 1
+
+
+    def incantationManagement(self) -> None:
+        if self.status != "Incantation" and self.status != "Waiting player to start incantation" and self.status != "Is on incantation":
+            self.round += 1 # Increment the round
+            return
+        self.waitingIncantationResponses()
 
         if self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("Current level:"): # If the incantation is a success
             self.hasAskedIncantation = False
             self.status = "Mining"
             self.agentInfo.setLevel(self.agentInfo.getLevel() + 1)
-            self.countRoundForIncantation = 0
             if self.agentInfo.commandsToSend.count("Look\n") < 3:
                 self.agentInfo.commandsToSend.append("Look\n")
             self.agentInfo.incantationResponses = 1
             self.round = 0
             self.agentInfo.commandsToSend.append("Connect_nbr\n")
             print(f"Add connect_nbr command {self.agentInfo.commandsToSend}")
-            # self.createChild()
         elif self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("ko"): # If the incantation is a failure
             self.hasAskedIncantation = False
             self.status = "Food"
+            print(f"Player has failed incantation with status {self.status}")
             if not f"Inventory\n" in self.agentInfo.commandsToSend:
                 self.agentInfo.commandsToSend.append("Inventory\n")
             self.round = 0
@@ -423,29 +422,36 @@ class AgentAlgo():
             self.updateClientStatus(self.round)
             self.checkPlayerIncantationWaiting()
             self.round += 1
-            print(f"Round: {self.round}")
+            # print(f"Round: {self.round}")
             # self.borntick += 1
             # if self.round == 5 and "incantation" not in self.status:
             #     self.agentInfo.commandsToSend.append("Connect_nbr\n")
             if self.inventoryManagement():
                 return
+            # print("Inventory management done")
             self.agentBroadcast.goToBroadcast(self.agentInfo.broadcast_orientation, self.agentInfo, self.status)
             if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
                 self.foodMode()
                 return
+            # print("Food mode done")
             if self.agentInfo.movements != []:
                 self.agentInfo.addCommandsToSend(self.agentInfo.movements.pop(0))
                 return
+            # print("Movements done")
             if self.checkInventory() == True:
                 return
+            # print("Check inventory done")
+            self.askIncantation()
             self.incantationManagement()
             if self.status == "Food":
                 if self.agentInfo.commandsToSend.count("Look\n") < 3:
                     self.agentInfo.commandsToSend.append("Look\n")
                 return
+            # print("Food status done")
             if self.status == "Mining":
                 if self.agentInfo.commandsToSend.count("Look\n") < 3:
                     self.agentInfo.commandsToSend.append("Look\n")
+            # print(f"Current status: {self.status}")
             self.clientPlayLevel1()
             self.clientPlayLevel2()
             self.clientPlayLevel3()
@@ -464,13 +470,10 @@ class AgentAlgo():
             self.clearReturnCommand()
         if self.agentInfo.commandsToSend == deque([]) or self.client == None: # If there are no commands to send, get out of the function
             return
-        # if self.agentInfo.commandsReturned[0] != None and self.agentInfo.commandsReturned[0] == None:
-        #     print(f"Must wait before sending command: {self.agentInfo.commandsReturned[0]}")
-        #     return
         command_to_send = self.agentInfo.commandsToSend.popleft()
         self.client.send(command_to_send.encode())
         self.agentInfo.commandsReturned = [command_to_send, None]
-        # Add first command from waiting list to the commandsToSend list
+
 
     def setReturnCommandAnswer(self, serverAnswer: str) -> None:
         """Set the command to return"""
@@ -642,14 +645,10 @@ class AgentAlgo():
             if self.agentInfo.broadcast_received.startswith("on_same_tile"):
                 print(f"A player on same tile than incanter")
                 self.playerOnSameTileForIncantation += 1
-                # if self.playerOnSameTileForIncantation >= required_players:
-                #     print(f"Player can start an incantation level {next_level}")
-                #     self.setItemsForIncantation()
-                #     self.agentInfo.commandsToSend.append(f"Incantation\n")
-                #     self.status = "Is on incantation"
         except Exception as e:
             print(f"Error from playerOnSameTile broadcast received: {e}")
             return
+
         try:
             # print(f"Orientation of broadcast {self.agentInfo.broadcast_orientation} | received: {self.agentInfo.broadcast_received}")
             # If player receive broadcast orientation with message "waiting_for_incantation_level_n"
