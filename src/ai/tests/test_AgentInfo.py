@@ -73,19 +73,7 @@ class TestAgentInfo(unittest.TestCase):
         """Test the inventory all case"""
         agent_info = AgentInfo()
         self.assertEqual(agent_info.getInventory("all"), {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0})
-    
-    def test09_setStatus(self):
-        """Test the set status method"""
-        agent_info = AgentInfo()
-        agent_info.setStatus("Dead")
-        self.assertEqual(agent_info.getAgentStatus(), "Dead")
 
-    def test10_setStatus(self):
-        """Test the set status method"""
-        agent_info = AgentInfo()
-        with self.assertRaises(ValueError):
-            agent_info.setStatus("Not a status")
-    
     def test11_setLevel(self):
         """Test the set level method"""
         agent_info = AgentInfo()

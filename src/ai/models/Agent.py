@@ -73,8 +73,8 @@ class Agent():
                 try:
                     try:
                         self.receive_from_server = self.client.recv(1024).decode()
-                        # if self.receive_from_server.count('\n') == 0:
-                        #     continue
+                        if self.receive_from_server != None and self.receive_from_server.startswith("ko\n"):
+                            self.agentInfo.commandsToSend.clear()
                         if self.agentAlgo.broadcastManagement(self.receive_from_server.replace("\n", "")) == True:
                             continue
                         # print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
@@ -91,8 +91,10 @@ class Agent():
                         if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None: # If the server sends nothing, continue
                             continue
                         self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
-                        self.agentAlgo.ConnectNbrManagement()
-                        self.agentAlgo.forkManagement()
+                        if self.agentInfo.getCommandsToSend() != deque([]):
+                            print(f"Commands response: {self.agentInfo.getCommandsReturned()} | status: {self.agentAlgo.status}")
+                        # self.agentAlgo.ConnectNbrManagement()
+                        # self.agentAlgo.forkManagement()
                         self.agentAlgo.play(self.receive_from_server)
                         self.agentAlgo.clearReturnCommand()
                         self.agentAlgo.send_to_server()

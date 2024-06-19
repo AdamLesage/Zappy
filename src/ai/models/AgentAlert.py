@@ -43,11 +43,6 @@ class AgentAlerts(AgentInfo):
             return (self.alerts)
             # send broadcast with crypted data
         
-        if self.agent.getAgentStatus() == "Incantation":
-            """Incantation in progress"""
-            self.alerts.append("incantation")
-            # send broadcast with crypted data
-        
         if playerLevel == 1 and self.agent.getInventory("linemate") >= 1 and self.agent.getTimeUnits() >= minTimeUnitStartIncantation and self.alerts.count("incantationNeeded_2") == 0 and self.formerAlert != "incantationNeeded_2":
             """Incantation lvl 1 -> 2 needed"""
             self.alerts.append("incantationNeeded_2")

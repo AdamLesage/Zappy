@@ -30,8 +30,9 @@ class AgentBroadcast():
         """
         Player will go to the broadcast position and add the movements to the movements list
         """
-        if orientation == None or status != "Going to incantation" or len(agentInfo.movements) > 0: # Player is already going to the incantation
+        if status != "Going to incantation": # Player is already going to the incantation
             return False
+        print(f"Going to broadcast with food: {agentInfo.inventory['food']} | client num: {agentInfo.client_num}")
         if orientation == "0": # Player is on the broadcast position
             return True
         elif orientation == "1": # Broadcast position is on the north of the player

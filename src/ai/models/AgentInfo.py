@@ -19,7 +19,6 @@ class AgentInfo():
         self.world_width = 0
         self.world_height = 0
         self.movements = []
-        self.agentStatus = "Alive" # Alive, Dead, Incantation, Fork
         self.level = 1
         self.teamInventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0} # Inventory of the team
         self.playerVision = [] # Vision of player, tiles around him
@@ -38,10 +37,6 @@ class AgentInfo():
     def getTimeUnits(self) -> int:
         """Returns the number of time units"""
         return (self.timeUnits)
-
-    def getAgentStatus(self) -> str:
-        """Get the status of the agent: Alive, Dead, Incantation, Fork"""
-        return (self.agentStatus)
     
     def getCommandsToSend(self) -> list:
         """Get the list of commands to send to the server"""
@@ -82,12 +77,6 @@ class AgentInfo():
         if level > 8 or level < 1:
             raise ValueError("Invalid level")
         self.level = level
-    
-    def setStatus(self, status: str) -> None:
-        """Set the status of the agent: Alive, Dead, Incantation, Fork"""
-        if status not in ["Alive", "Dead", "Incantation", "Fork"]:
-            raise ValueError("Invalid status")
-        self.agentStatus = status
 
     def addCommandsToSend(self, commandName: str) -> None:
         """Add a command to the list of commands to send"""
