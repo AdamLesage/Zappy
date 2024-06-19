@@ -48,6 +48,7 @@ class IEvolution {
     // Member functions
     virtual void draw(sf::RenderWindow *window) = 0;
     virtual bool updateClock(int &currentFrame, float frameTime) = 0;
+    virtual void updateFrame(int &currentFrame) = 0;
 
     protected:
     private:

@@ -25,6 +25,7 @@ class Evolution : public IEvolution {
     int getNbrFrame() const;
     int getFrameHight() const;
     int getFrameWidth() const;
+    sf::Sprite getSprite() const;
 
     // Setters
     void setPosition(int x, int y);
@@ -38,6 +39,7 @@ class Evolution : public IEvolution {
     // Member functions
     void draw(sf::RenderWindow *window);
     bool updateClock(int &currentFrame, float frameTime);
+    void updateFrame(int &currentFrame);
 
     protected:
     private:

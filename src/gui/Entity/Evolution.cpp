@@ -69,6 +69,11 @@ std::pair<float, float> Evolution::getSize() const
     return _size;
 }
 
+sf::Sprite Evolution::getSprite() const
+{
+    return _sprite;
+}
+
 int Evolution::getNbrFrame() const
 {
     return _nbrFrame;
@@ -144,4 +149,10 @@ bool Evolution::updateClock(int &currentFrame, float frameTime)
         return true;
     }
     return false;
+}
+
+void Evolution::updateFrame(int &currentFrame)
+{
+    currentFrame = (currentFrame + 1) % _nbrFrame;
+    _sprite.setTextureRect(_frames[currentFrame]);
 }
