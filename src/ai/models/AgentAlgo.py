@@ -326,16 +326,14 @@ class AgentAlgo():
         """
         if self.status != "Ask incantation":
             return
-        if self.hasAskedIncantation == False:
+        if self.hasAskedIncantation == False and self.agentInfo.getLevel() != 1:
             # Ask for incantation
             self.hasAskedIncantation = True
-            if self.agentInfo.getLevel() != 1:
-                self.canStartCounting = True
-                self.agentInfo.commandsToSend.append(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}\n")
+            self.canStartCounting = True
+            self.agentInfo.commandsToSend.append(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}\n")
 
-                print(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}")
+            print(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}")
         if self.playerOnSameTileForIncantation >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
-            # TODO: fix change logic to start incantation
             print(f"Player level {self.agentInfo.getLevel()} has asked for incantation")
             self.setItemsForIncantation()
             self.status = "Incantation"
@@ -344,8 +342,11 @@ class AgentAlgo():
 
 
     def incantationManagement(self) -> None:
-        if self.status != "Incantation" and self.status != "Waiting player to start incantation" and self.status != "Is on incantation":
-            self.round += 1 # Increment the round
+        """
+        Manage the incantation of the agent
+        """
+        if self.status != "Incantation":
+            # Status is not incantation
             return
         self.waitingIncantationResponses()
 
@@ -358,7 +359,6 @@ class AgentAlgo():
             self.agentInfo.incantationResponses = 1
             self.round = 0
             self.agentInfo.commandsToSend.append("Connect_nbr\n")
-            print(f"Add connect_nbr command {self.agentInfo.commandsToSend}")
         elif self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("ko"): # If the incantation is a failure
             self.hasAskedIncantation = False
             self.status = "Food"
@@ -401,8 +401,8 @@ class AgentAlgo():
         if self.canStartCounting == False:
             return
         self.broadcastPassed += 1
-        print(f"Broadcast passed: {self.broadcastPassed}")
-        if self.broadcastPassed >= 8 and self.agentInfo.incantationResponses < self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
+        # TODO: check why player is stuck in incantation
+        if self.broadcastPassed >= 8 and self.status == "Ask incantation":
             self.status = "Food"
             self.broadcastPassed = 0
             self.canStartCounting = False
@@ -417,10 +417,10 @@ class AgentAlgo():
         try:
             # if self.agentInfo.getLevel() == 2:
                 # print(f"COmmands to send: {self.agentInfo.commandsToSend} | movements: {self.agentInfo.movements} | playernum {self.agentInfo.client_num}")
+            self.checkPlayerIncantationWaiting()
             if self.agentBroadcast.goToBroadcast(self.agentInfo.broadcast_orientation, self.agentInfo, self.status) == True:
                 return
             self.updateClientStatus(self.round)
-            self.checkPlayerIncantationWaiting()
             self.round += 1
             # print(f"Round: {self.round}")
             # self.borntick += 1
@@ -632,7 +632,6 @@ class AgentAlgo():
             return
         if self.agentInfo.incantationResponses >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
             # wait until every players are ready and send incantation position with broadcast
-            self.setItemsForIncantation()
             if f"Broadcast waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}" not in self.agentInfo.commandsToSend: # check if boradcast waiting is not already sent in commandsToSend
                 self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}\n")
         pass
