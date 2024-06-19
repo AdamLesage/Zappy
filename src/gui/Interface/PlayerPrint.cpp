@@ -8,17 +8,17 @@
 #include "PlayerPrint.hpp"
 
 
-zappy::PlayerPrint::PlayerPrint(std::shared_ptr<GuiConnect> guiConnect, std::shared_ptr<sf::RenderWindow> window)
+Zappy::PlayerPrint::PlayerPrint(std::shared_ptr<GuiConnect> guiConnect, std::shared_ptr<sf::RenderWindow> window)
 {
     this->_window = window;
     this->_guiConnect = guiConnect;
 }
 
-zappy::PlayerPrint::~PlayerPrint()
+Zappy::PlayerPrint::~PlayerPrint()
 {
 }
 
-void zappy::PlayerPrint::display()
+void Zappy::PlayerPrint::display()
 {
     return;
 }

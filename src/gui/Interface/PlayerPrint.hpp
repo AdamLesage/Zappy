@@ -17,7 +17,7 @@
 #ifndef PLAYERPRINT_HPP_
 #define PLAYERPRINT_HPP_
 
-namespace zappy {
+namespace Zappy {
 
 class PlayerPrint {
     public:
