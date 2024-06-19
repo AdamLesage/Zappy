@@ -35,6 +35,8 @@ Test (command_look, command_look_level1, .init = cr_redirect_stdout)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
     info = find_player(&core.players, 1);
     tile_info0 = find_tile(&core.map, 5, 5);
     tile_info1 = find_tile(&core.map, 4, 4);
@@ -91,6 +93,8 @@ Test (command_look, command_look_level3, .init = cr_redirect_stdout)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
     info = find_player(&core.players, 1);
     tile_info0 = find_tile(&core.map, 5, 5);
 
@@ -168,6 +172,8 @@ Test (command_look, command_look_S, .init = cr_redirect_stdout)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
     info = find_player(&core.players, 1);
     tile_info0 = find_tile(&core.map, 5, 5);
 
@@ -210,6 +216,8 @@ Test (command_look, command_look_E, .init = cr_redirect_stdout)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
     info = find_player(&core.players, 1);
     tile_info0 = find_tile(&core.map, 5, 5);
 
@@ -252,6 +260,8 @@ Test (command_look, command_look_W, .init = cr_redirect_stdout)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
     info = find_player(&core.players, 1);
     tile_info0 = find_tile(&core.map, 5, 5);
 

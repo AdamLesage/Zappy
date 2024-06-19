@@ -20,6 +20,9 @@ Test(command_fork, Command_fork, .init = cr_redirect_stderr)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 2, "team1");
     add_player(&core.map, &core.players, 3, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
+    FD_SET(3, &core.select_info.write_fds);
     info = find_player(&core.players, 2);
     info->action_queue[0] = strdup("Fork");
     info->timer_action = 0;

@@ -27,6 +27,9 @@ Test(command_Incantation, Command_Incantation_sucess_level_1, .init = redirect_a
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -81,6 +84,9 @@ Test(command_Incantation, Command_Incantation_multiple_level_1, .init = redirect
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->pos_x = 5;
@@ -156,6 +162,9 @@ Test(command_Incantation, Command_Incantation_failure_start_level_1, .init = red
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -192,6 +201,10 @@ Test(command_Incantation, Command_Incantation_failure_end_level_1, .init = redir
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -246,6 +259,9 @@ Test(command_Incantation, Command_Incantation_sucess_level_2, .init = redirect_a
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -301,6 +317,9 @@ Test(command_Incantation, Command_Incantation_failure_level_2, .init = redirect_
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -341,6 +360,9 @@ Test(command_Incantation, Command_Incantation_level_2_not_same_pos, .init = redi
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -379,6 +401,9 @@ Test(command_Incantation, Command_Incantation_level_2_not_same_level, .init = re
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -417,6 +442,9 @@ Test(command_Incantation, Command_Incantation_level_2_death_of_a_player, .init =
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -459,6 +487,9 @@ Test(command_Incantation, Command_Incantation_sucess_level_3, .init = redirect_a
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -520,6 +551,9 @@ Test(command_Incantation, Command_Incantation_failure_level_3, .init = redirect_
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -562,6 +596,11 @@ Test(command_Incantation, Command_Incantation_sucess_level_4, .init = redirect_a
     add_player(&core.map, &core.players, 2, "team1");
     add_player(&core.map, &core.players, 3, "team1");
     add_player(&core.map, &core.players, 4, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
+    FD_SET(3, &core.select_info.write_fds);
+    FD_SET(4, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info3 = find_player(&core.players, 3);
@@ -627,6 +666,8 @@ Test(command_Incantation, Command_Incantation_failure_level_4, .init = redirect_
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     tile_info = find_tile(&core.map, 5, 5);
     info1->pos_x = 5;
@@ -664,6 +705,11 @@ Test(command_Incantation, Command_Incantation_sucess_level_5, .init = redirect_a
     add_player(&core.map, &core.players, 2, "team1");
     add_player(&core.map, &core.players, 3, "team1");
     add_player(&core.map, &core.players, 4, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
+    FD_SET(3, &core.select_info.write_fds);
+    FD_SET(4, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info3 = find_player(&core.players, 3);
@@ -741,6 +787,13 @@ Test(command_Incantation, Command_Incantation_sucess_level_6, .init = redirect_a
     add_player(&core.map, &core.players, 4, "team1");
     add_player(&core.map, &core.players, 5, "team1");
     add_player(&core.map, &core.players, 6, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
+    FD_SET(3, &core.select_info.write_fds);
+    FD_SET(4, &core.select_info.write_fds);
+    FD_SET(5, &core.select_info.write_fds);
+    FD_SET(6, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info3 = find_player(&core.players, 3);
@@ -828,6 +881,13 @@ Test(command_Incantation, Command_Incantation_sucess_level_7, .init = redirect_a
     add_player(&core.map, &core.players, 4, "team1");
     add_player(&core.map, &core.players, 5, "team1");
     add_player(&core.map, &core.players, 6, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
+    FD_SET(3, &core.select_info.write_fds);
+    FD_SET(4, &core.select_info.write_fds);
+    FD_SET(5, &core.select_info.write_fds);
+    FD_SET(6, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info3 = find_player(&core.players, 3);
