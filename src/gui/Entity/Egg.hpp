@@ -16,6 +16,7 @@ namespace Zappy {
             Egg();
             ~Egg();
             int getEggNb() const { return _eggNb; }
+            void setEggNb(int eggNb) { _eggNb = eggNb; }
 
         int _eggNb;
         protected:

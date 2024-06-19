@@ -87,10 +87,9 @@ bool add_player(map_t *map, players_t *players, int fd,
     int x = 0;
     int y = 0;
 
-    if (map == NULL)
-        return (false);
     add_graphic_player(players, fd, team_name);
-    if (find_eggs(map->eggs, team_name, &x, &y) == true) {
+    if (strcmp(team_name, "GRAPHIC") != 0 &&
+        find_eggs(map->eggs, team_name, &x, &y) == true) {
         new_player = malloc(sizeof(players_list_t));
         remove_eggs(map, x, y, team_name);
         put_player(map, x, y);

@@ -47,6 +47,7 @@ namespace Zappy {
             void print_player_team();
             void set_scale_of_player(int i);
             void playBackgroundMusic(const std::string& filename);
+            void updatePlayersTravelled();
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
@@ -106,6 +107,7 @@ namespace Zappy {
             std::vector<sf::Sprite> player_rank;
             std::vector<sf::Text> player_rank_text;
             std::shared_ptr<Credit> credit;
+            std::vector<Evolution> evolutions;
         private:
     };
 }

@@ -284,11 +284,27 @@ void Zappy::Interface::fill_color_team()
     }
 }
 
+void Zappy::Interface::updatePlayersTravelled()
+{
+    for (int i = 0; i < _gui_connect->_players.size(); i++) {
+        if (_gui_connect->_players[i]->getLastPosition() != _gui_connect->_players[i]->getPosition()) {
+            _gui_connect->_players[i]->setTravelled(_gui_connect->_players[i]->getTravelled() + 1);
+        }
+    }
+     for (int i = 0; i < _gui_connect->_players.size(); i++) {
+        std::array<int, 2> playerPosition = _gui_connect->_players[i]->getPosition();
+        _gui_connect->_players[i]->setLastPosition(playerPosition[0], playerPosition[1]);
+    }
+}
+
 void Zappy::Interface::print_players()
 {
+    updatePlayersTravelled();
     for (int i = 0; i < _gui_connect->_players.size(); i++) {
         if (player_sprites.size() < _gui_connect->_players.size())
             player_sprites.push_back(sf::Sprite());
+            // Evolution plEvol(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png");
+            // evolutions.push_back(plEvol);
         player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel() - 1]);
         set_scale_of_player(i);
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
@@ -298,26 +314,31 @@ void Zappy::Interface::print_players()
         print_player_team();
         _broadcast->check_player_broadcast(i);
         _broadcast->display();
-        // if (_gui_connect->_players[i]->isEvoluting()) {
-        //     print_evolution(i);
-        // }
+        //if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
+        //    evolutions[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
+        //    evolutions[i].draw(window.get());
+        //}
     }
 }
 
 void Zappy::Interface::print_evolution(int current_player)
 {
-    sf::Sprite evolutionSprite;
-    sf::Texture evolutionTexture;
+    std::pair<int, int> plPos {_gui_connect->_players[current_player].get()->getPosition()[0],
+        _gui_connect->_players[current_player].get()->getPosition()[1]};
+    Evolution plEvol(plPos, std::make_pair(1, 1), sf::Clock(),
+        "asset/sprite/animation/evolution1.png");
+    int currentFrame {0};
+    int countFrame {0};
 
-    if (!evolutionTexture.loadFromFile("./sprite/animation/evo.png")) {
-        std::cerr << "Error loading texture" << std::endl;
-        return;
+    plEvol.setFrameInfo(82, 67, 16, 2);
+    while (countFrame < 16) {
+        plEvol.updateClock(currentFrame, 0.1);
+        window->clear();
+        plEvol.draw(window.get());
+        window->display();
+        countFrame++;
     }
-    evolutionSprite.setTexture(evolutionTexture);
-    set_scale_of_player(current_player);
-    auto playerPosition = _gui_connect->_players[current_player]->getPosition();
-    evolutionSprite.setPosition(playerPosition[0] * 102.4 + 100, playerPosition[1] * 102.4 + 150);
-    window->draw(evolutionSprite);
+    return;
 }
 
 Zappy::Interface::~Interface()
@@ -504,6 +525,8 @@ void Zappy::Interface::print_map_iso()
 
 void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
 {
+    int frameTime = 0.1; // speed of the game
+
     _gui_connect = gui_connect;
     this->_inventory.reset(new InventoryDisplay(_gui_connect, window));
     this->_info.reset(new InfoDisplay(_gui_connect, window, ressource_sprite_));
@@ -548,8 +571,16 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     set_map();
     view.zoom(0.5);
     playBackgroundMusic("./asset/music/music.ogg");
+    clock.restart();
+    int currentFrame {0};
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
+        //if (clock.getElapsedTime().asSeconds() > frameTime) {
+        //    for (auto it : evolutions) {
+        //        it.setFrameInfo(82, 67, 16, 2);
+        //        it.updateClock(currentFrame, frameTime);
+        //    }
+        //}
         sound_volume = bars[0]->checkClick(window);
         backgroundMusic.setVolume(sound_volume);
         check_event();
