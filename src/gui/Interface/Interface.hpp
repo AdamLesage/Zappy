@@ -107,7 +107,7 @@ namespace Zappy {
             std::vector<sf::Sprite> player_rank;
             std::vector<sf::Text> player_rank_text;
             std::shared_ptr<Credit> credit;
-            std::vector<Evolution> evolutions;
+            std::vector<std::shared_ptr<Evolution>> evolutions;
         private:
     };
 }

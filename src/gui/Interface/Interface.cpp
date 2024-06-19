@@ -303,8 +303,8 @@ void Zappy::Interface::print_players()
     for (int i = 0; i < _gui_connect->_players.size(); i++) {
         if (player_sprites.size() < _gui_connect->_players.size()) {
             player_sprites.push_back(sf::Sprite());
-            //evolutions.push_back(Evolution(std::make_pair(500, 500), std::make_pair(1.5, 1.5), sf::Clock(), "asset/sprite/animation/evolution1.png"));
-            //evolutions.back().setFrameInfo(82, 67, 16, 2);
+            evolutions.push_back(std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png"));
+            evolutions.back()->setFrameInfo(82, 67, 16, 2);
         }
         player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel() - 1]);
         set_scale_of_player(i);
@@ -315,12 +315,10 @@ void Zappy::Interface::print_players()
         print_player_team();
         _broadcast->check_player_broadcast(i);
         _broadcast->display();
-        //if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
-        //    //evolutions[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
-        //    evolutions[i].setPosition(500, 500);
-        //    window->draw(evolutions[i].getSprite());
-        //    //std::cout << "Player " << i << " is incanting" << std::endl;
-        //}
+        if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
+            evolutions[i]->setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 70, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 125);
+            window->draw(evolutions[i]->getSprite());
+        }
     }
 }
 
@@ -528,7 +526,7 @@ void Zappy::Interface::print_map_iso()
 
 void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
 {
-    int frameTime = 0.1; // speed of the game
+    float frameTime = 0.13; // speed of the game
 
     _gui_connect = gui_connect;
     this->_inventory.reset(new InventoryDisplay(_gui_connect, window));
@@ -579,9 +577,13 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
         if (clock.getElapsedTime().asSeconds() > frameTime) {
-            //for (auto &it : evolutions) {
-            //    it.updateFrame(currentFrame);
-            //}
+            int i = 0;
+            for (auto &it : evolutions) {
+                if (_gui_connect->_players[i].get()->isPlayerIncanting() == true)
+                    it->updateFrame(currentFrame);
+                i++;
+            }
+            clock.restart();
         }
         sound_volume = bars[0]->checkClick(window);
         backgroundMusic.setVolume(sound_volume);
