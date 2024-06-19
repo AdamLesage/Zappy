@@ -150,6 +150,16 @@ int Zappy::InfoDisplay::get_Thystame()
     return (Thystame);
 }
 
+int Zappy::InfoDisplay::get_player(int x, int y)
+{
+    int players = 0;
+    for (int i = 0; i < _guiConnect->_players.size(); i++) {
+        if (_guiConnect->_players[i]->getPosition()[0] == x && _guiConnect->_players[i]->getPosition()[1] == y)
+            players++;
+    }
+    return (players);
+}
+
 void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
 {
     for (int i = 0; i < _guiConnect->get_size_map()[0]; i++) {
@@ -157,7 +167,7 @@ void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
             sf::FloatRect tileBounds(100 + (i * 102.4), 150 + (j * 102.4), 102.4, 102.4);
             if (tileBounds.contains(mousePos)) {
                 info[0].setString("Tile: x " + std::to_string(i + 1) + " y " + std::to_string(j + 1));
-                info[1].setString("Player: " + std::to_string(_guiConnect->_tiles[i][j]->_players.size()));
+                info[1].setString("Player: " + std::to_string(get_player(i, j)));
                 info[2].setString("Food: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Food")));
                 info[3].setString("Linemate: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Linemate")));
                 info[4].setString("Deraumere: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Deraumere")));
