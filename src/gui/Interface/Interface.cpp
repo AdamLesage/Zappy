@@ -220,6 +220,7 @@ Zappy::Interface::Interface()
     }
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
+    credit = std::make_shared<Credit>(window);
 }
 
 void Zappy::Interface::set_scale_of_player(int i)
@@ -462,6 +463,7 @@ void Zappy::Interface::check_event()
             }
             sf::Vector2f mousePos = window->mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y), view);
             _info->Checkclick(mousePos);
+            printf("jesuisletest\n");
         }
         sf::Vector2f mousePos2 = window->mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y), view);
         for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
@@ -524,9 +526,12 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->clear(sf::Color::Black);
         while (window->pollEvent(event)) {
             menu = buttons[0]->checkClick(window);
+            if (buttons[3]->checkClick(window) == true) {
+                credit->start();
+                credit->run();
+            }
             buttons[1]->checkClick(window);
             buttons[2]->checkClick(window);
-            buttons[3]->checkClick(window);
             if (event.type == sf::Event::Closed)
                 window->close();
         }
