@@ -66,6 +66,9 @@ class GuiConnect {
         std::vector<Zappy::Inventory> get_inventories() { return _inventories; } // get inventories
         Zappy::Inventory update_inventory(std::vector<std::string> args, Zappy::Inventory tmp); // update inventory of a tile
         std::shared_ptr<Zappy::Tile> getTileByCoords(std::pair<int, int> coords); // get tile by coords
+        int getEggNbOnTile(std::pair<int, int> coords); // get egg on tile
+        int getPlayerNbOnTile(std::pair<int, int> coords); // get player on tile
+
         void setTimeUnit(std::string args);
         int getTimeUnit() { return _timeUnit; }
         std::array<int, 2> _size_map;
