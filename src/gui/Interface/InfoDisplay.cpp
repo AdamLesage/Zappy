@@ -58,7 +58,7 @@ Zappy::InfoDisplay::InfoDisplay(std::shared_ptr<GuiConnect> guiConnect, std::sha
     info[7].setPosition(730, baseY + offsetY);
     info_sprites[5].setPosition(630, baseY + 2 * offsetY);
     info[8].setPosition(730, baseY + 2 * offsetY);
-    info[0].setString("Map Info");
+    info[0].setString("Map Size: x " + std::to_string(_guiConnect->get_size_map()[0]) + " y " + std::to_string(_guiConnect->get_size_map()[1]));
     info[1].setString("Player: " + std::to_string(_guiConnect->_players.size()));
     info[2].setString("Food: " + std::to_string(get_food()));
     info[3].setString("Linemate: " + std::to_string(get_Linemate()));
@@ -170,7 +170,7 @@ void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
         }
     }
     if (info_ == false) {
-        info[0].setString("Map Info");
+        info[0].setString("Map Size: x " + std::to_string(_guiConnect->get_size_map()[0]) + " y " + std::to_string(_guiConnect->get_size_map()[1]));
         info[1].setString("Player: " + std::to_string(_guiConnect->_players.size()));
         info[2].setString("Food: " + std::to_string(get_food()));
         info[3].setString("Linemate: " + std::to_string(get_Linemate()));
