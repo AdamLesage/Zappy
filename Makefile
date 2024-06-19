@@ -99,6 +99,7 @@ SRC_SEVER	=	src/server/main.c											\
 
 SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/Interface/Interface.cpp									\
+			src/gui/Interface/Credit.cpp									\
 			src/gui/Interface/bar.cpp										\
 			src/gui/Interface/InventoryDisplay.cpp							\
 			src/gui/Interface/Button.cpp									\
@@ -359,7 +360,7 @@ SFML		=	-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 all:    $(Name)
 
-$(Name): zappy_server zappy_ai
+$(Name): zappy_server zappy_ai zappy_gui
 
 zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS) -Iinclude/server -lm

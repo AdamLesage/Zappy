@@ -220,6 +220,7 @@ Zappy::Interface::Interface()
     }
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
+    credit = std::make_shared<Credit>(window);
 }
 
 void Zappy::Interface::set_scale_of_player(int i)
@@ -300,10 +301,11 @@ void Zappy::Interface::print_players()
 {
     updatePlayersTravelled();
     for (int i = 0; i < _gui_connect->_players.size(); i++) {
-        if (player_sprites.size() < _gui_connect->_players.size())
+        if (player_sprites.size() < _gui_connect->_players.size()) {
             player_sprites.push_back(sf::Sprite());
-            // Evolution plEvol(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png");
-            // evolutions.push_back(plEvol);
+            //evolutions.push_back(Evolution(std::make_pair(500, 500), std::make_pair(1.5, 1.5), sf::Clock(), "asset/sprite/animation/evolution1.png"));
+            //evolutions.back().setFrameInfo(82, 67, 16, 2);
+        }
         player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel() - 1]);
         set_scale_of_player(i);
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
@@ -314,8 +316,10 @@ void Zappy::Interface::print_players()
         _broadcast->check_player_broadcast(i);
         _broadcast->display();
         //if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
-        //    evolutions[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
-        //    evolutions[i].draw(window.get());
+        //    //evolutions[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
+        //    evolutions[i].setPosition(500, 500);
+        //    window->draw(evolutions[i].getSprite());
+        //    //std::cout << "Player " << i << " is incanting" << std::endl;
         //}
     }
 }
@@ -483,6 +487,7 @@ void Zappy::Interface::check_event()
             }
             sf::Vector2f mousePos = window->mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y), view);
             _info->Checkclick(mousePos);
+            printf("jesuisletest\n");
         }
         sf::Vector2f mousePos2 = window->mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y), view);
         for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
@@ -547,9 +552,12 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->clear(sf::Color::Black);
         while (window->pollEvent(event)) {
             menu = buttons[0]->checkClick(window);
+            if (buttons[3]->checkClick(window) == true) {
+                credit->start();
+                credit->run();
+            }
             buttons[1]->checkClick(window);
             buttons[2]->checkClick(window);
-            buttons[3]->checkClick(window);
             if (event.type == sf::Event::Closed)
                 window->close();
         }
@@ -570,12 +578,11 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     int currentFrame {0};
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
-        //if (clock.getElapsedTime().asSeconds() > frameTime) {
-        //    for (auto it : evolutions) {
-        //        it.setFrameInfo(82, 67, 16, 2);
-        //        it.updateClock(currentFrame, frameTime);
-        //    }
-        //}
+        if (clock.getElapsedTime().asSeconds() > frameTime) {
+            //for (auto &it : evolutions) {
+            //    it.updateFrame(currentFrame);
+            //}
+        }
         sound_volume = bars[0]->checkClick(window);
         backgroundMusic.setVolume(sound_volume);
         check_event();
