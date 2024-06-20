@@ -49,5 +49,6 @@ typedef struct network_s {
 bool add_client_on_network(network_t *network, int fd);
 bool delete_client_of_network(network_t *network, int fd);
 client_info_t *find_client(network_t *network, int fd);
+void send_command_responce(network_t *network);
 
 #endif /* !NETWORK_DATA_H_ */

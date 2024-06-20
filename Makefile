@@ -15,6 +15,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/check_food_players.c									\
 			src/server/check_win_game.c										\
 			src/server/set_command.c										\
+			src/server/send_command_responce.c								\
 			src/server/dataManagment/arguments/get_arguments.c				\
 			src/server/dataManagment/arguments/get_port.c					\
 			src/server/dataManagment/arguments/get_width.c					\

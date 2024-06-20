@@ -59,6 +59,24 @@ static void free_eggs(eggs_t *eggs)
     free(eggs);
 }
 
+static void free_network(client_list_t *network)
+{
+    if (network == NULL) {
+        return;
+    }
+    if (network->next != NULL) {
+        free_network(network->next);
+    }
+    if (network->client_info->buffer_read != NULL) {
+        free(network->client_info->buffer_read);
+    }
+    if (network->client_info->buffer_send != NULL) {
+        free(network->client_info->buffer_send);
+    }
+    free(network->client_info);
+    free(network);
+}
+
 void close_server(core_t *core)
 {
     printf("server shutdown\n");
@@ -67,6 +85,7 @@ void close_server(core_t *core)
     free_map(core->map.tiles_list);
     free_eggs(core->map.eggs);
     free_array(core->arguments.name_teams);
+    free_network(core->network.client_list);
     close(core->network.select_info.fd_socket_control);
     exit(0);
 }

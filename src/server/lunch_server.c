@@ -21,6 +21,7 @@ static void manage_select_notif(core_t *core, int retval)
             refill_map(core);
         }
     }
+    send_command_responce(&core->network);
 }
 
 static void update_select_info(select_info_t *select_info, int frequency)
