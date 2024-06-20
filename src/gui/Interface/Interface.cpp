@@ -10,6 +10,7 @@
 
 Zappy::Interface::Interface()
 {
+    TileClicked = false;
     loading_texture.push_back(sf::Texture());
     loading_texture.push_back(sf::Texture());
     if (loading_texture[0].loadFromFile("./asset/gui/fonddd.jpg") == false)
@@ -152,7 +153,9 @@ Zappy::Interface::Interface()
     if (egg_texture.loadFromFile("./asset/sprite/egg.png") == false)
         throw InterfaceError("Error: egg.png not found", "Interface");
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
+    rect2 = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
+    rect2.setFillColor(sf::Color(255, 165, 0, 150));
     credit = std::make_shared<Credit>(window);
     printf("Interface created\n");
     printf("Interface created\n");
@@ -327,9 +330,24 @@ void Zappy::Interface::check_event()
                 if (tileBounds2.contains(mousePos2)) {
                     rect.setPosition(tileBounds2.left, (tileBounds2.top - rect.getSize().y) + 102.4);
                     isOverTile = true;
+                    isOverTile2 = true;
                 }
             }
         }
+        sf::Vector2f mousePos3 = window->mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y), view);
+        for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
+            for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
+                sf::FloatRect tileBounds2(100 + (i * 102.4), 150 + (j * 102.4), 102.4, 102.4);
+                if (tileBounds2.contains(mousePos3) && event.type == sf::Event::MouseButtonPressed) {
+                    rect2.setPosition(tileBounds2.left, (tileBounds2.top - rect2.getSize().y) + 102.4);
+                    TileClicked = true;
+                    TileClicked2 = true;
+                }
+            }
+        }
+        if (isOverTile2 == false)
+            isOverTile = false;
+        isOverTile2 = false;
 
         if (event.type == sf::Event::MouseButtonReleased) {
             if (event.mouseButton.button == sf::Mouse::Left) {
@@ -446,6 +464,8 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         }
         if (isOverTile)
             window->draw(rect);
+        if (TileClicked)
+            window->draw(rect2);
         _teamnbr = gui_connect->getTeamNames().size();
         _teamPrint->print_team();
         print_resssource();
