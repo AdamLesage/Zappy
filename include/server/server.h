@@ -21,21 +21,7 @@
     #include <math.h>
     #include <signal.h>
     #include "server_data.h"
-
-typedef struct select_info_s {
-    fd_set rfds;
-    fd_set read_fds;
-    fd_set write_fds;
-    fd_set except_fds;
-    int max_fd;
-    struct timeval tv;
-    int fd_socket_control;
-} select_info_t;
-
-typedef struct socket_config_s {
-    struct sockaddr_in server_socket;
-    int sockfd;
-} socket_config_t;
+    #include "network_data.h"
 
 typedef struct look_info_s {
     char *str;
@@ -45,12 +31,10 @@ typedef struct look_info_s {
 } look_info_t;
 
 typedef struct core_s {
-    socket_config_t socket_config;
-    select_info_t select_info;
     arguments_t arguments;
     map_t map;
     players_t players;
-    client_t *client;
+    network_t network;
 } core_t;
 
 typedef struct command_list_s {
@@ -151,9 +135,5 @@ void ebo(players_t *players, int egg_id);
 void edi(players_t *players, int egg_id);
 void seg(players_t *players, char *team_name);
 void smg(players_t *players, char *message);
-
-bool add_client(core_t *core, int fd);
-client_t *find_client(client_t *client, int fd);
-bool delete_client(core_t *core, int fd);
 
 #endif /* !SERVER_H_ */
