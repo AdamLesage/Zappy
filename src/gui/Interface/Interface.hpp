@@ -100,7 +100,11 @@ namespace Zappy {
             sf::Vector2i lastMousePos;
             bool isPanning;
             sf::RectangleShape rect;
+            sf::RectangleShape rect2;
             bool isOverTile;
+            bool isOverTile2;
+            bool TileClicked;
+            bool TileClicked2;
             sf::Music backgroundMusic;
             std::shared_ptr<InventoryDisplay> _inventory;
             sf::Texture interface_texture;
@@ -117,7 +121,7 @@ namespace Zappy {
             std::vector<sf::Sprite> player_rank;
             std::vector<sf::Text> player_rank_text;
             std::shared_ptr<Credit> credit;
-            std::vector<std::shared_ptr<Evolution>> evolutions;
+            std::vector<std::pair<int, std::shared_ptr<Evolution>>> evolutions;
             std::shared_ptr<TeamPrint> _teamPrint;
         private:
     };

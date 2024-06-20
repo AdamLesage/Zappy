@@ -28,7 +28,7 @@ namespace Zappy {
             enum StateBar {
                 None, Hover, Clicked
             };
-            Bar(sf::Vector2f size, sf::Vector2f size_back, sf::Vector2f pos, sf::Color color, int outline, sf::Color outlineColor);
+            Bar(sf::Vector2f size, sf::Vector2f size_back, sf::Vector2f pos, sf::Color color, int outline, sf::Color outlineColor, int origin = 0);
             ~Bar();
             int checkClick(std::shared_ptr<sf::RenderWindow> window);
             bool checkClick2(std::shared_ptr<sf::RenderWindow> window);
