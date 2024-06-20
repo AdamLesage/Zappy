@@ -12,10 +12,10 @@ Zappy::Interface::Interface()
 {
     loading_texture.push_back(sf::Texture());
     loading_texture.push_back(sf::Texture());
-    if (loading_texture[0].loadFromFile("./asset/gui/loading-screen.jpg") == false)
-        throw InterfaceError("Error: loading-screen.jpg not found", "Interface");
-    if (loading_texture[1].loadFromFile("./asset/gui/menu.png") == false)
-        throw InterfaceError("Error: menu.png not found", "Interface");
+    if (loading_texture[0].loadFromFile("./asset/gui/fonddd.jpg") == false)
+        throw InterfaceError("Error: fonddd.jpg not found", "Interface");
+    if (loading_texture[1].loadFromFile("./asset/gui/fonddd.jpg") == false)
+        throw InterfaceError("Error: fonddd.jpg not found", "Interface");
     loading.setSize(sf::Vector2f(1920, 1080));
     loading.setTexture(&loading_texture[0]);
     sound_volume = 50;
@@ -269,7 +269,7 @@ void Zappy::Interface::set_player_textures()
     player_orientation[7][2] = sf::IntRect(84, 202, 22, 51);
     player_orientation[7][3] = sf::IntRect(63, 108, 64, 62);
     for (int i = 0; i < 8; i++) {
-        player_rank[i].setTextureRect(player_orientation[i][1]);
+        player_rank[i].setTextureRect(player_orientation[i][3]);
     }
 }
 
@@ -385,7 +385,7 @@ void Zappy::Interface::print_players()
         player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel() - 1]);
         set_scale_of_player(i);
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
-        player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation() + 1]);
+        player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation() - 1]);
         window->draw(player_sprites[i]);
         updatePlayersTravelled();
         fill_color_team();
