@@ -19,6 +19,8 @@ Test (command_move_player, command_forward_N)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info = find_player(&core.players, 2);
     info->orientation = N;
     info->pos_x = 5;
@@ -44,6 +46,8 @@ Test (command_move_player, command_forward_N_cross_map)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info = find_player(&core.players, 2);
     info->orientation = N;
     info->pos_x = 5;
@@ -69,6 +73,8 @@ Test (command_move_player, command_forward_S)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info = find_player(&core.players, 2);
     info->orientation = S;
     info->pos_x = 5;
@@ -94,6 +100,8 @@ Test (command_move_player, command_forward_S_cross_map)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info = find_player(&core.players, 2);
     info->orientation = S;
     info->pos_x = 5;
@@ -119,6 +127,8 @@ Test (command_move_player, command_forward_E)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info = find_player(&core.players, 2);
     info->orientation = E;
     info->pos_x = 5;
@@ -144,6 +154,8 @@ Test (command_move_player, command_forward_E_cross_map)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info = find_player(&core.players, 2);
     info->orientation = E;
     info->pos_x = 9;
@@ -169,6 +181,8 @@ Test (command_move_player, command_forward_W)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info = find_player(&core.players, 2);
     info->orientation = W;
     info->pos_x = 5;
@@ -194,6 +208,8 @@ Test (command_move_player, command_forward_W_cross_map)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info = find_player(&core.players, 2);
     info->orientation = W;
     info->pos_x = 0;
@@ -219,6 +235,8 @@ Test (command_move_player, command_Right)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info = find_player(&core.players, 2);
     info->orientation = W;
     info->pos_x = 5;
@@ -242,6 +260,8 @@ Test (command_move_player, command_Left)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info = find_player(&core.players, 2);
     info->orientation = S;
     info->pos_x = 5;

@@ -24,7 +24,9 @@
 
 typedef struct select_info_s {
     fd_set rfds;
-    fd_set temp_fds;
+    fd_set read_fds;
+    fd_set write_fds;
+    fd_set except_fds;
     int max_fd;
     struct timeval tv;
     int fd_socket_control;
