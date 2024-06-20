@@ -28,10 +28,8 @@ std::vector<std::string> Zappy::TNA::receiveData(std::string message, std::strin
     for (std::size_t i = 0; i < args.size(); i++) {
         // args[i] = "tna teamName"
         std::string teamName = args[i];
-        std::cout << "teamName: [" << teamName << "]" << std::endl;
         // remove "tna " from teamName
         teamName.erase(0, 4);
-        std::cout << "edited teamName: [" << teamName << "]" << std::endl;
         teams.push_back(teamName);
     }
     // return format std::vector<std::string> { "tna", "team1", "team2", ... };

@@ -37,13 +37,17 @@ void Zappy::ENW::applyChanges(std::vector<std::string> parsedData,
     egg->_eggNb = std::stoi(parsedData[1]);
     egg->setPlayerNumber(std::stoi(parsedData[2]));
     egg->setPosition(std::stoi(parsedData[3]), std::stoi(parsedData[4]));
-    std::shared_ptr<Player> playertt = std::make_shared<Player>();
-    for (auto &player : players) {
-        if (player->getPlayerNumber() == std::stoi(parsedData[2])) {
-            playertt = player;
-            break;
+    if (std::stoi(parsedData[2]) == -1) {
+        egg->setTeamName("server");
+    } else {
+        std::shared_ptr<Player> playertt = std::make_shared<Player>();
+        for (auto &player : players) {
+            if (player->getPlayerNumber() == std::stoi(parsedData[2])) {
+                playertt = player;
+                break;
+            }
         }
+        egg->setTeamName(playertt->getTeamName());
     }
-    egg->setTeamName(playertt->getTeamName());
     eggs.push_back(egg);
 }

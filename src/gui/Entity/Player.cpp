@@ -19,6 +19,7 @@ Zappy::Player::Player()
     _isIncanting = false;
     _orientation = 0;
     _message = "";
+    _travelled = 0;
 }
 
 Zappy::Player::~Player()
