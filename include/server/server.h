@@ -67,6 +67,7 @@ void free_array2(char **array);
 char **my_str_to_word_array(char *str, char separator);
 int len_array(char **arr);
 enum Object string_to_object(char *str);
+char *alloc_buffer(char *buffer, int size_to_add);
 void set_command(core_t *core, int fd, char *command);
 
 void authentification(core_t *core, char *command, int fd);

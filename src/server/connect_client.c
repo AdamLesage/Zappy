@@ -24,7 +24,7 @@ void connect_client(network_t *network)
         FD_SET(fd_new_client, &network->select_info.rfds);
         if (fd_new_client > network->select_info.max_fd)
             network->select_info.max_fd = fd_new_client;
-        send_response("WELCOME\n", fd_new_client);
         add_client_on_network(network, fd_new_client);
+        network->client_list->client_info->buffer_send = strdup("WELCOME\n");
     }
 }

@@ -30,8 +30,8 @@ static void free_incantation(incantation_list_t *incantation)
     if (incantation->next != NULL) {
         free_incantation(incantation->next);
     }
-    free(incantation->incantation_info);
     free(incantation->incantation_info->ids);
+    free(incantation->incantation_info);
     free(incantation);
 }
 

@@ -43,23 +43,12 @@ static char *read_socket(core_t *core, int fd_client)
     return (buf);
 }
 
-static char *alloc_buffer(char *buffer)
-{
-    if (buffer == NULL) {
-        buffer = malloc(sizeof(char) * 2);
-        buffer[0] = '\0';
-    } else {
-        buffer = realloc(buffer, strlen(buffer) + 2);
-    }
-    return (buffer);
-}
-
 static void read_client_socket(core_t *core, int fd_client)
 {
     client_info_t *client_info = find_client(&core->network, fd_client);
     char *buf = NULL;
 
-    client_info->buffer_read = alloc_buffer(client_info->buffer_read);
+    client_info->buffer_read = alloc_buffer(client_info->buffer_read, 1);
     buf = read_socket(core, fd_client);
     if (buf == NULL) {
         return;
