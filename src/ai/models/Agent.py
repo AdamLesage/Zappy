@@ -90,11 +90,12 @@ class Agent():
                     if self.firstConnexion == False and tmp >= 2:
                         if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None: # If the server sends nothing, continue
                             continue
-                        self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
-                        self.agentAlgo.ConnectNbrManagement()
-                        self.agentAlgo.forkManagement()
                         if self.receive_from_server == "Elevation underway\n":
                             continue
+                        self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
+                        self.agentAlgo.countPassedCommands += 1
+                        self.agentAlgo.ConnectNbrManagement()
+                        self.agentAlgo.forkManagement()
                         self.agentAlgo.play(self.receive_from_server)
                         self.agentAlgo.clearReturnCommand()
                         self.agentAlgo.send_to_server()

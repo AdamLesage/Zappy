@@ -34,7 +34,7 @@ class Moves():
                 presentItems.append(item)
         return presentItems
     
-    def reachItemList(self, itemToReach: str, lookResult: str):
+    def reachItemList(self, itemToReach: str, lookResult: str) -> list[str]:
         """
         This function will manage movements to reach an specific item.
         It will return the list of movements/commands to reach the item.
@@ -68,7 +68,7 @@ class Moves():
                     movements.append(f"Take {itemToReach}\n")
                     return (movements)
                 movements.append("Forward\n")
-        if itemPosition in leftTiles:
+        elif itemPosition in leftTiles:
             # print(itemPosition)
             while itemPosition > midTiles[pos]:
                 movements.append("Forward\n")
@@ -80,7 +80,7 @@ class Moves():
                 posIndice -= 1
             movements.append(f"Take {itemToReach}\n")
             return (movements)
-        if itemPosition in rightTiles:
+        elif itemPosition in rightTiles:
             while itemPosition > midTiles[pos + 1]:
                 movements.append("Forward\n")
                 pos += 1
@@ -91,7 +91,7 @@ class Moves():
                 posIndice += 1
             movements.append(f"Take {itemToReach}\n")
             return (movements)
-        
+
     def searchItem(self, itemToSearch: str, lookResult: str, needReaching: bool = True):
         """
         This function will search for an item in the look result.
@@ -102,7 +102,7 @@ class Moves():
         if self.checkItem(lookResult, itemToSearch) and needReaching == True:
             return self.reachItemList(itemToSearch, lookResult)
         return False
-    
+
     def findBestItemToTake(self, agentInfo: AgentInfo, playerLevel: int, itemsInPlayerVision: list) -> str:
         """
         Find the best item to take according to the player level

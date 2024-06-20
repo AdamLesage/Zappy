@@ -33,7 +33,7 @@ class AgentBroadcast():
         if status != "Going to incantation": # If the player is not moving to incantation, then return
             return False
         if len(agentInfo.movements) > 0: # If the movements list is not empty, then return
-            print(f"MOVEMENTS: {agentInfo.movements}")
+            # print(f"MOVEMENTS: {agentInfo.movements}")
             # agentInfo.commandsToSend.clear()
             return False
         if orientation == None: # If the orientation is None, then return
@@ -71,5 +71,5 @@ class AgentBroadcast():
             agentInfo.movements.append("Forward\n")
             agentInfo.movements.append("Right\n")
             agentInfo.movements.append("Forward\n")
-        print(f"Moves after goToBroadcast: {agentInfo.movements} with orientation {orientation} and status {status}")
+        # print(f"Moves after goToBroadcast: {agentInfo.movements} with orientation {orientation} and status {status}")
         return True
