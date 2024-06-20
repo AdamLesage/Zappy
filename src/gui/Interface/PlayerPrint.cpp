@@ -210,6 +210,26 @@ void Zappy::PlayerPrint::updatePlayersTravelled()
     }
 }
 
+void Zappy::PlayerPrint::print_walk_animation(int playerIndex)
+{
+    // std::shared_ptr<Player> player = this->_guiConnect->_players[playerIndex];
+    // sf::Sprite& sprite = this->player_sprites[playerIndex];
+    // int level = player->getLevel() - 1;
+    // float time_spent = this->anim_clock[playerIndex].getElapsedTime().asSeconds();
+    // float total_duration = 0.4f;
+
+    // if (time_spent < total_duration) {
+    //     sf::Vector2f newPosition = this->start_pos[playerIndex] + 
+    //         (this->end_pos[playerIndex] - this->start_pos[playerIndex]) * (time_spent / total_duration);
+    //     sprite.setPosition(newPosition);
+
+    //     int frameIndex = static_cast<int>((time_spent / total_duration) * 4) % 4;
+    //     sprite.setTextureRect(this->player_orientation[level][frameIndex]);
+    // } else {
+    //     sprite.setPosition(this->end_pos[playerIndex]);
+    //     sprite.setTextureRect(this->player_orientation[level][0]);
+    // }
+}
 
 void Zappy::PlayerPrint::display()
 {
