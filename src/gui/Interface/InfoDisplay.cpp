@@ -13,7 +13,7 @@ Zappy::InfoDisplay::InfoDisplay(std::shared_ptr<GuiConnect> guiConnect, std::sha
     this->_guiConnect = guiConnect;
     info_ = false;
     font.loadFromFile("./asset/gui/Farmhouse.otf");
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 21; i++) {
         info.push_back(sf::Text("", font, 45));
         info[i].setFillColor(sf::Color::Black);
     }
@@ -48,32 +48,34 @@ Zappy::InfoDisplay::InfoDisplay(std::shared_ptr<GuiConnect> guiConnect, std::sha
     float offsetY = 50;
     info[0].setPosition(230, baseY);
     info[1].setPosition(230, baseY + offsetY);
-    info[2].setPosition(1730, baseY);
+    info[2].setPosition(230, baseY + 2 * offsetY);
+    info[3].setPosition(1730, baseY);
     info_sprites[6].setPosition(1630, baseY);
     info_sprites[0].setPosition(1130, baseY);
-    info[3].setPosition(1230, baseY);
+    info[4].setPosition(1230, baseY);
     info_sprites[1].setPosition(1130, baseY + offsetY);
-    info[4].setPosition(1230, baseY + offsetY);
+    info[5].setPosition(1230, baseY + offsetY);
     info_sprites[2].setPosition(1130, baseY + 2 * offsetY);
-    info[5].setPosition(1230, baseY + 2 * offsetY);
+    info[6].setPosition(1230, baseY + 2 * offsetY);
     info_sprites[3].setPosition(630, baseY);
-    info[6].setPosition(730, baseY);
+    info[7].setPosition(730, baseY);
     info_sprites[4].setPosition(630, baseY + offsetY);
-    info[7].setPosition(730, baseY + offsetY);
+    info[8].setPosition(730, baseY + offsetY);
     info_sprites[5].setPosition(630, baseY + 2 * offsetY);
     info_sprites[7].setPosition(1630, baseY + offsetY);
-    info[8].setPosition(730, baseY + 2 * offsetY);
-    info[9].setPosition(1730, baseY + offsetY);
+    info[9].setPosition(730, baseY + 2 * offsetY);
+    info[10].setPosition(1730, baseY + offsetY);
     info[0].setString("Map Size: x " + std::to_string(_guiConnect->get_size_map()[0]) + " y " + std::to_string(_guiConnect->get_size_map()[1]));
     info[1].setString("Player: " + std::to_string(_guiConnect->_players.size()));
-    info[2].setString("Food: " + std::to_string(get_food()));
-    info[3].setString("Linemate: " + std::to_string(get_Linemate()));
-    info[4].setString("Deraumere: " + std::to_string(get_Deraumere()));
-    info[5].setString("Sibur: " + std::to_string(get_Sibur()));
-    info[6].setString("Mendiane: " + std::to_string(get_Mendiane()));
-    info[7].setString("Phiras: " + std::to_string(get_Phiras()));
-    info[8].setString("Thystame: " + std::to_string(get_Thystame()));
-    info[9].setString("Egg: " + std::to_string(_guiConnect->_eggs.size()));
+    info[2].setString("Total Resources: " + std::to_string(get_food() + get_Linemate() + get_Deraumere() + get_Sibur() + get_Mendiane() + get_Phiras() + get_Thystame() + _guiConnect->_eggs.size()));
+    info[3].setString("Food: " + std::to_string(get_food()));
+    info[4].setString("Linemate: " + std::to_string(get_Linemate()));
+    info[5].setString("Deraumere: " + std::to_string(get_Deraumere()));
+    info[6].setString("Sibur: " + std::to_string(get_Sibur()));
+    info[7].setString("Mendiane: " + std::to_string(get_Mendiane()));
+    info[8].setString("Phiras: " + std::to_string(get_Phiras()));
+    info[9].setString("Thystame: " + std::to_string(get_Thystame()));
+    info[10].setString("Egg: " + std::to_string(_guiConnect->_eggs.size()));
 }
 
 Zappy::InfoDisplay::~InfoDisplay()
@@ -185,14 +187,15 @@ void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
             if (tileBounds.contains(mousePos)) {
                 info[0].setString("Tile: x " + std::to_string(i + 1) + " y " + std::to_string(j + 1));
                 info[1].setString("Player: " + std::to_string(get_player(i, j)));
-                info[2].setString("Food: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Food")));
-                info[3].setString("Linemate: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Linemate")));
-                info[4].setString("Deraumere: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Deraumere")));
-                info[5].setString("Sibur: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Sibur")));
-                info[6].setString("Mendiane: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Mendiane")));
-                info[7].setString("Phiras: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Phiras")));
-                info[8].setString("Thystame: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Thystame")));
-                info[9].setString("Egg: " + std::to_string(get_eggs(i, j)));
+                info[2].setString("Total resources: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Food") + _guiConnect->_tiles[i][j]->_inventory->get("Linemate") + _guiConnect->_tiles[i][j]->_inventory->get("Deraumere") + _guiConnect->_tiles[i][j]->_inventory->get("Sibur") + _guiConnect->_tiles[i][j]->_inventory->get("Mendiane") + _guiConnect->_tiles[i][j]->_inventory->get("Phiras") + _guiConnect->_tiles[i][j]->_inventory->get("Thystame") + get_eggs(i, j)));
+                info[3].setString("Food: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Food")));
+                info[4].setString("Linemate: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Linemate")));
+                info[5].setString("Deraumere: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Deraumere")));
+                info[6].setString("Sibur: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Sibur")));
+                info[7].setString("Mendiane: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Mendiane")));
+                info[8].setString("Phiras: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Phiras")));
+                info[9].setString("Thystame: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Thystame")));
+                info[10].setString("Egg: " + std::to_string(get_eggs(i, j)));
                 info_ = true;
             }
         }
@@ -200,21 +203,22 @@ void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
     if (info_ == false) {
         info[0].setString("Map Size: x " + std::to_string(_guiConnect->get_size_map()[0]) + " y " + std::to_string(_guiConnect->get_size_map()[1]));
         info[1].setString("Player: " + std::to_string(_guiConnect->_players.size()));
-        info[2].setString("Food: " + std::to_string(get_food()));
-        info[3].setString("Linemate: " + std::to_string(get_Linemate()));
-        info[4].setString("Deraumere: " + std::to_string(get_Deraumere()));
-        info[5].setString("Sibur: " + std::to_string(get_Sibur()));
-        info[6].setString("Mendiane: " + std::to_string(get_Mendiane()));
-        info[7].setString("Phiras: " + std::to_string(get_Phiras()));
-        info[8].setString("Thystame: " + std::to_string(get_Thystame()));
-        info[9].setString("Egg: " + std::to_string(_guiConnect->_eggs.size()));
+        info[2].setString("Total resources: " + std::to_string(get_food() + get_Linemate() + get_Deraumere() + get_Sibur() + get_Mendiane() + get_Phiras() + get_Thystame() + _guiConnect->_eggs.size()));
+        info[3].setString("Food: " + std::to_string(get_food()));
+        info[4].setString("Linemate: " + std::to_string(get_Linemate()));
+        info[5].setString("Deraumere: " + std::to_string(get_Deraumere()));
+        info[6].setString("Sibur: " + std::to_string(get_Sibur()));
+        info[7].setString("Mendiane: " + std::to_string(get_Mendiane()));
+        info[8].setString("Phiras: " + std::to_string(get_Phiras()));
+        info[9].setString("Thystame: " + std::to_string(get_Thystame()));
+        info[10].setString("Egg: " + std::to_string(_guiConnect->_eggs.size()));
     }
     info_ = false;
 }
 
 void Zappy::InfoDisplay::display()
 {
-    for (int k = 0; k < 10; k++)
+    for (int k = 0; k < 11; k++)
         _window->draw(info[k]);
     for (int k = 0; k < 8; k++)
         _window->draw(info_sprites[k]);
