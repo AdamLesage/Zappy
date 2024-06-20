@@ -10,19 +10,19 @@
 
 Zappy::Interface::Interface()
 {
+    TileClicked = false;
     loading_texture.push_back(sf::Texture());
     loading_texture.push_back(sf::Texture());
-    if (loading_texture[0].loadFromFile("./asset/gui/loading-screen.jpg") == false)
-        throw InterfaceError("Error: loading-screen.jpg not found", "Interface");
-    if (loading_texture[1].loadFromFile("./asset/gui/menu.png") == false)
-        throw InterfaceError("Error: menu.png not found", "Interface");
+    if (loading_texture[0].loadFromFile("./asset/gui/fonddd.jpg") == false)
+        throw InterfaceError("Error: fonddd.jpg not found", "Interface");
+    if (loading_texture[1].loadFromFile("./asset/gui/fonddd.jpg") == false)
+        throw InterfaceError("Error: fonddd.jpg not found", "Interface");
     loading.setSize(sf::Vector2f(1920, 1080));
     loading.setTexture(&loading_texture[0]);
     sound_volume = 50;
     window = std::make_shared<sf::RenderWindow>();
     window->create(sf::VideoMode(1920, 1080), "Zappy");
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 125), sf::Color(150, 150, 150), 5, sf::Color::Black));
-    bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 325), sf::Color(150, 150, 150), 5, sf::Color::Black));
     if (texture.loadFromFile("./asset/sprite/tiles/tile1.png") == false)
         throw InterfaceError("Error: tile1.png not found", "Interface");
     sprite.setTexture(texture);
@@ -153,7 +153,9 @@ Zappy::Interface::Interface()
     if (egg_texture.loadFromFile("./asset/sprite/egg.png") == false)
         throw InterfaceError("Error: egg.png not found", "Interface");
     rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
+    rect2 = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
+    rect2.setFillColor(sf::Color(255, 165, 0, 150));
     credit = std::make_shared<Credit>(window);
     printf("Interface created\n");
     printf("Interface created\n");
@@ -237,39 +239,39 @@ void Zappy::Interface::set_player_textures()
     player_anim_rank2[3][3] = sf::IntRect(64, 39, 30, 24);
 
     player_orientation[0][0] = sf::IntRect(35, 2, 23, 27);
-    player_orientation[0][1] = sf::IntRect(32, 103, 31, 24);
+    player_orientation[0][3] = sf::IntRect(32, 103, 31, 24);
     player_orientation[0][2] = sf::IntRect(37, 65, 21, 28);
-    player_orientation[0][3] = sf::IntRect(33, 38, 30, 25);
+    player_orientation[0][1] = sf::IntRect(33, 38, 30, 25);
     player_orientation[1][0] = sf::IntRect(35, 2, 23, 27);
-    player_orientation[1][1] = sf::IntRect(32, 103, 31, 24);
+    player_orientation[1][3] = sf::IntRect(32, 103, 31, 24);
     player_orientation[1][2] = sf::IntRect(37, 65, 21, 28);
-    player_orientation[1][3] = sf::IntRect(33, 38, 30, 25);
+    player_orientation[1][1] = sf::IntRect(33, 38, 30, 25);
     player_orientation[2][0] = sf::IntRect(182, 137, 19, 29);
-    player_orientation[2][1] = sf::IntRect(207, 293, 28, 23);
+    player_orientation[2][3] = sf::IntRect(207, 293, 28, 23);
     player_orientation[2][2] = sf::IntRect(178, 51, 20, 27);
-    player_orientation[2][3] = sf::IntRect(178, 217, 27, 26);
+    player_orientation[2][1] = sf::IntRect(178, 217, 27, 26);
     player_orientation[3][0] = sf::IntRect(53, 538, 21, 66);
-    player_orientation[3][1] = sf::IntRect(35, 678, 53, 51);
+    player_orientation[3][3] = sf::IntRect(35, 678, 53, 51);
     player_orientation[3][2] = sf::IntRect(53, 801, 21, 55);
-    player_orientation[3][3] = sf::IntRect(39, 935, 54, 51);
+    player_orientation[3][1] = sf::IntRect(39, 935, 54, 51);
     player_orientation[4][0] = sf::IntRect(437, 42, 22, 47);
-    player_orientation[4][1] = sf::IntRect(417, 180, 56, 31);
+    player_orientation[4][3] = sf::IntRect(417, 180, 56, 31);
     player_orientation[4][2] = sf::IntRect(437, 301, 22, 45);
-    player_orientation[4][3] = sf::IntRect(422, 436, 56, 31);
+    player_orientation[4][1] = sf::IntRect(422, 436, 56, 31);
     player_orientation[5][0] = sf::IntRect(432, 38, 29, 49);
-    player_orientation[5][1] = sf::IntRect(420, 170, 50, 30);
+    player_orientation[5][3] = sf::IntRect(420, 170, 50, 30);
     player_orientation[5][2] = sf::IntRect(433, 302, 30, 41);
-    player_orientation[5][3] = sf::IntRect(425, 426, 50, 40);
+    player_orientation[5][1] = sf::IntRect(425, 426, 50, 40);
     player_orientation[6][0] = sf::IntRect(434, 39, 28, 71);
-    player_orientation[6][1] = sf::IntRect(403, 171, 71, 44);
+    player_orientation[6][3] = sf::IntRect(403, 171, 71, 44);
     player_orientation[6][2] = sf::IntRect(434, 300, 28, 58);
-    player_orientation[6][3] = sf::IntRect(419, 427, 72, 44);
+    player_orientation[6][1] = sf::IntRect(419, 427, 72, 44);
     player_orientation[7][0] = sf::IntRect(83, 20, 25, 64);
-    player_orientation[7][1] = sf::IntRect(64, 278, 64, 61);
+    player_orientation[7][3] = sf::IntRect(64, 278, 64, 61);
     player_orientation[7][2] = sf::IntRect(84, 202, 22, 51);
-    player_orientation[7][3] = sf::IntRect(63, 108, 64, 62);
+    player_orientation[7][1] = sf::IntRect(63, 108, 64, 62);
     for (int i = 0; i < 8; i++) {
-        player_rank[i].setTextureRect(player_orientation[i][1]);
+        player_rank[i].setTextureRect(player_orientation[i][3]);
     }
 }
 
@@ -373,11 +375,16 @@ void Zappy::Interface::print_walk_animation(int i)
 
 void Zappy::Interface::print_players()
 {
+    //if (evolutions.size() > _gui_connect->_players.size()) {
+    //    while (evolutions.size() > _gui_connect->_players.size()) {
+    //        evolutions.pop_back();
+    //    }
+    //}
     for (int i = 0; i < _gui_connect->_players.size(); i++) {
         if (player_sprites.size() < _gui_connect->_players.size()) {
             player_sprites.push_back(sf::Sprite());
-            // evolutions.push_back(std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png"));
-            // evolutions.back()->setFrameInfo(82, 67, 16, 2);
+            evolutions.push_back(std::make_pair(0, std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png")));
+            evolutions.back().second->setFrameInfo(82, 67, 16, 2);
         }
         // if (_gui_connect->_players[i]->getLastPosition() != _gui_connect->_players[i]->getPosition()) {
         //     print_walk_animation(i);
@@ -385,17 +392,17 @@ void Zappy::Interface::print_players()
         player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel() - 1]);
         set_scale_of_player(i);
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
-        player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation() + 1]);
+        player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation() - 1]);
         window->draw(player_sprites[i]);
         updatePlayersTravelled();
         fill_color_team();
         print_player_team();
         _broadcast->check_player_broadcast(i);
-        _broadcast->display();
-        // if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
-        //     evolutions[i]->setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 70, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 125);
-        //     window->draw(evolutions[i]->getSprite());
-        // }
+        _broadcast->display(i);
+        if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
+            evolutions[i].second->setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 70, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 125);
+            window->draw(evolutions[i].second->getSprite());
+        }
     }
 }
 
@@ -567,9 +574,24 @@ void Zappy::Interface::check_event()
                 if (tileBounds2.contains(mousePos2)) {
                     rect.setPosition(tileBounds2.left, (tileBounds2.top - rect.getSize().y) + 102.4);
                     isOverTile = true;
+                    isOverTile2 = true;
                 }
             }
         }
+        sf::Vector2f mousePos3 = window->mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y), view);
+        for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
+            for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
+                sf::FloatRect tileBounds2(100 + (i * 102.4), 150 + (j * 102.4), 102.4, 102.4);
+                if (tileBounds2.contains(mousePos3) && event.type == sf::Event::MouseButtonPressed) {
+                    rect2.setPosition(tileBounds2.left, (tileBounds2.top - rect2.getSize().y) + 102.4);
+                    TileClicked = true;
+                    TileClicked2 = true;
+                }
+            }
+        }
+        if (isOverTile2 == false)
+            isOverTile = false;
+        isOverTile2 = false;
 
         if (event.type == sf::Event::MouseButtonReleased) {
             if (event.mouseButton.button == sf::Mouse::Left) {
@@ -619,6 +641,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     window->draw(loading);
     window->display();
     clock.restart();
+    bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 325), sf::Color(150, 150, 150), 5, sf::Color::Black, _gui_connect->_timeUnit));
     while (clock.getElapsedTime().asSeconds() < 5) {
         float progress = clock.getElapsedTime().asSeconds() / 5;
         loadingBar.setSize(sf::Vector2f(1600 * progress, 60));
@@ -659,15 +682,16 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     view.zoom(0.5);
     playBackgroundMusic("./asset/music/music.ogg");
     clock.restart();
-    int currentFrame {0};
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
         if (clock.getElapsedTime().asSeconds() > frameTime) {
             int i = 0;
-            for (auto &it : evolutions) {
-                if (_gui_connect->_players[i].get()->isPlayerIncanting() == true)
-                    it->updateFrame(currentFrame);
-                i++;
+            if (evolutions.size() > 0) {
+                for (auto &it : evolutions) {
+                    if (_gui_connect->_players[i].get()->isPlayerIncanting() == true)
+                        it.second->updateFrame(it.first);
+                    i++;
+                }
             }
             clock.restart();
         }
@@ -683,6 +707,8 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         }
         if (isOverTile)
             window->draw(rect);
+        if (TileClicked)
+            window->draw(rect2);
         _teamnbr = gui_connect->getTeamNames().size();
         _teamPrint->print_team();
         print_resssource();
