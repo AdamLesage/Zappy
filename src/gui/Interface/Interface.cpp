@@ -391,7 +391,7 @@ void Zappy::Interface::print_players()
         fill_color_team();
         print_player_team();
         _broadcast->check_player_broadcast(i);
-        _broadcast->display();
+        _broadcast->display(i);
         // if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
         //     evolutions[i]->setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 70, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 125);
         //     window->draw(evolutions[i]->getSprite());
