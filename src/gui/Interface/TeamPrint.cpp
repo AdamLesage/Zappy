@@ -32,11 +32,10 @@ void Zappy::TeamPrint::print_info(int i)
     close->displayButton(_window);
     for (size_t j = 0; j < _guiConnect->_players.size(); j++) {
         if (_guiConnect->_players[j]->getTeamName() == teamNames[i]) {
-            if (players[j] < _guiConnect->_players.size()) {
-                players[j]++;  
-                team_info[i].push_back(sf::Text("Player " + std::to_string(players[j]), font, 30));
+            if (players[i] < _guiConnect->_players.size()) {
+                players[i]++;  
+                team_info[i].push_back(sf::Text("Player " + std::to_string(players[i]), font, 30));
                 team_info[i].push_back(sf::Text("Level: " + std::to_string(_guiConnect->_players[j]->getLevel()), font, 30));
-                team_info[i].push_back(sf::Text("X: " + std::to_string(_guiConnect->_players[j]->getPosition()[0]) + "Y: " + std::to_string(_guiConnect->_players[j]->getPosition()[1]), font, 30));
             }
         }
     }
