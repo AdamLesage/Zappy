@@ -45,31 +45,23 @@ class AgentBroadcast():
             agentInfo.movements.append("Forward\n")
         elif orientation == "2": # Broadcast position is on north-west of the player
             agentInfo.movements.append("Forward\n")
+        elif orientation == "3":
             agentInfo.movements.append("Left\n")
             agentInfo.movements.append("Forward\n")
-        elif orientation == "3": # Broadcast position is on the west of the player
+        elif orientation == "4":
             agentInfo.movements.append("Left\n")
             agentInfo.movements.append("Forward\n")
-        elif orientation == "4": # Broadcast position is on the north-west of the player
-            agentInfo.movements.append("Left\n")
-            agentInfo.movements.append("Forward\n")
-            agentInfo.movements.append("Left\n")
-            agentInfo.movements.append("Forward\n")
-        elif orientation == "5": # Broadcast position is on the south of the player
+        elif orientation == "5":
             agentInfo.movements.append("Left\n")
             agentInfo.movements.append("Left\n")
             agentInfo.movements.append("Forward\n")
-        elif orientation == "6": # Broadcast position is on the south-east of the player
+        elif orientation == "6":
             agentInfo.movements.append("Right\n")
             agentInfo.movements.append("Forward\n")
+        elif orientation == "7":
             agentInfo.movements.append("Right\n")
             agentInfo.movements.append("Forward\n")
-        elif orientation == "7": # Broadcast position is on the east of the player
-            agentInfo.movements.append("Right\n")
-            agentInfo.movements.append("Forward\n")
-        elif orientation == "8": # Broadcast position is on the north-east of the player
-            agentInfo.movements.append("Forward\n")
-            agentInfo.movements.append("Right\n")
+        elif orientation == "8":
             agentInfo.movements.append("Forward\n")
         # print(f"Moves after goToBroadcast: {agentInfo.movements} with orientation {orientation} and status {status}")
         return True

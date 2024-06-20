@@ -246,6 +246,7 @@ class AgentAlgo():
         Set the items to take for the incantation
         """
         # TODO: look before setting everything to avoid to take the same item twice
+        print(f"Set items for incantation | level {self.agentInfo.getLevel()}")
         self.agentInfo.commandsToSend.clear()
         if self.agentInfo.getLevel() == 1:
             self.agentInfo.commandsToSend.append("Set linemate\n")
