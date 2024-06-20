@@ -709,7 +709,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->draw(sound);
         _info->display();
         print_sound();
-        this->_inventory->display();
+        this->_inventory->display(player_sprites);
         window->display();
     }
 }
