@@ -22,7 +22,6 @@ Zappy::Interface::Interface()
     window = std::make_shared<sf::RenderWindow>();
     window->create(sf::VideoMode(1920, 1080), "Zappy");
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 125), sf::Color(150, 150, 150), 5, sf::Color::Black));
-    bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 325), sf::Color(150, 150, 150), 5, sf::Color::Black));
     if (texture.loadFromFile("./asset/sprite/tiles/tile1.png") == false)
         throw InterfaceError("Error: tile1.png not found", "Interface");
     sprite.setTexture(texture);
@@ -179,6 +178,43 @@ void Zappy::Interface::print_walk_animation(int i)
             _playerPrint->getPlayerSprites()[i].setTextureRect(_playerPrint->getPlayerAnimRank2()[orientation - 1][j]);
             _playerPrint->getPlayerSprites()[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
             window->draw(_playerPrint->getPlayerSprites()[i]);
+        }
+            player_sprites[i].setTextureRect(player_anim_rank2[orientation - 1][j]);
+            player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
+            window->draw(player_sprites[i]);
+        }
+    }
+} 
+
+void Zappy::Interface::print_players()
+{
+    //if (evolutions.size() > _gui_connect->_players.size()) {
+    //    while (evolutions.size() > _gui_connect->_players.size()) {
+    //        evolutions.pop_back();
+    //    }
+    //}
+    for (int i = 0; i < _gui_connect->_players.size(); i++) {
+        if (player_sprites.size() < _gui_connect->_players.size()) {
+            player_sprites.push_back(sf::Sprite());
+            evolutions.push_back(std::make_pair(0, std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png")));
+            evolutions.back().second->setFrameInfo(82, 67, 16, 2);
+        }
+        // if (_gui_connect->_players[i]->getLastPosition() != _gui_connect->_players[i]->getPosition()) {
+        //     print_walk_animation(i);
+        // }
+        player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel() - 1]);
+        set_scale_of_player(i);
+        player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
+        player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation() - 1]);
+        window->draw(player_sprites[i]);
+        updatePlayersTravelled();
+        fill_color_team();
+        print_player_team();
+        _broadcast->check_player_broadcast(i);
+        _broadcast->display(i);
+        if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
+            evolutions[i].second->setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 70, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 125);
+            window->draw(evolutions[i].second->getSprite());
         }
     }
 }
@@ -404,6 +440,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     window->draw(loading);
     window->display();
     clock.restart();
+    bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 325), sf::Color(150, 150, 150), 5, sf::Color::Black, _gui_connect->_timeUnit));
     while (clock.getElapsedTime().asSeconds() < 5) {
         float progress = clock.getElapsedTime().asSeconds() / 5;
         loadingBar.setSize(sf::Vector2f(1600 * progress, 60));
@@ -444,15 +481,16 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     view.zoom(0.5);
     playBackgroundMusic("./asset/music/music.ogg");
     clock.restart();
-    int currentFrame {0};
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
         if (clock.getElapsedTime().asSeconds() > frameTime) {
             int i = 0;
-            for (auto &it : evolutions) {
-                if (_gui_connect->_players[i].get()->isPlayerIncanting() == true)
-                    it->updateFrame(currentFrame);
-                i++;
+            if (evolutions.size() > 0) {
+                for (auto &it : evolutions) {
+                    if (_gui_connect->_players[i].get()->isPlayerIncanting() == true)
+                        it.second->updateFrame(it.first);
+                    i++;
+                }
             }
             clock.restart();
         }

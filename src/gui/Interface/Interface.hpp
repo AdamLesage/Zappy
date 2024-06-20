@@ -98,7 +98,7 @@ namespace Zappy {
             bool menu;
             std::vector<std::shared_ptr<Button>> buttons;
             std::shared_ptr<Credit> credit;
-            std::vector<std::shared_ptr<Evolution>> evolutions;
+            std::vector<std::pair<int, std::shared_ptr<Evolution>>> evolutions;
             std::shared_ptr<TeamPrint> _teamPrint;
             std::shared_ptr<PlayerPrint> _playerPrint;
         private:
