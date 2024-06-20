@@ -47,6 +47,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/dataManagment/players/remove_from_inventory.c		\
 			src/server/dataManagment/players/get_player_k.c					\
 			src/server/dataManagment/client/add_client.c					\
+			src/server/dataManagment/client/find_client.c					\
 			src/server/command/GUI_command/execute_gui_command.c			\
 			src/server/command/GUI_command/gui_command.c					\
 			src/server/command/GUI_command/bct.c							\

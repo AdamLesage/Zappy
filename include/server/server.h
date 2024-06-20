@@ -153,5 +153,6 @@ void seg(players_t *players, char *team_name);
 void smg(players_t *players, char *message);
 
 bool add_client(core_t *core, int fd);
+client_t *find_client(client_t *client, int fd);
 
 #endif /* !SERVER_H_ */
