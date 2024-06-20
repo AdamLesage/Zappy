@@ -38,11 +38,11 @@ void take(core_t *core, int fd, char **command)
 
     if (take_on_map(pos, object, &core->map) == false) {
         free(pos);
-        send_response("ko\n", fd);
+        add_to_send_buffer(&core->network, "ko\n", fd);
         return;
     }
     put_on_inventory(&core->players, object, fd);
-    send_response("ok\n", fd);
+    add_to_send_buffer(&core->network, "ok\n", fd);
     info = find_player(&core->players, fd);
     pgt(&core->players, info->id, object);
     pin_event(&core->players, info);

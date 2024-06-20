@@ -38,12 +38,12 @@ void set(core_t *core, int fd, char **command)
 
     if (remove_from_inventory(&core->players, object, fd) == false) {
         free(pos);
-        send_response("ko\n", fd);
+        add_to_send_buffer(&core->network, "ko\n", fd);
         return;
     }
     info = find_player(&core->players, fd);
     set_on_map(pos, object, &core->map);
-    send_response("ok\n", fd);
+    add_to_send_buffer(&core->network, "ok\n", fd);
     pdr(&core->players, info->id, object);
     pin_event(&core->players, info);
     bct_event(core, pos[0], pos[1]);
