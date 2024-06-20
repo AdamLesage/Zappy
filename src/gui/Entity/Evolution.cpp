@@ -69,6 +69,11 @@ std::pair<float, float> Evolution::getSize() const
     return _size;
 }
 
+sf::Sprite Evolution::getSprite() const
+{
+    return _sprite;
+}
+
 int Evolution::getNbrFrame() const
 {
     return _nbrFrame;
@@ -103,6 +108,7 @@ void Evolution::setPosition(int x, int y)
 {
     _position.first = x;
     _position.second = y;
+    _sprite.setPosition(_position.first, _position.second);
 }
 
 void Evolution::setClock(sf::Clock clock)
@@ -135,11 +141,19 @@ void Evolution::draw(sf::RenderWindow *window)
     window->draw(_sprite);
 }
 
-void Evolution::updateClock(int &currentFrame, float frameTime)
+bool Evolution::updateClock(int &currentFrame, float frameTime)
 {
     if (_clock.getElapsedTime().asSeconds() > frameTime) {
         currentFrame = (currentFrame + 1) % _nbrFrame;
         _sprite.setTextureRect(_frames[currentFrame]);
         _clock.restart();
+        return true;
     }
+    return false;
+}
+
+void Evolution::updateFrame(int &currentFrame)
+{
+    currentFrame = (currentFrame + 1) % _nbrFrame;
+    _sprite.setTextureRect(_frames[currentFrame]);
 }

@@ -87,7 +87,7 @@ void Zappy::CommandFactory::executeCommand(std::string commandName, std::string 
     std::vector<std::string> parsedData = _commands[commandName]->receiveData(message, commandName);
     // Order: parsedData, size_map, tiles, players, eggs
     try {
-    _commands[commandName]->applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning);
+        _commands[commandName]->applyChanges(parsedData, size_map, tiles, players, eggs, teams, timeUnit, isRunning);
     } catch (const Zappy::CommandError &e) {
         std::cerr << "Error: " << e.what() << std::endl << "Location: " << e.where() << std::endl;
         exit(84);

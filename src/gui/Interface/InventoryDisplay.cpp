@@ -15,8 +15,8 @@ Zappy::InventoryDisplay::InventoryDisplay(std::shared_ptr<GuiConnect> guiConnect
 
     if (font.loadFromFile("./asset/gui/Farmhouse.otf") == false)
         throw InterfaceError("Error: Farmhouse.otf not found", "Interface");
-    for (int i = 0; i != 9; i++) {
-        this->playerInfo.push_back(sf::Text("", font, 45));
+    for (int i = 0; i != 12; i++) {
+        this->playerInfo.push_back(sf::Text("", font, 30));
         this->playerInfo[i].setFillColor(sf::Color::Black);
     }
     for (int i = 0; i < 7; i++)
@@ -47,20 +47,27 @@ Zappy::InventoryDisplay::InventoryDisplay(std::shared_ptr<GuiConnect> guiConnect
     playerInfo[0].setPosition(window->getSize().x - 180, window->getSize().y / 2 + 30);
     playerInfo[1].setCharacterSize(30);
     playerInfo[1].setPosition(window->getSize().x - 180, window->getSize().y / 2 + 60);
-    playerInfo[2].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 150);
-    _ressource_sprite[0].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 155);
-    playerInfo[3].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 200);
-    _ressource_sprite[1].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 205);
+    playerInfo[2].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 170);
+    _ressource_sprite[0].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 170);
+    playerInfo[3].setPosition(window->getSize().x - 100, window->getSize().y / 2 + 170);
+    _ressource_sprite[1].setPosition(window->getSize().x - 140, window->getSize().y / 2 + 170);
     playerInfo[4].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 250);
-    _ressource_sprite[2].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 255);
-    playerInfo[5].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 300);
-    _ressource_sprite[3].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 305);
-    playerInfo[6].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 350);
-    _ressource_sprite[4].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 355);
-    playerInfo[7].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 400);
-    _ressource_sprite[5].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 405);
-    playerInfo[8].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 450);
-    _ressource_sprite[6].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 455);
+    _ressource_sprite[2].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 250);
+    playerInfo[5].setPosition(window->getSize().x - 100, window->getSize().y / 2 + 250);
+    _ressource_sprite[3].setPosition(window->getSize().x - 140, window->getSize().y / 2 + 250);
+    playerInfo[6].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 325);
+    _ressource_sprite[4].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 325);
+    playerInfo[7].setPosition(window->getSize().x - 100, window->getSize().y / 2 + 325);
+    _ressource_sprite[5].setPosition(window->getSize().x - 140, window->getSize().y / 2 + 325);
+    playerInfo[8].setPosition(window->getSize().x - 250, window->getSize().y / 2 + 400);
+    _ressource_sprite[6].setPosition(window->getSize().x - 290, window->getSize().y / 2 + 400);
+    playerInfo[9].setCharacterSize(30);
+    playerInfo[9].setPosition(window->getSize().x - 180, window->getSize().y / 2 + 0);
+    playerInfo[10].setCharacterSize(30);
+    playerInfo[10].setPosition(window->getSize().x - 280, window->getSize().y / 2 + 120);
+    playerInfo[11].setCharacterSize(30);
+    playerInfo[11].setPosition(window->getSize().x - 280 + 150, window->getSize().y / 2 + 120);
+
 
     this->back.setPosition(window->getSize().x - 300, window->getSize().y / 2);
     this->back.setSize(sf::Vector2f(300, window->getSize().y / 2));
@@ -108,6 +115,9 @@ void Zappy::InventoryDisplay::check_event(sf::Event *event, std::vector<sf::Spri
                 playerInfo[6].setString("Mendiane " + std::to_string(_guiConnect->_players[i]->getInventory()->_mendiane));
                 playerInfo[7].setString("Phiras " + std::to_string(_guiConnect->_players[i]->getInventory()->_phiras));
                 playerInfo[8].setString("Thystame " + std::to_string(_guiConnect->_players[i]->getInventory()->_thystame));
+                playerInfo[9].setString("Player " + std::to_string(_guiConnect->_players[i]->getPlayerNumber()));
+                playerInfo[10].setString("Orientation " + std::to_string(_guiConnect->_players[i]->getOrientation()));
+                playerInfo[11].setString("Travelled " + std::to_string(_guiConnect->_players[i]->getTravelled()));
                 this->SkinPlayer.setTexture(players_sprites[i].getTexture());
                 this->SkinPlayer.setTextureRect(players_sprites[i].getTextureRect());
             }
@@ -115,12 +125,26 @@ void Zappy::InventoryDisplay::check_event(sf::Event *event, std::vector<sf::Spri
     }
 }
 
-void Zappy::InventoryDisplay::display()
+void Zappy::InventoryDisplay::display(std::vector<sf::Sprite> players_sprites)
 {
     if (current_player_index != -1) {
+        playerInfo[0].setString("Lvl: " + std::to_string(_guiConnect->_players[current_player_index]->getLevel()));
+        playerInfo[1].setString("Team: " + _guiConnect->_players[current_player_index]->getTeamName());
+        playerInfo[2].setString("Food " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_food));
+        playerInfo[3].setString("Linemate " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_linemate));
+        playerInfo[4].setString("Deraumere " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_deraumere));
+        playerInfo[5].setString("Sibur " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_sibur));
+        playerInfo[6].setString("Mendiane " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_mendiane));
+        playerInfo[7].setString("Phiras " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_phiras));
+        playerInfo[8].setString("Thystame " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_thystame));
+        playerInfo[9].setString("Player " + std::to_string(_guiConnect->_players[current_player_index]->getPlayerNumber()));
+        playerInfo[10].setString("Orientation " + std::to_string(_guiConnect->_players[current_player_index]->getOrientation()));
+        playerInfo[11].setString("Travelled " + std::to_string(_guiConnect->_players[current_player_index]->getTravelled()));
+        this->SkinPlayer.setTexture(players_sprites[current_player_index].getTexture());
+        this->SkinPlayer.setTextureRect(players_sprites[current_player_index].getTextureRect());
         this->_window->draw(this->back);
         this->_window->draw(this->header);
-        for (int i = 0; i != 9; i++) {
+        for (int i = 0; i != 12; i++) {
             this->_window->draw(this->playerInfo[i]);
         }
         for (int i = 0; i < 7; i++) {

@@ -37,3 +37,55 @@ std::shared_ptr<Zappy::Tile> GuiConnect::getTileByCoords(std::pair<int, int> coo
     throw Zappy::ConnectError("Tile not found", "GuiConnect::getTileByCoords");
     return nullptr;
 }
+
+int GuiConnect::getEggNbOnTile(std::pair<int, int> coords)
+{
+    int nb = 0;
+
+    for (const auto &row : _tiles)
+    {
+        for (const auto &tile : row)
+        {
+            int x = tile->_position.x;
+            int y = tile->_position.y;
+            if (x == coords.first && y == coords.second)
+            {
+                for (const auto &egg : this->_eggs)
+                {
+                    std::array<int, 2> egg_coords = egg->getPosition();
+                    if (egg_coords[0] == x && egg_coords[1] == y)
+                    {
+                        nb++;
+                    }
+                }
+            }
+        }
+        return nb;
+    }
+}
+
+int GuiConnect::getPlayerNbOnTile(std::pair<int, int> coords)
+{
+    int nb = 0;
+
+    for (const auto &row : _tiles)
+    {
+        for (const auto &tile : row)
+        {
+            int x = tile->_position.x;
+            int y = tile->_position.y;
+            if (x == coords.first && y == coords.second)
+            {
+                for (const auto &player : this->_players)
+                {
+                    std::array<int, 2> player_coords = player->getPosition();
+                    if (player_coords[0] == x && player_coords[1] == y)
+                    {
+                        nb++;
+                    }
+                }
+            }
+        }
+        return nb;
+    }
+}

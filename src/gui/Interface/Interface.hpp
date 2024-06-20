@@ -6,6 +6,7 @@
 */
 
 #include "bar.hpp"
+#include "Credit.hpp"
 #include "../Entity/Evolution.hpp"
 #include "../ServerInfo/GuiConnect.hpp"
 #include "../Entity/Player.hpp"
@@ -13,6 +14,7 @@
 #include "InventoryDisplay.hpp"
 #include "InfoDisplay.hpp"
 #include "Broadcast.hpp"
+#include "TeamPrint.hpp"
 #include "InterfaceError.hpp"
 #include <iostream>
 #include <thread>
@@ -36,6 +38,7 @@ namespace Zappy {
             std::array<int, 2> get_mape_size() { return _mape_size; }
             void set_mape_size(std::array<int, 2> mape_size) { _mape_size = mape_size; }
             void set_map();
+            void set_player_textures();
             void check_event();
             void print_resssource();
             void print_eggs();
@@ -46,11 +49,14 @@ namespace Zappy {
             void print_player_team();
             void set_scale_of_player(int i);
             void playBackgroundMusic(const std::string& filename);
+            void updatePlayersTravelled();
+            void print_walk_animation(int i);
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
             std::vector<std::shared_ptr<Bar>> bars;
             int tick;
+            sf::Text tick_text;
             int last_tick;
             float zoom;
             float last_zoom;
@@ -73,12 +79,19 @@ namespace Zappy {
             std::vector<std::shared_ptr<Player>> players;
             std::vector<sf::Sprite> player_sprites;
             std::vector<std::array<sf::IntRect, 4>> player_orientation;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank1;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank2;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank3;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank4;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank5;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank6;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank7;
+            std::vector<std::array<sf::IntRect, 4>> player_anim_rank8;
             std::vector<sf::Texture> player_textures;
             std::vector<sf::Sprite> egg_sprites;
             sf::Texture egg_texture;
             sf::Font font;
             std::vector<sf::Text> Texts;
-            std::vector<std::string> Texts_str;
             sf::Sprite sound;
             sf::Texture sound_;
             std::shared_ptr<GuiConnect> _gui_connect;
@@ -103,6 +116,9 @@ namespace Zappy {
             std::vector<std::shared_ptr<Button>> buttons;
             std::vector<sf::Sprite> player_rank;
             std::vector<sf::Text> player_rank_text;
+            std::shared_ptr<Credit> credit;
+            std::vector<std::shared_ptr<Evolution>> evolutions;
+            std::shared_ptr<TeamPrint> _teamPrint;
         private:
     };
 }
