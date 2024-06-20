@@ -14,6 +14,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/lunch_server.c										\
 			src/server/check_food_players.c									\
 			src/server/check_win_game.c										\
+			src/server/set_command.c										\
 			src/server/dataManagment/arguments/get_arguments.c				\
 			src/server/dataManagment/arguments/get_port.c					\
 			src/server/dataManagment/arguments/get_width.c					\
@@ -371,7 +372,7 @@ SFML		=	-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 all:    $(Name)
 
-$(Name): zappy_server zappy_gui zappy_ai
+$(Name): zappy_server
 
 zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS) -Iinclude/server -lm

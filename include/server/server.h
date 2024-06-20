@@ -56,8 +56,7 @@ int get_frequency(const char **argv, int *index);
 void init_server(core_t *core);
 void close_server(core_t *core);
 void lunch_server(core_t *core);
-void connect_client(select_info_t *select_info,
-    struct sockaddr_in *server_socket);
+void connect_client(network_t *network);
 void get_client_command(core_t *core);
 bool str_isnum(char *str);
 char *int_to_str(int nbr);
@@ -68,6 +67,7 @@ void free_array2(char **array);
 char **my_str_to_word_array(char *str, char separator);
 int len_array(char **arr);
 enum Object string_to_object(char *str);
+void set_command(core_t *core, int fd, char *command);
 
 void authentification(core_t *core, char *command, int fd);
 int get_time_action(char *command);

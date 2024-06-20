@@ -10,9 +10,8 @@
 static void manage_select_notif(core_t *core, int retval)
 {
     if (retval > 0) {
+        connect_client(&core->network);
         get_client_command(core);
-        connect_client(&core->network.select_info,
-            &core->network.socket_config.server_socket);
     } else {
         check_win_game(core);
         check_player_command(core);

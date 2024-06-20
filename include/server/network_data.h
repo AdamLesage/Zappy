@@ -6,7 +6,7 @@
 */
 
 #ifndef NETWORK_DATA_H_
-#define NETWORK_DATA_H_
+    #define NETWORK_DATA_H_
 
     #include <sys/socket.h>
     #include <arpa/inet.h>
