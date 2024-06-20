@@ -50,6 +50,7 @@ typedef struct core_s {
     arguments_t arguments;
     map_t map;
     players_t players;
+    client_t *client;
 } core_t;
 
 typedef struct command_list_s {
@@ -150,5 +151,7 @@ void ebo(players_t *players, int egg_id);
 void edi(players_t *players, int egg_id);
 void seg(players_t *players, char *team_name);
 void smg(players_t *players, char *message);
+
+bool add_client(core_t *core, int fd);
 
 #endif /* !SERVER_H_ */

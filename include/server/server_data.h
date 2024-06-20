@@ -118,6 +118,12 @@ typedef struct arguments_s {
     int frequency;
 } arguments_t;
 
+typedef struct client_s {
+    int fd;
+    char *command;
+    struct client_s *next;
+} client_t;
+
 enum Object {
     Food = 0,
     Linemate = 1,
