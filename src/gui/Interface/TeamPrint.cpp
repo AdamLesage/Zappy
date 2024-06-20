@@ -32,24 +32,23 @@ void Zappy::TeamPrint::print_info(int i)
     close->displayButton(_window);
     for (size_t j = 0; j < _guiConnect->_players.size(); j++) {
         if (_guiConnect->_players[j]->getTeamName() == teamNames[i]) {
-            printf("teamName: %s\n", teamNames[i].c_str());
-            if (players[i] < _guiConnect->_players.size()) {
-                players[i]++;  
-                team_info.push_back(sf::Text("Player " + std::to_string(players[i]), font, 30));
-                team_info.push_back(sf::Text("Level: " + std::to_string(_guiConnect->_players[j]->getLevel()), font, 30));
-                team_info.push_back(sf::Text("X: " + std::to_string(_guiConnect->_players[j]->getPosition()[0]) + "Y: " + std::to_string(_guiConnect->_players[j]->getPosition()[1]), font, 30));
+            if (players[j] < _guiConnect->_players.size()) {
+                players[j]++;  
+                team_info[i].push_back(sf::Text("Player " + std::to_string(players[j]), font, 30));
+                team_info[i].push_back(sf::Text("Level: " + std::to_string(_guiConnect->_players[j]->getLevel()), font, 30));
+                team_info[i].push_back(sf::Text("X: " + std::to_string(_guiConnect->_players[j]->getPosition()[0]) + "Y: " + std::to_string(_guiConnect->_players[j]->getPosition()[1]), font, 30));
             }
         }
     }
-    for (size_t k = 0; k < team_info.size(); k++) {
+    for (size_t k = 0; k < team_info[i].size(); k++) {
         if (k < 18)
-            team_info[k].setPosition(310, 100 + k * 30);
+            team_info[i][k].setPosition(310, 100 + k * 30);
         else if (k < 36)
-            team_info[k].setPosition(510, 100 + (k - 18) * 30);
+            team_info[i][k].setPosition(510, 100 + (k - 18) * 30);
         else
-            team_info[k].setPosition(710, 100 + (k - 12) * 30);
-        team_info[k].setFillColor(sf::Color::Black);
-        _window->draw(team_info[k]);
+            team_info[i][k].setPosition(710, 100 + (k - 12) * 30);
+        team_info[i][k].setFillColor(sf::Color::Black);
+        _window->draw(team_info[i][k]);
     }
 }
 
@@ -60,6 +59,7 @@ void Zappy::TeamPrint::print_team()
         if (std::find(Texts_str.begin(), Texts_str.end(), teamNames[i]) == Texts_str.end()) {
             Texts_str.push_back(teamNames[i]);
             print_team_.push_back(false);
+            team_info.push_back(std::vector<sf::Text>());
             _buttons.push_back(std::make_shared<Button>(sf::Vector2f(200, 50), sf::Vector2f(10, 140 + i * 50), sf::Color::Green, 5, sf::Color::Black));
             _buttons[i]->setText(teamNames[i]);
             players.push_back(0);
@@ -70,8 +70,13 @@ void Zappy::TeamPrint::print_team()
 void Zappy::TeamPrint::display()
 {
     for (size_t i = 0; i < _buttons.size(); i++) {
-        if (_buttons[i]->checkClick(_window) == true)
+        if (_buttons[i]->checkClick(_window) == true) {
             print_team_[i] = true;
+            for (size_t j = 0; j < _buttons.size(); j++) {
+                if (j != i)
+                    print_team_[j] = false;
+            }
+        }
         _buttons[i]->displayButton(_window);
         if (print_team_[i] == true)
             print_info(i);

@@ -37,7 +37,8 @@ namespace Zappy {
             std::vector<std::string> Texts_str;
             std::vector<std::string> teamNames;
             sf::RectangleShape Rectangle;
-            std::vector<sf::Text> team_info;
+            std::vector<std::vector<sf::Text>> team_info;
+            std::vector<std::string> newteamNames;
             std::shared_ptr<Button> close;
             std::vector<int> players;
         private:
