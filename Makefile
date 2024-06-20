@@ -13,6 +13,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/init_server.c										\
 			src/server/lunch_server.c										\
 			src/server/check_food_players.c									\
+			src/server/check_win_game.c										\
 			src/server/dataManagment/arguments/get_arguments.c				\
 			src/server/dataManagment/arguments/get_port.c					\
 			src/server/dataManagment/arguments/get_width.c					\
@@ -155,6 +156,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/init_server.c										\
 			src/server/lunch_server.c										\
 			src/server/check_food_players.c									\
+			src/server/check_win_game.c										\
 			src/server/dataManagment/arguments/get_arguments.c				\
 			src/server/dataManagment/arguments/get_port.c					\
 			src/server/dataManagment/arguments/get_width.c					\
@@ -286,18 +288,19 @@ SRC_TEST_GUI =  src/gui/Interface/Interface.cpp								\
 				src/gui/DataManagement/server_info_management.cpp			\
 
 TEST 		=	tests/server/test_arguments.c					\
+				tests/server/test_command_look.c				\
 				tests/server/test_player_function.c				\
 				tests/server/test_init_map.c					\
 				tests/server/test_init_players.c				\
 				tests/server/test_find_tiles.c					\
 				tests/server/test_map_put.c						\
 				tests/server/test_map_remove.c					\
+				tests/server/test_check_win_game.c				\
 				tests/server/test_command_GUI.c					\
 				tests/server/test_command_move_player.c			\
 				tests/server/test_command_interact_player.c		\
 				tests/server/test_command_fork.c				\
 				tests/server/test_command_inventory.c			\
-				tests/server/test_command_look.c				\
 				tests/server/test_command_eject.c				\
 				tests/server/test_command_broadcast.c			\
 				tests/server/test_command_incantation.c			\
@@ -358,7 +361,7 @@ SFML		=	-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 all:    $(Name)
 
-$(Name): zappy_server zappy_ai
+$(Name): zappy_server
 
 zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS) -Iinclude/server -lm
