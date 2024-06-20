@@ -373,11 +373,16 @@ void Zappy::Interface::print_walk_animation(int i)
 
 void Zappy::Interface::print_players()
 {
+    //if (evolutions.size() > _gui_connect->_players.size()) {
+    //    while (evolutions.size() > _gui_connect->_players.size()) {
+    //        evolutions.pop_back();
+    //    }
+    //}
     for (int i = 0; i < _gui_connect->_players.size(); i++) {
         if (player_sprites.size() < _gui_connect->_players.size()) {
             player_sprites.push_back(sf::Sprite());
-            // evolutions.push_back(std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png"));
-            // evolutions.back()->setFrameInfo(82, 67, 16, 2);
+            evolutions.push_back(std::make_pair(0, std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png")));
+            evolutions.back().second->setFrameInfo(82, 67, 16, 2);
         }
         // if (_gui_connect->_players[i]->getLastPosition() != _gui_connect->_players[i]->getPosition()) {
         //     print_walk_animation(i);
@@ -392,10 +397,10 @@ void Zappy::Interface::print_players()
         print_player_team();
         _broadcast->check_player_broadcast(i);
         _broadcast->display();
-        // if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
-        //     evolutions[i]->setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 70, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 125);
-        //     window->draw(evolutions[i]->getSprite());
-        // }
+        if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
+            evolutions[i].second->setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 70, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 125);
+            window->draw(evolutions[i].second->getSprite());
+        }
     }
 }
 
@@ -659,15 +664,16 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     view.zoom(0.5);
     playBackgroundMusic("./asset/music/music.ogg");
     clock.restart();
-    int currentFrame {0};
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
         if (clock.getElapsedTime().asSeconds() > frameTime) {
             int i = 0;
-            for (auto &it : evolutions) {
-                if (_gui_connect->_players[i].get()->isPlayerIncanting() == true)
-                    it->updateFrame(currentFrame);
-                i++;
+            if (evolutions.size() > 0) {
+                for (auto &it : evolutions) {
+                    if (_gui_connect->_players[i].get()->isPlayerIncanting() == true)
+                        it.second->updateFrame(it.first);
+                    i++;
+                }
             }
             clock.restart();
         }
