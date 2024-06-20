@@ -49,7 +49,7 @@ class TestAgentAlgo(unittest.TestCase):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
         agentAlgo.alerts.alerts.append("food")
-        agentAlgo.updateClientStatus(10)
+        agentAlgo.updateClientStatus()
         self.assertEqual(agentAlgo.status, "Food")
 
     def test06_updateAgentInfo(self):
@@ -64,21 +64,21 @@ class TestAgentAlgo(unittest.TestCase):
     def test07_updateClientStatusNoAlert(self):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
-        agentAlgo.updateClientStatus(10)
+        agentAlgo.updateClientStatus()
         self.assertEqual(agentAlgo.status, "Food")
 
     def test08_updateClientStatusIncantation(self):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
         agentAlgo.alerts.alerts.append("incantation")
-        agentAlgo.updateClientStatus(10)
+        agentAlgo.updateClientStatus()
         self.assertEqual(agentAlgo.status, "Food")
 
     def test09_updateClientStatusContinue(self):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
         agentAlgo.alerts.alerts.append("Mining")
-        agentAlgo.updateClientStatus(10)
+        agentAlgo.updateClientStatus()
         self.assertEqual(agentAlgo.status, "Food")
     
     def test05_testUpdateInventory(self):
@@ -127,7 +127,7 @@ class TestAgentAlgo(unittest.TestCase):
         agentAlgo.alerts.alerts.append("food")
         agentAlgo.agentMentality = "Hungry"
         agentAlgo.agentInfo.inventory["food"] = 50
-        agentAlgo.updateClientStatus(10)
+        agentAlgo.updateClientStatus()
         self.assertEqual(agentAlgo.agentMentality, "Hungry")
 
     def test11_updateClientStatus(self):
@@ -136,7 +136,7 @@ class TestAgentAlgo(unittest.TestCase):
         agentAlgo.alerts.alerts.append("food")
         agentAlgo.agentMentality = "Hungry"
         agentAlgo.agentInfo.inventory["food"] = 0
-        agentAlgo.updateClientStatus(10)
+        agentAlgo.updateClientStatus()
         self.assertEqual(agentAlgo.agentMentality, "Hungry")
 
     def test12_playLevel1_invalid_level(self):

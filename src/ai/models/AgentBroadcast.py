@@ -45,23 +45,17 @@ class AgentBroadcast():
             agentInfo.movements.append("Forward\n")
         elif orientation == "2": # Broadcast position is on north-west of the player
             agentInfo.movements.append("Forward\n")
-        elif orientation == "3":
+        elif orientation == "3": # Broadcast position is on the west of the player
             agentInfo.movements.append("Left\n")
-            agentInfo.movements.append("Forward\n")
-        elif orientation == "4":
+        elif orientation == "4": # Broadcast position is on the south-west of the player
             agentInfo.movements.append("Left\n")
-            agentInfo.movements.append("Forward\n")
-        elif orientation == "5":
+        elif orientation == "5": # Broadcast position is on the south of the player
             agentInfo.movements.append("Left\n")
-            agentInfo.movements.append("Left\n")
-            agentInfo.movements.append("Forward\n")
-        elif orientation == "6":
+        elif orientation == "6": # Broadcast position is on the south-east of the player
             agentInfo.movements.append("Right\n")
-            agentInfo.movements.append("Forward\n")
-        elif orientation == "7":
+        elif orientation == "7": # Broadcast position is on the east of the player
             agentInfo.movements.append("Right\n")
-            agentInfo.movements.append("Forward\n")
-        elif orientation == "8":
+        elif orientation == "8": # Broadcast position is on the north-east of the player
             agentInfo.movements.append("Forward\n")
         # print(f"Moves after goToBroadcast: {agentInfo.movements} with orientation {orientation} and status {status}")
         return True
