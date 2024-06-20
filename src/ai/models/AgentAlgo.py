@@ -498,17 +498,6 @@ class AgentAlgo():
         if self.isPlayerConnected == True:
             return
         self.agentInfo.commandsToSend.append(f"Broadcast Anybody_on_the_map_?\n")
-        self.hasAskedPlayerConnected = True
-
-    def AnybodyHere(self) -> None:
-        """
-        Check if there are any other players on the map
-        """
-        if self.hasAskedPlayerConnected == True:
-            return
-        if self.isPlayerConnected == True:
-            return
-        self.agentInfo.commandsToSend.append(f"Broadcast Anybody_on_the_map_?\n")
         print(f"Broadcast Anybody_on_the_map_?")
         self.hasAskedPlayerConnected = True
 
