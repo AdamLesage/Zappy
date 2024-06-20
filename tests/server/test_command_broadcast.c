@@ -29,6 +29,9 @@ Test(command_Broadcast, Command_Broadcast_same_case, .init = redirect_all_stdout
     add_player(&core.map, &core.players, 2, "team1");
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1->pos_x = 5;
     info1->pos_y = 5;
     info2->pos_x = 5;
@@ -57,6 +60,9 @@ Test(command_Broadcast, Command_Broadcast_N, .init = redirect_all_stdout3)
     add_player(&core.map, &core.players, 2, "team1");
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1->pos_x = 5;
     info1->pos_y = 1;
     info2->pos_x = 5;
@@ -85,6 +91,9 @@ Test(command_Broadcast, Command_Broadcast_N_W, .init = redirect_all_stdout3)
     add_player(&core.map, &core.players, 2, "team1");
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1->pos_x = 1;
     info1->pos_y = 1;
     info2->pos_x = 5;
@@ -113,6 +122,9 @@ Test(command_Broadcast, Command_Broadcast_W, .init = redirect_all_stdout3)
     add_player(&core.map, &core.players, 2, "team1");
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1->pos_x = 1;
     info1->pos_y = 5;
     info2->pos_x = 5;
@@ -139,6 +151,9 @@ Test(command_Broadcast, Command_Broadcast_S_W, .init = redirect_all_stdout3)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->pos_x = 1;
@@ -167,6 +182,9 @@ Test(command_Broadcast, Command_Broadcast_S, .init = redirect_all_stdout3)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->pos_x = 5;
@@ -195,6 +213,9 @@ Test(command_Broadcast, Command_Broadcast_S_E, .init = redirect_all_stdout3)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->pos_x = 8;
@@ -223,6 +244,9 @@ Test(command_Broadcast, Command_Broadcast_E, .init = redirect_all_stdout3)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->pos_x = 8;
@@ -251,6 +275,9 @@ Test(command_Broadcast, Command_Broadcast_N_E, .init = redirect_all_stdout3)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
+    FD_SET(2, &core.select_info.write_fds);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->pos_x = 8;

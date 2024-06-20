@@ -13,7 +13,7 @@ void connect_client(select_info_t *select_info,
     unsigned int len = 0;
     int fd_new_client = 0;
 
-    if (FD_ISSET(select_info->fd_socket_control, &select_info->temp_fds)) {
+    if (FD_ISSET(select_info->fd_socket_control, &select_info->read_fds)) {
         len = sizeof(server_socket);
         fd_new_client = accept(select_info->fd_socket_control,
             (struct sockaddr *)&(*server_socket), &len);
