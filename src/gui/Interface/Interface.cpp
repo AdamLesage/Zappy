@@ -366,19 +366,16 @@ void Zappy::Interface::print_sound()
 void Zappy::Interface::set_map()
 {
     for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
-        std::vector<std::shared_ptr<Tile>> tmp;
         std::vector<sf::Sprite> tmp_sprite;
         std::vector<sf::Sprite> tmp_iso_sprite;
         std::vector<std::vector<sf::Sprite>> tmp_ressource_sprite;
         for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
-            tmp.push_back(std::make_shared<Tile>(sf::Vector2f(i, j), std::make_shared<Inventory>()));
             int random_index = rand() % 2;
             tmp_sprite.push_back(tile_sprite_[random_index]);
             tmp_iso_sprite.push_back(tile_iso_sprite[random_index]);
             tmp_sprite[j].setPosition(i + 100, j + 100);
             tmp_ressource_sprite.push_back(ressource_sprite_);
         }
-        _gui_connect->_tiles.push_back(tmp);
         map_sprites.push_back(tmp_sprite);
         map_iso_sprites.push_back(tmp_iso_sprite);
         ressource_sprite.push_back(tmp_ressource_sprite);
@@ -532,6 +529,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     this->_info.reset(new InfoDisplay(_gui_connect, window, ressource_sprite_));
     this->_broadcast.reset(new Broadcast(window, _gui_connect));
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
+    printf("start\n");
     window->setFramerateLimit(120);
     loading.setTexture(&loading_texture[0]);
     window->clear();
@@ -573,6 +571,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         }
         window->display();
     }
+    printf("end\n");
     set_map();
     view.zoom(0.5);
     playBackgroundMusic("./asset/music/music.ogg");
