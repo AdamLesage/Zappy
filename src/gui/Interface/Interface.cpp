@@ -70,6 +70,7 @@ Zappy::Interface::Interface()
         tile_iso_sprite[i].setScale(0.32, 0.32);
         tile_iso_sprite[i].setColor(sf::Color(255, 255, 255, 230));
     }
+    set_player_textures();
     font.loadFromFile("./asset/gui/Farmhouse.otf");
     if (font.loadFromFile("./asset/gui/Farmhouse.otf") == false)
         throw InterfaceError("Error: Farmhouse.otf not found", "Interface");
@@ -151,7 +152,16 @@ Zappy::Interface::Interface()
     ressource_sprite_[6].setScale(0.05, 0.05);
     if (egg_texture.loadFromFile("./asset/sprite/egg.png") == false)
         throw InterfaceError("Error: egg.png not found", "Interface");
-    for (int i = 0; i < 8; i++)
+    rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
+    rect.setFillColor(sf::Color(150, 150, 150, 150));
+    credit = std::make_shared<Credit>(window);
+    printf("Interface created\n");
+    printf("Interface created\n");
+}
+
+void Zappy::Interface::set_player_textures()
+{
+     for (int i = 0; i < 8; i++)
         player_textures.push_back(sf::Texture());
     if (player_textures[0].loadFromFile("./asset/sprite/rank/rank1.png") == false)
         throw InterfaceError("Error: rank1.png not found", "Interface");
@@ -225,6 +235,7 @@ Zappy::Interface::Interface()
     player_anim_rank2[3][1] = sf::IntRect(64, 39, 30, 24);
     player_anim_rank2[3][2] = sf::IntRect(0, 39, 32, 25);
     player_anim_rank2[3][3] = sf::IntRect(64, 39, 30, 24);
+
     player_orientation[0][0] = sf::IntRect(35, 2, 23, 27);
     player_orientation[0][1] = sf::IntRect(32, 103, 31, 24);
     player_orientation[0][2] = sf::IntRect(37, 65, 21, 28);
@@ -260,11 +271,6 @@ Zappy::Interface::Interface()
     for (int i = 0; i < 8; i++) {
         player_rank[i].setTextureRect(player_orientation[i][1]);
     }
-    rect = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
-    rect.setFillColor(sf::Color(150, 150, 150, 150));
-    credit = std::make_shared<Credit>(window);
-    printf("Interface created\n");
-    printf("Interface created\n");
 }
 
 void Zappy::Interface::set_scale_of_player(int i)
@@ -335,26 +341,53 @@ void Zappy::Interface::updatePlayersTravelled()
             _gui_connect->_players[i]->setTravelled(_gui_connect->_players[i]->getTravelled() + 1);
         }
     }
-     for (int i = 0; i < _gui_connect->_players.size(); i++) {
+    for (int i = 0; i < _gui_connect->_players.size(); i++) {
         std::array<int, 2> playerPosition = _gui_connect->_players[i]->getPosition();
         _gui_connect->_players[i]->setLastPosition(playerPosition[0], playerPosition[1]);
     }
 }
 
+void Zappy::Interface::print_walk_animation(int i)
+{
+    int orientation = _gui_connect->_players[i]->getOrientation();
+    int level = _gui_connect->_players[i]->getLevel();
+    int pos_en_plus = 0;
+
+    if (level == 1) {
+        for (int j = 0; j < 4; j++) {
+            std::cout << "orientation: " << orientation << "\n";
+            std::cout << "j: " << j << "\n";
+            player_sprites[i].setTextureRect(player_anim_rank1[orientation - 1][j]);
+            player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
+            window->draw(player_sprites[i]);
+        }
+    } else if (level == 2) {
+        for (int j = 0; j < 4; j++) {
+            std::cout << "est ce que ce passe par la ?" << std::endl;
+            player_sprites[i].setTextureRect(player_anim_rank2[orientation - 1][j]);
+            player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
+            window->draw(player_sprites[i]);
+        }
+    }
+} 
+
 void Zappy::Interface::print_players()
 {
-    updatePlayersTravelled();
     for (int i = 0; i < _gui_connect->_players.size(); i++) {
         if (player_sprites.size() < _gui_connect->_players.size()) {
             player_sprites.push_back(sf::Sprite());
             // evolutions.push_back(std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png"));
             // evolutions.back()->setFrameInfo(82, 67, 16, 2);
         }
+        // if (_gui_connect->_players[i]->getLastPosition() != _gui_connect->_players[i]->getPosition()) {
+        //     print_walk_animation(i);
+        // }
         player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel() - 1]);
         set_scale_of_player(i);
         player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
         player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation() + 1]);
         window->draw(player_sprites[i]);
+        updatePlayersTravelled();
         fill_color_team();
         print_player_team();
         _broadcast->check_player_broadcast(i);
@@ -674,10 +707,10 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->draw(tick_text);
         bars[0]->displayBar(window);
         bars[1]->displayBar(window);
-        this->_inventory->display();
         window->draw(sound);
         _info->display();
         print_sound();
+        this->_inventory->display();
         window->display();
     }
 }

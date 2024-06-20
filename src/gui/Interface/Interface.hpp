@@ -38,6 +38,7 @@ namespace Zappy {
             std::array<int, 2> get_mape_size() { return _mape_size; }
             void set_mape_size(std::array<int, 2> mape_size) { _mape_size = mape_size; }
             void set_map();
+            void set_player_textures();
             void check_event();
             void print_resssource();
             void print_eggs();
@@ -49,6 +50,7 @@ namespace Zappy {
             void set_scale_of_player(int i);
             void playBackgroundMusic(const std::string& filename);
             void updatePlayersTravelled();
+            void print_walk_animation(int i);
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
