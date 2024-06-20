@@ -20,7 +20,7 @@ void broadcast(core_t *core, int fd, char **command)
         if (tmp->fd != fd &&
             strcmp(tmp->player_info->team_name, "GRAPHIC") != 0) {
             add_to_send_buffer(&core->network, "message ", tmp->fd);
-            add_int_to_send_buffer(&core->network, 
+            add_int_to_send_buffer(&core->network,
                 get_player_k(tmp->player_info, info->pos_x,
                 info->pos_y, &core->arguments), tmp->fd);
             add_to_send_buffer(&core->network, ", ", tmp->fd);

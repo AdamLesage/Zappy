@@ -48,7 +48,7 @@ void eject_player(core_t *core, int fd, player_info_t *info)
             move_player2(&core->map, &core->players, tmp->fd,
                 info->orientation);
             add_to_send_buffer(&core->network, "eject: ", tmp->fd);
-            add_int_to_send_buffer(&core->network, 
+            add_int_to_send_buffer(&core->network,
                 get_player_k(tmp->player_info, info->pos_x,
                 info->pos_y, &core->arguments), tmp->fd);
             add_to_send_buffer(&core->network, "\n", tmp->fd);

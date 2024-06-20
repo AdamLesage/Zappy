@@ -15,6 +15,6 @@ void ffork(core_t *core, int fd, char **command)
         return;
     }
     put_eggs(&core->map, info->pos_x, info->pos_y, info->team_name);
-    send_response("ok\n", fd);
+    add_to_send_buffer(&core->network, "ok\n", fd);
     enw(&core->players, info->id, core->map.eggs);
 }
