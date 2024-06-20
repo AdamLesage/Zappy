@@ -16,7 +16,7 @@ static void disconnect_client(int readbite, int fd_client, core_t *core)
     } else
         perror("read");
     close(fd_client);
-    FD_CLR(fd_client, &core->select_info.rfds);
+    FD_CLR(fd_client, &core->network.select_info.rfds);
     pdi(&core->players, info->id);
     delete_player(&core->map, &core->players, fd_client);
     enw(&core->players, -1, core->map.eggs);
@@ -88,7 +88,7 @@ static char *get_command(core_t *core, int fd_client)
 
     do {
         set_get_command_select_info(&read_select, &tv, fd_client);
-        select(core->select_info.max_fd + 1,
+        select(core->network.select_info.max_fd + 1,
             &read_select, NULL, NULL, &tv);
         readbite = 0;
         if (FD_ISSET(fd_client, &read_select))
@@ -155,9 +155,9 @@ void get_client_command(core_t *core)
 {
     char *command = NULL;
 
-    for (int i = 0; i <= core->select_info.max_fd; i++) {
-        if (FD_ISSET(i, &core->select_info.read_fds) &&
-            core->select_info.fd_socket_control != i) {
+    for (int i = 0; i <= core->network.select_info.max_fd; i++) {
+        if (FD_ISSET(i, &core->network.select_info.read_fds) &&
+            core->network.select_info.fd_socket_control != i) {
             command = get_command(core, i);
             check_command(core, i, command);
         }

@@ -67,6 +67,6 @@ void close_server(core_t *core)
     free_map(core->map.tiles_list);
     free_eggs(core->map.eggs);
     free_array(core->arguments.name_teams);
-    close(core->select_info.fd_socket_control);
+    close(core->network.select_info.fd_socket_control);
     exit(0);
 }

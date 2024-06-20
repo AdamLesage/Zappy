@@ -19,7 +19,8 @@ static bool delete_client_of_network2(network_t *network, int fd)
 {
     client_list_t *deleted_client = NULL;
 
-    for (client_list_t *tmp = network->client_list; tmp->next != NULL; tmp = tmp->next) {
+    for (client_list_t *tmp = network->client_list;
+        tmp->next != NULL; tmp = tmp->next) {
         if (tmp->fd == fd) {
             deleted_client = tmp;
             tmp->next = tmp->next->next;
