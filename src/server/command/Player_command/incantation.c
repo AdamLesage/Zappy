@@ -8,12 +8,12 @@
 #include "server.h"
 
 static int *get_incantation_players_ids(player_info_t *player_info,
-    players_t *players, int nb_player)
+    core_t *core, int nb_player)
 {
     int *ids = malloc(sizeof(int) * (nb_player + 1));
     int index = 0;
 
-    for (players_list_t *tmp = players->players_list;
+    for (players_list_t *tmp = core->players.players_list;
         tmp != NULL; tmp = tmp->next) {
         if (tmp->player_info->level == player_info->level &&
             tmp->player_info->is_on_incantation == false &&
@@ -23,14 +23,15 @@ static int *get_incantation_players_ids(player_info_t *player_info,
             index++;
             ids[index] = -1;
             tmp->player_info->is_on_incantation = true;
-            send_response("Elevation underway\n", tmp->fd);
+            add_to_send_buffer(&core->network, "Elevation underway\n",
+                tmp->fd);          
         }
     }
     return ids;
 }
 
 static incantation_info_t *init_incantation_info(player_info_t *player_info,
-    players_t *players)
+    core_t *core)
 {
     incantation_info_t *info = malloc(sizeof(incantation_info_t));
 
@@ -38,10 +39,10 @@ static incantation_info_t *init_incantation_info(player_info_t *player_info,
     info->pos_y = player_info->pos_y;
     info->incantation_level = player_info->level;
     info->incantation_timer = 300;
-    info->nb_players = nb_player_at_level(players->players_list,
+    info->nb_players = nb_player_at_level(core->players.players_list,
         info->incantation_level,
         info->pos_x, info->pos_y);
-    info->ids = get_incantation_players_ids(player_info, players,
+    info->ids = get_incantation_players_ids(player_info, core,
         info->nb_players);
     return info;
 }
@@ -57,12 +58,12 @@ void start_incantation(core_t *core, int fd)
         player_info->level)) {
         new_incantation = malloc(sizeof(incantation_list_t));
         new_incantation->incantation_info =
-            init_incantation_info(player_info, &core->players);
+            init_incantation_info(player_info, core);
         new_incantation->next = core->players.incantation_list;
         core->players.incantation_list = new_incantation;
         pic(&core->players, new_incantation->incantation_info);
     } else {
-        send_response("ko\n", fd);
+        add_to_send_buffer(&core->network, "ko\n", fd);
     }
 }
 
@@ -123,7 +124,9 @@ static void incantation_end_success(tile_info_t *tile_info,
         info = find_player_by_id(&core->players, incantation_info->ids[i]);
         if (info != NULL) {
             info->level++;
-            dprintf(info->fd, "Current level: %d\n", info->level);
+            add_to_send_buffer(&core->network, "Current level: ", info->fd);
+            add_int_to_send_buffer(&core->network, info->level, info->fd);
+            add_to_send_buffer(&core->network, "\n", info->fd);
         }
         plv_event(&core->players, info);
         pie(&core->players, tile_info->pos_x, tile_info->pos_y, true);
@@ -138,7 +141,7 @@ static void incantation_end_failure(incantation_info_t *incantation_info,
     for (int i = 0; incantation_info->ids[i] != -1; i++) {
         info = find_player_by_id(&core->players, incantation_info->ids[i]);
         if (info != NULL)
-            send_response("ko\n", info->fd);
+            add_to_send_buffer(&core->network, "ko\n", info->fd);
     }
     pie(&core->players, incantation_info->pos_x, incantation_info->pos_y,
         false);
