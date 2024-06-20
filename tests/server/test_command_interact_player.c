@@ -20,6 +20,8 @@ Test (command_interact_player, command_take_success, .init = cr_redirect_stdout)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
     info = find_player(&core.players, 1);
     tile_info = find_tile(&core.map, 5, 5);
     tile_info->nb_deraumere = 1;
@@ -87,6 +89,8 @@ Test (command_interact_player, command_take_unknow_object, .init = cr_redirect_s
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
     info = find_player(&core.players, 1);
     tile_info = find_tile(&core.map, 5, 5);
     info->action_queue[0] = strdup("Take test");
@@ -117,6 +121,8 @@ Test (command_interact_player, command_set_success, .init = cr_redirect_stdout)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
     info = find_player(&core.players, 1);
     tile_info = find_tile(&core.map, 5, 5);
     tile_info->nb_deraumere = 1;
@@ -190,6 +196,8 @@ Test (command_interact_player, command_set_unknow_object, .init = cr_redirect_st
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
+    FD_ZERO(&core.select_info.write_fds);
+    FD_SET(1, &core.select_info.write_fds);
     info = find_player(&core.players, 1);
     tile_info = find_tile(&core.map, 5, 5);
     info->action_queue[0] = strdup("Set test");
