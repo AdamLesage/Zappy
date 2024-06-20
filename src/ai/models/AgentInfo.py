@@ -33,6 +33,29 @@ class AgentInfo():
         """Return True if there is no more life units"""
         return (self.lifeUnits <= 0)
 
+    def updateInventory(self, inv: str) -> None:
+        """
+        Update the inventory of the agent
+        """
+        # return if there is not digit in the inv string
+        if any(char.isdigit() for char in inv) == False:
+            return
+        # if inv contains "player" return
+        if "player" in inv or "message" in inv: # If the inventory contains "player" or "message"
+            return
+        try:
+            inv = inv.replace("[ ", "").replace(" ]", "").replace("[", "").replace("]", "").replace(", ", ",")
+            splitedInf = inv.split(',')
+
+            for item in splitedInf:
+                item = item.split(' ')
+                if self.inventory[item[0]] == int(item[1]):
+                    continue
+                self.addInventory(item[0], item[1])
+            self.setTimeUnits(self.getInventory("food") * 126)
+        except Exception as e:
+            print(f"Error from updateInventory: {e}")
+
     # Getters
     def getTimeUnits(self) -> int:
         """Returns the number of time units"""
