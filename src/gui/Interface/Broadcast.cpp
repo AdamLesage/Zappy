@@ -22,6 +22,8 @@ Zappy::Broadcast::Broadcast(std::shared_ptr<sf::RenderWindow> window, std::share
     _broadcasts_sprites.push_back(sf::Sprite());
     _broadcasts_messages.push_back(sf::Sprite());
     _broadcasts_sprites[0].setTexture(_broadcasts_textures[0]);
+    _broadcasts_sprites[0].setScale(0.35, 0.1);
+    _broadcasts_sprites[0].setTexture(_broadcasts_textures[0]);
     _broadcasts_messages[0].setTexture(_broadcasts_textures[1]);
 }
 
@@ -31,7 +33,7 @@ Zappy::Broadcast::~Broadcast()
 
 void Zappy::Broadcast::display()
 {
-    if (_clock.getElapsedTime().asSeconds() < 5) {
+    if (_clock.getElapsedTime().asSeconds() < 3) {
         _window->draw(_broadcasts_sprites[_broadcasts_sprites.size() - 1]);
         _window->draw(_broadcasts_text[_broadcasts_text.size() - 1]);
     }

@@ -43,4 +43,11 @@ void Zappy::MSZ::applyChanges(std::vector<std::string> parsedData,
         throw Zappy::CommandError("Invalid number of arguments for SGT command", "MSZ");
     size_map[0] = std::stoi(parsedData[1]);
     size_map[1] = std::stoi(parsedData[2]);
+    for (int i = 0; i < size_map[0]; i++) {
+        std::vector<std::shared_ptr<Tile>> tmp;
+        for (int j = 0; j < size_map[1]; j++) {
+            tmp.push_back(std::make_shared<Tile>(sf::Vector2f(i, j), std::make_shared<Inventory>()));
+        }
+        tiles.push_back(tmp);
+    }
 }
