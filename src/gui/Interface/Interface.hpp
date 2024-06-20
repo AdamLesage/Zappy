@@ -100,7 +100,11 @@ namespace Zappy {
             sf::Vector2i lastMousePos;
             bool isPanning;
             sf::RectangleShape rect;
+            sf::RectangleShape rect2;
             bool isOverTile;
+            bool isOverTile2;
+            bool TileClicked;
+            bool TileClicked2;
             sf::Music backgroundMusic;
             std::shared_ptr<InventoryDisplay> _inventory;
             sf::Texture interface_texture;
