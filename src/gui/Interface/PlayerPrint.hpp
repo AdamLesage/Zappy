@@ -5,6 +5,7 @@
 ** PlayerPrint
 */
 #include "Broadcast.hpp"
+#include "../Entity/Evolution.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -22,7 +23,9 @@ namespace Zappy
     class PlayerPrint
     {
     public:
-        PlayerPrint(std::shared_ptr<GuiConnect> guiConnect, std::shared_ptr<sf::RenderWindow> window, sf::Font font, int teamnbr, std::shared_ptr<Broadcast> broadcast);
+        PlayerPrint(std::shared_ptr<GuiConnect> guiConnect, std::shared_ptr<sf::RenderWindow> window,
+        sf::Font font, int teamnbr, std::shared_ptr<Broadcast> broadcast,
+        std::vector<std::pair<int, std::shared_ptr<Evolution>>> );
         ~PlayerPrint();
         void display();
         void print_player_team();
@@ -92,6 +95,7 @@ namespace Zappy
         size_t _teamnbr;
         std::vector<sf::Color> color_list_team;
         std::shared_ptr<Broadcast> _broadcast;
+        std::vector<std::pair<int, std::shared_ptr<Evolution>>> _evolutions;
 
     private:
     };

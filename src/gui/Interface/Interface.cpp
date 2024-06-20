@@ -158,69 +158,9 @@ Zappy::Interface::Interface()
     printf("Interface created\n");
 }
 
-void Zappy::Interface::print_walk_animation(int i)
-{
-    int orientation = _gui_connect->_players[i]->getOrientation();
-    int level = _gui_connect->_players[i]->getLevel();
-    int pos_en_plus = 0;
-
-    if (level == 1) {
-        for (int j = 0; j < 4; j++) {
-            std::cout << "orientation: " << orientation << "\n";
-            std::cout << "j: " << j << "\n";
-            _playerPrint->getPlayerSprites()[i].setTextureRect(_playerPrint->getPlayerAnimRank1()[orientation - 1][j]);
-            _playerPrint->getPlayerSprites()[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
-            window->draw(_playerPrint->getPlayerSprites()[i]);
-        }
-    } else if (level == 2) {
-        for (int j = 0; j < 4; j++) {
-            std::cout << "est ce que ce passe par la ?" << std::endl;
-            _playerPrint->getPlayerSprites()[i].setTextureRect(_playerPrint->getPlayerAnimRank2()[orientation - 1][j]);
-            _playerPrint->getPlayerSprites()[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
-            window->draw(_playerPrint->getPlayerSprites()[i]);
-        }
-            player_sprites[i].setTextureRect(player_anim_rank2[orientation - 1][j]);
-            player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
-            window->draw(player_sprites[i]);
-        }
-    }
-} 
-
-void Zappy::Interface::print_players()
-{
-    //if (evolutions.size() > _gui_connect->_players.size()) {
-    //    while (evolutions.size() > _gui_connect->_players.size()) {
-    //        evolutions.pop_back();
-    //    }
-    //}
-    for (int i = 0; i < _gui_connect->_players.size(); i++) {
-        if (player_sprites.size() < _gui_connect->_players.size()) {
-            player_sprites.push_back(sf::Sprite());
-            evolutions.push_back(std::make_pair(0, std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png")));
-            evolutions.back().second->setFrameInfo(82, 67, 16, 2);
-        }
-        // if (_gui_connect->_players[i]->getLastPosition() != _gui_connect->_players[i]->getPosition()) {
-        //     print_walk_animation(i);
-        // }
-        player_sprites[i].setTexture(player_textures[_gui_connect->_players[i]->getLevel() - 1]);
-        set_scale_of_player(i);
-        player_sprites[i].setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 100, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 150);
-        player_sprites[i].setTextureRect(player_orientation[_gui_connect->_players[i]->getLevel() - 1][_gui_connect->_players[i]->getOrientation() - 1]);
-        window->draw(player_sprites[i]);
-        updatePlayersTravelled();
-        fill_color_team();
-        print_player_team();
-        _broadcast->check_player_broadcast(i);
-        _broadcast->display(i);
-        if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
-            evolutions[i].second->setPosition(_gui_connect->_players[i]->getPosition()[0] * 102.4 + 70, _gui_connect->_players[i]->getPosition()[1] * 102.4 + 125);
-            window->draw(evolutions[i].second->getSprite());
-        }
-    }
-}
-
 void Zappy::Interface::print_evolution(int current_player)
 {
+    std::cout << "evolution" << std::endl;
     std::pair<int, int> plPos {_gui_connect->_players[current_player].get()->getPosition()[0],
         _gui_connect->_players[current_player].get()->getPosition()[1]};
     Evolution plEvol(plPos, std::make_pair(1, 1), sf::Clock(),
@@ -427,7 +367,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         this->_info.reset(new InfoDisplay(_gui_connect, window, ressource_sprite_));
         this->_broadcast.reset(new Broadcast(window, _gui_connect));
         this->_teamPrint.reset(new TeamPrint(_gui_connect, window));
-        this->_playerPrint.reset(new PlayerPrint(_gui_connect, window,font,_teamnbr,_broadcast));
+        this->_playerPrint.reset(new PlayerPrint(_gui_connect, window,font,_teamnbr,_broadcast,evolutions));
     } catch (Zappy::InterfaceError &e) {
         throw Zappy::InterfaceError(e.what(), "Interface");
         return;

@@ -8,13 +8,15 @@
 #include "PlayerPrint.hpp"
 
 
-Zappy::PlayerPrint::PlayerPrint(std::shared_ptr<GuiConnect> guiConnect, std::shared_ptr<sf::RenderWindow> window,sf::Font font, int teamnbr, std::shared_ptr<Broadcast> brodcasr)
+Zappy::PlayerPrint::PlayerPrint(std::shared_ptr<GuiConnect> guiConnect, std::shared_ptr<sf::RenderWindow> window,sf::Font font,
+int teamnbr, std::shared_ptr<Broadcast> brodcasr, std::vector<std::pair<int, std::shared_ptr<Evolution>>> evolu)
 {
     this->_window = window;
     this->_guiConnect = guiConnect;
     this->font = font;
     this->_teamnbr = teamnbr;
     this->_broadcast = brodcasr;
+    this->_evolutions = evolu;
     for (int i = 0; i < 8; i++)
         player_textures.push_back(sf::Texture());
     if (player_textures[0].loadFromFile("./asset/sprite/rank/rank1.png") == false)
@@ -214,8 +216,8 @@ void Zappy::PlayerPrint::display()
     for (int i = 0; i < this->_guiConnect->_players.size(); i++) {
         if (player_sprites.size() < this->_guiConnect->_players.size()) {
             player_sprites.push_back(sf::Sprite());
-            // evolutions.push_back(std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png"));
-            // evolutions.back()->setFrameInfo(82, 67, 16, 2);
+            _evolutions.push_back(std::make_pair(0, std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png")));
+            _evolutions.back().second->setFrameInfo(82, 67, 16, 2);
         }
         // if (this->_guiConnect->_players[i]->getLastPosition() != this->_guiConnect->_players[i]->getPosition()) {
         //     print_walk_animation(i);
@@ -229,10 +231,10 @@ void Zappy::PlayerPrint::display()
         fill_color_team();
         print_player_team();
         _broadcast->check_player_broadcast(i);
-        _broadcast->display();
-        // if (this->_guiConnect->_players[i].get()->isPlayerIncanting() == true) {
-        //     evolutions[i]->setPosition(this->_guiConnect->_players[i]->getPosition()[0] * 102.4 + 70, this->_guiConnect->_players[i]->getPosition()[1] * 102.4 + 125);
-        //     window->draw(evolutions[i]->getSprite());
-        // }
+        _broadcast->display(i);
+        if (this->_guiConnect->_players[i].get()->isPlayerIncanting() == true) {
+            _evolutions[i].second->setPosition(this->_guiConnect->_players[i]->getPosition()[0] * 102.4 + 70, this->_guiConnect->_players[i]->getPosition()[1] * 102.4 + 125);
+            this->_window->draw(_evolutions[i].second->getSprite());
+        }
     }
 }
