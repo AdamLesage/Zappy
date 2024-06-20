@@ -197,6 +197,7 @@ class AgentAlgo():
             self.status = "Mining"
             return
         buf = self.getReturnCommand()[1]
+        self.agentInfo.checkPlayerLevelFromLook(buf)
         if self.agentMoves.checkItem(self.getReturnCommand()[1], "food"):
             self.agentInfo.movements = self.agentMoves.reachItemList("food", buf)
             return
@@ -213,6 +214,7 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.append("Look\n")
         actions = ["Forward\n", "Right\n", "Left\n"] # More chance to go forward (x2)
         buf = self.getReturnCommand()[1]
+        self.agentInfo.checkPlayerLevelFromLook(buf)
         if buf != None and self.agentMoves.checkItems(buf, ["linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"]) != []: # If there are resources to take
             availables_resources = self.agentMoves.checkItems(buf, ["linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame"])
             item = self.agentMoves.findBestItemToTake(self.agentInfo, self.agentInfo.getLevel(), availables_resources)
@@ -246,6 +248,7 @@ class AgentAlgo():
         Set the items to take for the incantation
         """
         # TODO: look before setting everything to avoid to take the same item twice
+        print(f"Set items for incantation | level {self.agentInfo.getLevel()}")
         self.agentInfo.commandsToSend.clear()
         if self.agentInfo.getLevel() == 1:
             self.agentInfo.commandsToSend.append("Set linemate\n")
@@ -325,7 +328,7 @@ class AgentAlgo():
         """
         Manage the incantation of the agent
         """
-        if self.status != "Incantation":
+        if self.status != "Incantation" and self.status != "Ask incantation" and self.status != "Going to incantation" and self.status != "Waiting player to start incantation" and self.status != "Incantation in progress":
             # Status is not incantation
             return
 
@@ -334,7 +337,7 @@ class AgentAlgo():
             self.status = "Food"
             # level_to_set = int(self.getReturnCommand()[1].split(" ")[-1])
             # print(f"Current level [{self.getReturnCommand()[1]}] | level to set {level_to_set}")
-            self.agentInfo.setLevel(self.agentInfo.getLevel() + 1)
+            # self.agentInfo.setLevel(self.agentInfo.getLevel() + 1) # TODO: does not work
             if self.agentInfo.commandsToSend.count("Look\n") < 2:
                 self.agentInfo.commandsToSend.append("Look\n")
             self.agentInfo.incantationResponses = 1
