@@ -22,7 +22,6 @@ Zappy::Interface::Interface()
     window = std::make_shared<sf::RenderWindow>();
     window->create(sf::VideoMode(1920, 1080), "Zappy");
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 125), sf::Color(150, 150, 150), 5, sf::Color::Black));
-    bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 325), sf::Color(150, 150, 150), 5, sf::Color::Black));
     if (texture.loadFromFile("./asset/sprite/tiles/tile1.png") == false)
         throw InterfaceError("Error: tile1.png not found", "Interface");
     sprite.setTexture(texture);
@@ -619,6 +618,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     window->draw(loading);
     window->display();
     clock.restart();
+    bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 325), sf::Color(150, 150, 150), 5, sf::Color::Black, _gui_connect->_timeUnit));
     while (clock.getElapsedTime().asSeconds() < 5) {
         float progress = clock.getElapsedTime().asSeconds() / 5;
         loadingBar.setSize(sf::Vector2f(1600 * progress, 60));
