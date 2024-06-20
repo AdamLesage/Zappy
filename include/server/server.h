@@ -154,5 +154,6 @@ void smg(players_t *players, char *message);
 
 bool add_client(core_t *core, int fd);
 client_t *find_client(client_t *client, int fd);
+bool delete_client(core_t *core, int fd);
 
 #endif /* !SERVER_H_ */
