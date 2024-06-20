@@ -51,5 +51,6 @@ bool delete_client_of_network(network_t *network, int fd);
 client_info_t *find_client(network_t *network, int fd);
 void send_command_responce(network_t *network);
 void add_to_send_buffer(network_t *network, char *responce, int fd);
+void add_int_to_send_buffer(network_t *network, int number, int fd);
 
 #endif /* !NETWORK_DATA_H_ */
