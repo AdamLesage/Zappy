@@ -64,59 +64,48 @@ void GuiConnect::setTimeUnit(std::string args)
     _commandFactory->askCommand("sst", {"SST", args});
 }
 
-void GuiConnect::readServer(std::string &buffer2, char *buffer)
+void GuiConnect::readServer(std::string &buffer)
 {
+    char buf[1];
     std::vector<std::string> pString;
 
-    for (int j = 0; j <= client_management.max_fd; j++) {
-        if (FD_ISSET(j, &client_management.temp_fds)) {
-            for (int c = 0; c != 100000; c++)
-                buffer[c] = '\0';
-            if (read(_socket, buffer, 100000) == -1) {
-                throw Zappy::ConnectError("Failed to receive message", "GuiConnect");
+    if (FD_ISSET(_socket, &client_management.read_fd)) {
+        if (read(_socket, buf, 1) == -1) {
+            throw Zappy::ConnectError("Failed to receive message", "GuiConnect");
+        }
+        buffer += buf;
+        if (buf[0] == '\n') {
+            std::vector<std::string> args = split(buffer, " ");
+            if (args.size() > 0) {
+                executeCommandChanges(args[0], buffer);
             }
-            if (buffer2.empty()) {
-                buffer2 = buffer;
-            } else {
-                buffer2 += buffer;
-            }
-            if (buffer2.find('\n') == buffer2.npos) {
-                break;
-            }
-            pString = split(buffer2, "\n");
-            for (size_t i = 0; i < pString.size(); i++) {
-                std::vector<std::string> args = my_str_to_word_array(pString[i].c_str());
-                if (args.size() > 0) {
-                    executeCommandChanges(args[0], pString[i]);
-                    buffer2 = "";
-                }
-            }
-            pString.clear();
+            buffer.clear();
+            return;
         }
     }
 }
 
 void GuiConnect::receive()
 {
-    char buffer[100000] = {0};
-    std::string buffer2;
+    char buf[2] = {0};
+    std::string buffer;
     FD_ZERO(&(client_management.rfds));
     FD_SET(_socket, &client_management.rfds);
     int retval = 0;
 
     client_management.max_fd = _socket;
-    if (read(_socket, buffer, 100000) == -1) {
+    if (read(_socket, buf, 1) == -1) {
         throw Zappy::ConnectError("Failed to receive message", "GuiConnect");
     }
     send("GRAPHIC\n");
     while (Running) {
-        client_management.temp_fds = client_management.rfds;
-        retval = select(client_management.max_fd + 1, &client_management.temp_fds, NULL, NULL, NULL);
+        client_management.read_fd = client_management.rfds;
+        retval = select(client_management.max_fd + 1, &client_management.read_fd, NULL, NULL, NULL);
         if (retval == -1) {
             throw Zappy::ConnectError("Select error", "GuiConnect");
         }
         if (retval >= 0) {
-            readServer(buffer2, buffer);
+            readServer(buffer);
         }
     }
 }

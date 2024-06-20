@@ -19,7 +19,7 @@
 
 typedef struct client_managment_s {
     fd_set rfds;
-    fd_set temp_fds;
+    fd_set read_fd;
     int max_fd;
     struct timeval tv;
 } client_management_t;
@@ -85,7 +85,7 @@ class GuiConnect {
         std::vector<std::string> _teams;
         client_management_t client_management;
     private:
-        void readServer(std::string &buffer2, char *buffer);
+        void readServer(std::string &buffer);
 };
 
 #endif /* !GUI_CONNECT_HPP_ */
