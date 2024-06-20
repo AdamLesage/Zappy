@@ -43,13 +43,13 @@ class AgentAlgo():
         self.agentMoves = Moves()
         self.agentBroadcast = AgentBroadcast()
         self.client = client
-        self.round = 0
         self.ip = ip
         self.port = port
         self.teamName = teamName
         self.agentMentality = "None" #Hungry, Incantation, Mining, None
         self.status = "Mining"
         self.hasAskedIncantation = False
+        self.hasAcceptedIncantation = False
         self.availableCommands = {"connect_nbr\n": ConnectCommand(), "forward\n": ForwardCommand(),
                                 "right\n": RightCommand(), "left\n": LeftCommand(),
                                 "look\n": LookCommand(), "inventory\n": InventoryCommand(),
@@ -71,7 +71,7 @@ class AgentAlgo():
     def updateAgentInfo(self, info: AgentInfo):
         self.agentInfo = info
 
-    def updateClientStatus(self, round: int) -> None:
+    def updateClientStatus(self) -> None:
         """
         Update the client status.
         State could be: Continue, End, Dead, Incantation, Food
@@ -225,24 +225,6 @@ class AgentAlgo():
             self.agentInfo.addCommandsToSend(finalAction)
             return
 
-    def checkInventory(self) -> bool:
-        """
-        Check the inventory of the agent every 10 rounds
-        Return True if the inventory has been checked
-        """
-        try:
-            if self.status == "Incantation":
-                self.round = 0
-                return False
-            if self.round == 10 and not f"Inventory\n" in self.agentInfo.commandsToSend: # Frequency of inventory check, avoid to check inventory if incantation is in progress
-                self.agentInfo.commandsToSend.append("Inventory\n")
-                self.round = 0
-                return True
-            return False
-        except Exception as e:
-            print(f"Error from checkInventory: {e}")
-            return False
-
     def setItemsForIncantation(self) -> None:
         """
         Set the items to take for the incantation
@@ -316,8 +298,10 @@ class AgentAlgo():
             self.canStartCounting = True
             self.agentInfo.commandsToSend.append(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}\n")
             print(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()} | client num {self.agentInfo.client_num}")
+
         if self.playerOnSameTileForIncantation >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
-            print(f"Enough players to evolve to level {self.agentInfo.getLevel() + 1}")
+            if self.agentInfo.getLevel() != 1:
+                print(f"Enough players to evolve to level {self.agentInfo.getLevel() + 1}")
             self.setItemsForIncantation()
             self.status = "Incantation"
             self.agentInfo.commandsToSend.append("Incantation\n")
@@ -341,17 +325,15 @@ class AgentAlgo():
             if self.agentInfo.commandsToSend.count("Look\n") < 2:
                 self.agentInfo.commandsToSend.append("Look\n")
             self.agentInfo.incantationResponses = 1
-            self.round = 0
             self.agentInfo.commandsToSend.append("Connect_nbr\n")
+            self.hasAcceptedIncantation = False
 
         elif self.getReturnCommand()[1] != None and self.getReturnCommand()[1].startswith("ko"): # If the incantation is a failure
             self.hasAskedIncantation = False
+            self.hasAcceptedIncantation = False
             self.agentInfo.incantationResponses = 1
             self.status = "Food"
             # print(f"Player level {self.agentInfo.getLevel()} has failed incantation with status {self.status}")
-            if not f"Inventory\n" in self.agentInfo.commandsToSend:
-                self.agentInfo.commandsToSend.append("Inventory\n")
-            self.round = 0
 
 
     def inventoryManagement(self) -> bool:
@@ -360,7 +342,6 @@ class AgentAlgo():
         - Send the command "Inventory" to the server.
         - Update the inventory of the agent.
         """
-        
         try:
             command_output = self.getReturnCommand()
             
@@ -368,10 +349,9 @@ class AgentAlgo():
                 if command_output[1] == None or command_output[1].startswith("[") == False:
                     return False
                 self.agentInfo.updateInventory(command_output[1])
-                self.round = 0
                 return False
 
-            if self.round >= 10 and self.status != "Incantation" and not f"Inventory\n" in self.agentInfo.commandsToSend: # Frequency of inventory check, avoid to check inventory if incantation is in progress
+            if self.countPassedCommands % 10 == 0 and self.status != "Incantation" and not f"Inventory\n" in self.agentInfo.commandsToSend: # Frequency of inventory check, avoid to check inventory if incantation is in progress
                 self.agentInfo.commandsToSend.append("Inventory\n")
                 return True
 
@@ -401,22 +381,18 @@ class AgentAlgo():
         Play the game, search for resources, level up, incantation, etc
         """
         # print(f"Status: {self.status}, level {self.agentInfo.getLevel()}")
-        if self.status == "Waiting player to start incantation":
-            return
+        # if self.status == "Waiting player to start incantation":
+        #     return
         try:
-            # if self.agentInfo.getLevel() == 2:
-                # print(f"COmmands to send: {self.agentInfo.commandsToSend} | movements: {self.agentInfo.movements} | playernum {self.agentInfo.client_num}")
+            # print(f"Status: {self.status} | Level: {self.agentInfo.getLevel()}")
             self.checkPlayerIncantationWaiting()
             if self.agentBroadcast.goToBroadcast(self.agentInfo.broadcast_orientation, self.agentInfo, self.status) == True:
                 return
             else:
                 self.agentInfo.broadcast_orientation = None # Reset the broadcast orientation
-            self.updateClientStatus(self.round)
-            self.round += 1
-            # print(f"Round: {self.round}")
+            self.updateClientStatus()
             # self.borntick += 1
-            # if self.round == 5 and "incantation" not in self.status:
-            #     self.agentInfo.commandsToSend.append("Connect_nbr\n")
+            self.askIncantation()
             if self.inventoryManagement():
                 return
             # print("Inventory management done")
@@ -428,11 +404,9 @@ class AgentAlgo():
                 self.agentInfo.addCommandsToSend(self.agentInfo.movements.pop(0))
                 return
             # print("Movements done")
-            self.checkInventory()
             # print("Check inventory done")
             if self.waitingIncantationResponses() == True:
                 return
-            self.askIncantation()
             self.incantationManagement()
             if self.status == "Food":
                 if self.agentInfo.commandsToSend.count("Look\n") < 2:
@@ -570,6 +544,7 @@ class AgentAlgo():
             if self.agentInfo.broadcast_received != None and self.agentInfo.broadcast_received.startswith(f"waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}"):
                 # Only retrieve orientation if the broadcast is waiting for incantation
                 self.agentInfo.broadcast_orientation = data.split(' ')[1]
+                print(f"Broadcast received: {self.agentInfo.broadcast_received} with orientation {self.agentInfo.broadcast_orientation}")
 
             self.acceptOrRefuseIncantation()
             self.playerOnSameTile()
@@ -587,14 +562,18 @@ class AgentAlgo():
         """
         if self.agentInfo.getLevel() == 1: # Player level 1 do not need to wait for responses
             return
+        # if self.hasAcceptedIncantation == True: # If the agent has already accepted the incantation
+        #     return
         try:
             if self.agentInfo.broadcast_received.startswith(f"need_incantation_level_{self.agentInfo.getLevel()}"): # If the agent receives a broadcast from another player asking for incantation
                 if self.agentInfo.inventory["food"] >= 10:
-                    print(f"Accept incantation level {self.agentInfo.getLevel()} | current status: {self.status}")
                     self.agentInfo.movements.clear()
+                    self.agentInfo.commandsToSend.clear()
                     self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{self.agentInfo.getLevel()}\n")
+                    self.hasAcceptedIncantation = True
                     self.status = "Going to incantation"
                     self.hasAskedIncantation = False
+                    print(f"Accept incantation level {self.agentInfo.getLevel()} | current level: {self.agentInfo.level} | {self.agentInfo.inventory['food']=} | {self.hasAskedIncantation=} | {self.agentInfo.client_num=}")
                 else:
                     print(f"Refuse incantation level {self.agentInfo.getLevel()} | current level: {self.agentInfo.level} | {self.agentInfo.inventory['food']=} | {self.hasAskedIncantation=} | {self.agentInfo.client_num=}")
         except Exception as e:
@@ -616,11 +595,12 @@ class AgentAlgo():
     def waitingIncantationResponses(self) -> bool:
         if self.agentInfo.getLevel() == 1: # Player level 1 do not need to wait for responses
             return False
+        if self.playerOnSameTileForIncantation >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
+            return False
         if self.agentInfo.incantationResponses >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
             # wait until every players are ready and send incantation position with broadcast
             if f"Broadcast waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}" not in self.agentInfo.commandsToSend: # check if boradcast waiting is not already sent in commandsToSend
                 self.agentInfo.commandsToSend.append(f"Broadcast waiting_for_incantation_level_{self.agentInfo.getLevel() + 1}\n")
-                print(f"WAITING FOR INCANTATION LEVEL {self.agentInfo.getLevel() + 1} from client {self.agentInfo.client_num}")
             return True
         return False
 
