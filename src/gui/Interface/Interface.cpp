@@ -156,8 +156,6 @@ Zappy::Interface::Interface()
     rect.setFillColor(sf::Color(150, 150, 150, 150));
     rect2.setFillColor(sf::Color(255, 165, 0, 150));
     credit = std::make_shared<Credit>(window);
-    printf("Interface created\n");
-    printf("Interface created\n");
 }
 
 void Zappy::Interface::print_evolution(int current_player)
@@ -426,8 +424,13 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->draw(loading);
         window->draw(loadingBar);
         for (int i = 0; i < 8; i++) {
+            pplayer_rank_text.push_back(sf::Text("Level " + std::to_string(i), font, 40));
+            pplayer_rank_text[i].setFillColor(sf::Color::White);
+            pplayer_rank_text[i].setPosition(100, 100 + i * 100);
+        }
+        for (int i = 0; i < 8; i++) {
             window->draw(_playerPrint->getPlayerRank()[i]);
-            window->draw(_playerPrint->getPlayerRankText()[i]);
+            window->draw(pplayer_rank_text[i]);
             if (i < 4)
                 buttons[i]->displayButton(window);
         }
