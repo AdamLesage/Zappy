@@ -345,18 +345,18 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         print_eggs();
         _playerPrint->display();
         evolutions = _playerPrint->getEvolutions();
-        if (clock.getElapsedTime().asSeconds() > frameTime) {
-            int i = 0;
-            if (evolutions.size() > 0) {
-                for (auto &it : evolutions) {
-                    if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
-                        it.second->updateFrame(it.first);
-                    }
-                    i++;
-                }
-            }
-            clock.restart();
-        }
+        // if (clock.getElapsedTime().asSeconds() > frameTime) {
+        //     int i = 0;
+        //     if (evolutions.size() > 0) {
+        //         for (auto &it : evolutions) {
+        //             if (_gui_connect->_players[i].get()->isPlayerIncanting() == true) {
+        //                 it.second->updateFrame(it.first);
+        //             }
+        //             i++;
+        //         }
+        //     }
+        //     clock.restart();
+        // }
         _playerPrint->setEvolutions(evolutions);
         window->setView(window->getDefaultView());
         for (size_t i = 0; i < _rect.size(); i++)
