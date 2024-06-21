@@ -11,18 +11,6 @@ from models.AgentInfo import AgentInfo
 from models.AgentMoves import Moves
 
 class AgentBroadcast():
-    """
-    This class is used to manage the broadcast of the agent.
-    Each agent can send and receive broadcast messages.
-
-    List of broadcast messages (demands):
-    - "Incantation level : n"
-    - "Count mates"
-    
-    List of broadcast messages (answers):
-    - "I am coming"
-    - "Present"
-    """
     def __init__(self) -> None:
         pass
 
