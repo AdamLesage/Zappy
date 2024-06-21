@@ -378,7 +378,7 @@ SFML		=	-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 all:    $(Name)
 
-$(Name): zappy_server
+$(Name): zappy_server zappy_gui zappy_ai
 
 zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS) -Iinclude/server -lm
@@ -398,6 +398,8 @@ fclean: clean
 	rm -f $(NAME_BINARY_SERVER)
 	rm -f $(Name)
 	rm -f $(NAMETEST)
+	rm -f $(NAME_BINARY_GUI)
+	rm -f $(NAME_BINARY_AI)
 	rm -f unit*
 	rm -f plugins/*.so
 
