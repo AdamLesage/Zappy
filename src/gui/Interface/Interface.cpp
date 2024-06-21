@@ -70,7 +70,6 @@ Zappy::Interface::Interface()
         tile_iso_sprite[i].setScale(0.32, 0.32);
         tile_iso_sprite[i].setColor(sf::Color(255, 255, 255, 230));
     }
-    // set_player_textures();
     font.loadFromFile("./asset/gui/Farmhouse.otf");
     if (font.loadFromFile("./asset/gui/Farmhouse.otf") == false)
         throw InterfaceError("Error: Farmhouse.otf not found", "Interface");
