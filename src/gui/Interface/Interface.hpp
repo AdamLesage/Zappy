@@ -45,7 +45,6 @@ namespace Zappy {
             void print_evolution(int playerIndex);
             void print_map_iso();
             void playBackgroundMusic(const std::string& filename);
-            void print_walk_animation(int i);
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;

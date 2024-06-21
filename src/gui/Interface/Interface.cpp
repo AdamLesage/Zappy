@@ -158,27 +158,6 @@ Zappy::Interface::Interface()
     credit = std::make_shared<Credit>(window);
 }
 
-void Zappy::Interface::print_evolution(int current_player)
-{
-    std::cout << "evolution" << std::endl;
-    std::pair<int, int> plPos {_gui_connect->_players[current_player].get()->getPosition()[0],
-        _gui_connect->_players[current_player].get()->getPosition()[1]};
-    Evolution plEvol(plPos, std::make_pair(1, 1), sf::Clock(),
-        "asset/sprite/animation/evolution1.png");
-    int currentFrame {0};
-    int countFrame {0};
-
-    plEvol.setFrameInfo(82, 67, 16, 2);
-    while (countFrame < 16) {
-        plEvol.updateClock(currentFrame, 0.1);
-        window->clear();
-        plEvol.draw(window.get());
-        window->display();
-        countFrame++;
-    }
-    return;
-}
-
 Zappy::Interface::~Interface()
 {
     window->close();
