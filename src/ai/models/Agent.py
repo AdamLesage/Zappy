@@ -92,6 +92,10 @@ class Agent():
                             continue
                         if self.receive_from_server == "Elevation underway\n":
                             continue
+                        if self.receive_from_server != None:
+                            if "Current level" in self.receive_from_server:
+                                self.agentAlgo.setStatus("Mining")
+                                self.receive_from_server = None
                         self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
                         self.agentAlgo.countPassedCommands += 1
                         self.agentAlgo.ConnectNbrManagement()
