@@ -41,8 +41,6 @@ namespace Zappy {
             void check_event();
             void print_resssource();
             void print_eggs();
-            void print_evolution(int playerIndex);
-            void print_map_iso();
             void playBackgroundMusic(const std::string& filename);
         protected:
             std::shared_ptr<sf::RenderWindow> window;
@@ -57,15 +55,12 @@ namespace Zappy {
             std::vector<sf::RectangleShape> _rect;
             std::array<int, 2> _mape_size;
             std::vector<std::vector<sf::Sprite>> map_sprites;
-            std::vector<std::vector<sf::Sprite>> map_iso_sprites;
             std::vector<sf::Texture> map_textures;
             std::vector<std::vector<std::vector<sf::Sprite>>> ressource_sprite;
             std::vector<sf::Sprite> ressource_sprite_;
             std::vector<sf::Texture> ressource_texture;
             std::vector<sf::Texture> tile_texture_;
             std::vector<sf::Sprite> tile_sprite_;
-            std::vector<sf::Texture> tile_iso_texture;
-            std::vector<sf::Sprite> tile_iso_sprite;
             sf::Sprite sprite;
             sf::Texture texture;
             std::vector<sf::Texture> textures;

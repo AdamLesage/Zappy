@@ -30,26 +30,6 @@ Zappy::Interface::Interface()
         tile_sprite_[i].setTexture(tile_texture_[i]);
         tile_sprite_[i].setScale(0.32, 0.32);
     }
-    for (int i = 0; i < 6; i++)
-        tile_iso_texture.push_back(sf::Texture());
-    if (tile_iso_texture[0].loadFromFile("./asset/sprite/tiles/tile1w.png") == false)
-        throw InterfaceError("Error: tile1w.png not found", "Interface");
-    if (tile_iso_texture[1].loadFromFile("./asset/sprite/tiles/tile2w.png") == false)
-        throw InterfaceError("Error: tile2w.png not found", "Interface");
-    if (tile_iso_texture[2].loadFromFile("./asset/sprite/tiles/tile3w.png") == false)
-        throw InterfaceError("Error: tile3w.png not found", "Interface");
-    if (tile_iso_texture[3].loadFromFile("./asset/sprite/tiles/tile4w.png") == false)
-        throw InterfaceError("Error: tile4w.png not found", "Interface");
-    if (tile_iso_texture[4].loadFromFile("./asset/sprite/tiles/tile5w.png") == false)
-        throw InterfaceError("Error: tile5w.png not found", "Interface");
-    if (tile_iso_texture[5].loadFromFile("./asset/sprite/tiles/tile6w.png") == false)
-        throw InterfaceError("Error: tile6w.png not found", "Interface");
-    for (int i = 0; i < 6; i++) {
-        tile_iso_sprite.push_back(sf::Sprite());
-        tile_iso_sprite[i].setTexture(tile_iso_texture[i]);
-        tile_iso_sprite[i].setScale(0.32, 0.32);
-        tile_iso_sprite[i].setColor(sf::Color(255, 255, 255, 230));
-    }
     font.loadFromFile("./asset/gui/Farmhouse.otf");
     if (font.loadFromFile("./asset/gui/Farmhouse.otf") == false)
         throw InterfaceError("Error: Farmhouse.otf not found", "Interface");
@@ -162,17 +142,14 @@ void Zappy::Interface::set_map()
 {
     for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
         std::vector<sf::Sprite> tmp_sprite;
-        std::vector<sf::Sprite> tmp_iso_sprite;
         std::vector<std::vector<sf::Sprite>> tmp_ressource_sprite;
         for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
             int random_index = rand() % 2;
             tmp_sprite.push_back(tile_sprite_[random_index]);
-            tmp_iso_sprite.push_back(tile_iso_sprite[random_index]);
             tmp_sprite[j].setPosition(i + 100, j + 100);
             tmp_ressource_sprite.push_back(ressource_sprite_);
         }
         map_sprites.push_back(tmp_sprite);
-        map_iso_sprites.push_back(tmp_iso_sprite);
         ressource_sprite.push_back(tmp_ressource_sprite);
     }
 }
@@ -316,16 +293,6 @@ void Zappy::Interface::check_event()
                 view.move(delta);
                 lastMousePos = currentMousePos;
             }
-        }
-    }
-}
-
-void Zappy::Interface::print_map_iso()
-{
-    for (double i = 0; i < _gui_connect->get_size_map()[0]; i++) {
-        for (double j = 0; j < _gui_connect->get_size_map()[1]; j++) {
-            map_iso_sprites[i][j].setPosition(100 + (i * 102.4), 150 + (j * 102.4));
-            window->draw(map_iso_sprites[i][j]);
         }
     }
 }
