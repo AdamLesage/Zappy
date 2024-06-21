@@ -7,6 +7,18 @@
 
 #include "../../include/server/server.h"
 
+static void init_select_info(network_t *network, float delay)
+{
+    network->select_info.max_fd = network->socket_config.sockfd;
+    network->select_info.tv.tv_sec = delay;
+    network->select_info.tv.tv_usec = 0;
+    FD_ZERO(&network->select_info.rfds);
+    FD_SET(network->socket_config.sockfd, &network->select_info.rfds);
+    FD_ZERO(&network->select_info.write_fds);
+    FD_ZERO(&network->select_info.except_fds);
+    network->select_info.fd_socket_control = network->socket_config.sockfd;
+}
+
 static struct sockaddr_in init_socket(int port)
 {
     struct sockaddr_in server_socket;
@@ -39,7 +51,10 @@ static int bind_socket(struct sockaddr_in *server_socket)
 
 void init_server(core_t *core)
 {
-    core->socket_config.server_socket = init_socket(core->arguments.port);
-    core->socket_config.sockfd =
-        bind_socket(&core->socket_config.server_socket);
+    core->network.socket_config.server_socket =
+        init_socket(core->arguments.port);
+    core->network.socket_config.sockfd =
+        bind_socket(&core->network.socket_config.server_socket);
+    core->network.client_list = NULL;
+    init_select_info(&core->network, 1);
 }

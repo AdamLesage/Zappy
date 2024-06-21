@@ -7,19 +7,19 @@
 
 #include "server.h"
 
-static void send_pfk_info(int id, int fd)
+static void send_pfk_info(network_t *network, int id, int fd)
 {
-    send_response("pfk ", fd);
-    send_response_int(id, fd);
-    send_response("\n", fd);
+    add_to_send_buffer(network, "pfk ", fd);
+    add_int_to_send_buffer(network, id, fd);
+    add_to_send_buffer(network, "\n", fd);
 }
 
-void pfk(players_t *players, int id)
+void pfk(core_t *core, int id)
 {
-    for (players_list_t *tmp = players->players_list;
+    for (players_list_t *tmp = core->players.players_list;
         tmp != NULL; tmp = tmp->next) {
         if (strcmp(tmp->player_info->team_name, "GRAPHIC") == 0) {
-            send_pfk_info(id, tmp->fd);
+            send_pfk_info(&core->network, id, tmp->fd);
         }
     }
 }

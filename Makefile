@@ -14,6 +14,8 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/lunch_server.c										\
 			src/server/check_food_players.c									\
 			src/server/check_win_game.c										\
+			src/server/set_command.c										\
+			src/server/send_command_responce.c								\
 			src/server/dataManagment/arguments/get_arguments.c				\
 			src/server/dataManagment/arguments/get_port.c					\
 			src/server/dataManagment/arguments/get_width.c					\
@@ -46,6 +48,10 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/dataManagment/players/put_on_inventory.c				\
 			src/server/dataManagment/players/remove_from_inventory.c		\
 			src/server/dataManagment/players/get_player_k.c					\
+			src/server/dataManagment/network/add_client_on_network.c		\
+			src/server/dataManagment/network/find_client_on_network.c		\
+			src/server/dataManagment/network/delete_client_of_network.c		\
+			src/server/dataManagment/network/add_to_send_buffer.c			\
 			src/server/command/GUI_command/execute_gui_command.c			\
 			src/server/command/GUI_command/gui_command.c					\
 			src/server/command/GUI_command/bct.c							\
@@ -97,6 +103,7 @@ SRC_SEVER	=	src/server/main.c											\
 			src/server/utils/my_str_to_word_array.c							\
 			src/server/utils/len_array.c									\
 			src/server/utils/string_to_object.c								\
+			src/server/utils/alloc_buffer.c									\
 
 SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/Interface/Interface.cpp									\
@@ -194,6 +201,10 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/dataManagment/players/put_on_inventory.c				\
 			src/server/dataManagment/players/remove_from_inventory.c		\
 			src/server/dataManagment/players/get_player_k.c					\
+			src/server/dataManagment/network/add_client_on_network.c		\
+			src/server/dataManagment/network/find_client_on_network.c		\
+			src/server/dataManagment/network/delete_client_of_network.c		\
+			src/server/dataManagment/network/add_to_send_buffer.c			\
 			src/server/command/GUI_command/execute_gui_command.c			\
 			src/server/command/GUI_command/gui_command.c					\
 			src/server/command/GUI_command/bct.c							\
@@ -245,6 +256,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/utils/my_str_to_word_array.c							\
 			src/server/utils/len_array.c									\
 			src/server/utils/string_to_object.c								\
+			src/server/utils/alloc_buffer.c									\
 
 SRC_TEST_GUI =  src/gui/Interface/Interface.cpp								\
 				src/gui/Interface/bar.cpp									\
@@ -366,7 +378,7 @@ SFML		=	-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 all:    $(Name)
 
-$(Name): zappy_server zappy_gui zappy_ai
+$(Name): zappy_server
 
 zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS) -Iinclude/server -lm

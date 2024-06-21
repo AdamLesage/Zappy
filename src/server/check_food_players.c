@@ -12,15 +12,15 @@ static void eat_food(player_info_t *info, core_t *core)
     if (info->last_feed == 0) {
         info->last_feed = 126;
         if (remove_from_inventory_2(info, Food) == false) {
-            send_response("dead\n", info->fd);
+            add_to_send_buffer(&core->network, "dead\n", info->fd);
             close(info->fd);
-            FD_CLR(info->fd, &core->select_info.rfds);
-            pdi(&core->players, info->id);
+            FD_CLR(info->fd, &core->network.select_info.rfds);
+            pdi(core, info->id);
             delete_player(&core->map, &core->players, info->fd);
-            enw(&core->players, -1, core->map.eggs);
+            enw(core, -1, core->map.eggs);
             return;
         }
-        pin_event(&core->players, info);
+        pin_event(&core->network, &core->players, info);
     } else {
         info->last_feed--;
     }

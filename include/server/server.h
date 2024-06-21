@@ -21,21 +21,7 @@
     #include <math.h>
     #include <signal.h>
     #include "server_data.h"
-
-typedef struct select_info_s {
-    fd_set rfds;
-    fd_set read_fds;
-    fd_set write_fds;
-    fd_set except_fds;
-    int max_fd;
-    struct timeval tv;
-    int fd_socket_control;
-} select_info_t;
-
-typedef struct socket_config_s {
-    struct sockaddr_in server_socket;
-    int sockfd;
-} socket_config_t;
+    #include "network_data.h"
 
 typedef struct look_info_s {
     char *str;
@@ -45,11 +31,10 @@ typedef struct look_info_s {
 } look_info_t;
 
 typedef struct core_s {
-    socket_config_t socket_config;
-    select_info_t select_info;
     arguments_t arguments;
     map_t map;
     players_t players;
+    network_t network;
 } core_t;
 
 typedef struct command_list_s {
@@ -71,8 +56,7 @@ int get_frequency(const char **argv, int *index);
 void init_server(core_t *core);
 void close_server(core_t *core);
 void lunch_server(core_t *core);
-void connect_client(select_info_t *select_info,
-    struct sockaddr_in *server_socket);
+void connect_client(network_t *network);
 void get_client_command(core_t *core);
 bool str_isnum(char *str);
 char *int_to_str(int nbr);
@@ -83,6 +67,8 @@ void free_array2(char **array);
 char **my_str_to_word_array(char *str, char separator);
 int len_array(char **arr);
 enum Object string_to_object(char *str);
+char *alloc_buffer(char *buffer, int size_to_add);
+void set_command(core_t *core, int fd, char *command);
 
 void authentification(core_t *core, char *command, int fd);
 int get_time_action(char *command);
@@ -112,20 +98,22 @@ void take(core_t *core, int fd, char **command);
 
 void bct(core_t *core, int fd, char **command);
 void bct_event(core_t *core, int x, int y);
-void bct_two(int fd, tiles_list_t *current_tile);
-void bct_three(int fd, tiles_list_t *current_tile);
+void bct_two(core_t *core, int fd, tiles_list_t *current_tile);
+void bct_three(core_t *core, int fd, tiles_list_t *current_tile);
 void mct(core_t *core, int fd, char **command);
 void mct_start(core_t *core, int fd);
 void mct_event(core_t *core);
 void msz(core_t *core, int fd, char **command);
 void msz_start(core_t *core, int fd);
 void pin(core_t *core, int fd, char **command);
-void pin_event(players_t *players, player_info_t *player_info);
-void pin_two(int fd, player_info_t *player_info);
-void pin_three(int fd, inventory_t *inventory);
+void pin_two(network_t *network, int fd, player_info_t *player_info);
+void pin_three(network_t *network, int fd, inventory_t *inventory);
+void pin_event(network_t *network, players_t *players,
+    player_info_t *player_info);
 void plv(core_t *core, int fd, char **command);
-void plv_start(int fd, player_info_t *player_info);
-void plv_event(players_t *player, player_info_t *player_info);
+void plv_start(network_t *network, int fd, player_info_t *player_info);
+void plv_event(network_t *network, players_t *players,
+    player_info_t *player_info);
 void ppo(core_t *core, int fd, char **command);
 void send_ppo(core_t *core, player_info_t *player_info);
 void sgt(core_t *core, int fd, char **command);
@@ -134,21 +122,21 @@ void sst(core_t *core, int fd, char **command);
 void tna(core_t *core, int fd, char **command);
 void tna_start(core_t *core, int fd);
 
-void pnw(players_t *players, player_info_t *player_info);
-void send_pnw_info(player_info_t *player_info, int fd);
-void pex(players_t *players, player_info_t *player_info);
-void pbc(players_t *players, int id, char *message);
-void pic(players_t *players, incantation_info_t *info);
-void pie(players_t *players, int x, int y, bool state);
-void pfk(players_t *players, int id);
-void pdr(players_t *players, int id, enum Object object);
-void pgt(players_t *players, int id, enum Object object);
-void pdi(players_t *players, int id);
-void enw(players_t *players, int player_id, eggs_t *eggs);
-void send_enw_info(int player_id, eggs_t *eggs, int fd);
-void ebo(players_t *players, int egg_id);
-void edi(players_t *players, int egg_id);
-void seg(players_t *players, char *team_name);
-void smg(players_t *players, char *message);
+void pnw(core_t *core, player_info_t *player_info);
+void send_pnw_info(network_t *network, player_info_t *player_info, int fd);
+void pex(core_t *core, player_info_t *player_info);
+void pbc(core_t *core, int id, char *message);
+void pic(core_t *core, incantation_info_t *info);
+void pie(core_t *core, int x, int y, bool state);
+void pfk(core_t *core, int id);
+void pdr(core_t *core, int id, enum Object object);
+void pgt(core_t *core, int id, enum Object object);
+void pdi(core_t *core, int id);
+void enw(core_t *core, int player_id, eggs_t *eggs);
+void send_enw_info(network_t *network, int player_id, eggs_t *eggs, int fd);
+void ebo(core_t *core, int egg_id);
+void edi(core_t *core, int egg_id);
+void seg(core_t *core, char *team_name);
+void smg(core_t *core, char *message);
 
 #endif /* !SERVER_H_ */
