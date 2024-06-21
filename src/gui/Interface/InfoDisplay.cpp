@@ -162,7 +162,7 @@ int Zappy::InfoDisplay::get_Thystame()
 int Zappy::InfoDisplay::get_player(int x, int y)
 {
     int players = 0;
-    for (int i = 0; i < _guiConnect->_players.size(); i++) {
+    for (int i = 0; (std::size_t)i < _guiConnect->_players.size(); i++) {
         if (_guiConnect->_players[i]->getPosition()[0] == x && _guiConnect->_players[i]->getPosition()[1] == y)
             players++;
     }
@@ -172,7 +172,7 @@ int Zappy::InfoDisplay::get_player(int x, int y)
 int Zappy::InfoDisplay::get_eggs(int x, int y)
 {
     int eggs = 0;
-    for (int i = 0; i < _guiConnect->_eggs.size(); i++) {
+    for (int i = 0; (std::size_t)i < _guiConnect->_eggs.size(); i++) {
         if (_guiConnect->_eggs[i]->getPosition()[0] == x && _guiConnect->_eggs[i]->getPosition()[1] == y)
             eggs++;
     }
@@ -187,7 +187,7 @@ void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
             if (tileBounds.contains(mousePos)) {
                 info[0].setString("Tile: x " + std::to_string(i + 1) + " y " + std::to_string(j + 1));
                 info[1].setString("Player: " + std::to_string(get_player(i, j)));
-                info[2].setString("Total resources: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Food") + _guiConnect->_tiles[i][j]->_inventory->get("Linemate") + _guiConnect->_tiles[i][j]->_inventory->get("Deraumere") + _guiConnect->_tiles[i][j]->_inventory->get("Sibur") + _guiConnect->_tiles[i][j]->_inventory->get("Mendiane") + _guiConnect->_tiles[i][j]->_inventory->get("Phiras") + _guiConnect->_tiles[i][j]->_inventory->get("Thystame") + get_eggs(i, j)));
+                info[2].setString("Total resources: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Food") + _guiConnect->_tiles[i][j]->_inventory->get("Linemate") + _guiConnect->_tiles[i][j]->_inventory->get("Deraumere") + _guiConnect->_tiles[i][j]->_inventory->get("Sibur") + _guiConnect->_tiles[i][j]->_inventory->get("Mendiane") + _guiConnect->_tiles[i][j]->_inventory->get("Phiras") + _guiConnect->_tiles[i][j]->_inventory->get("Thystame") ));
                 info[3].setString("Food: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Food")));
                 info[4].setString("Linemate: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Linemate")));
                 info[5].setString("Deraumere: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Deraumere")));
@@ -203,7 +203,7 @@ void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
     if (info_ == false) {
         info[0].setString("Map Size: x " + std::to_string(_guiConnect->get_size_map()[0]) + " y " + std::to_string(_guiConnect->get_size_map()[1]));
         info[1].setString("Player: " + std::to_string(_guiConnect->_players.size()));
-        info[2].setString("Total resources: " + std::to_string(get_food() + get_Linemate() + get_Deraumere() + get_Sibur() + get_Mendiane() + get_Phiras() + get_Thystame() + _guiConnect->_eggs.size()));
+        info[2].setString("Total resources: " + std::to_string(get_food() + get_Linemate() + get_Deraumere() + get_Sibur() + get_Mendiane() + get_Phiras() + get_Thystame()));
         info[3].setString("Food: " + std::to_string(get_food()));
         info[4].setString("Linemate: " + std::to_string(get_Linemate()));
         info[5].setString("Deraumere: " + std::to_string(get_Deraumere()));

@@ -58,11 +58,11 @@ void Zappy::TeamPrint::print_info(int i)
     }
     for (size_t k = 0; k < team_info[i].size(); k++) {
         if (k < 18)
-            team_info[i][k].setPosition(310, 100 + k * 32);
+            team_info[i][k].setPosition(230, 160 + k * 32);
         else if (k < 36)
-            team_info[i][k].setPosition(510, 100 + (k - 18) * 32);
+            team_info[i][k].setPosition(430, 160 + (k - 18) * 32);
         else
-            team_info[i][k].setPosition(710, 100 + (k - 12) * 32);
+            team_info[i][k].setPosition(630, 160 + (k - 12) * 32);
         team_info[i][k].setFillColor(sf::Color::Black);
         _window->draw(team_info[i][k]);
     }
