@@ -29,6 +29,15 @@ class Agent():
         self.ip = ip
         self.firstConnexion = True
 
+    def isDataReceivedABroadcast(self, data: str) -> bool:
+        """Check if the data received is a broadcast"""
+        listBroadcasts = ["need_incantation_level_", "accept_incantation_level_", "waiting_for_incantation_level_", "on_same_tile", "yes_we_are_on_the_map", "Anybody_on_the_map_?", "message "]
+        if data == None:
+            return False
+        if any(broadcast in data for broadcast in listBroadcasts):
+            return True
+        return False
+
     def retrieveWorldDimensions(self, data: str) -> None:
         """Retrieve the world dimensions"""
         if data == None:
@@ -100,7 +109,11 @@ class Agent():
 
                         if self.bufferManagement(data_received) == False:
                             continue
-                        if self.agentAlgo.broadcastManagement(self.receive_from_server.replace("\n", "")) == True:
+                        if self.agentAlgo.broadcastManagement(self.receive_from_server) == True:
+                            self.receive_from_server = None
+                            continue
+                        if self.isDataReceivedABroadcast(self.receive_from_server) == True:
+                            self.receive_from_server = None
                             continue
                         # print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
                         tmp += 1
@@ -121,9 +134,9 @@ class Agent():
                             if "Current level" in self.receive_from_server:
                                 self.agentAlgo.setStatus("Mining")
                                 self.receive_from_server = None
-                        # if self.agentInfo.getCommandsReturned()[0] != None:
-                        #     print(f"Get return {self.agentInfo.getCommandsReturned()} | receive from server {self.receive_from_server}")
+                        print(f"Receive from server end: {self.receive_from_server}")
                         self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
+                        # print(f"Commands returned: {self.agentInfo.getCommandsReturned()}")
                         self.agentAlgo.countPassedCommands += 1
                         self.agentAlgo.ConnectNbrManagement()
                         self.agentAlgo.forkManagement()

@@ -122,8 +122,9 @@ class AgentAlgo():
             self.hasAskedIncantation = True
             self.agentInfo.commandsToSend.clear()
             self.status = "Waiting player to start incantation"
-            self.agentInfo.commandsToSend.append(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}\n")
-            print(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()} | client num {self.agentInfo.client_num}")
+            if f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}\n" not in self.agentInfo.commandsToSend:
+                self.agentInfo.commandsToSend.append(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}\n")
+                print(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()} | client num {self.agentInfo.client_num}")
         else:
             self.miningMode()
 
@@ -393,13 +394,13 @@ class AgentAlgo():
         """
         Play the game, search for resources, level up, incantation, etc
         """
-        print(f"Status: {self.status}, level {self.agentInfo.getLevel()}")
+        # print(f"Status: {self.status}, level {self.agentInfo.getLevel()}")
         # if self.status == "Waiting player to start incantation":
         #     return
         try:
             if self.status == "Incantation":
                 return
-            if self.inventoryManagement():
+            if self.inventoryManagement() == True:
                 return
             # print(f"Status: {self.status} | Level: {self.agentInfo.getLevel()}")
             #self.checkPlayerIncantationWaiting()
@@ -460,7 +461,7 @@ class AgentAlgo():
         if self.agentInfo.commandsToSend == deque([]) or self.client == None: # If there are no commands to send, get out of the function
             return
         command_to_send = self.agentInfo.commandsToSend.popleft()
-        print(f"Command to send: {command_to_send}")
+        # print(f"Command to send: {command_to_send}")
         self.client.send(command_to_send.encode())
         self.agentInfo.commandsReturned = [command_to_send, None]
 
@@ -563,7 +564,8 @@ class AgentAlgo():
         Split data with ' ' ---> ["message", "K,", "text"]
         Agent can accept the incantation but need to broadcast answer
         """
-        if data == None or data.startswith("message") == False:
+        # If any string in listBroadcasts is in data then return True
+        if data == None or "message " not in data:
             return False
         self.broadcastReceived = data
         data = data.replace(",", "") # remove comma after K
@@ -591,6 +593,8 @@ class AgentAlgo():
         """
         if self.agentInfo.getLevel() == 1: # Player level 1 do not need to wait for responses
             return
+        if self.status == "Going to incantation":
+            return
         # if self.hasAcceptedIncantation == True: # If the agent has already accepted the incantation
         #     return
         try:
@@ -598,7 +602,8 @@ class AgentAlgo():
                 if self.agentInfo.inventory["food"] >= 10:
                     self.agentInfo.movements.clear()
                     self.agentInfo.commandsToSend.clear()
-                    self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{self.agentInfo.getLevel()}\n")
+                    if f"Broadcast accept_incantation_level_{self.agentInfo.getLevel()}\n" not in self.agentInfo.commandsToSend:
+                        self.agentInfo.commandsToSend.append(f"Broadcast accept_incantation_level_{self.agentInfo.getLevel()}\n")
                     self.hasAcceptedIncantation = True
                     self.status = "Going to incantation"
                     self.hasAskedIncantation = False
