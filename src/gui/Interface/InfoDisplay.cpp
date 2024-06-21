@@ -187,7 +187,7 @@ void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
             if (tileBounds.contains(mousePos)) {
                 info[0].setString("Tile: x " + std::to_string(i + 1) + " y " + std::to_string(j + 1));
                 info[1].setString("Player: " + std::to_string(get_player(i, j)));
-                info[2].setString("Total resources: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Food") + _guiConnect->_tiles[i][j]->_inventory->get("Linemate") + _guiConnect->_tiles[i][j]->_inventory->get("Deraumere") + _guiConnect->_tiles[i][j]->_inventory->get("Sibur") + _guiConnect->_tiles[i][j]->_inventory->get("Mendiane") + _guiConnect->_tiles[i][j]->_inventory->get("Phiras") + _guiConnect->_tiles[i][j]->_inventory->get("Thystame") + get_eggs(i, j)));
+                info[2].setString("Total resources: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Food") + _guiConnect->_tiles[i][j]->_inventory->get("Linemate") + _guiConnect->_tiles[i][j]->_inventory->get("Deraumere") + _guiConnect->_tiles[i][j]->_inventory->get("Sibur") + _guiConnect->_tiles[i][j]->_inventory->get("Mendiane") + _guiConnect->_tiles[i][j]->_inventory->get("Phiras") + _guiConnect->_tiles[i][j]->_inventory->get("Thystame") ));
                 info[3].setString("Food: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Food")));
                 info[4].setString("Linemate: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Linemate")));
                 info[5].setString("Deraumere: " + std::to_string(_guiConnect->_tiles[i][j]->_inventory->get("Deraumere")));
@@ -203,7 +203,7 @@ void Zappy::InfoDisplay::Checkclick(sf::Vector2f mousePos)
     if (info_ == false) {
         info[0].setString("Map Size: x " + std::to_string(_guiConnect->get_size_map()[0]) + " y " + std::to_string(_guiConnect->get_size_map()[1]));
         info[1].setString("Player: " + std::to_string(_guiConnect->_players.size()));
-        info[2].setString("Total resources: " + std::to_string(get_food() + get_Linemate() + get_Deraumere() + get_Sibur() + get_Mendiane() + get_Phiras() + get_Thystame() + _guiConnect->_eggs.size()));
+        info[2].setString("Total resources: " + std::to_string(get_food() + get_Linemate() + get_Deraumere() + get_Sibur() + get_Mendiane() + get_Phiras() + get_Thystame()));
         info[3].setString("Food: " + std::to_string(get_food()));
         info[4].setString("Linemate: " + std::to_string(get_Linemate()));
         info[5].setString("Deraumere: " + std::to_string(get_Deraumere()));
