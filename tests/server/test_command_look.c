@@ -21,7 +21,7 @@ void clean_tile(tile_info_t *info)
     info->nb_players = 0;
 }
 
-Test (command_look, command_look_level1, .init = cr_redirect_stdout)
+Test (command_look, command_look_level1)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -34,9 +34,9 @@ Test (command_look, command_look_level1, .init = cr_redirect_stdout)
     int argc = 12;
 
     init_core(argc, argv, &core);
+    core.network.client_list = NULL;
     add_player(&core.map, &core.players, 1, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
+    add_client_on_network(&core.network, 1);
     info = find_player(&core.players, 1);
     tile_info0 = find_tile(&core.map, 5, 5);
     tile_info1 = find_tile(&core.map, 4, 4);
@@ -59,12 +59,14 @@ Test (command_look, command_look_level1, .init = cr_redirect_stdout)
     info->pos_y = 5;
     info->action_queue[0] = strdup("Look");
     info->timer_action = 0;
+    printf("start\n");
     check_player_command(&core);
-    cr_assert_stdout_eq_str("[ mendiane player, phiras, sibur, thystame ]\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "[ mendiane player, phiras, sibur, thystame ]\n");
     delete_player(&core.map, &core.players, 1);
+    delete_client_of_network(&core.network, 1);
 }
 
-Test (command_look, command_look_level3, .init = cr_redirect_stdout)
+Test (command_look, command_look_level3)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -92,9 +94,9 @@ Test (command_look, command_look_level3, .init = cr_redirect_stdout)
     int argc = 12;
 
     init_core(argc, argv, &core);
+    core.network.client_list = NULL;
     add_player(&core.map, &core.players, 1, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
+    add_client_on_network(&core.network, 1);
     info = find_player(&core.players, 1);
     tile_info0 = find_tile(&core.map, 5, 5);
 
@@ -154,11 +156,12 @@ Test (command_look, command_look_level3, .init = cr_redirect_stdout)
     info->action_queue[0] = strdup("Look");
     info->timer_action = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("[ player, phiras, sibur, thystame,,,,,,,,,, linemate linemate, food, deraumere deraumere deraumere ]\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "[ player, phiras, sibur, thystame,,,,,,,,,, linemate linemate, food, deraumere deraumere deraumere ]\n");
     delete_player(&core.map, &core.players, 1);
+    close_server(&core);
 }
 
-Test (command_look, command_look_S, .init = cr_redirect_stdout)
+Test (command_look, command_look_S)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -171,9 +174,9 @@ Test (command_look, command_look_S, .init = cr_redirect_stdout)
     int argc = 12;
 
     init_core(argc, argv, &core);
+    core.network.client_list = NULL;
     add_player(&core.map, &core.players, 1, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
+    add_client_on_network(&core.network, 1);
     info = find_player(&core.players, 1);
     tile_info0 = find_tile(&core.map, 5, 5);
 
@@ -198,11 +201,11 @@ Test (command_look, command_look_S, .init = cr_redirect_stdout)
     info->action_queue[0] = strdup("Look");
     info->timer_action = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("[ mendiane player, phiras, sibur, thystame ]\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "[ mendiane player, phiras, sibur, thystame ]\n");
     delete_player(&core.map, &core.players, 1);
 }
 
-Test (command_look, command_look_E, .init = cr_redirect_stdout)
+Test (command_look, command_look_E)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -216,8 +219,8 @@ Test (command_look, command_look_E, .init = cr_redirect_stdout)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
     info = find_player(&core.players, 1);
     tile_info0 = find_tile(&core.map, 5, 5);
 
@@ -242,11 +245,11 @@ Test (command_look, command_look_E, .init = cr_redirect_stdout)
     info->action_queue[0] = strdup("Look");
     info->timer_action = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("[ mendiane player, phiras, sibur, thystame ]\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "[ mendiane player, phiras, sibur, thystame ]\n");
     delete_player(&core.map, &core.players, 1);
 }
 
-Test (command_look, command_look_W, .init = cr_redirect_stdout)
+Test (command_look, command_look_W)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -260,8 +263,8 @@ Test (command_look, command_look_W, .init = cr_redirect_stdout)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
     info = find_player(&core.players, 1);
     tile_info0 = find_tile(&core.map, 5, 5);
 
@@ -286,6 +289,6 @@ Test (command_look, command_look_W, .init = cr_redirect_stdout)
     info->action_queue[0] = strdup("Look");
     info->timer_action = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("[ mendiane player, phiras, sibur, thystame ]\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "[ mendiane player, phiras, sibur, thystame ]\n");
     delete_player(&core.map, &core.players, 1);
 }
