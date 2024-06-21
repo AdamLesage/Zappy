@@ -7,7 +7,6 @@
 
 #include "PlayerPrint.hpp"
 #include "bar.hpp"
-#include "Credit.hpp"
 #include "../Entity/Evolution.hpp"
 #include "../ServerInfo/GuiConnect.hpp"
 #include "../Entity/Player.hpp"
@@ -17,6 +16,7 @@
 #include "Broadcast.hpp"
 #include "TeamPrint.hpp"
 #include "InterfaceError.hpp"
+#include "Menu.hpp"
 #include <iostream>
 #include <thread>
 #include <array>
@@ -35,7 +35,6 @@ namespace Zappy {
             ~Interface();
             void loop(std::shared_ptr<GuiConnect> gui_connect);
             void print_sound();
-            void command_handler();
             std::array<int, 2> get_mape_size() { return _mape_size; }
             void set_mape_size(std::array<int, 2> mape_size) { _mape_size = mape_size; }
             void set_map();
@@ -94,17 +93,11 @@ namespace Zappy {
             std::shared_ptr<InfoDisplay> _info;
             std::shared_ptr<Broadcast> _broadcast;
             size_t _teamnbr;
-            std::vector<sf::Texture> loading_texture;
-            sf::RectangleShape loading;
             sf::Clock clock;
-            sf::RectangleShape loadingBar;
-            bool menu;
-            std::vector<std::shared_ptr<Button>> buttons;
-            std::shared_ptr<Credit> credit;
             std::vector<std::pair<int, std::shared_ptr<Evolution>>> evolutions;
             std::shared_ptr<TeamPrint> _teamPrint;
             std::shared_ptr<PlayerPrint> _playerPrint;
-            std::vector<sf::Text> pplayer_rank_text;
+            std::shared_ptr<Menu> _menu;
         private:
     };
 }

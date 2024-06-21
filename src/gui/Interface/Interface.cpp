@@ -11,14 +11,6 @@
 Zappy::Interface::Interface()
 {
     TileClicked = false;
-    loading_texture.push_back(sf::Texture());
-    loading_texture.push_back(sf::Texture());
-    if (loading_texture[0].loadFromFile("./asset/gui/fonddd.jpg") == false)
-        throw InterfaceError("Error: fonddd.jpg not found", "Interface");
-    if (loading_texture[1].loadFromFile("./asset/gui/fonddd.jpg") == false)
-        throw InterfaceError("Error: fonddd.jpg not found", "Interface");
-    loading.setSize(sf::Vector2f(1920, 1080));
-    loading.setTexture(&loading_texture[0]);
     sound_volume = 50;
     window = std::make_shared<sf::RenderWindow>();
     window->create(sf::VideoMode(1920, 1080), "Zappy");
@@ -38,18 +30,6 @@ Zappy::Interface::Interface()
         tile_sprite_[i].setTexture(tile_texture_[i]);
         tile_sprite_[i].setScale(0.32, 0.32);
     }
-    loadingBar.setSize(sf::Vector2f(1600, 40));
-    loadingBar.setFillColor(sf::Color(119 , 181 , 254));
-    loadingBar.setPosition(160, 900);
-    buttons.push_back(std::make_shared<Button>(sf::Vector2f(200, 50), sf::Vector2f(860, 350), sf::Color::Green, 5, sf::Color::Black));
-    buttons.push_back(std::make_shared<Button>(sf::Vector2f(200, 50), sf::Vector2f(860, 450), sf::Color::Green, 5, sf::Color::Black));
-    buttons.push_back(std::make_shared<Button>(sf::Vector2f(200, 50), sf::Vector2f(860, 550), sf::Color::Green, 5, sf::Color::Black));
-    buttons.push_back(std::make_shared<Button>(sf::Vector2f(200, 50), sf::Vector2f(860, 650), sf::Color::Green, 5, sf::Color::Black));
-    buttons[0]->setText("Start");
-    buttons[1]->setText("Zappy");
-    buttons[2]->setText("User guide");
-    buttons[3]->setText("Credits");
-    menu = false;
     for (int i = 0; i < 6; i++)
         tile_iso_texture.push_back(sf::Texture());
     if (tile_iso_texture[0].loadFromFile("./asset/sprite/tiles/tile1w.png") == false)
@@ -155,7 +135,6 @@ Zappy::Interface::Interface()
     rect2 = sf::RectangleShape(sf::Vector2f(102.4, 102.4));
     rect.setFillColor(sf::Color(150, 150, 150, 150));
     rect2.setFillColor(sf::Color(255, 165, 0, 150));
-    credit = std::make_shared<Credit>(window);
 }
 
 Zappy::Interface::~Interface()
@@ -362,6 +341,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         this->_broadcast.reset(new Broadcast(window, _gui_connect));
         this->_teamPrint.reset(new TeamPrint(_gui_connect, window));
         this->_playerPrint.reset(new PlayerPrint(_gui_connect, window,font,_teamnbr,_broadcast,evolutions));
+        this->_menu.reset(new Menu(window, _playerPrint));
     } catch (Zappy::InterfaceError &e) {
         throw Zappy::InterfaceError(e.what(), "Interface");
         return;
@@ -369,57 +349,13 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     ReceiveProcess = std::thread(&GuiConnect::receive, gui_connect.get());
     printf("start\n");
     window->setFramerateLimit(120);
-    loading.setTexture(&loading_texture[0]);
-    window->clear();
-    window->draw(loading);
-    window->display();
-    clock.restart();
-    bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 325), sf::Color(150, 150, 150), 5, sf::Color::Black, _gui_connect->_timeUnit));
-    while (clock.getElapsedTime().asSeconds() < 5) {
-        float progress = clock.getElapsedTime().asSeconds() / 5;
-        loadingBar.setSize(sf::Vector2f(1600 * progress, 60));
-        window->clear();
-        window->draw(loading);
-        window->draw(loadingBar);
-        window->display();
-    }
-    loading.setTexture(&loading_texture[1]);
-    loadingBar.setSize(sf::Vector2f(400, 1080));
-    loadingBar.setPosition(0, 0);
-    loadingBar.setFillColor(sf::Color(0, 0, 0, 150));
-    while (menu == false) {
-        window->clear(sf::Color::Black);
-        while (window->pollEvent(event)) {
-            menu = buttons[0]->checkClick(window);
-            if (buttons[3]->checkClick(window) == true) {
-                credit->start();
-                credit->run();
-            }
-            buttons[1]->checkClick(window);
-            buttons[2]->checkClick(window);
-            if (event.type == sf::Event::Closed)
-                window->close();
-        }
-        window->draw(loading);
-        window->draw(loadingBar);
-        for (int i = 0; i < 8; i++) {
-            pplayer_rank_text.push_back(sf::Text("Level " + std::to_string(i), font, 40));
-            pplayer_rank_text[i].setFillColor(sf::Color::White);
-            pplayer_rank_text[i].setPosition(100, 100 + i * 100);
-        }
-        for (int i = 0; i < 8; i++) {
-            window->draw(_playerPrint->getPlayerRank()[i]);
-            window->draw(pplayer_rank_text[i]);
-            if (i < 4)
-                buttons[i]->displayButton(window);
-        }
-        window->display();
-    }
+    this->_menu->display();
     printf("end\n");
     set_map();
     view.zoom(0.5);
     playBackgroundMusic("./asset/music/music.ogg");
     clock.restart();
+    bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 325), sf::Color(150, 150, 150), 5, sf::Color::Black, _gui_connect->_timeUnit));
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
         sound_volume = bars[0]->checkClick(window);
@@ -478,10 +414,6 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         this->_inventory->display(_playerPrint->getPlayerSprites());
         window->display();
     }
-}
-
-void Zappy::Interface::command_handler()
-{
 }
 
 void Zappy::Interface::playBackgroundMusic(const std::string& filename)
