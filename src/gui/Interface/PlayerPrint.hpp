@@ -75,6 +75,12 @@ namespace Zappy
         std::vector<std::array<sf::IntRect, 4>> getPlayerAnimRank8(){
             return player_anim_rank8;
         }
+        std::vector<std::pair<int, std::shared_ptr<Evolution>>> getEvolutions(){
+            return _evolutions;
+        }
+        void setEvolutions(std::vector<std::pair<int, std::shared_ptr<Evolution>>> evolutions){
+            _evolutions = evolutions;
+        }
 
     protected:
         std::vector<sf::Sprite> player_rank;
