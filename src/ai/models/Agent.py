@@ -59,6 +59,30 @@ class Agent():
                 # TODO: check up sometimes to see if there is a slot available and fork if not
                 print(f"Player is not allowed to connect to the server with client number {client_num}")
                 exit(1)
+    
+    def bufferManagement(self, data: str) -> bool:
+        """
+        if data_received != None:
+            if there is a \n in data_received and self.receive_from_server != None --> self.receive_from_server += data_received | return True because we have the full data
+            elif there is a \n in data_received and self.receive_from_server == None --> self.receive_from_server = data_received | return True because we have the full data
+            elif there is no \n in data_received and self.receive_from_server != None --> self.receive_from_server += data_received | return False because we don't have the full data
+            elif there is no \n in data_received and self.receive_from_server == None --> self.receive_from_server = data_received | return False because we don't have the full data
+        """
+        if data == None or data == "":
+            return False
+        if "\n" in data and self.receive_from_server != None: # If there is a \n in data_received and self.receive_from_server != None
+            self.receive_from_server += data
+            return True
+        elif "\n" in data and self.receive_from_server == None: # If there is a \n in data_received and self.receive_from_server == None
+            self.receive_from_server = data
+            return True
+        elif "\n" not in data and self.receive_from_server != None: # If there is no \n in data_received and self.receive_from_server != None
+            self.receive_from_server += data
+            return False
+        elif "\n" not in data and self.receive_from_server == None: # If there is no \n in data_received and self.receive_from_server == None
+            self.receive_from_server = data
+            return False
+        return False
 
     def connect_to_server(self) -> None:
         """Connect to the server from the given ip and port"""
@@ -72,15 +96,16 @@ class Agent():
             while True:
                 try:
                     try:
-                        self.receive_from_server = self.client.recv(1024).decode()
-                        if self.receive_from_server != None and self.receive_from_server.startswith("ko\n"):
-                            self.agentInfo.commandsToSend.clear()
+                        data_received = self.client.recv(1024).decode()
+
+                        if self.bufferManagement(data_received) == False:
+                            continue
                         if self.agentAlgo.broadcastManagement(self.receive_from_server.replace("\n", "")) == True:
                             continue
                         # print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
                         tmp += 1
-                    except BlockingIOError:
-                        self.receive_from_server = None
+                    except BlockingIOError as e:
+                        pass
 
                     self.retrieveClientNumber(self.receive_from_server)
                     self.disconnect_from_server(self.receive_from_server)
@@ -96,6 +121,8 @@ class Agent():
                             if "Current level" in self.receive_from_server:
                                 self.agentAlgo.setStatus("Mining")
                                 self.receive_from_server = None
+                        # if self.agentInfo.getCommandsReturned()[0] != None:
+                        #     print(f"Get return {self.agentInfo.getCommandsReturned()} | receive from server {self.receive_from_server}")
                         self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
                         self.agentAlgo.countPassedCommands += 1
                         self.agentAlgo.ConnectNbrManagement()
@@ -103,8 +130,11 @@ class Agent():
                         self.agentAlgo.play(self.receive_from_server)
                         self.agentAlgo.clearReturnCommand()
                         self.agentAlgo.send_to_server()
+                        if self.receive_from_server != None and "\n" in self.receive_from_server:
+                            self.receive_from_server = None
                 except Exception as e:
                     print(f"Error loop: {e}")
+                    exit(1)
                     continue
         except Exception as e:
             print(f"Error: {e}")
