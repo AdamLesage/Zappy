@@ -7,19 +7,19 @@
 
 #include "server.h"
 
-void send_smg_info(char *message, int fd)
+void send_smg_info(network_t *network, char *message, int fd)
 {
-    send_response("smg ", fd);
-    send_response(message, fd);
-    send_response("\n", fd);
+    add_to_send_buffer(network, "smg ", fd);
+    add_to_send_buffer(network, message, fd);
+    add_to_send_buffer(network, "\n", fd);
 }
 
-void smg(players_t *players, char *message)
+void smg(core_t *core, char *message)
 {
-    for (players_list_t *tmp = players->players_list;
+    for (players_list_t *tmp = core->players.players_list;
         tmp != NULL; tmp = tmp->next) {
         if (strcmp(tmp->player_info->team_name, "GRAPHIC") == 0) {
-            send_smg_info(message, tmp->fd);
+            send_smg_info(&core->network, message, tmp->fd);
         }
     }
 }
