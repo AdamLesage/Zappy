@@ -45,7 +45,7 @@ void set(core_t *core, int fd, char **command)
     set_on_map(pos, object, &core->map);
     add_to_send_buffer(&core->network, "ok\n", fd);
     pdr(&core->players, info->id, object);
-    pin_event(&core->players, info);
+    pin_event(&core->network, &core->players, info);
     bct_event(core, pos[0], pos[1]);
     free(pos);
 }

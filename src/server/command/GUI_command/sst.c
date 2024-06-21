@@ -25,6 +25,6 @@ void sst(core_t *core, int fd, char **command)
     strcat(buff, "sst ");
     strcat(buff, command[1]);
     strcat(buff, "\n");
-    send_response(buff, fd);
+    add_to_send_buffer(&core->network, buff, fd);
     free(buff);
 }

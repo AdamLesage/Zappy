@@ -25,7 +25,7 @@ void sgt(core_t *core, int fd, char **command)
     strcat(buff, "sgt ");
     strcat(buff, str_frequency);
     strcat(buff, "\n");
-    send_response(buff, fd);
+    add_to_send_buffer(&core->network, buff, fd);
     free(buff);
     free(str_frequency);
 }
@@ -44,7 +44,7 @@ void sgt_start(core_t *core, int fd)
     strcat(buff, "sgt ");
     strcat(buff, str_frequency);
     strcat(buff, "\n");
-    send_response(buff, fd);
+    add_to_send_buffer(&core->network, buff, fd);
     free(buff);
     free(str_frequency);
 }

@@ -20,7 +20,7 @@ static void eat_food(player_info_t *info, core_t *core)
             enw(&core->players, -1, core->map.eggs);
             return;
         }
-        pin_event(&core->players, info);
+        pin_event(&core->network, &core->players, info);
     } else {
         info->last_feed--;
     }

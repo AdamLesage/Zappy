@@ -34,7 +34,8 @@ static void create_player(core_t *core, char *command, int fd)
         add_int_to_send_buffer(&core->network, core->arguments.height, fd);
         add_to_send_buffer(&core->network, "\n", fd);
         pnw(&core->players, core->players.players_list->player_info);
-        pin_event(&core->players, core->players.players_list->player_info);
+        pin_event(&core->network, &core->players,
+            core->players.players_list->player_info);
         ebo(&core->players, eggs_used);
     } else {
         add_to_send_buffer(&core->network, "ko\n", fd);
@@ -63,8 +64,8 @@ void graphic_authentification(core_t *core, char *command, int fd)
         tmp != NULL; tmp = tmp->next) {
         if (strcmp(tmp->player_info->team_name, "GRAPHIC") != 0) {
             send_pnw_info(tmp->player_info, fd);
-            pin_two(fd, tmp->player_info);
-            plv_start(fd, tmp->player_info);
+            pin_two(&core->network, fd, tmp->player_info);
+            plv_start(&core->network, fd, tmp->player_info);
         }
     }
     for (eggs_t *tmp = core->map.eggs; tmp != NULL; tmp = tmp->next) {

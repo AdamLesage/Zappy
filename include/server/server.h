@@ -98,20 +98,22 @@ void take(core_t *core, int fd, char **command);
 
 void bct(core_t *core, int fd, char **command);
 void bct_event(core_t *core, int x, int y);
-void bct_two(int fd, tiles_list_t *current_tile);
-void bct_three(int fd, tiles_list_t *current_tile);
+void bct_two(core_t *core, int fd, tiles_list_t *current_tile);
+void bct_three(core_t *core, int fd, tiles_list_t *current_tile);
 void mct(core_t *core, int fd, char **command);
 void mct_start(core_t *core, int fd);
 void mct_event(core_t *core);
 void msz(core_t *core, int fd, char **command);
 void msz_start(core_t *core, int fd);
 void pin(core_t *core, int fd, char **command);
-void pin_event(players_t *players, player_info_t *player_info);
-void pin_two(int fd, player_info_t *player_info);
-void pin_three(int fd, inventory_t *inventory);
+void pin_two(network_t *network, int fd, player_info_t *player_info);
+void pin_three(network_t *network, int fd, inventory_t *inventory);
+void pin_event(network_t *network, players_t *players,
+    player_info_t *player_info);
 void plv(core_t *core, int fd, char **command);
-void plv_start(int fd, player_info_t *player_info);
-void plv_event(players_t *player, player_info_t *player_info);
+void plv_start(network_t *network, int fd, player_info_t *player_info);
+void plv_event(network_t *network, players_t *players,
+    player_info_t *player_info);
 void ppo(core_t *core, int fd, char **command);
 void send_ppo(core_t *core, player_info_t *player_info);
 void sgt(core_t *core, int fd, char **command);

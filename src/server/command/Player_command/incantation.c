@@ -128,7 +128,7 @@ static void incantation_end_success(tile_info_t *tile_info,
             add_int_to_send_buffer(&core->network, info->level, info->fd);
             add_to_send_buffer(&core->network, "\n", info->fd);
         }
-        plv_event(&core->players, info);
+        plv_event(&core->network, &core->players, info);
         pie(&core->players, tile_info->pos_x, tile_info->pos_y, true);
     }
 }
