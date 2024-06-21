@@ -156,8 +156,6 @@ Zappy::Interface::Interface()
     rect.setFillColor(sf::Color(150, 150, 150, 150));
     rect2.setFillColor(sf::Color(255, 165, 0, 150));
     credit = std::make_shared<Credit>(window);
-    printf("Interface created\n");
-    printf("Interface created\n");
 }
 
 void Zappy::Interface::print_evolution(int current_player)
