@@ -105,6 +105,7 @@ namespace Zappy {
             std::vector<std::pair<int, std::shared_ptr<Evolution>>> evolutions;
             std::shared_ptr<TeamPrint> _teamPrint;
             std::shared_ptr<PlayerPrint> _playerPrint;
+            std::vector<sf::Text> pplayer_rank_text;
         private:
     };
 }
