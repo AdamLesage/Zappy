@@ -101,6 +101,7 @@ SRC_SEVER	=	src/server/main.c											\
 SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/Interface/Interface.cpp									\
 			src/gui/Interface/Credit.cpp									\
+			src/gui/Interface/Menu.cpp										\
 			src/gui/Interface/TeamPrint.cpp									\
 			src/gui/Interface/bar.cpp										\
 			src/gui/Interface/InventoryDisplay.cpp							\
