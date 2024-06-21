@@ -19,7 +19,7 @@
 
 typedef struct client_managment_s {
     fd_set rfds;
-    fd_set temp_fds;
+    fd_set read_fd;
     int max_fd;
     struct timeval tv;
 } client_management_t;
@@ -66,7 +66,10 @@ class GuiConnect {
         std::vector<Zappy::Inventory> get_inventories() { return _inventories; } // get inventories
         Zappy::Inventory update_inventory(std::vector<std::string> args, Zappy::Inventory tmp); // update inventory of a tile
         std::shared_ptr<Zappy::Tile> getTileByCoords(std::pair<int, int> coords); // get tile by coords
+        int getPlayerNbOnTile(std::pair<int, int> coords); // get player on tile
+
         void setTimeUnit(std::string args);
+        int getTimeUnit() { return _timeUnit; }
         std::array<int, 2> _size_map;
         std::vector<Zappy::Inventory> _inventories;
         std::shared_ptr<Zappy::CommandFactory> _commandFactory;
@@ -81,7 +84,7 @@ class GuiConnect {
         std::vector<std::string> _teams;
         client_management_t client_management;
     private:
-        void readServer(std::string &buffer2, char *buffer);
+        void readServer(std::string &buffer);
 };
 
 #endif /* !GUI_CONNECT_HPP_ */

@@ -100,6 +100,9 @@ SRC_SEVER	=	src/server/main.c											\
 
 SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/Interface/Interface.cpp									\
+			src/gui/Interface/Credit.cpp									\
+			src/gui/Interface/Menu.cpp										\
+			src/gui/Interface/TeamPrint.cpp									\
 			src/gui/Interface/bar.cpp										\
 			src/gui/Interface/InventoryDisplay.cpp							\
 			src/gui/Interface/Button.cpp									\
@@ -114,6 +117,7 @@ SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/Entity/AInventory.cpp									\
 			src/gui/Entity/Player.cpp										\
 			src/gui/Entity/Egg.cpp											\
+			src/gui/Entity/Evolution.cpp									\
 			src/gui/ServerInfo/ServerInfo.cpp								\
 			src/gui/ServerInfo/CommandFactory.cpp							\
 			src/gui/ServerInfo/ACommand.cpp									\
@@ -146,6 +150,7 @@ SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/DataManagement/player_management.cpp					\
 			src/gui/DataManagement/tile_management.cpp						\
 			src/gui/DataManagement/server_info_management.cpp				\
+			src/gui/Interface/PlayerPrint.cpp								\
 
 SRC_AI				=	src/ai/main.py										\
 
@@ -361,7 +366,7 @@ SFML		=	-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 all:    $(Name)
 
-$(Name): zappy_server
+$(Name): zappy_server zappy_gui zappy_ai
 
 zappy_server:
 	gcc -o $(NAME_BINARY_SERVER) $(SRC_SEVER) $(CFLAGS) -Iinclude/server -lm

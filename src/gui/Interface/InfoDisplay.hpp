@@ -22,6 +22,15 @@ namespace Zappy {
             ~InfoDisplay();
             void Checkclick(sf::Vector2f mousePos);
             void display();
+            int get_food();
+            int get_Linemate();
+            int get_Deraumere();
+            int get_Sibur();
+            int get_Mendiane();
+            int get_Phiras();
+            int get_Thystame();
+            int get_player(int x, int y);
+            int get_eggs(int x, int y);
         protected:
             bool info_;
             std::vector<sf::Text> info;

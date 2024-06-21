@@ -22,7 +22,7 @@ namespace Zappy {
         public:
             InventoryDisplay(std::shared_ptr<GuiConnect> guiConnect, std::shared_ptr<sf::RenderWindow> window);
             ~InventoryDisplay();
-            void display();
+            void display(std::vector<sf::Sprite> players_sprites);
             void check_event(sf::Event *event, std::vector<sf::Sprite> players_sprites, sf::View view);
         protected:
         private:
