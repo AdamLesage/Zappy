@@ -29,13 +29,13 @@ void msz(core_t *core, int fd, char **command)
     char *str_width = int_to_str(core->map.width);
 
     if (command == NULL || len_array(command) != 1) {
-        send_response("sbp\n", fd);
+        add_to_send_buffer(&core->network, "sbp\n", fd);
         return;
     }
     buff_size = strlen("msz ") + strlen(str_width)
         + strlen(" ") + strlen(str_height) + strlen("\n") + 1;
     buff = set_msz_buff(buff_size, str_width, str_height);
-    send_response(buff, fd);
+    add_to_send_buffer(&core->network, buff, fd);
     free(buff);
     free(str_height);
     free(str_width);
@@ -51,7 +51,7 @@ void msz_start(core_t *core, int fd)
     buff_size = strlen("msz ") + strlen(str_width)
         + strlen(" ") + strlen(str_height) + strlen("\n") + 1;
     buff = set_msz_buff(buff_size, str_width, str_height);
-    send_response(buff, fd);
+    add_to_send_buffer(&core->network, buff, fd);
     free(buff);
     free(str_height);
     free(str_width);

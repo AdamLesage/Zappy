@@ -7,24 +7,11 @@
 
 #include "../../include/server/server.h"
 
-static void init_select_info(core_t *core, float delay)
-{
-    core->select_info.max_fd = core->socket_config.sockfd;
-    core->select_info.tv.tv_sec = delay;
-    core->select_info.tv.tv_usec = 0;
-    FD_ZERO(&core->select_info.rfds);
-    FD_SET(core->socket_config.sockfd, &core->select_info.rfds);
-    FD_ZERO(&core->select_info.write_fds);
-    FD_ZERO(&core->select_info.except_fds);
-    core->select_info.fd_socket_control = core->socket_config.sockfd;
-}
-
 static void manage_select_notif(core_t *core, int retval)
 {
     if (retval > 0) {
+        connect_client(&core->network);
         get_client_command(core);
-        connect_client(&core->select_info,
-            &core->socket_config.server_socket);
     } else {
         check_win_game(core);
         check_player_command(core);
@@ -34,6 +21,7 @@ static void manage_select_notif(core_t *core, int retval)
             refill_map(core);
         }
     }
+    send_command_responce(&core->network);
 }
 
 static void update_select_info(select_info_t *select_info, int frequency)
@@ -50,16 +38,15 @@ static void update_select_info(select_info_t *select_info, int frequency)
 void lunch_server(core_t *core)
 {
     int retval = 0;
-    float period = 0;
 
-    period = (float)1 / core->arguments.frequency;
-    init_select_info(core, period);
     while (1) {
-        update_select_info(&core->select_info, core->arguments.frequency);
-        retval = select(core->select_info.max_fd + 1,
-            &core->select_info.read_fds, NULL,
-            &core->select_info.except_fds, &core->select_info.tv);
-        if (FD_ISSET(STDIN_FILENO, &core->select_info.except_fds)) {
+        update_select_info(&core->network.select_info,
+            core->arguments.frequency);
+        retval = select(core->network.select_info.max_fd + 1,
+            &core->network.select_info.read_fds, NULL,
+            &core->network.select_info.except_fds,
+            &core->network.select_info.tv);
+        if (FD_ISSET(STDIN_FILENO, &core->network.select_info.except_fds)) {
             close_server(core);
             exit(0);
         }

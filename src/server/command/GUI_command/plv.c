@@ -13,35 +13,36 @@ void plv(core_t *core, int fd, char **command)
     player_info_t *player_info = find_player_by_id(&core->players, player_id);
 
     if (len_array(command) != 2) {
-        send_response("sbp\n", fd);
+        add_to_send_buffer(&core->network, "sbp\n", fd);
         return;
     }
     if (player_info == NULL) {
-        send_response("sbp\n", fd);
+        add_to_send_buffer(&core->network, "sbp\n", fd);
         return;
     }
-    send_response("plv ", fd);
-    send_response_int(player_info->id, fd);
-    send_response(" ", fd);
-    send_response_int(player_info->level, fd);
-    send_response("\n", fd);
+    add_to_send_buffer(&core->network, "plv ", fd);
+    add_int_to_send_buffer(&core->network, player_info->id, fd);
+    add_to_send_buffer(&core->network, " ", fd);
+    add_int_to_send_buffer(&core->network, player_info->level, fd);
+    add_to_send_buffer(&core->network, "\n", fd);
 }
 
-void plv_start(int fd, player_info_t *player_info)
+void plv_start(network_t *network, int fd, player_info_t *player_info)
 {
-    send_response("plv ", fd);
-    send_response_int(player_info->id, fd);
-    send_response(" ", fd);
-    send_response_int(player_info->level, fd);
-    send_response("\n", fd);
+    add_to_send_buffer(network, "plv ", fd);
+    add_int_to_send_buffer(network, player_info->id, fd);
+    add_to_send_buffer(network, " ", fd);
+    add_int_to_send_buffer(network, player_info->level, fd);
+    add_to_send_buffer(network, "\n", fd);
 }
 
-void plv_event(players_t *players, player_info_t *player_info)
+void plv_event(network_t *network, players_t *players,
+    player_info_t *player_info)
 {
     for (players_list_t *tmp = players->players_list;
         tmp != NULL; tmp = tmp->next) {
         if (strcmp(tmp->player_info->team_name, "GRAPHIC") == 0) {
-            plv_start(tmp->fd, player_info);
+            plv_start(network, tmp->fd, player_info);
         }
     }
 }
