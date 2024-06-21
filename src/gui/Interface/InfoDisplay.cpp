@@ -162,7 +162,7 @@ int Zappy::InfoDisplay::get_Thystame()
 int Zappy::InfoDisplay::get_player(int x, int y)
 {
     int players = 0;
-    for (int i = 0; i < _guiConnect->_players.size(); i++) {
+    for (int i = 0; (std::size_t)i < _guiConnect->_players.size(); i++) {
         if (_guiConnect->_players[i]->getPosition()[0] == x && _guiConnect->_players[i]->getPosition()[1] == y)
             players++;
     }
@@ -172,7 +172,7 @@ int Zappy::InfoDisplay::get_player(int x, int y)
 int Zappy::InfoDisplay::get_eggs(int x, int y)
 {
     int eggs = 0;
-    for (int i = 0; i < _guiConnect->_eggs.size(); i++) {
+    for (int i = 0; (std::size_t)i < _guiConnect->_eggs.size(); i++) {
         if (_guiConnect->_eggs[i]->getPosition()[0] == x && _guiConnect->_eggs[i]->getPosition()[1] == y)
             eggs++;
     }
