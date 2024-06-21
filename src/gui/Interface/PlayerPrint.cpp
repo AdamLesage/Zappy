@@ -234,7 +234,6 @@ void Zappy::PlayerPrint::print_walk_animation(int playerIndex)
 void Zappy::PlayerPrint::display()
 {
     for (int i = 0; i < this->_guiConnect->_players.size(); i++) {
-        std::cout << "ici1" << std::endl;
         if (player_sprites.size() < this->_guiConnect->_players.size()) {
             player_sprites.push_back(sf::Sprite());
             std::cout << "ici2" << std::endl;
