@@ -88,7 +88,7 @@ namespace Zappy
         std::shared_ptr<GuiConnect> _guiConnect;
         std::shared_ptr<sf::RenderWindow> _window;
         std::vector<sf::Sprite> player_sprites;
-        sf::Font font;
+        sf::Font _font;
         std::vector<std::array<sf::IntRect, 4>> player_orientation;
         std::vector<std::array<sf::IntRect, 4>> player_anim_rank1;
         std::vector<std::array<sf::IntRect, 4>> player_anim_rank2;

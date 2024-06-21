@@ -13,7 +13,7 @@ int teamnbr, std::shared_ptr<Broadcast> brodcasr, std::vector<std::pair<int, std
 {
     this->_window = window;
     this->_guiConnect = guiConnect;
-    this->font = font;
+    this->_font = font;
     this->_teamnbr = teamnbr;
     this->_broadcast = brodcasr;
     this->_evolutions = evolu;
@@ -166,7 +166,7 @@ void Zappy::PlayerPrint::print_player_team()
 {
     std::vector<std::string> team_list;
 
-    for (int i = 0; i < this->_guiConnect->_players.size(); i++) {
+    for (size_t i = 0; i < this->_guiConnect->_players.size(); i++) {
         std::string team_name = this->_guiConnect->_players[i]->getTeamName();
         bool team_exists = false;
         for (const std::string& team : team_list) {
@@ -184,7 +184,7 @@ void Zappy::PlayerPrint::print_player_team()
             sf::RectangleShape playerSquare(sf::Vector2f(2, 2));
             std::string team_name = player->getTeamName();
             int team_index = 0;
-            for (int i = 0; i < team_list.size(); i++) {
+            for (size_t i = 0; i < team_list.size(); i++) {
                 if (team_list[i] == team_name) {
                     team_index = i;
                     break;
@@ -199,12 +199,12 @@ void Zappy::PlayerPrint::print_player_team()
 
 void Zappy::PlayerPrint::updatePlayersTravelled()
 {
-    for (int i = 0; i < this->_guiConnect->_players.size(); i++) {
+    for (size_t i = 0; i < this->_guiConnect->_players.size(); i++) {
         if (this->_guiConnect->_players[i]->getLastPosition() != this->_guiConnect->_players[i]->getPosition()) {
             this->_guiConnect->_players[i]->setTravelled(this->_guiConnect->_players[i]->getTravelled() + 1);
         }
     }
-    for (int i = 0; i < this->_guiConnect->_players.size(); i++) {
+    for (size_t i = 0; i < this->_guiConnect->_players.size(); i++) {
         std::array<int, 2> playerPosition = this->_guiConnect->_players[i]->getPosition();
         this->_guiConnect->_players[i]->setLastPosition(playerPosition[0], playerPosition[1]);
     }
@@ -212,6 +212,7 @@ void Zappy::PlayerPrint::updatePlayersTravelled()
 
 void Zappy::PlayerPrint::print_walk_animation(int playerIndex)
 {
+    playerIndex = playerIndex;
     // std::shared_ptr<Player> player = this->_guiConnect->_players[playerIndex];
     // sf::Sprite& sprite = this->player_sprites[playerIndex];
     // int level = player->getLevel() - 1;
@@ -233,7 +234,7 @@ void Zappy::PlayerPrint::print_walk_animation(int playerIndex)
 
 void Zappy::PlayerPrint::display()
 {
-    for (int i = 0; i < this->_guiConnect->_players.size(); i++) {
+    for (size_t i = 0; i < this->_guiConnect->_players.size(); i++) {
         if (player_sprites.size() < this->_guiConnect->_players.size()) {
             player_sprites.push_back(sf::Sprite());
             _evolutions.push_back(std::make_pair(0, std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png")));
