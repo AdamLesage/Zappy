@@ -26,14 +26,18 @@ static void create_player(core_t *core, char *command, int fd)
 
     eggs_used = get_id_eggs(core->map.eggs, command);
     if (add_player(&core->map, &core->players, fd, command)) {
-        dprintf(fd, "%d\n%d %d\n",
-            find_number_eggs_on_team(core->map.eggs, command),
-            core->arguments.width, core->arguments.height);
+        add_int_to_send_buffer(&core->network,
+            find_number_eggs_on_team(core->map.eggs, command), fd);
+        add_to_send_buffer(&core->network, "\n", fd);
+        add_int_to_send_buffer(&core->network, core->arguments.width, fd);
+        add_to_send_buffer(&core->network, " ", fd);
+        add_int_to_send_buffer(&core->network, core->arguments.height, fd);
+        add_to_send_buffer(&core->network, "\n", fd);
         pnw(&core->players, core->players.players_list->player_info);
         pin_event(&core->players, core->players.players_list->player_info);
         ebo(&core->players, eggs_used);
     } else {
-        send_response("ko\n", fd);
+        add_to_send_buffer(&core->network, "ko\n", fd);
     }
 }
 

@@ -24,7 +24,7 @@ static int *get_incantation_players_ids(player_info_t *player_info,
             ids[index] = -1;
             tmp->player_info->is_on_incantation = true;
             add_to_send_buffer(&core->network, "Elevation underway\n",
-                tmp->fd);          
+                tmp->fd);
         }
     }
     return ids;
