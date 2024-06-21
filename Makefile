@@ -308,21 +308,21 @@ SRC_TEST_GUI =  src/gui/Interface/Interface.cpp								\
 
 TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_command_look.c				\
-				# tests/server/test_player_function.c				\
-				# tests/server/test_init_map.c					\
-				# tests/server/test_init_players.c				\
-				# tests/server/test_find_tiles.c					\
-				# tests/server/test_map_put.c						\
-				# tests/server/test_map_remove.c					\
-				# tests/server/test_check_win_game.c				\
-				# tests/server/test_command_GUI.c					\
-				# tests/server/test_command_move_player.c			\
-				# tests/server/test_command_interact_player.c		\
-				# tests/server/test_command_fork.c				\
-				# tests/server/test_command_inventory.c			\
-				# tests/server/test_command_eject.c				\
-				# tests/server/test_command_broadcast.c			\
-				# tests/server/test_command_incantation.c			\
+				tests/server/test_player_function.c				\
+				tests/server/test_init_map.c					\
+				tests/server/test_init_players.c				\
+				tests/server/test_find_tiles.c					\
+				tests/server/test_map_put.c						\
+				tests/server/test_map_remove.c					\
+				tests/server/test_check_win_game.c				\
+				tests/server/test_command_GUI.c					\
+				tests/server/test_command_move_player.c			\
+				tests/server/test_command_interact_player.c		\
+				tests/server/test_command_fork.c				\
+				tests/server/test_command_eject.c				\
+				tests/server/test_command_inventory.c			\
+				tests/server/test_command_broadcast.c			\
+				tests/server/test_command_incantation.c			\
 				# tests/server/test_event_pnw.c					\
 				# tests/server/test_event_pex.c					\
 				# tests/server/test_event_pbc.c					\

@@ -27,9 +27,9 @@ Test(command_Incantation, Command_Incantation_sucess_level_1, .init = redirect_a
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -65,8 +65,8 @@ Test(command_Incantation, Command_Incantation_sucess_level_1, .init = redirect_a
 
     core.players.incantation_list->incantation_info->incantation_timer = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nElevation underway\nCurrent level: 2\n");
-    cr_assert_stderr_eq_str("Elevation underway\nCurrent level: 2\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nElevation underway\nCurrent level: 2\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "Elevation underway\nCurrent level: 2\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }
@@ -84,9 +84,9 @@ Test(command_Incantation, Command_Incantation_multiple_level_1, .init = redirect
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->pos_x = 5;
@@ -143,9 +143,9 @@ Test(command_Incantation, Command_Incantation_multiple_level_1, .init = redirect
     core.players.incantation_list->next->incantation_info->incantation_timer = 0;
     core.players.incantation_list->incantation_info->incantation_timer = 1;
     check_player_command(&core);
-    cr_assert_stderr_eq_str("ok\nElevation underway\nCurrent level: 2\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "ok\nElevation underway\nCurrent level: 2\n");
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nElevation underway\nCurrent level: 2\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nElevation underway\nCurrent level: 2\n");
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 2);
 }
@@ -162,9 +162,9 @@ Test(command_Incantation, Command_Incantation_failure_start_level_1, .init = red
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -184,7 +184,7 @@ Test(command_Incantation, Command_Incantation_failure_start_level_1, .init = red
     info1->action_queue[1] = strdup("Incantation");
     info1->last_action = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nko\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nko\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }
@@ -201,10 +201,9 @@ Test(command_Incantation, Command_Incantation_failure_end_level_1, .init = redir
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -241,8 +240,8 @@ Test(command_Incantation, Command_Incantation_failure_end_level_1, .init = redir
     tile_info->nb_linemate = 0;
     core.players.incantation_list->incantation_info->incantation_timer = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nElevation underway\nko\n");
-    cr_assert_stderr_eq_str("Elevation underway\nko\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nElevation underway\nko\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "Elevation underway\nko\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }
@@ -259,9 +258,9 @@ Test(command_Incantation, Command_Incantation_sucess_level_2, .init = redirect_a
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -299,8 +298,8 @@ Test(command_Incantation, Command_Incantation_sucess_level_2, .init = redirect_a
 
     core.players.incantation_list->incantation_info->incantation_timer = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nElevation underway\nCurrent level: 3\n");
-    cr_assert_stderr_eq_str("Elevation underway\nCurrent level: 3\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nElevation underway\nCurrent level: 3\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "Elevation underway\nCurrent level: 3\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }
@@ -317,9 +316,9 @@ Test(command_Incantation, Command_Incantation_failure_level_2, .init = redirect_
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -343,7 +342,7 @@ Test(command_Incantation, Command_Incantation_failure_level_2, .init = redirect_
     check_player_command(&core);
     cr_assert_eq(info1->is_on_incantation, false);
     cr_assert_eq(info2->is_on_incantation, false);
-    cr_assert_stdout_eq_str("ok\nko\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nko\n");
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 2);
 }
@@ -360,9 +359,9 @@ Test(command_Incantation, Command_Incantation_level_2_not_same_pos, .init = redi
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -384,7 +383,7 @@ Test(command_Incantation, Command_Incantation_level_2_not_same_pos, .init = redi
     info1->action_queue[1] = strdup("Incantation");
     info1->last_action = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nko\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nko\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }
@@ -401,9 +400,9 @@ Test(command_Incantation, Command_Incantation_level_2_not_same_level, .init = re
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -425,7 +424,7 @@ Test(command_Incantation, Command_Incantation_level_2_not_same_level, .init = re
     info1->action_queue[1] = strdup("Incantation");
     info1->last_action = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nko\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nko\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }
@@ -442,9 +441,9 @@ Test(command_Incantation, Command_Incantation_level_2_death_of_a_player, .init =
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -470,8 +469,8 @@ Test(command_Incantation, Command_Incantation_level_2_death_of_a_player, .init =
     core.players.incantation_list->incantation_info->incantation_timer = 0;
     delete_player(&core.map, &core.players, 2);
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nElevation underway\nko\n");
-    cr_assert_stderr_eq_str("Elevation underway\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nElevation underway\nko\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "Elevation underway\n");
     delete_player(&core.map, &core.players, 1);
 }
 
@@ -487,9 +486,9 @@ Test(command_Incantation, Command_Incantation_sucess_level_3, .init = redirect_a
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -527,8 +526,8 @@ Test(command_Incantation, Command_Incantation_sucess_level_3, .init = redirect_a
 
     core.players.incantation_list->incantation_info->incantation_timer = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nElevation underway\nCurrent level: 4\n");
-    cr_assert_stderr_eq_str("Elevation underway\nCurrent level: 4\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nElevation underway\nCurrent level: 4\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "Elevation underway\nCurrent level: 4\n");
     cr_assert_eq(tile_info->nb_deraumere, 0);
     cr_assert_eq(tile_info->nb_linemate, 0);
     cr_assert_eq(tile_info->nb_mendiane, 0);
@@ -551,9 +550,9 @@ Test(command_Incantation, Command_Incantation_failure_level_3, .init = redirect_
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     tile_info = find_tile(&core.map, 5, 5);
@@ -575,7 +574,7 @@ Test(command_Incantation, Command_Incantation_failure_level_3, .init = redirect_
     info1->action_queue[1] = strdup("Incantation");
     info1->last_action = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nko\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nko\n");
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 2);
 }
@@ -596,11 +595,9 @@ Test(command_Incantation, Command_Incantation_sucess_level_4, .init = redirect_a
     add_player(&core.map, &core.players, 2, "team1");
     add_player(&core.map, &core.players, 3, "team1");
     add_player(&core.map, &core.players, 4, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
-    FD_SET(3, &core.select_info.write_fds);
-    FD_SET(4, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info3 = find_player(&core.players, 3);
@@ -644,8 +641,8 @@ Test(command_Incantation, Command_Incantation_sucess_level_4, .init = redirect_a
 
     core.players.incantation_list->incantation_info->incantation_timer = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nElevation underway\nCurrent level: 5\n");
-    cr_assert_stderr_eq_str("Elevation underway\nCurrent level: 5\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nElevation underway\nCurrent level: 5\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "Elevation underway\nCurrent level: 5\n");
     cr_assert_eq(tile_info->nb_deraumere, 0);
     cr_assert_eq(tile_info->nb_linemate, 0);
     cr_assert_eq(tile_info->nb_mendiane, 0);
@@ -666,8 +663,8 @@ Test(command_Incantation, Command_Incantation_failure_level_4, .init = redirect_
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     tile_info = find_tile(&core.map, 5, 5);
     info1->pos_x = 5;
@@ -685,7 +682,7 @@ Test(command_Incantation, Command_Incantation_failure_level_4, .init = redirect_
     info1->action_queue[1] = strdup("Incantation");
     info1->last_action = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nko\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nko\n");
     delete_player(&core.map, &core.players, 1);
 }
 
@@ -705,11 +702,9 @@ Test(command_Incantation, Command_Incantation_sucess_level_5, .init = redirect_a
     add_player(&core.map, &core.players, 2, "team1");
     add_player(&core.map, &core.players, 3, "team1");
     add_player(&core.map, &core.players, 4, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
-    FD_SET(3, &core.select_info.write_fds);
-    FD_SET(4, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info3 = find_player(&core.players, 3);
@@ -753,8 +748,8 @@ Test(command_Incantation, Command_Incantation_sucess_level_5, .init = redirect_a
 
     core.players.incantation_list->incantation_info->incantation_timer = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nElevation underway\nCurrent level: 6\n");
-    cr_assert_stderr_eq_str("Elevation underway\nCurrent level: 6\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nElevation underway\nCurrent level: 6\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "Elevation underway\nCurrent level: 6\n");
     cr_assert_eq(tile_info->nb_deraumere, 0);
     cr_assert_eq(tile_info->nb_linemate, 0);
     cr_assert_eq(tile_info->nb_mendiane, 0);
@@ -787,13 +782,9 @@ Test(command_Incantation, Command_Incantation_sucess_level_6, .init = redirect_a
     add_player(&core.map, &core.players, 4, "team1");
     add_player(&core.map, &core.players, 5, "team1");
     add_player(&core.map, &core.players, 6, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
-    FD_SET(3, &core.select_info.write_fds);
-    FD_SET(4, &core.select_info.write_fds);
-    FD_SET(5, &core.select_info.write_fds);
-    FD_SET(6, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info3 = find_player(&core.players, 3);
@@ -847,8 +838,8 @@ Test(command_Incantation, Command_Incantation_sucess_level_6, .init = redirect_a
 
     core.players.incantation_list->incantation_info->incantation_timer = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nElevation underway\nCurrent level: 7\n");
-    cr_assert_stderr_eq_str("Elevation underway\nCurrent level: 7\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nElevation underway\nCurrent level: 7\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "Elevation underway\nCurrent level: 7\n");
     cr_assert_eq(tile_info->nb_deraumere, 0);
     cr_assert_eq(tile_info->nb_linemate, 0);
     cr_assert_eq(tile_info->nb_mendiane, 0);
@@ -881,13 +872,9 @@ Test(command_Incantation, Command_Incantation_sucess_level_7, .init = redirect_a
     add_player(&core.map, &core.players, 4, "team1");
     add_player(&core.map, &core.players, 5, "team1");
     add_player(&core.map, &core.players, 6, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
-    FD_SET(3, &core.select_info.write_fds);
-    FD_SET(4, &core.select_info.write_fds);
-    FD_SET(5, &core.select_info.write_fds);
-    FD_SET(6, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info3 = find_player(&core.players, 3);
@@ -940,8 +927,8 @@ Test(command_Incantation, Command_Incantation_sucess_level_7, .init = redirect_a
 
     core.players.incantation_list->incantation_info->incantation_timer = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ok\nElevation underway\nCurrent level: 8\n");
-    cr_assert_stderr_eq_str("Elevation underway\nCurrent level: 8\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\nElevation underway\nCurrent level: 8\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "Elevation underway\nCurrent level: 8\n");
     cr_assert_eq(tile_info->nb_deraumere, 0);
     cr_assert_eq(tile_info->nb_linemate, 0);
     cr_assert_eq(tile_info->nb_mendiane, 0);
