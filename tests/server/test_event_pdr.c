@@ -9,7 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-Test (event_pdr, event_pdr1, .init = cr_redirect_stdout)
+Test (event_pdr, event_pdr1)
 {
     core_t core;
 
@@ -20,14 +20,16 @@ Test (event_pdr, event_pdr1, .init = cr_redirect_stdout)
     add_player(&core.map, &core.players, 1, "GRAPHIC");
     add_player(&core.map, &core.players, 2, "team1");
     add_player(&core.map, &core.players, 3, "team2");
-    pdr(&core.players, 0, Food);
-    pdr(&core.players, 0, Linemate);
-    pdr(&core.players, 0, Deraumere);
-    pdr(&core.players, 0, Sibur);
-    pdr(&core.players, 1, Mendiane);
-    pdr(&core.players, 0, Phiras);
-    pdr(&core.players, 0, Thystame);
-    cr_assert_stdout_eq_str("pdr 0 0\npdr 0 1\npdr 0 2\npdr 0 3\npdr 1 4\npdr 0 5\npdr 0 6\n");
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
+    pdr(&core, 0, Food);
+    pdr(&core, 0, Linemate);
+    pdr(&core, 0, Deraumere);
+    pdr(&core, 0, Sibur);
+    pdr(&core, 1, Mendiane);
+    pdr(&core, 0, Phiras);
+    pdr(&core, 0, Thystame);
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "pdr 0 0\npdr 0 1\npdr 0 2\npdr 0 3\npdr 1 4\npdr 0 5\npdr 0 6\n");
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 2);
 }

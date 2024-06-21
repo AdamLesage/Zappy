@@ -38,7 +38,7 @@ Test(tna, test_tna)
     cr_assert_str_eq(core.network.client_list->client_info->buffer_send, expected);
 }
 
-Test(sgt, test_sgt, .init = cr_redirect_stdout)
+Test(sgt, test_sgt)
 {
     core_t core;
     char *command[] = {"sgt", NULL};
@@ -51,7 +51,7 @@ Test(sgt, test_sgt, .init = cr_redirect_stdout)
     cr_assert_str_eq(core.network.client_list->client_info->buffer_send, expected);
 }
 
-Test(sst, test_sst, .init = cr_redirect_stdout)
+Test(sst, test_sst)
 {
     core_t core;
     char *command[] = {"sst", "100", NULL};
@@ -64,7 +64,7 @@ Test(sst, test_sst, .init = cr_redirect_stdout)
     cr_assert_str_eq(core.network.client_list->client_info->buffer_send, expected);
 }
 
-Test(bct, test_bct, .init = cr_redirect_stdout)
+Test(bct, test_bct)
 {
     core_t core;
     char *command[] = {"bct", "5", "4", NULL};
@@ -85,7 +85,7 @@ Test(bct, test_bct, .init = cr_redirect_stdout)
     cr_assert_str_eq(core.network.client_list->client_info->buffer_send, expected);
 }
 
-Test(mct, test_mct, .init = cr_redirect_stdout)
+Test(mct, test_mct)
 {
     core_t core;
     char *command[] = {"mct", NULL};
@@ -114,7 +114,7 @@ Test(mct, test_mct, .init = cr_redirect_stdout)
     cr_assert_str_eq(core.network.client_list->client_info->buffer_send, expected);
 }
 
-Test(pin, test_pin, .init = cr_redirect_stdout)
+Test(pin, test_pin)
 {
     core_t core;
     char *command[] = {"pin", "1", NULL};
@@ -137,7 +137,7 @@ Test(pin, test_pin, .init = cr_redirect_stdout)
     cr_assert_str_eq(core.network.client_list->client_info->buffer_send, expected);
 }
 
-Test(ppo, test_ppo, .init = cr_redirect_stdout)
+Test(ppo, test_ppo)
 {
     core_t core;
     char *command[] = {"ppo", "1", NULL};
@@ -160,7 +160,7 @@ Test(ppo, test_ppo, .init = cr_redirect_stdout)
     cr_assert_str_eq(core.network.client_list->client_info->buffer_send, expected);
 }
 
-Test(plv, test_plv, .init = cr_redirect_stdout)
+Test(plv, test_plv)
 {
     core_t core;
     char *command[] = {"plv", "1", NULL};

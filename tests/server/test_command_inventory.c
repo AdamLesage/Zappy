@@ -9,7 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-Test (command_Inventory, command_Inventory_success, .init = cr_redirect_stdout)
+Test (command_Inventory, command_Inventory_success)
 {
     core_t core;
     player_info_t *info = NULL;

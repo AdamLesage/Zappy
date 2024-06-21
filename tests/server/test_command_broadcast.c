@@ -9,13 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-void redirect_all_stdout3(void)
-{
-    cr_redirect_stdout();
-    cr_redirect_stderr();
-}
-
-Test(command_Broadcast, Command_Broadcast_same_case, .init = redirect_all_stdout3)
+Test(command_Broadcast, Command_Broadcast_same_case)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -46,7 +40,7 @@ Test(command_Broadcast, Command_Broadcast_same_case, .init = redirect_all_stdout
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Broadcast, Command_Broadcast_N, .init = redirect_all_stdout3)
+Test(command_Broadcast, Command_Broadcast_N)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -77,7 +71,7 @@ Test(command_Broadcast, Command_Broadcast_N, .init = redirect_all_stdout3)
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Broadcast, Command_Broadcast_N_W, .init = redirect_all_stdout3)
+Test(command_Broadcast, Command_Broadcast_N_W)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -108,7 +102,7 @@ Test(command_Broadcast, Command_Broadcast_N_W, .init = redirect_all_stdout3)
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Broadcast, Command_Broadcast_W, .init = redirect_all_stdout3)
+Test(command_Broadcast, Command_Broadcast_W)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -139,7 +133,7 @@ Test(command_Broadcast, Command_Broadcast_W, .init = redirect_all_stdout3)
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Broadcast, Command_Broadcast_S_W, .init = redirect_all_stdout3)
+Test(command_Broadcast, Command_Broadcast_S_W)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -170,7 +164,7 @@ Test(command_Broadcast, Command_Broadcast_S_W, .init = redirect_all_stdout3)
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Broadcast, Command_Broadcast_S, .init = redirect_all_stdout3)
+Test(command_Broadcast, Command_Broadcast_S)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -201,7 +195,7 @@ Test(command_Broadcast, Command_Broadcast_S, .init = redirect_all_stdout3)
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Broadcast, Command_Broadcast_S_E, .init = redirect_all_stdout3)
+Test(command_Broadcast, Command_Broadcast_S_E)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -232,7 +226,7 @@ Test(command_Broadcast, Command_Broadcast_S_E, .init = redirect_all_stdout3)
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Broadcast, Command_Broadcast_E, .init = redirect_all_stdout3)
+Test(command_Broadcast, Command_Broadcast_E)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -263,7 +257,7 @@ Test(command_Broadcast, Command_Broadcast_E, .init = redirect_all_stdout3)
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Broadcast, Command_Broadcast_N_E, .init = redirect_all_stdout3)
+Test(command_Broadcast, Command_Broadcast_N_E)
 {
     core_t core;
     player_info_t *info1 = NULL;

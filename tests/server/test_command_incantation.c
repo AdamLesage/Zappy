@@ -9,13 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-void redirect_all_stdout4(void)
-{
-    cr_redirect_stdout();
-    cr_redirect_stderr();
-}
-
-Test(command_Incantation, Command_Incantation_sucess_level_1, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_sucess_level_1)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -71,7 +65,7 @@ Test(command_Incantation, Command_Incantation_sucess_level_1, .init = redirect_a
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Incantation, Command_Incantation_multiple_level_1, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_multiple_level_1)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -150,7 +144,7 @@ Test(command_Incantation, Command_Incantation_multiple_level_1, .init = redirect
     delete_player(&core.map, &core.players, 2);
 }
 
-Test(command_Incantation, Command_Incantation_failure_start_level_1, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_failure_start_level_1)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -189,7 +183,7 @@ Test(command_Incantation, Command_Incantation_failure_start_level_1, .init = red
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Incantation, Command_Incantation_failure_end_level_1, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_failure_end_level_1)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -246,7 +240,7 @@ Test(command_Incantation, Command_Incantation_failure_end_level_1, .init = redir
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Incantation, Command_Incantation_sucess_level_2, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_sucess_level_2)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -304,7 +298,7 @@ Test(command_Incantation, Command_Incantation_sucess_level_2, .init = redirect_a
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Incantation, Command_Incantation_failure_level_2, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_failure_level_2)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -347,7 +341,7 @@ Test(command_Incantation, Command_Incantation_failure_level_2, .init = redirect_
     delete_player(&core.map, &core.players, 2);
 }
 
-Test(command_Incantation, Command_Incantation_level_2_not_same_pos, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_level_2_not_same_pos)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -388,7 +382,7 @@ Test(command_Incantation, Command_Incantation_level_2_not_same_pos, .init = redi
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Incantation, Command_Incantation_level_2_not_same_level, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_level_2_not_same_level)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -429,7 +423,7 @@ Test(command_Incantation, Command_Incantation_level_2_not_same_level, .init = re
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Incantation, Command_Incantation_level_2_death_of_a_player, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_level_2_death_of_a_player)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -474,7 +468,7 @@ Test(command_Incantation, Command_Incantation_level_2_death_of_a_player, .init =
     delete_player(&core.map, &core.players, 1);
 }
 
-Test(command_Incantation, Command_Incantation_sucess_level_3, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_sucess_level_3)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -538,7 +532,7 @@ Test(command_Incantation, Command_Incantation_sucess_level_3, .init = redirect_a
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Incantation, Command_Incantation_failure_level_3, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_failure_level_3)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -579,7 +573,7 @@ Test(command_Incantation, Command_Incantation_failure_level_3, .init = redirect_
     delete_player(&core.map, &core.players, 2);
 }
 
-Test(command_Incantation, Command_Incantation_sucess_level_4, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_sucess_level_4)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -653,7 +647,7 @@ Test(command_Incantation, Command_Incantation_sucess_level_4, .init = redirect_a
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Incantation, Command_Incantation_failure_level_4, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_failure_level_4)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -686,7 +680,7 @@ Test(command_Incantation, Command_Incantation_failure_level_4, .init = redirect_
     delete_player(&core.map, &core.players, 1);
 }
 
-Test(command_Incantation, Command_Incantation_sucess_level_5, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_sucess_level_5)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -762,7 +756,7 @@ Test(command_Incantation, Command_Incantation_sucess_level_5, .init = redirect_a
     delete_player(&core.map, &core.players, 4);
 }
 
-Test(command_Incantation, Command_Incantation_sucess_level_6, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_sucess_level_6)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -852,7 +846,7 @@ Test(command_Incantation, Command_Incantation_sucess_level_6, .init = redirect_a
     delete_player(&core.map, &core.players, 4);
 }
 
-Test(command_Incantation, Command_Incantation_sucess_level_7, .init = redirect_all_stdout4)
+Test(command_Incantation, Command_Incantation_sucess_level_7)
 {
     core_t core;
     player_info_t *info1 = NULL;

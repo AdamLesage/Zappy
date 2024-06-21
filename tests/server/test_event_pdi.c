@@ -9,7 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-Test (event_pdi, event_pdi_success, .init = cr_redirect_stdout)
+Test (event_pdi, event_pdi_success)
 {
     core_t core;
 
@@ -20,9 +20,11 @@ Test (event_pdi, event_pdi_success, .init = cr_redirect_stdout)
     add_player(&core.map, &core.players, 1, "GRAPHIC");
     add_player(&core.map, &core.players, 2, "team1");
     add_player(&core.map, &core.players, 3, "team2");
-    pdi(&core.players, 0);
-    pdi(&core.players, 1);
-    cr_assert_stdout_eq_str("pdi 0\npdi 1\n");
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
+    pdi(&core, 0);
+    pdi(&core, 1);
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "pdi 0\npdi 1\n");
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 2);
 }

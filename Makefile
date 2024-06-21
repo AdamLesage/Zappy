@@ -323,20 +323,20 @@ TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_command_inventory.c			\
 				tests/server/test_command_broadcast.c			\
 				tests/server/test_command_incantation.c			\
-				# tests/server/test_event_pnw.c					\
-				# tests/server/test_event_pex.c					\
-				# tests/server/test_event_pbc.c					\
-				# tests/server/test_event_pic.c					\
-				# tests/server/test_event_pie.c					\
-				# tests/server/test_event_pfk.c					\
-				# tests/server/test_event_pdr.c					\
-				# tests/server/test_event_pgt.c					\
-				# tests/server/test_event_pdi.c					\
-				# tests/server/test_event_enw.c					\
-				# tests/server/test_event_ebo.c					\
-				# tests/server/test_event_edi.c					\
-				# tests/server/test_event_seg.c					\
-				# tests/server/test_event_smg.c					\
+				tests/server/test_event_pnw.c					\
+				tests/server/test_event_pex.c					\
+				tests/server/test_event_pbc.c					\
+				tests/server/test_event_pic.c					\
+				tests/server/test_event_pie.c					\
+				tests/server/test_event_pfk.c					\
+				tests/server/test_event_pdr.c					\
+				tests/server/test_event_pgt.c					\
+				tests/server/test_event_pdi.c					\
+				tests/server/test_event_enw.c					\
+				tests/server/test_event_ebo.c					\
+				tests/server/test_event_edi.c					\
+				tests/server/test_event_seg.c					\
+				tests/server/test_event_smg.c					\
 
 TEST_GUI    =   tests/gui/command/test_bct.cpp					\
 				tests/gui/command/test_msz.cpp					\

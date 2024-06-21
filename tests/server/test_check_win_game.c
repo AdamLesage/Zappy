@@ -46,7 +46,7 @@ Test(win_condition, wind_condition_success)
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(win_condition, wind_condition_failure, .init = cr_redirect_stderr)
+Test(win_condition, wind_condition_failure)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -83,7 +83,7 @@ Test(win_condition, wind_condition_failure, .init = cr_redirect_stderr)
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(win_condition, wind_condition_failure2, .init = cr_redirect_stderr)
+Test(win_condition, wind_condition_failure2)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -117,7 +117,7 @@ Test(win_condition, wind_condition_failure2, .init = cr_redirect_stderr)
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(win_condition, wind_condition_failure3, .init = cr_redirect_stderr)
+Test(win_condition, wind_condition_failure3)
 {
     core_t core;
     player_info_t *info = NULL;
