@@ -234,22 +234,22 @@ void Zappy::PlayerPrint::print_walk_animation(int playerIndex)
 void Zappy::PlayerPrint::display()
 {
     for (int i = 0; i < this->_guiConnect->_players.size(); i++) {
+        std::cout << "ici1" << std::endl;
         if (player_sprites.size() < this->_guiConnect->_players.size()) {
             player_sprites.push_back(sf::Sprite());
+            std::cout << "ici2" << std::endl;
             _evolutions.push_back(std::make_pair(0, std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png")));
             _evolutions.back().second->setFrameInfo(82, 67, 16, 2);
         }
-        // if (this->_guiConnect->_players[i]->getLastPosition() != this->_guiConnect->_players[i]->getPosition()) {
-        //     print_walk_animation(i);
-        // }
+        if (this->_guiConnect->_players[i]->getLastPosition() != this->_guiConnect->_players[i]->getPosition()) {
+            print_walk_animation(i);
+        }
         player_sprites[i].setTexture(player_textures[this->_guiConnect->_players[i]->getLevel() - 1]);
         set_scale_of_player(i);
         player_sprites[i].setPosition(this->_guiConnect->_players[i]->getPosition()[0] * 102.4 + 100, this->_guiConnect->_players[i]->getPosition()[1] * 102.4 + 150);
         player_sprites[i].setTextureRect(player_orientation[this->_guiConnect->_players[i]->getLevel() - 1][this->_guiConnect->_players[i]->getOrientation() - 1]);
         this->_window->draw(player_sprites[i]);
         updatePlayersTravelled();
-        fill_color_team();
-        print_player_team();
         _broadcast->check_player_broadcast(i);
         _broadcast->display(i);
         if (this->_guiConnect->_players[i].get()->isPlayerIncanting() == true) {
