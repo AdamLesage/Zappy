@@ -13,7 +13,9 @@ Zappy::TeamPrint::TeamPrint(std::shared_ptr<GuiConnect> guiConnect, std::shared_
     _window = window;
     Rectangle.setSize(sf::Vector2f(400, 600));
     Rectangle.setFillColor(sf::Color::Yellow);
-    Rectangle.setPosition(300, 50);
+    Rectangle.setPosition(220, 140);
+    Rectangle.setOutlineThickness(5);
+    Rectangle.setOutlineColor(sf::Color::Black);
     if (!font.loadFromFile("./asset/gui/Farmhouse.otf"))
         throw InterfaceError("Error: Farmhouse.otf not found", "Interface");
     closeTexture.loadFromFile("./asset/sprite/close.png");
@@ -36,7 +38,7 @@ int Zappy::TeamPrint::getLevel(std::string teamName)
 void Zappy::TeamPrint::print_info(int i)
 {
     _window->draw(Rectangle);
-    close = std::make_shared<Button>(sf::Vector2f(20, 20), sf::Vector2f(680, 50), sf::Color::White);
+    close = std::make_shared<Button>(sf::Vector2f(20, 20), sf::Vector2f(600, 140), sf::Color::White);
     close->setSprite(closeSprite);
     if (close->checkClick(_window) == true)
         print_team_[i] = false;
