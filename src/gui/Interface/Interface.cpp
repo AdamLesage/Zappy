@@ -225,7 +225,7 @@ void Zappy::Interface::print_resssource()
 {
     for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
         for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
-            if (i < ressource_sprite.size() && j < ressource_sprite[i].size()) {
+            if ((std::size_t)i < ressource_sprite.size() && (std::size_t)j < ressource_sprite[i].size()) {
                 ressource_sprite[i][j][6].setPosition(110 + (i * 102.4), 160 + (j * 102.4));
                 if (_gui_connect->_tiles[i][j]->_inventory->get("Food") > 0) {
                     if (_gui_connect->_tiles[i][j]->_inventory->get("Food") > 1)
@@ -289,7 +289,7 @@ void Zappy::Interface::print_resssource()
 
 void Zappy::Interface::print_eggs()
 {
-    for (int i = 0; i < _gui_connect->_eggs.size(); i++) {
+    for (int i = 0; (std::size_t)i < _gui_connect->_eggs.size(); i++) {
         if (egg_sprites.size() < _gui_connect->_eggs.size())
             egg_sprites.push_back(sf::Sprite());
         egg_sprites[i].setTexture(egg_texture);

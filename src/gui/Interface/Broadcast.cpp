@@ -34,7 +34,7 @@ Zappy::Broadcast::~Broadcast()
 void Zappy::Broadcast::display(int i)
 {
     if (_clock.getElapsedTime().asSeconds() < 2) {
-        if (i < _broadcasts_sprites.size() && _broadcasts_sprites.size() > 0) {
+        if ((std::size_t)i < _broadcasts_sprites.size() && _broadcasts_sprites.size() > 0) {
             for (size_t j = 0; j < _broadcasts_sprites.size(); j++) {
                 _window->draw(_broadcasts_sprites[j]);
             }
@@ -46,7 +46,7 @@ void Zappy::Broadcast::display(int i)
 
 void Zappy::Broadcast::check_player_broadcast(int i)
 {
-    if (i < _guiConnect->_players.size() && _guiConnect->_players[i]->getMessage() != "") {
+    if ((std::size_t)i < _guiConnect->_players.size() && _guiConnect->_players[i]->getMessage() != "") {
         _broadcasts_sprites.push_back(sf::Sprite());
         _broadcasts_sprites[_broadcasts_sprites.size() - 1].setScale(0.1, 0.1);
         _broadcasts_sprites[_broadcasts_sprites.size() - 1].setTexture(_broadcasts_textures[0]);
