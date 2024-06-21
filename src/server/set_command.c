@@ -16,7 +16,7 @@ static void set_player_queue(core_t *core, player_info_t *info,
             return;
         }
         if (strcmp(command, "Fork") == 0) {
-            pfk(&core->players, info->id);
+            pfk(core, info->id);
         }
         info->timer_action = get_time_action(command);
     }

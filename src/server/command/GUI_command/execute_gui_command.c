@@ -25,6 +25,5 @@ void execute_gui_command(core_t *core, char *command, int fd)
         }
     }
     add_to_send_buffer(&core->network, "suc\n", fd);
-    send_response("suc\n", fd);
     free_array(array_command);
 }

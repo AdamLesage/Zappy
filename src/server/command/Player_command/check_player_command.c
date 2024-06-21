@@ -17,7 +17,7 @@ static void next_player_command(player_info_t *info, core_t *core)
             return;
         }
         if (strcmp(info->action_queue[0], "Fork") == 0) {
-            pfk(&core->players, info->id);
+            pfk(core, info->id);
         }
         info->timer_action = get_time_action(info->action_queue[0]);
     }
@@ -38,7 +38,7 @@ static void execute_client_command(core_t *core, char *command, int fd)
             return;
         }
     }
-    send_response("ko\n", fd);
+    add_to_send_buffer(&core->network, "ko\n", fd);
     free_array(array_command);
 }
 

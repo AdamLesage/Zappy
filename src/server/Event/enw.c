@@ -7,25 +7,25 @@
 
 #include "server.h"
 
-void send_enw_info(int player_id, eggs_t *eggs, int fd)
+void send_enw_info(network_t *network, int player_id, eggs_t *eggs, int fd)
 {
-    send_response("enw ", fd);
-    send_response_int(eggs->egg_id, fd);
-    send_response(" ", fd);
-    send_response_int(player_id, fd);
-    send_response(" ", fd);
-    send_response_int(eggs->pos_x, fd);
-    send_response(" ", fd);
-    send_response_int(eggs->pos_y, fd);
-    send_response("\n", fd);
+    add_to_send_buffer(network, "enw ", fd);
+    add_int_to_send_buffer(network, eggs->egg_id, fd);
+    add_to_send_buffer(network, " ", fd);
+    add_int_to_send_buffer(network, player_id, fd);
+    add_to_send_buffer(network, " ", fd);
+    add_int_to_send_buffer(network, eggs->pos_x, fd);
+    add_to_send_buffer(network, " ", fd);
+    add_int_to_send_buffer(network, eggs->pos_y, fd);
+    add_to_send_buffer(network, "\n", fd);
 }
 
-void enw(players_t *players, int player_id, eggs_t *eggs)
+void enw(core_t *core, int player_id, eggs_t *eggs)
 {
-    for (players_list_t *tmp = players->players_list;
+    for (players_list_t *tmp = core->players.players_list;
         tmp != NULL; tmp = tmp->next) {
         if (strcmp(tmp->player_info->team_name, "GRAPHIC") == 0) {
-            send_enw_info(player_id, eggs, tmp->fd);
+            send_enw_info(&core->network, player_id, eggs, tmp->fd);
         }
     }
 }

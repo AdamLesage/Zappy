@@ -15,7 +15,7 @@ static bool delete_eggs_at(core_t *core, int x, int y, bool is_deleted)
         if (tmp->next->pos_x == x && tmp->next->pos_y == y) {
             deleted_eggs = tmp->next;
             tmp->next = tmp->next->next;
-            edi(&core->players, deleted_eggs->egg_id);
+            edi(core, deleted_eggs->egg_id);
             free(deleted_eggs);
             is_deleted = true;
         }
@@ -31,7 +31,7 @@ static bool remove_eggs_at(core_t *core, int x, int y)
     if (core->map.eggs->pos_x == x && core->map.eggs->pos_y == y) {
         deleted_eggs = core->map.eggs;
         core->map.eggs = core->map.eggs->next;
-        edi(&core->players, deleted_eggs->egg_id);
+        edi(core, deleted_eggs->egg_id);
         free(deleted_eggs);
         is_deleted = true;
     }
@@ -63,7 +63,7 @@ void eject(core_t *core, int fd, char **command)
 
     if (info == NULL || command == NULL)
         return;
-    pex(&core->players, info);
+    pex(core, info);
     eject_player(core, fd, info);
     remove_eggs_at(core, info->pos_x, info->pos_y);
     add_to_send_buffer(&core->network, "ok\n", fd);

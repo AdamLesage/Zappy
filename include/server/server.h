@@ -122,21 +122,21 @@ void sst(core_t *core, int fd, char **command);
 void tna(core_t *core, int fd, char **command);
 void tna_start(core_t *core, int fd);
 
-void pnw(players_t *players, player_info_t *player_info);
-void send_pnw_info(player_info_t *player_info, int fd);
-void pex(players_t *players, player_info_t *player_info);
-void pbc(players_t *players, int id, char *message);
-void pic(players_t *players, incantation_info_t *info);
-void pie(players_t *players, int x, int y, bool state);
-void pfk(players_t *players, int id);
-void pdr(players_t *players, int id, enum Object object);
-void pgt(players_t *players, int id, enum Object object);
-void pdi(players_t *players, int id);
-void enw(players_t *players, int player_id, eggs_t *eggs);
-void send_enw_info(int player_id, eggs_t *eggs, int fd);
-void ebo(players_t *players, int egg_id);
-void edi(players_t *players, int egg_id);
-void seg(players_t *players, char *team_name);
-void smg(players_t *players, char *message);
+void pnw(core_t *core, player_info_t *player_info);
+void send_pnw_info(network_t *network, player_info_t *player_info, int fd);
+void pex(core_t *core, player_info_t *player_info);
+void pbc(core_t *core, int id, char *message);
+void pic(core_t *core, incantation_info_t *info);
+void pie(core_t *core, int x, int y, bool state);
+void pfk(core_t *core, int id);
+void pdr(core_t *core, int id, enum Object object);
+void pgt(core_t *core, int id, enum Object object);
+void pdi(core_t *core, int id);
+void enw(core_t *core, int player_id, eggs_t *eggs);
+void send_enw_info(network_t *network, int player_id, eggs_t *eggs, int fd);
+void ebo(core_t *core, int egg_id);
+void edi(core_t *core, int egg_id);
+void seg(core_t *core, char *team_name);
+void smg(core_t *core, char *message);
 
 #endif /* !SERVER_H_ */

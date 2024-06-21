@@ -14,7 +14,7 @@ void sgt(core_t *core, int fd, char **command)
     char *str_frequency = NULL;
 
     if (command == NULL || len_array(command) != 1) {
-        send_response("sbp\n", fd);
+        add_to_send_buffer(&core->network, "sbp\n", fd);
         return;
     }
     str_frequency = int_to_str(core->arguments.frequency);

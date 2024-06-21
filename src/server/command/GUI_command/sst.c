@@ -14,7 +14,7 @@ void sst(core_t *core, int fd, char **command)
     int new_frequency = 0;
 
     if (len_array(command) != 2) {
-        send_response("sbp\n", fd);
+        add_to_send_buffer(&core->network, "sbp\n", fd);
         return;
     }
     new_frequency = atoi(command[1]);

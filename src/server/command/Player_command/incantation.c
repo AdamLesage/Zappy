@@ -61,7 +61,7 @@ void start_incantation(core_t *core, int fd)
             init_incantation_info(player_info, core);
         new_incantation->next = core->players.incantation_list;
         core->players.incantation_list = new_incantation;
-        pic(&core->players, new_incantation->incantation_info);
+        pic(core, new_incantation->incantation_info);
     } else {
         add_to_send_buffer(&core->network, "ko\n", fd);
     }
@@ -129,7 +129,7 @@ static void incantation_end_success(tile_info_t *tile_info,
             add_to_send_buffer(&core->network, "\n", info->fd);
         }
         plv_event(&core->network, &core->players, info);
-        pie(&core->players, tile_info->pos_x, tile_info->pos_y, true);
+        pie(core, tile_info->pos_x, tile_info->pos_y, true);
     }
 }
 
@@ -143,7 +143,7 @@ static void incantation_end_failure(incantation_info_t *incantation_info,
         if (info != NULL)
             add_to_send_buffer(&core->network, "ko\n", info->fd);
     }
-    pie(&core->players, incantation_info->pos_x, incantation_info->pos_y,
+    pie(core, incantation_info->pos_x, incantation_info->pos_y,
         false);
 }
 

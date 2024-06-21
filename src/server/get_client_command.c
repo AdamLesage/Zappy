@@ -18,9 +18,9 @@ static void disconnect_client(int readbite, int fd_client, core_t *core)
     close(fd_client);
     FD_CLR(fd_client, &core->network.select_info.rfds);
     if (info != NULL) {
-        pdi(&core->players, info->id);
+        pdi(core, info->id);
         delete_player(&core->map, &core->players, fd_client);
-        enw(&core->players, -1, core->map.eggs);
+        enw(core, -1, core->map.eggs);
     }
     delete_client_of_network(&core->network, fd_client);
 }

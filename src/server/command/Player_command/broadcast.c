@@ -27,6 +27,6 @@ void broadcast(core_t *core, int fd, char **command)
             add_to_send_buffer(&core->network, command[1], tmp->fd);
             add_to_send_buffer(&core->network, "\n", tmp->fd);
         }
-        pbc(&core->players, info->id, command[1]);
+        pbc(core, info->id, command[1]);
     }
 }

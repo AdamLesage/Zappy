@@ -44,7 +44,7 @@ void take(core_t *core, int fd, char **command)
     put_on_inventory(&core->players, object, fd);
     add_to_send_buffer(&core->network, "ok\n", fd);
     info = find_player(&core->players, fd);
-    pgt(&core->players, info->id, object);
+    pgt(core, info->id, object);
     pin_event(&core->network, &core->players, info);
     bct_event(core, pos[0], pos[1]);
     free(pos);

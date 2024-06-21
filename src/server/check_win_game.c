@@ -29,7 +29,7 @@ void check_win_game(core_t *core)
     for (int i = 0; core->arguments.name_teams[i] != NULL; i++) {
         if (check_win_for_team(&core->players,
             core->arguments.name_teams[i])) {
-            seg(&core->players, core->arguments.name_teams[i]);
+            seg(core, core->arguments.name_teams[i]);
             return;
         }
     }
