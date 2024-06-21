@@ -26,6 +26,7 @@ namespace Zappy {
             void print_team();
             void display();
             void print_info(int i);
+            int getLevel(std::string teamName);
         protected:
             std::shared_ptr<GuiConnect> _guiConnect;
             std::shared_ptr<sf::RenderWindow> _window;
@@ -41,6 +42,9 @@ namespace Zappy {
             std::vector<std::string> newteamNames;
             std::shared_ptr<Button> close;
             std::vector<int> players;
+            sf::Sprite closeSprite;
+            sf::Texture closeTexture;
+            std::vector<int> players_by_team;            
         private:
     };
 }

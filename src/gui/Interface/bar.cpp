@@ -7,7 +7,7 @@
 
 #include "bar.hpp"
 
-Zappy::Bar::Bar(sf::Vector2f size, sf::Vector2f size_back, sf::Vector2f pos, sf::Color color, int outline, sf::Color outlineColor)
+Zappy::Bar::Bar(sf::Vector2f size, sf::Vector2f size_back, sf::Vector2f pos, sf::Color color, int outline, sf::Color outlineColor, int origin)
 {
     this->shape.setSize(size);
     this->back_shape.setSize(size_back);
@@ -25,6 +25,12 @@ Zappy::Bar::Bar(sf::Vector2f size, sf::Vector2f size_back, sf::Vector2f pos, sf:
     this->hoverSape.setFillColor(sf::Color::Black);
     this->_characterSize = 0;
     this->_pos = pos;
+    if (origin > 200)
+        origin = 200;
+    if (origin != 0) {
+        this->shape.setPosition(pos.x + origin, pos.y);
+        this->hoverSape.setPosition(pos.x + origin, pos.y);
+    }
 }
 
 Zappy::Bar::~Bar()

@@ -23,7 +23,7 @@ namespace Zappy {
         public:
             Broadcast(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<GuiConnect> guiConnect);
             ~Broadcast();
-            void display();
+            void display(int i);
             void check_player_broadcast(int i);
         protected:
             sf::Font font;
