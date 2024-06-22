@@ -35,6 +35,12 @@ Zappy::Menu::Menu(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Play
     buttons[3]->setText("Credits");
     menu = false;
     credit = std::make_shared<Credit>(window);
+    shop = std::make_shared<Shop>(window, playerPrint);
+    for (int i = 0; i < 8; i++) {
+        pplayer_rank_text.push_back(sf::Text("Level " + std::to_string(i + 1), font, 40));
+        pplayer_rank_text[i].setFillColor(sf::Color::White);
+        pplayer_rank_text[i].setPosition(100, 100 + i * 100);
+    }
 }
 
 Zappy::Menu::~Menu()
@@ -57,7 +63,7 @@ void Zappy::Menu::display()
         _window->display();
     }
     loading.setTexture(&loading_texture[1]);
-    loadingBar.setSize(sf::Vector2f(400, 1080));
+    loadingBar.setSize(sf::Vector2f(500, 1080));
     loadingBar.setPosition(0, 0);
     loadingBar.setFillColor(sf::Color(0, 0, 0, 150));
     while (menu == false) {
@@ -69,17 +75,15 @@ void Zappy::Menu::display()
                 credit->run();
             }
             buttons[1]->checkClick(_window, event);
-            buttons[2]->checkClick(_window, event);
+            if (buttons[2]->checkClick(_window, event) == true) {
+                shop->start();
+                shop->display();
+            }
             if (event.type == sf::Event::Closed)
                 _window->close();
         }
         _window->draw(loading);
         _window->draw(loadingBar);
-        for (int i = 0; i < 8; i++) {
-            pplayer_rank_text.push_back(sf::Text("Level " + std::to_string(i + 1), font, 40));
-            pplayer_rank_text[i].setFillColor(sf::Color::White);
-            pplayer_rank_text[i].setPosition(100, 100 + i * 100);
-        }
         for (int i = 0; i < 8; i++) {
             _window->draw(_playerPrint->getPlayerRank()[i]);
             _window->draw(pplayer_rank_text[i]);
