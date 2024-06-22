@@ -26,6 +26,7 @@ class AgentBroadcast():
             return False
         if orientation == None: # If the orientation is None, then return
             return False
+        print(f"Going to incantation with orientation {orientation}")
         if orientation == "0": # Player is on the broadcast position
             print("Player is on the broadcast position")
             return True
