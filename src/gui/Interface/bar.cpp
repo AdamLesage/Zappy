@@ -37,12 +37,11 @@ Zappy::Bar::~Bar()
 {
 }
 
-int Zappy::Bar::checkClick(std::shared_ptr<sf::RenderWindow> window)
+int Zappy::Bar::checkClick(std::shared_ptr<sf::RenderWindow> window, sf::Event event)
 {
     sf::Mouse mouse;
-    sf::Vector2f mousPos;
-    mousPos.x = mouse.getPosition(*window.get()).x;
-    mousPos.y = mouse.getPosition(*window.get()).y;
+    sf::Vector2f mousPos = window->mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
+
     this->setState(StateBar::None);
     if (this->shape.getGlobalBounds().contains(mousPos)) {
         this->setState(StateBar::Hover);

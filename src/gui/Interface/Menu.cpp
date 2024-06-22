@@ -63,13 +63,13 @@ void Zappy::Menu::display()
     while (menu == false) {
         _window->clear(sf::Color::Black);
         while (_window->pollEvent(event)) {
-            menu = buttons[0]->checkClick(_window);
-            if (buttons[3]->checkClick(_window) == true) {
+            menu = buttons[0]->checkClick(_window, event);
+            if (buttons[3]->checkClick(_window, event) == true) {
                 credit->start();
                 credit->run();
             }
-            buttons[1]->checkClick(_window);
-            buttons[2]->checkClick(_window);
+            buttons[1]->checkClick(_window, event);
+            buttons[2]->checkClick(_window, event);
             if (event.type == sf::Event::Closed)
                 _window->close();
         }
