@@ -54,9 +54,8 @@ static bool read_client_socket(core_t *core, int fd_client)
     }
     client_info->buffer_read = alloc_buffer(client_info->buffer_read, 1);
     buf = read_socket(core, fd_client);
-    if (buf == NULL) {
+    if (buf == NULL)
         return (true);
-    }
     strcat(client_info->buffer_read, buf);
     if (buf[0] == '\n') {
         client_info->buffer_read[strlen(client_info->buffer_read) - 1] = '\0';
