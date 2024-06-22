@@ -81,6 +81,8 @@ namespace Zappy
         }
 
     protected:
+        void printPlayerEvolution(bool, int i);
+        bool setPlayerEvolution(int i);
         std::vector<sf::Sprite> player_rank;
         std::vector<sf::Text> player_rank_text;
         std::shared_ptr<GuiConnect> _guiConnect;

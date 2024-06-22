@@ -24,6 +24,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
+#include <mutex>
 
 #ifndef INTERFACE_HPP_
 #define INTERFACE_HPP_
