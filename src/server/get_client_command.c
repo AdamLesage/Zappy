@@ -43,15 +43,19 @@ static char *read_socket(core_t *core, int fd_client)
     return (buf);
 }
 
-static void read_client_socket(core_t *core, int fd_client)
+static bool read_client_socket(core_t *core, int fd_client)
 {
     client_info_t *client_info = find_client(&core->network, fd_client);
     char *buf = NULL;
 
+    if (client_info == NULL) {
+        disconnect_client(0, fd_client, core);
+        return (true);
+    }
     client_info->buffer_read = alloc_buffer(client_info->buffer_read, 1);
     buf = read_socket(core, fd_client);
     if (buf == NULL) {
-        return;
+        return (true);
     }
     strcat(client_info->buffer_read, buf);
     if (buf[0] == '\n') {
@@ -61,15 +65,16 @@ static void read_client_socket(core_t *core, int fd_client)
         client_info->buffer_read = NULL;
     }
     free(buf);
-    return;
+    return (false);
 }
 
 void get_client_command(core_t *core)
 {
+    bool test = false;
     for (int i = 0; i <= core->network.select_info.max_fd; i++) {
         if (FD_ISSET(i, &core->network.select_info.read_fds) &&
             core->network.select_info.fd_socket_control != i) {
-            read_client_socket(core, i);
+            test = read_client_socket(core, i);
         }
     }
 }
