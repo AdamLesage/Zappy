@@ -76,7 +76,7 @@ void Zappy::Menu::display()
         _window->draw(loading);
         _window->draw(loadingBar);
         for (int i = 0; i < 8; i++) {
-            pplayer_rank_text.push_back(sf::Text("Level " + std::to_string(i), font, 40));
+            pplayer_rank_text.push_back(sf::Text("Level " + std::to_string(i + 1), font, 40));
             pplayer_rank_text[i].setFillColor(sf::Color::White);
             pplayer_rank_text[i].setPosition(100, 100 + i * 100);
         }

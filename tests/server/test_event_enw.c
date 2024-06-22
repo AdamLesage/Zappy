@@ -9,7 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-Test (event_enw, event_enw1, .init = cr_redirect_stdout)
+Test (event_enw, event_enw1)
 {
     core_t core;
 
@@ -20,11 +20,13 @@ Test (event_enw, event_enw1, .init = cr_redirect_stdout)
     add_player(&core.map, &core.players, 1, "GRAPHIC");
     add_player(&core.map, &core.players, 2, "team1");
     add_player(&core.map, &core.players, 3, "team2");
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
     put_eggs(&core.map, 3, 4, "team1");
     put_eggs(&core.map, 5, 1, "team2");
-    enw(&core.players, 2, core.map.eggs->next);
-    enw(&core.players, -1, core.map.eggs);
-    cr_assert_stdout_eq_str("enw 4 2 3 4\nenw 5 -1 5 1\n");
+    enw(&core, 2, core.map.eggs->next);
+    enw(&core, -1, core.map.eggs);
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "enw 4 2 3 4\nenw 5 -1 5 1\n");
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);

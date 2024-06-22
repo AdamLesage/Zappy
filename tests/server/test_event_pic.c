@@ -9,7 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-Test (event_pic, event_pic1, .init = cr_redirect_stdout)
+Test (event_pic, event_pic1)
 {
     core_t core;
     incantation_info_t *incantation = malloc(sizeof(incantation_info_t));
@@ -30,9 +30,11 @@ Test (event_pic, event_pic1, .init = cr_redirect_stdout)
     add_player(&core.map, &core.players, 1, "GRAPHIC");
     add_player(&core.map, &core.players, 2, "team1");
     add_player(&core.map, &core.players, 3, "team2");
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
 
-    pic(&core.players, incantation);
-    cr_assert_stdout_eq_str("pic 2 2 4 0 1\n");
+    pic(&core, incantation);
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "pic 2 2 4 0 1\n");
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);

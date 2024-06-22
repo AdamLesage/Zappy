@@ -9,7 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-Test (event_pie, event_pie_success, .init = cr_redirect_stdout)
+Test (event_pie, event_pie_success)
 {
     core_t core;
 
@@ -20,9 +20,11 @@ Test (event_pie, event_pie_success, .init = cr_redirect_stdout)
     add_player(&core.map, &core.players, 1, "GRAPHIC");
     add_player(&core.map, &core.players, 2, "team1");
     add_player(&core.map, &core.players, 3, "team2");
-    pie(&core.players, 3, 5, true);
-    pie(&core.players, 9, 0, false);
-    cr_assert_stdout_eq_str("pie 3 5 1\npie 9 0 0\n");
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
+    pie(&core, 3, 5, true);
+    pie(&core, 9, 0, false);
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "pie 3 5 1\npie 9 0 0\n");
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 2);
 }
