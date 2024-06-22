@@ -29,10 +29,8 @@ namespace Zappy
         ~PlayerPrint();
         void display();
         void print_walk_animation(int playerIndex);
-        void print_player_team();
         void set_scale_of_player(int i);
         void updatePlayersTravelled();
-        void fill_color_team();
         std::vector<sf::Sprite> getPlayerSprites(){
             return player_sprites;
         }

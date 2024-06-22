@@ -152,50 +152,6 @@ void Zappy::PlayerPrint::set_scale_of_player(int i)
 }
 
 
-void Zappy::PlayerPrint::fill_color_team()
-{
-    for (size_t i = 0; i <= _teamnbr; i++ and i <= color_list_team.size() ) {
-        sf::Color color;
-        color = sf::Color(rand() % 256, rand() % 256, rand() % 256);
-        color_list_team.push_back(color);
-    }
-}
-
-
-void Zappy::PlayerPrint::print_player_team()
-{
-    std::vector<std::string> team_list;
-
-    for (size_t i = 0; i < this->_guiConnect->_players.size(); i++) {
-        std::string team_name = this->_guiConnect->_players[i]->getTeamName();
-        bool team_exists = false;
-        for (const std::string& team : team_list) {
-            if (team == team_name) {
-                team_exists = true;
-                break;
-            }
-        }
-        if (!team_exists) {
-            team_list.push_back(team_name);
-        }
-    }
-
-      for (const auto& player : this->_guiConnect->_players) {
-            sf::RectangleShape playerSquare(sf::Vector2f(2, 2));
-            std::string team_name = player->getTeamName();
-            int team_index = 0;
-            for (size_t i = 0; i < team_list.size(); i++) {
-                if (team_list[i] == team_name) {
-                    team_index = i;
-                    break;
-                }
-            }
-            playerSquare.setFillColor(color_list_team[team_index]);
-            playerSquare.setPosition(player->getPosition()[0] * 102.4 + 112, player->getPosition()[1] * 102.4 + 162);
-            this->_window->draw(playerSquare);
-        }
-}
-
 
 void Zappy::PlayerPrint::updatePlayersTravelled()
 {
