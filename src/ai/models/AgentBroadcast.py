@@ -14,37 +14,41 @@ class AgentBroadcast():
     def __init__(self) -> None:
         pass
 
-    def goToBroadcast(self, orientation: str, agentInfo: AgentInfo, status: str) -> None:
+    def goToBroadcast(self, orientation: str, agentInfo: AgentInfo, status: str) -> bool:
         """
-        Player will go to the broadcast position and add the movements to the movements list
+        Directs the player to the broadcast position based on the given orientation and status.
+        
+        Parameters:
+        - orientation (str): The direction towards the broadcast position relative to the player.
+        - agentInfo (AgentInfo): An object containing agent information including movements.
+        - status (str): The current status of the player.
+        
+        Returns:
+        - bool: True if the player starts moving towards the broadcast position, False otherwise.
         """
-        if status != "Going to incantation": # If the player is not moving to incantation, then return
+        if status != "Going to incantation":  # If the player is not moving to incantation, then return
             return False
-        if len(agentInfo.movements) > 0: # If the movements list is not empty, then return
-            # print(f"MOVEMENTS: {agentInfo.movements}")
-            # agentInfo.commandsToSend.clear()
+        if agentInfo.movements:  # If the movements list is not empty, then return
             return False
-        if orientation == None: # If the orientation is None, then return
+        if not orientation:  # If the orientation is None or empty, then return
             return False
+
         print(f"Going to incantation with orientation {orientation}")
-        if orientation == "0": # Player is on the broadcast position
-            print("Player is on the broadcast position")
+        movements_map = {
+            "0": [],
+            "1": ["Forward\n"],
+            "2": ["Forward\n", "Left\n", "Forward\n"],
+            "3": ["Left\n", "Forward\n"],
+            "4": ["Left\n", "Forward\n", "Left\n", "Forward\n"],
+            "5": ["Left\n", "Left\n", "Forward\n"],
+            "6": ["Right\n", "Forward\n", "Right\n", "Forward\n"],
+            "7": ["Right\n", "Forward\n"],
+            "8": ["Forward\n", "Right\n", "Forward\n"]
+        }
+        movements = movements_map.get(orientation)
+        if movements is not None:
+            agentInfo.movements.extend(movements)
+            if orientation == "0":
+                print("Player is on the broadcast position")
             return True
-        elif orientation == "1": # Broadcast position is on the north of the player
-            agentInfo.movements.append("Forward\n")
-        elif orientation == "2": # Broadcast position is on north-west of the player
-            agentInfo.movements.append("Forward\n")
-        elif orientation == "3": # Broadcast position is on the west of the player
-            agentInfo.movements.append("Left\n")
-        elif orientation == "4": # Broadcast position is on the south-west of the player
-            agentInfo.movements.append("Left\n")
-        elif orientation == "5": # Broadcast position is on the south of the player
-            agentInfo.movements.append("Left\n")
-        elif orientation == "6": # Broadcast position is on the south-east of the player
-            agentInfo.movements.append("Right\n")
-        elif orientation == "7": # Broadcast position is on the east of the player
-            agentInfo.movements.append("Right\n")
-        elif orientation == "8": # Broadcast position is on the north-east of the player
-            agentInfo.movements.append("Forward\n")
-        # print(f"Moves after goToBroadcast: {agentInfo.movements} with orientation {orientation} and status {status}")
-        return True
+        return False
