@@ -127,6 +127,22 @@ int teamnbr, std::shared_ptr<Broadcast> brodcasr, std::vector<std::pair<int, std
     player_anim_rank4[3][2] = sf::IntRect(290, 166, 54, 53);
     player_anim_rank4[3][3] = sf::IntRect(418, 165, 54, 53);
 
+    player_anim_rank5[0][0] = sf::IntRect(53, 43, 22, 48);
+    player_anim_rank5[0][1] = sf::IntRect(181, 42, 22, 47);
+    player_anim_rank5[0][2] = sf::IntRect(309, 43, 22, 48);
+    player_anim_rank5[0][3] = sf::IntRect(53, 43, 22, 48);
+    player_anim_rank5[1][0] = sf::IntRect(38, 437, 56, 31);
+    player_anim_rank5[1][1] = sf::IntRect(166, 436, 56, 31);
+    player_anim_rank5[1][2] = sf::IntRect(294, 437, 56, 31);
+    player_anim_rank5[1][3] = sf::IntRect(38, 437, 56, 31);
+    player_anim_rank5[2][0] = sf::IntRect(53, 302, 22, 46);
+    player_anim_rank5[2][1] = sf::IntRect(181, 301, 22, 45);
+    player_anim_rank5[2][2] = sf::IntRect(309, 302, 22, 46);
+    player_anim_rank5[2][3] = sf::IntRect(53, 302, 22, 46);
+    player_anim_rank5[3][0] = sf::IntRect(33, 181, 56, 31);
+    player_anim_rank5[3][1] = sf::IntRect(161, 180, 56, 30);
+    player_anim_rank5[3][2] = sf::IntRect(289, 181, 56, 31);
+    player_anim_rank5[3][3] = sf::IntRect(33, 181, 56, 31);
 
     player_orientation[0][0] = sf::IntRect(35, 2, 23, 27);
     player_orientation[0][3] = sf::IntRect(32, 103, 31, 24);
