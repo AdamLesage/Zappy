@@ -70,11 +70,10 @@ static bool read_client_socket(core_t *core, int fd_client)
 
 void get_client_command(core_t *core)
 {
-    bool test = false;
     for (int i = 0; i <= core->network.select_info.max_fd; i++) {
         if (FD_ISSET(i, &core->network.select_info.read_fds) &&
             core->network.select_info.fd_socket_control != i) {
-            test = read_client_socket(core, i);
+            read_client_socket(core, i);
         }
     }
 }
