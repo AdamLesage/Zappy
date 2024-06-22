@@ -25,15 +25,16 @@ Zappy::Button::~Button()
 {
 }
 
-bool Zappy::Button::checkClick(std::shared_ptr<sf::RenderWindow> window)
+bool Zappy::Button::checkClick(std::shared_ptr<sf::RenderWindow> window, sf::Event event)
 {
     sf::Mouse mouse;
-    sf::Vector2f mousPos;
-    mousPos.x = mouse.getPosition(*window.get()).x;
-    mousPos.y = mouse.getPosition(*window.get()).y;
+    sf::Vector2f mousPos = window->mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
+    sf::Vector2f mousPos2 = window->mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
+
     this->setState(StateButton::None);
-    if (this->shape.getGlobalBounds().contains(mousPos)) {
+    if (this->shape.getGlobalBounds().contains(mousPos2))
         this->setState(StateButton::Hover);
+    if (this->shape.getGlobalBounds().contains(mousPos)) {
         if (mouse.isButtonPressed(sf::Mouse::Button::Left)) {
             this->setState(StateButton::Clicked);
             return (true);

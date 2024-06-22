@@ -199,7 +199,7 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 325), sf::Color(150, 150, 150), 5, sf::Color::Black, _gui_connect->_timeUnit));
     while (window->isOpen()) {
         window->clear(sf::Color::Black);
-        sound_volume = bars[0]->checkClick(window);
+        sound_volume = bars[0]->checkClick(window, event);
         backgroundMusic.setVolume(sound_volume);
         check_event();
         window->setView(view); 
@@ -235,10 +235,10 @@ void Zappy::Interface::loop(std::shared_ptr<GuiConnect> gui_connect)
         window->setView(window->getDefaultView());
         for (size_t i = 0; i < _rect.size(); i++)
             window->draw(_rect[i]);
-        _teamPrint->display();
+        _teamPrint->display(event);
         for (size_t i = 0; i < Texts.size(); i++)
             window->draw(Texts[i]);
-        tick = bars[1]->checkClick(window);
+        tick = bars[1]->checkClick(window, event);
         if (tick > 2 && tick != last_tick) {
             _gui_connect->setTimeUnit(std::to_string(tick));
             last_tick = tick;

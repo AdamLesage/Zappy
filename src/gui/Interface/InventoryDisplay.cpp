@@ -98,7 +98,7 @@ Zappy::InventoryDisplay::~InventoryDisplay()
 
 void Zappy::InventoryDisplay::check_event(sf::Event *event, std::vector<sf::Sprite> players_sprites, sf::View view)
 {
-    if (closeButton->checkClick(_window)) {
+    if (closeButton->checkClick(_window, *event)) {
         current_player_index = -1;
     }
     if (event->type == sf::Event::MouseButtonPressed) {
