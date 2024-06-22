@@ -9,7 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-Test (command_interact_player, command_take_success, .init = cr_redirect_stdout)
+Test (command_interact_player, command_take_success)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -20,8 +20,8 @@ Test (command_interact_player, command_take_success, .init = cr_redirect_stdout)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
     info = find_player(&core.players, 1);
     tile_info = find_tile(&core.map, 5, 5);
     tile_info->nb_deraumere = 1;
@@ -78,7 +78,7 @@ Test (command_interact_player, command_take_success, .init = cr_redirect_stdout)
     delete_player(&core.map, &core.players, 1);
 }
 
-Test (command_interact_player, command_take_unknow_object, .init = cr_redirect_stdout)
+Test (command_interact_player, command_take_unknow_object)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -89,8 +89,8 @@ Test (command_interact_player, command_take_unknow_object, .init = cr_redirect_s
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
     info = find_player(&core.players, 1);
     tile_info = find_tile(&core.map, 5, 5);
     info->action_queue[0] = strdup("Take test");
@@ -105,12 +105,12 @@ Test (command_interact_player, command_take_unknow_object, .init = cr_redirect_s
     info->pos_x = 5;
     info->pos_y = 5;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ko\n");
+    cr_assert_str_eq("ko\n", core.network.client_list->client_info->buffer_send);
 
     delete_player(&core.map, &core.players, 1);
 }
 
-Test (command_interact_player, command_set_success, .init = cr_redirect_stdout)
+Test (command_interact_player, command_set_success)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -121,8 +121,8 @@ Test (command_interact_player, command_set_success, .init = cr_redirect_stdout)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
     info = find_player(&core.players, 1);
     tile_info = find_tile(&core.map, 5, 5);
     tile_info->nb_deraumere = 1;
@@ -185,7 +185,7 @@ Test (command_interact_player, command_set_success, .init = cr_redirect_stdout)
     delete_player(&core.map, &core.players, 1);
 }
 
-Test (command_interact_player, command_set_unknow_object, .init = cr_redirect_stdout)
+Test (command_interact_player, command_set_unknow_object)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -196,8 +196,8 @@ Test (command_interact_player, command_set_unknow_object, .init = cr_redirect_st
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
     info = find_player(&core.players, 1);
     tile_info = find_tile(&core.map, 5, 5);
     info->action_queue[0] = strdup("Set test");
@@ -212,7 +212,7 @@ Test (command_interact_player, command_set_unknow_object, .init = cr_redirect_st
     info->pos_x = 5;
     info->pos_y = 5;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("ko\n");
+    cr_assert_str_eq("ko\n", core.network.client_list->client_info->buffer_send);
 
     delete_player(&core.map, &core.players, 1);
 }
