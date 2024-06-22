@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** Zappy
 ** File description:
-** Menu
+** Shop
 */
 
 #include <SFML/Graphics.hpp>
@@ -11,39 +11,39 @@
 #include <SFML/Audio.hpp>
 #include "../ServerInfo/GuiConnect.hpp"
 #include "Button.hpp"
-#include "Credit.hpp"
 #include "PlayerPrint.hpp"
 #include <memory>
 #include "InterfaceError.hpp"
-#include "Shop.hpp"
 
-#ifndef MENU_HPP_
-#define MENU_HPP_
+
+#ifndef SHOP_HPP_
+#define SHOP_HPP_
 
 namespace Zappy {
-    class Menu {
+    class Shop {
         public:
-            Menu(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<PlayerPrint> playerPrint);
-            ~Menu();
+            Shop(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<PlayerPrint> playerPrint);
+            ~Shop();
             void display();
-
+            void start() { isRunning = true; }
         protected:
             std::shared_ptr<PlayerPrint> _playerPrint;
+            bool isRunning;
             std::shared_ptr<sf::RenderWindow> _window;
-            std::shared_ptr<GuiConnect> _guiConnect;
+            sf::Font font;
+            std::vector<std::string> skins;
+            std::vector<sf::Text> texts;
             std::vector<sf::Texture> loading_texture;
             sf::RectangleShape loading;
-            sf::Clock clock;
-            std::shared_ptr<Credit> credit;
-            std::shared_ptr<Shop> shop;
-            sf::RectangleShape loadingBar;
-            std::vector<std::shared_ptr<Button>> buttons;
             std::vector<sf::Text> pplayer_rank_text;
-            bool menu;
+            std::vector<std::shared_ptr<Button>> buttons;
             sf::Event event;
-            sf::Font font;
+            sf::RectangleShape shoprect;
+            std::shared_ptr<Button> close;
+            sf::Sprite closeSprite;
+            sf::Texture closeTexture;
         private:
     };
 }
 
-#endif /* !MENU_HPP_ */
+#endif /* !SHOP_HPP_ */
