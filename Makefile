@@ -146,7 +146,6 @@ SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/ServerInfo/Command/SBP.cpp								\
 			src/gui/ServerInfo/Command/BCT.cpp								\
 			src/gui/ServerInfo/Command/MCT.cpp								\
-			src/gui/DataManagement/server_info_management.cpp				\
 			src/gui/Interface/PlayerPrint.cpp								\
 			src/gui/Interface/LoadInterface.cpp								\
 
