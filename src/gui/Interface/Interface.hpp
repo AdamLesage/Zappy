@@ -42,6 +42,10 @@ namespace Zappy {
             void print_resssource();
             void print_eggs();
             void playBackgroundMusic(const std::string& filename);
+            void loadResources();
+            void loadTiles();
+            void loadTexts();
+            void loadSound();
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;
