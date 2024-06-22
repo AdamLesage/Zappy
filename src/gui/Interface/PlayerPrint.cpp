@@ -156,6 +156,10 @@ int teamnbr, std::shared_ptr<Broadcast> brodcasr, std::vector<std::pair<int, std
     player_anim_rank6[2][1] = sf::IntRect(177, 302, 28, 41);
     player_anim_rank6[2][2] = sf::IntRect(305, 303, 28, 42);
     player_anim_rank6[2][3] = sf::IntRect(49, 303, 28, 42);
+    player_anim_rank6[3][0] = sf::IntRect(36, 171, 50, 39);
+    player_anim_rank6[3][1] = sf::IntRect(164, 170, 50, 40);
+    player_anim_rank6[3][2] = sf::IntRect(292, 171, 50, 40);
+    player_anim_rank6[3][3] = sf::IntRect(36, 171, 50, 39);
 
     player_orientation[0][0] = sf::IntRect(35, 2, 23, 27);
     player_orientation[0][3] = sf::IntRect(32, 103, 31, 24);
