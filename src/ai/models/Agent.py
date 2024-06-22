@@ -134,7 +134,6 @@ class Agent():
                             if "Current level" in self.receive_from_server:
                                 self.agentAlgo.setStatus("Mining")
                                 self.receive_from_server = None
-                        print(f"Receive from server end: {self.receive_from_server}")
                         self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
                         # print(f"Commands returned: {self.agentInfo.getCommandsReturned()}")
                         self.agentAlgo.countPassedCommands += 1
@@ -148,7 +147,6 @@ class Agent():
                 except Exception as e:
                     print(f"Error loop: {e}")
                     exit(1)
-                    continue
         except Exception as e:
             print(f"Error: {e}")
 

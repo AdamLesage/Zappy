@@ -122,9 +122,9 @@ class AgentAlgo():
             self.hasAskedIncantation = True
             self.agentInfo.commandsToSend.clear()
             self.status = "Waiting player to start incantation"
-            if f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}\n" not in self.agentInfo.commandsToSend:
+            if f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}\n" not in self.agentInfo.commandsToSend and self.hasAskedIncantation and self.agentInfo.incantationResponses < self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
                 self.agentInfo.commandsToSend.append(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()}\n")
-                print(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()} | client num {self.agentInfo.client_num}")
+                print(f"Broadcast need_incantation_level_{self.agentInfo.getLevel()} | client num {self.agentInfo.client_num} | nb responses {self.agentInfo.incantationResponses} | expect {self.agentInfo.numberToEvolve[f'level{self.agentInfo.getLevel() + 1}']=}")
         else:
             self.miningMode()
 
@@ -317,7 +317,7 @@ class AgentAlgo():
                 print(f"Enough players to evolve to level {self.agentInfo.getLevel() + 1}")
             self.setItemsForIncantation()
             self.status = "Incantation"
-            self.agentInfo.commandsToSend.clear()
+            # self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.append("Incantation\n")
             self.playerOnSameTileForIncantation = 1
 
@@ -374,22 +374,6 @@ class AgentAlgo():
             print(f"Error from inventoryManagement: {e}")
             return False
 
-    def checkPlayerIncantationWaiting(self) -> None:
-        """
-        Check if the player is waiting for incantation
-        To avoid waiting for incantation until death
-        """
-        if self.canStartCounting == False:
-            return
-        self.broadcastPassed += 1
-        # TODO: check why player is stuck in incantation
-        if self.broadcastPassed >= 15 and self.status == "Ask incantation" and self.agentInfo.incantationResponses < self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
-            self.status = "Food"
-            print(f"Player level {self.agentInfo.getLevel()} has waited for incantation too long | responses {self.agentInfo.incantationResponses} instead of {self.agentInfo.numberToEvolve[f'level{self.agentInfo.getLevel() + 1}']}")
-            self.broadcastPassed = 0
-            self.canStartCounting = False
-            self.hasAskedIncantation = False
-
     def play(self, data: str) -> str:
         """
         Play the game, search for resources, level up, incantation, etc
@@ -400,14 +384,11 @@ class AgentAlgo():
         try:
             if self.status == "Incantation":
                 return
+            if self.agentBroadcast.goToBroadcast(self.agentInfo.broadcast_orientation, self.agentInfo, self.status) == True:
+                return
             if self.inventoryManagement() == True:
                 return
             # print(f"Status: {self.status} | Level: {self.agentInfo.getLevel()}")
-            #self.checkPlayerIncantationWaiting()
-            #if self.agentBroadcast.goToBroadcast(self.agentInfo.broadcast_orientation, self.agentInfo, self.status) == True:
-            #    return
-            #else:
-            #    self.agentInfo.broadcast_orientation = None # Reset the broadcast orientation
             self.updateClientStatus()
             if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
                 self.foodMode()
@@ -423,17 +404,13 @@ class AgentAlgo():
                 self.clientPlayLevel8()
                 return
             # self.borntick += 1
-            #self.launchIncantation()
-            # print("Inventory management done")
-            # print("Food mode done")
+            # self.launchIncantation()
             if self.agentInfo.movements != []:
                 self.agentInfo.addCommandsToSend(self.agentInfo.movements.pop(0))
                 return
-            # print("Movements done")
-            # print("Check inventory done")
-            #if self.waitingIncantationResponses() == True:
-            #    return
-            #self.incantationManagement()
+            if self.waitingIncantationResponses() == True:
+                return
+            # self.incantationManagement()
             if self.status == "Food":
                 if self.agentInfo.commandsToSend.count("Look\n") < 2:
                     self.agentInfo.commandsToSend.append("Look\n")
@@ -616,9 +593,9 @@ class AgentAlgo():
 
         try:
             # If the agent receives a broadcast to wait for incantation
-            if self.hasAskedIncantation and self.agentInfo.incantationResponses < self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
+            if self.agentInfo.incantationResponses < self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
                 # If the agent has asked for incantation and has not enough responses
-                self.isWaitingForResponses = True
+                # self.isWaitingForResponses = True
                 # print(f"Broadcast received: [{self.agentInfo.broadcast_received}], waiting: [accept_incantation_level_{str(self.agentInfo.getLevel())}], {self.agentInfo.incantationResponses=}")
                 if self.agentInfo.broadcast_received.startswith(f"accept_incantation_level_{self.agentInfo.getLevel()}"):
                     self.agentInfo.incantationResponses += 1
@@ -630,6 +607,7 @@ class AgentAlgo():
         if self.agentInfo.getLevel() == 1: # Player level 1 do not need to wait for responses
             return False
         if self.playerOnSameTileForIncantation >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]:
+            # If there is enough agent to evolve
             return False
         if self.agentInfo.incantationResponses >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
             # wait until every players are ready and send incantation position with broadcast
