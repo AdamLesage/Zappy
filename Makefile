@@ -169,6 +169,8 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/lunch_server.c										\
 			src/server/check_food_players.c									\
 			src/server/check_win_game.c										\
+			src/server/set_command.c										\
+			src/server/send_command_responce.c								\
 			src/server/dataManagment/arguments/get_arguments.c				\
 			src/server/dataManagment/arguments/get_port.c					\
 			src/server/dataManagment/arguments/get_width.c					\
@@ -234,7 +236,6 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/command/Player_command/right.c						\
 			src/server/command/Player_command/set.c							\
 			src/server/command/Player_command/take.c						\
-			src/server/command/authentification.c							\
 			src/server/Event/pnw.c											\
 			src/server/Event/pex.c											\
 			src/server/Event/pbc.c											\
@@ -249,6 +250,7 @@ SRC_TEST_SERVER		=	src/server/close_server.c							\
 			src/server/Event/edi.c											\
 			src/server/Event/seg.c											\
 			src/server/Event/smg.c											\
+			src/server/command/authentification.c							\
 			src/server/utils/send_response.c								\
 			src/server/utils/str_is_num.c									\
 			src/server/utils/int_to_str.c									\
@@ -317,8 +319,8 @@ TEST 		=	tests/server/test_arguments.c					\
 				tests/server/test_command_move_player.c			\
 				tests/server/test_command_interact_player.c		\
 				tests/server/test_command_fork.c				\
-				tests/server/test_command_inventory.c			\
 				tests/server/test_command_eject.c				\
+				tests/server/test_command_inventory.c			\
 				tests/server/test_command_broadcast.c			\
 				tests/server/test_command_incantation.c			\
 				tests/server/test_event_pnw.c					\

@@ -9,7 +9,7 @@
 #include <criterion/redirect.h>
 #include "../../include/server/server.h"
 
-Test(win_condition, wind_condition_success, .init = cr_redirect_stderr)
+Test(win_condition, wind_condition_success)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -18,6 +18,8 @@ Test(win_condition, wind_condition_success, .init = cr_redirect_stderr)
     int argc = 12;
 
     init_core(argc, argv, &core);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
     add_player(&core.map, &core.players, 2, "GRAPHIC");
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 3, "team1");
@@ -39,12 +41,12 @@ Test(win_condition, wind_condition_success, .init = cr_redirect_stderr)
     info->level = 8;
 
     check_win_game(&core);
-    cr_assert_stderr_eq_str("seg team1\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "seg team1\n");
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(win_condition, wind_condition_failure, .init = cr_redirect_stderr)
+Test(win_condition, wind_condition_failure)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -53,6 +55,8 @@ Test(win_condition, wind_condition_failure, .init = cr_redirect_stderr)
     int argc = 12;
 
     init_core(argc, argv, &core);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
     add_player(&core.map, &core.players, 2, "GRAPHIC");
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 3, "team1");
@@ -74,12 +78,12 @@ Test(win_condition, wind_condition_failure, .init = cr_redirect_stderr)
     info->level = 8;
 
     check_win_game(&core);
-    cr_assert_stderr_neq_str("seg team1\n");
+    cr_assert_eq(core.network.client_list->client_info->buffer_send, NULL);
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(win_condition, wind_condition_failure2, .init = cr_redirect_stderr)
+Test(win_condition, wind_condition_failure2)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -88,6 +92,8 @@ Test(win_condition, wind_condition_failure2, .init = cr_redirect_stderr)
     int argc = 12;
 
     init_core(argc, argv, &core);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
     add_player(&core.map, &core.players, 2, "GRAPHIC");
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 3, "team1");
@@ -106,12 +112,12 @@ Test(win_condition, wind_condition_failure2, .init = cr_redirect_stderr)
     info->level = 8;
 
     check_win_game(&core);
-    cr_assert_stderr_neq_str("seg team1\n");
+    cr_assert_eq(core.network.client_list->client_info->buffer_send, NULL);
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(win_condition, wind_condition_failure3, .init = cr_redirect_stderr)
+Test(win_condition, wind_condition_failure3)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -120,6 +126,8 @@ Test(win_condition, wind_condition_failure3, .init = cr_redirect_stderr)
     int argc = 12;
 
     init_core(argc, argv, &core);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
     add_player(&core.map, &core.players, 2, "GRAPHIC");
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 3, "team1");
@@ -141,7 +149,7 @@ Test(win_condition, wind_condition_failure3, .init = cr_redirect_stderr)
     info->level = 8;
 
     check_win_game(&core);
-    cr_assert_stderr_neq_str("seg team1\n");
+    cr_assert_eq(core.network.client_list->client_info->buffer_send, NULL);
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 3);
 }
