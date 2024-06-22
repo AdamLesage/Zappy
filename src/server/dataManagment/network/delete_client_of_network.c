@@ -9,8 +9,12 @@
 
 static void free_client(client_list_t *deleted_client)
 {
-    free(deleted_client->client_info->buffer_read);
-    free(deleted_client->client_info->buffer_send);
+    if (deleted_client->client_info->buffer_read != NULL) {
+        free(deleted_client->client_info->buffer_read);
+    }
+    if (deleted_client->client_info->buffer_send != NULL) {
+        free(deleted_client->client_info->buffer_send);
+    }
     free(deleted_client->client_info);
     free(deleted_client);
 }
@@ -22,7 +26,7 @@ static bool delete_client_of_network2(network_t *network, int fd)
     for (client_list_t *tmp = network->client_list;
         tmp->next != NULL; tmp = tmp->next) {
         if (tmp->fd == fd) {
-            deleted_client = tmp;
+            deleted_client = tmp->next;
             tmp->next = tmp->next->next;
             free_client(deleted_client);
             return (true);

@@ -237,8 +237,8 @@ void Zappy::PlayerPrint::display()
     for (size_t i = 0; i < this->_guiConnect->_players.size(); i++) {
         if (player_sprites.size() < this->_guiConnect->_players.size()) {
             player_sprites.push_back(sf::Sprite());
-            _evolutions.push_back(std::make_pair(0, std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png")));
-            _evolutions.back().second->setFrameInfo(82, 67, 16, 2);
+            // _evolutions.push_back(std::make_pair(0, std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png")));
+            // _evolutions.back().second->setFrameInfo(82, 67, 16, 2);
         }
         if (this->_guiConnect->_players[i]->getLastPosition() != this->_guiConnect->_players[i]->getPosition()) {
             print_walk_animation(i);
@@ -251,9 +251,9 @@ void Zappy::PlayerPrint::display()
         updatePlayersTravelled();
         _broadcast->check_player_broadcast(i);
         _broadcast->display(i);
-        if (this->_guiConnect->_players[i].get()->isPlayerIncanting() == true) {
-            _evolutions[i].second->setPosition(this->_guiConnect->_players[i]->getPosition()[0] * 102.4 + 70, this->_guiConnect->_players[i]->getPosition()[1] * 102.4 + 125);
-            this->_window->draw(_evolutions[i].second->getSprite());
-        }
+        // if (this->_guiConnect->_players[i].get()->isPlayerIncanting() == true) {
+        //     _evolutions[i].second->setPosition(this->_guiConnect->_players[i]->getPosition()[0] * 102.4 + 70, this->_guiConnect->_players[i]->getPosition()[1] * 102.4 + 125);
+        //     this->_window->draw(_evolutions[i].second->getSprite());
+        // }
     }
 }
