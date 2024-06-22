@@ -9,7 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-Test (command_Inventory, command_Inventory_success, .init = cr_redirect_stdout)
+Test (command_Inventory, command_Inventory_success)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -19,8 +19,8 @@ Test (command_Inventory, command_Inventory_success, .init = cr_redirect_stdout)
 
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
     info = find_player(&core.players, 1);
     info->orientation = N;
     info->pos_x = 5;
@@ -31,7 +31,7 @@ Test (command_Inventory, command_Inventory_success, .init = cr_redirect_stdout)
     info->action_queue[0] = strdup("Inventory");
     info->timer_action = 0;
     check_player_command(&core);
-    cr_assert_stdout_eq_str("[ food 9, linemate 4, deraumere 0, sibur 1, mendiane 0, phiras 0, thystame 3 ]\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "[ food 9, linemate 4, deraumere 0, sibur 1, mendiane 0, phiras 0, thystame 3 ]\n");
     inventory(&core, 1, NULL);
     delete_player(&core.map, &core.players, 1);
 }

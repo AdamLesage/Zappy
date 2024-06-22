@@ -15,7 +15,7 @@ void connect_nbr(core_t *core, int fd, char **command)
     if (command == NULL) {
         return;
     }
-    send_response_int(connect_number, fd);
-    send_response("\n", fd);
+    add_int_to_send_buffer(&core->network, connect_number, fd);
+    add_to_send_buffer(&core->network, "\n", fd);
     free(team_name);
 }

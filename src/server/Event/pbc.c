@@ -7,21 +7,21 @@
 
 #include "server.h"
 
-static void send_pbc_info(int id, char *message, int fd)
+static void send_pbc_info(network_t *network, int id, char *message, int fd)
 {
-    send_response("pbc ", fd);
-    send_response_int(id, fd);
-    send_response(" ", fd);
-    send_response(message, fd);
-    send_response("\n", fd);
+    add_to_send_buffer(network, "pbc ", fd);
+    add_int_to_send_buffer(network, id, fd);
+    add_to_send_buffer(network, " ", fd);
+    add_to_send_buffer(network, message, fd);
+    add_to_send_buffer(network, "\n", fd);
 }
 
-void pbc(players_t *players, int id, char *message)
+void pbc(core_t *core, int id, char *message)
 {
-    for (players_list_t *tmp = players->players_list;
+    for (players_list_t *tmp = core->players.players_list;
         tmp != NULL; tmp = tmp->next) {
         if (strcmp(tmp->player_info->team_name, "GRAPHIC") == 0) {
-            send_pbc_info(id, message, tmp->fd);
+            send_pbc_info(&core->network, id, message, tmp->fd);
         }
     }
 }

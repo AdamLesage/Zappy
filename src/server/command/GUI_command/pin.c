@@ -13,54 +13,55 @@ void pin(core_t *core, int fd, char **command)
     player_info_t *player_info = find_player_by_id(&core->players, player_id);
 
     if (len_array(command) != 2) {
-        send_response("sbp\n", fd);
+        add_to_send_buffer(&core->network, "sbp\n", fd);
         return;
     }
     if (player_info != NULL) {
-        pin_two(fd, player_info);
+        pin_two(&core->network, fd, player_info);
     } else {
-        send_response("sbp\n", fd);
+        add_to_send_buffer(&core->network, "sbp\n", fd);
     }
 }
 
-void pin_event(players_t *players, player_info_t *player_info)
+void pin_event(network_t *network, players_t *players,
+    player_info_t *player_info)
 {
     for (players_list_t *tmp = players->players_list;
         tmp != NULL; tmp = tmp->next) {
         if (strcmp(tmp->player_info->team_name, "GRAPHIC") == 0) {
-            pin_two(tmp->fd, player_info);
+            pin_two(network, tmp->fd, player_info);
         }
     }
 }
 
-void pin_two(int fd, player_info_t *player_info)
+void pin_two(network_t *network, int fd, player_info_t *player_info)
 {
     inventory_t *inventory = player_info->inventory;
 
-    send_response("pin ", fd);
-    send_response_int(player_info->id, fd);
-    send_response(" ", fd);
-    send_response_int(player_info->pos_x, fd);
-    send_response(" ", fd);
-    send_response_int(player_info->pos_y, fd);
-    send_response(" ", fd);
-    send_response_int(inventory->nb_food, fd);
-    send_response(" ", fd);
-    send_response_int(inventory->nb_linemate, fd);
-    send_response(" ", fd);
-    send_response_int(inventory->nb_deraumere, fd);
-    send_response(" ", fd);
-    send_response_int(inventory->nb_sibur, fd);
-    send_response(" ", fd);
-    pin_three(fd, inventory);
+    add_to_send_buffer(network, "pin ", fd);
+    add_int_to_send_buffer(network, player_info->id, fd);
+    add_to_send_buffer(network, " ", fd);
+    add_int_to_send_buffer(network, player_info->pos_x, fd);
+    add_to_send_buffer(network, " ", fd);
+    add_int_to_send_buffer(network, player_info->pos_y, fd);
+    add_to_send_buffer(network, " ", fd);
+    add_int_to_send_buffer(network, inventory->nb_food, fd);
+    add_to_send_buffer(network, " ", fd);
+    add_int_to_send_buffer(network, inventory->nb_linemate, fd);
+    add_to_send_buffer(network, " ", fd);
+    add_int_to_send_buffer(network, inventory->nb_deraumere, fd);
+    add_to_send_buffer(network, " ", fd);
+    add_int_to_send_buffer(network, inventory->nb_sibur, fd);
+    add_to_send_buffer(network, " ", fd);
+    pin_three(network, fd, inventory);
 }
 
-void pin_three(int fd, inventory_t *inventory)
+void pin_three(network_t *network, int fd, inventory_t *inventory)
 {
-    send_response_int(inventory->nb_mendiane, fd);
-    send_response(" ", fd);
-    send_response_int(inventory->nb_phiras, fd);
-    send_response(" ", fd);
-    send_response_int(inventory->nb_thystame, fd);
-    send_response("\n", fd);
+    add_int_to_send_buffer(network, inventory->nb_mendiane, fd);
+    add_to_send_buffer(network, " ", fd);
+    add_int_to_send_buffer(network, inventory->nb_phiras, fd);
+    add_to_send_buffer(network, " ", fd);
+    add_int_to_send_buffer(network, inventory->nb_thystame, fd);
+    add_to_send_buffer(network, "\n", fd);
 }

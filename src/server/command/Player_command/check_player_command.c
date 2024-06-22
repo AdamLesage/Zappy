@@ -17,7 +17,7 @@ static void next_player_command(player_info_t *info, core_t *core)
             return;
         }
         if (strcmp(info->action_queue[0], "Fork") == 0) {
-            pfk(&core->players, info->id);
+            pfk(core, info->id);
         }
         info->timer_action = get_time_action(info->action_queue[0]);
     }
@@ -38,7 +38,7 @@ static void execute_client_command(core_t *core, char *command, int fd)
             return;
         }
     }
-    send_response("ko\n", fd);
+    add_to_send_buffer(&core->network, "ko\n", fd);
     free_array(array_command);
 }
 
@@ -78,18 +78,9 @@ static void get_and_execute_players_command(core_t *core, player_info_t *info)
 
 void check_player_command(core_t *core)
 {
-    struct timeval tv;
-
     check_end_incantation(core);
-    tv.tv_sec = 0;
-    tv.tv_usec = 0;
-    select(core->select_info.max_fd + 1,
-        NULL, &core->select_info.write_fds,
-        NULL, &tv);
     for (players_list_t *tmp = core->players.players_list;
         tmp != NULL; tmp = tmp->next) {
-        if (FD_ISSET(tmp->player_info->fd, &core->select_info.write_fds)) {
-            get_and_execute_players_command(core, tmp->player_info);
-        }
+        get_and_execute_players_command(core, tmp->player_info);
     }
 }

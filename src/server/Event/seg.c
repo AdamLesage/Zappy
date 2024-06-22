@@ -7,19 +7,19 @@
 
 #include "server.h"
 
-void send_seg_info(char *team_name, int fd)
+void send_seg_info(network_t *network, char *team_name, int fd)
 {
-    send_response("seg ", fd);
-    send_response(team_name, fd);
-    send_response("\n", fd);
+    add_to_send_buffer(network, "seg ", fd);
+    add_to_send_buffer(network, team_name, fd);
+    add_to_send_buffer(network, "\n", fd);
 }
 
-void seg(players_t *players, char *team_name)
+void seg(core_t *core, char *team_name)
 {
-    for (players_list_t *tmp = players->players_list;
+    for (players_list_t *tmp = core->players.players_list;
         tmp != NULL; tmp = tmp->next) {
         if (strcmp(tmp->player_info->team_name, "GRAPHIC") == 0) {
-            send_seg_info(team_name, tmp->fd);
+            send_seg_info(&core->network, team_name, tmp->fd);
         }
     }
 }

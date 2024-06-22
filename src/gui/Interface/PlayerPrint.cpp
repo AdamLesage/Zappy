@@ -113,7 +113,7 @@ int teamnbr, std::shared_ptr<Broadcast> brodcasr, std::vector<std::pair<int, std
     player_orientation[4][2] = sf::IntRect(437, 301, 22, 45);
     player_orientation[4][1] = sf::IntRect(422, 436, 56, 31);
     player_orientation[5][0] = sf::IntRect(432, 38, 29, 49);
-    player_orientation[5][3] = sf::IntRect(420, 170, 50, 30);
+    player_orientation[5][3] = sf::IntRect(420, 170, 50, 40);
     player_orientation[5][2] = sf::IntRect(433, 302, 30, 41);
     player_orientation[5][1] = sf::IntRect(425, 426, 50, 40);
     player_orientation[6][0] = sf::IntRect(434, 39, 28, 71);
