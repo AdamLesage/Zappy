@@ -136,19 +136,19 @@ Zappy::PlayerPrint::~PlayerPrint()
 void Zappy::PlayerPrint::set_scale_of_player(int i)
 {
     if (this->_guiConnect->_players[i]->getLevel() == 1)
-        player_sprites[i].setScale(1, 1);
+        player_sprites[i].setScale(2, 2);
     else if (this->_guiConnect->_players[i]->getLevel() == 2)
-        player_sprites[i].setScale(1, 1);
+        player_sprites[i].setScale(2, 2);
     else if (this->_guiConnect->_players[i]->getLevel() == 4)
-        player_sprites[i].setScale(0.5, 0.5);
+        player_sprites[i].setScale(2, 2);
     else if (this->_guiConnect->_players[i]->getLevel() == 5)
-        player_sprites[i].setScale(0.5, 0.5);
+        player_sprites[i].setScale(2, 2);
     else if (this->_guiConnect->_players[i]->getLevel() == 6)
-        player_sprites[i].setScale(0.5, 0.5);
+        player_sprites[i].setScale(2, 2);
     else if (this->_guiConnect->_players[i]->getLevel() == 7)
-        player_sprites[i].setScale(0.5, 0.5);
+        player_sprites[i].setScale(2, 2);
     else if (this->_guiConnect->_players[i]->getLevel() == 8)
-        player_sprites[i].setScale(0.5, 0.5);
+        player_sprites[i].setScale(2, 2);
 }
 
 
