@@ -67,7 +67,6 @@ void GuiConnect::setTimeUnit(std::string args)
 void GuiConnect::readServer(std::string &buffer)
 {
     char buf[1];
-    std::vector<std::string> pString;
 
     if (FD_ISSET(_socket, &client_management.read_fd)) {
         if (read(_socket, buf, 1) == -1) {

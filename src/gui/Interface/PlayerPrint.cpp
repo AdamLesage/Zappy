@@ -300,9 +300,9 @@ void Zappy::PlayerPrint::display()
             // _evolutions.push_back(std::make_pair(0, std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png")));
             // _evolutions.back().second->setFrameInfo(82, 67, 16, 2);
         }
-        if (this->_guiConnect->_players[i]->getLastPosition() != this->_guiConnect->_players[i]->getPosition()) {
-            print_walk_animation(i);
-        }
+        // if (this->_guiConnect->_players[i]->getLastPosition() != this->_guiConnect->_players[i]->getPosition()) {
+        //     print_walk_animation(i);
+        // }
         player_sprites[i].setTexture(player_textures[this->_guiConnect->_players[i]->getLevel() - 1]);
         set_scale_of_player(i);
         player_sprites[i].setPosition(this->_guiConnect->_players[i]->getPosition()[0] * 102.4 + 100, this->_guiConnect->_players[i]->getPosition()[1] * 102.4 + 150);
