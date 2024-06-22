@@ -9,7 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-Test (event_pbc, event_pbc1, .init = cr_redirect_stdout)
+Test (event_pbc, event_pbc1)
 {
     core_t core;
     player_info_t *info = NULL;
@@ -22,11 +22,13 @@ Test (event_pbc, event_pbc1, .init = cr_redirect_stdout)
     add_player(&core.map, &core.players, 1, "GRAPHIC");
     add_player(&core.map, &core.players, 2, "team1");
     add_player(&core.map, &core.players, 3, "team2");
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
     info = find_player(&core.players, 2);
     info2 = find_player(&core.players, 3);
-    pbc(&core.players, info->id, "test_message");
-    pbc(&core.players, info2->id, "\"other message\"");
-    cr_assert_stdout_eq_str("pbc 0 test_message\npbc 1 \"other message\"\n");
+    pbc(&core, info->id, "test_message");
+    pbc(&core, info2->id, "\"other message\"");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "pbc 0 test_message\npbc 1 \"other message\"\n");
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 2);
 }

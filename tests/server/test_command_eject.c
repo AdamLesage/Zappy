@@ -15,7 +15,7 @@ void redirect_all_stdout2(void)
     cr_redirect_stderr();
 }
 
-Test(command_Eject, Command_Eject_N, .init = redirect_all_stdout2)
+Test(command_Eject, Command_Eject_N)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -27,9 +27,9 @@ Test(command_Eject, Command_Eject_N, .init = redirect_all_stdout2)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->orientation = N;
@@ -43,13 +43,13 @@ Test(command_Eject, Command_Eject_N, .init = redirect_all_stdout2)
     check_player_command(&core);
     cr_assert_eq(info2->pos_y, 4);
     cr_assert_eq(info2->pos_x, 5);
-    cr_assert_stdout_eq_str("ok\n");
-    cr_assert_stderr_eq_str("eject: 1\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "eject: 1\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Eject, Command_Eject_N_cross, .init = redirect_all_stdout2)
+Test(command_Eject, Command_Eject_N_cross)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -61,9 +61,9 @@ Test(command_Eject, Command_Eject_N_cross, .init = redirect_all_stdout2)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->orientation = N;
@@ -77,13 +77,13 @@ Test(command_Eject, Command_Eject_N_cross, .init = redirect_all_stdout2)
     check_player_command(&core);
     cr_assert_eq(info2->pos_y, 9);
     cr_assert_eq(info2->pos_x, 5);
-    cr_assert_stdout_eq_str("ok\n");
-    cr_assert_stderr_eq_str("eject: 1\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "eject: 1\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Eject, Command_Eject_S, .init = redirect_all_stdout2)
+Test(command_Eject, Command_Eject_S)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -95,9 +95,9 @@ Test(command_Eject, Command_Eject_S, .init = redirect_all_stdout2)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->orientation = S;
@@ -111,13 +111,13 @@ Test(command_Eject, Command_Eject_S, .init = redirect_all_stdout2)
     check_player_command(&core);
     cr_assert_eq(info2->pos_y, 6);
     cr_assert_eq(info2->pos_x, 5);
-    cr_assert_stdout_eq_str("ok\n");
-    cr_assert_stderr_eq_str("eject: 5\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "eject: 5\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Eject, Command_Eject_S_cross, .init = redirect_all_stdout2)
+Test(command_Eject, Command_Eject_S_cross)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -129,9 +129,9 @@ Test(command_Eject, Command_Eject_S_cross, .init = redirect_all_stdout2)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->orientation = S;
@@ -145,13 +145,13 @@ Test(command_Eject, Command_Eject_S_cross, .init = redirect_all_stdout2)
     check_player_command(&core);
     cr_assert_eq(info2->pos_y, 0);
     cr_assert_eq(info2->pos_x, 5);
-    cr_assert_stdout_eq_str("ok\n");
-    cr_assert_stderr_eq_str("eject: 5\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "eject: 5\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Eject, Command_Eject_E, .init = redirect_all_stdout2)
+Test(command_Eject, Command_Eject_E)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -164,9 +164,9 @@ Test(command_Eject, Command_Eject_E, .init = redirect_all_stdout2)
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
     info1 = find_player(&core.players, 1);
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info2 = find_player(&core.players, 2);
     info1->orientation = E;
     info1->pos_x = 5;
@@ -179,13 +179,13 @@ Test(command_Eject, Command_Eject_E, .init = redirect_all_stdout2)
     check_player_command(&core);
     cr_assert_eq(info2->pos_y, 5);
     cr_assert_eq(info2->pos_x, 6);
-    cr_assert_stdout_eq_str("ok\n");
-    cr_assert_stderr_eq_str("eject: 7\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "eject: 7\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Eject, Command_Eject_E_cross, .init = redirect_all_stdout2)
+Test(command_Eject, Command_Eject_E_cross)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -197,9 +197,9 @@ Test(command_Eject, Command_Eject_E_cross, .init = redirect_all_stdout2)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->orientation = E;
@@ -213,13 +213,13 @@ Test(command_Eject, Command_Eject_E_cross, .init = redirect_all_stdout2)
     check_player_command(&core);
     cr_assert_eq(info2->pos_y, 5);
     cr_assert_eq(info2->pos_x, 0);
-    cr_assert_stdout_eq_str("ok\n");
-    cr_assert_stderr_eq_str("eject: 7\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "eject: 7\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Eject, Command_Eject_W, .init = redirect_all_stdout2)
+Test(command_Eject, Command_Eject_W)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -231,9 +231,9 @@ Test(command_Eject, Command_Eject_W, .init = redirect_all_stdout2)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->orientation = W;
@@ -247,13 +247,13 @@ Test(command_Eject, Command_Eject_W, .init = redirect_all_stdout2)
     check_player_command(&core);
     cr_assert_eq(info2->pos_y, 5);
     cr_assert_eq(info2->pos_x, 4);
-    cr_assert_stdout_eq_str("ok\n");
-    cr_assert_stderr_eq_str("eject: 3\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "eject: 3\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }
 
-Test(command_Eject, Command_Eject_W_cross, .init = redirect_all_stdout2)
+Test(command_Eject, Command_Eject_W_cross)
 {
     core_t core;
     player_info_t *info1 = NULL;
@@ -265,9 +265,9 @@ Test(command_Eject, Command_Eject_W_cross, .init = redirect_all_stdout2)
     init_core(argc, argv, &core);
     add_player(&core.map, &core.players, 1, "team1");
     add_player(&core.map, &core.players, 2, "team1");
-    FD_ZERO(&core.select_info.write_fds);
-    FD_SET(1, &core.select_info.write_fds);
-    FD_SET(2, &core.select_info.write_fds);
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 2);
+    add_client_on_network(&core.network, 1);
     info1 = find_player(&core.players, 1);
     info2 = find_player(&core.players, 2);
     info1->orientation = W;
@@ -281,8 +281,8 @@ Test(command_Eject, Command_Eject_W_cross, .init = redirect_all_stdout2)
     check_player_command(&core);
     cr_assert_eq(info2->pos_y, 5);
     cr_assert_eq(info2->pos_x, 9);
-    cr_assert_stdout_eq_str("ok\n");
-    cr_assert_stderr_eq_str("eject: 3\n");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "ok\n");
+    cr_assert_str_eq(core.network.client_list->next->client_info->buffer_send, "eject: 3\n");
     delete_player(&core.map, &core.players, 2);
     delete_player(&core.map, &core.players, 3);
 }

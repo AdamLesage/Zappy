@@ -75,7 +75,7 @@ void inventory(core_t *core, int fd, char **command)
     if (command == NULL)
         return;
     str = set_str_from_inventory_info(inventory_info, len_inventory);
-    send_response(str, fd);
+    add_to_send_buffer(&core->network, str, fd);
     free_array(inventory_info);
     free(str);
 }

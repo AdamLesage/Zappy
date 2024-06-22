@@ -9,7 +9,7 @@
 #include <criterion/redirect.h>
 #include "server.h"
 
-Test (event_seg, event_seg_success, .init = cr_redirect_stdout)
+Test (event_seg, event_seg_success)
 {
     core_t core;
 
@@ -20,9 +20,12 @@ Test (event_seg, event_seg_success, .init = cr_redirect_stdout)
     add_player(&core.map, &core.players, 1, "GRAPHIC");
     add_player(&core.map, &core.players, 2, "team1");
     add_player(&core.map, &core.players, 3, "team2");
-    seg(&core.players, "team1");
-    seg(&core.players, "team2");
-    cr_assert_stdout_eq_str("seg team1\nseg team2\n");
+    core.network.client_list = NULL;
+    add_client_on_network(&core.network, 1);
+
+    seg(&core, "team1");
+    seg(&core, "team2");
+    cr_assert_str_eq(core.network.client_list->client_info->buffer_send, "seg team1\nseg team2\n");
     delete_player(&core.map, &core.players, 1);
     delete_player(&core.map, &core.players, 2);
 }

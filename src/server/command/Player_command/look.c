@@ -171,7 +171,7 @@ void look(core_t *core, int fd, char **command)
         print_look_on_tile(core, &look_info);
     }
     strcat(look_info.str, " ]\n");
-    send_response(look_info.str, fd);
+    add_to_send_buffer(&core->network, look_info.str, fd);
     free(look_info.look_orientation);
     free(look_info.str);
 }

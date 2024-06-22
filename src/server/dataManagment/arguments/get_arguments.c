@@ -52,22 +52,6 @@ static bool get_flag(arguments_t *arguments, const char **argv, int *index)
     return get_flag2(arguments, argv, index);
 }
 
-static void print_arguments_server(arguments_t *arguments)
-{
-    printf("port:\t%d\n", arguments->port);
-    printf("height:\t%d\n", arguments->height);
-    printf("width:\t%d\n", arguments->width);
-    printf("nb_teams:\t%d\n", arguments->nb_teams);
-    printf("teams:\n");
-    if (arguments->name_teams != NULL) {
-        for (int i = 0; arguments->name_teams[i] != NULL; i++) {
-            printf("\tteam [%d]: name = %s\n", i, arguments->name_teams[i]);
-        }
-    }
-    printf("nb_by_teams:\t%d\n", arguments->nb_client);
-    printf("frequency:\t%d\n", arguments->frequency);
-}
-
 void print_usage(char *error)
 {
     dprintf(2, "Error: %s\n", error);
@@ -96,5 +80,4 @@ void get_arguments(arguments_t *arguments, const int argc, const char **argv)
     if (arguments->nb_teams == -1 || arguments->nb_client == -1) {
         print_usage("missing mandatory flag");
     }
-    print_arguments_server(arguments);
 }
