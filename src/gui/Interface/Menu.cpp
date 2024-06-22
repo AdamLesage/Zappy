@@ -31,7 +31,7 @@ Zappy::Menu::Menu(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Play
     buttons.push_back(std::make_shared<Button>(sf::Vector2f(200, 50), sf::Vector2f(860, 650), sf::Color::Green, 5, sf::Color::Black));
     buttons[0]->setText("Start");
     buttons[1]->setText("Zappy");
-    buttons[2]->setText("User guide");
+    buttons[2]->setText("Shop");
     buttons[3]->setText("Credits");
     menu = false;
     credit = std::make_shared<Credit>(window);
