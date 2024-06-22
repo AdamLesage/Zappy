@@ -39,6 +39,7 @@ namespace Zappy {
             void set_mape_size(std::array<int, 2> mape_size) { _mape_size = mape_size; }
             void set_map();
             void check_event();
+            void draw_resource_sprite(int i, int j, int spriteIndex, const std::string &resourceName, float baseX, float baseY, float scaleFactor);
             void print_resssource();
             void print_eggs();
             void playBackgroundMusic(const std::string& filename);

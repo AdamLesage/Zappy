@@ -67,67 +67,28 @@ void Zappy::Interface::set_map()
     }
 }
 
-void Zappy::Interface::print_resssource()
-{
+void Zappy::Interface::draw_resource_sprite(int i, int j, int spriteIndex, const std::string &resourceName, float baseX, float baseY, float scaleFactor) {
+    if (_gui_connect->_tiles[i][j]->_inventory->get(resourceName) > 0) {
+        ressource_sprite[i][j][spriteIndex].setPosition(baseX + (i * 102.4), baseY + (j * 102.4));
+        if (_gui_connect->_tiles[i][j]->_inventory->get(resourceName) > 1)
+            ressource_sprite[i][j][spriteIndex].setScale(scaleFactor * ((_gui_connect->_tiles[i][j]->_inventory->get(resourceName)) * 0.75), scaleFactor * ((_gui_connect->_tiles[i][j]->_inventory->get(resourceName)) * 0.75));
+        else
+            ressource_sprite[i][j][spriteIndex].setScale(scaleFactor, scaleFactor);
+        window->draw(ressource_sprite[i][j][spriteIndex]);
+    }
+}
+
+void Zappy::Interface::print_resssource() {
     for (int i = 0; i < _gui_connect->get_size_map()[0]; i++) {
         for (int j = 0; j < _gui_connect->get_size_map()[1]; j++) {
             if ((std::size_t)i < ressource_sprite.size() && (std::size_t)j < ressource_sprite[i].size()) {
-                ressource_sprite[i][j][6].setPosition(110 + (i * 102.4), 160 + (j * 102.4));
-                if (_gui_connect->_tiles[i][j]->_inventory->get("Food") > 0) {
-                    if (_gui_connect->_tiles[i][j]->_inventory->get("Food") > 1)
-                        ressource_sprite[i][j][6].setScale(0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Food")), 0.05 * (_gui_connect->_tiles[i][j]->_inventory->get("Food")));
-                    else
-                        ressource_sprite[i][j][6].setScale(0.05, 0.05);
-                    window->draw(ressource_sprite[i][j][6]);
-                }
-                if (_gui_connect->_tiles[i][j]->_inventory->get("Linemate") > 0) {
-                    ressource_sprite[i][j][0].setPosition(130 + (i * 102.4), 160 + (j * 102.4));
-                    if (_gui_connect->_tiles[i][j]->_inventory->get("Linemate") > 1)
-                        ressource_sprite[i][j][0].setScale(0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Linemate")) * 0.5), 0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Linemate")) * 0.5));
-                    else
-                        ressource_sprite[i][j][0].setScale(0.05, 0.05);
-                    window->draw(ressource_sprite[i][j][0]);
-                }
-                if (_gui_connect->_tiles[i][j]->_inventory->get("Deraumere") > 0) {
-                    ressource_sprite[i][j][1].setPosition(160 + (i * 102.4), 160 + (j * 102.4));
-                    if (_gui_connect->_tiles[i][j]->_inventory->get("Deraumere") > 1)
-                        ressource_sprite[i][j][1].setScale(0.025 * ((_gui_connect->_tiles[i][j]->_inventory->get("Deraumere")) * 0.75), 0.025 * ((_gui_connect->_tiles[i][j]->_inventory->get("Deraumere")) * 0.75));
-                    else
-                        ressource_sprite[i][j][1].setScale(0.025, 0.025);
-                    window->draw(ressource_sprite[i][j][1]);
-                }
-                if (_gui_connect->_tiles[i][j]->_inventory->get("Sibur") > 0) {
-                    ressource_sprite[i][j][2].setPosition(160 + (i * 102.4), 200 + (j * 102.4));
-                    if (_gui_connect->_tiles[i][j]->_inventory->get("Sibur") > 1)
-                        ressource_sprite[i][j][2].setScale(0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Sibur")) * 0.75), 0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Sibur")) * 0.75));
-                    else
-                        ressource_sprite[i][j][6].setScale(0.05, 0.05);
-                    window->draw(ressource_sprite[i][j][2]);
-                }
-                if (_gui_connect->_tiles[i][j]->_inventory->get("Mendiane") > 0) {
-                    ressource_sprite[i][j][3].setPosition(110 + (i * 102.4), 200 + (j * 102.4));
-                    if (_gui_connect->_tiles[i][j]->_inventory->get("Mendiane") > 1)
-                        ressource_sprite[i][j][3].setScale(0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Mendiane")) * 0.75), 0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Mendiane")) * 0.75));
-                    else
-                        ressource_sprite[i][j][6].setScale(0.05, 0.05);
-                    window->draw(ressource_sprite[i][j][3]);
-                }
-                if (_gui_connect->_tiles[i][j]->_inventory->get("Phiras") > 0) {
-                    ressource_sprite[i][j][4].setPosition(120 + (i * 102.4), 200 + (j * 102.4));
-                    if (_gui_connect->_tiles[i][j]->_inventory->get("Phiras") > 1)
-                        ressource_sprite[i][j][4].setScale(0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Phiras")) * 0.75), 0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Phiras")) * 0.75));
-                    else
-                        ressource_sprite[i][j][6].setScale(0.05, 0.05);
-                    window->draw(ressource_sprite[i][j][4]);
-                }
-                if (_gui_connect->_tiles[i][j]->_inventory->get("Thystame") > 0) {
-                    ressource_sprite[i][j][5].setPosition(140 + (i * 102.4), 200 + (j * 102.4));
-                    if (_gui_connect->_tiles[i][j]->_inventory->get("Thystame") > 1)
-                        ressource_sprite[i][j][5].setScale(0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Thystame")) * 0.75), 0.05 * ((_gui_connect->_tiles[i][j]->_inventory->get("Thystame")) * 0.75));
-                    else
-                        ressource_sprite[i][j][6].setScale(0.05, 0.05);
-                    window->draw(ressource_sprite[i][j][5]);
-                }
+                draw_resource_sprite(i, j, 6, "Food", 110, 160, 0.05);
+                draw_resource_sprite(i, j, 0, "Linemate", 130, 160, 0.05);
+                draw_resource_sprite(i, j, 1, "Deraumere", 160, 160, 0.025);
+                draw_resource_sprite(i, j, 2, "Sibur", 160, 200, 0.05);
+                draw_resource_sprite(i, j, 3, "Mendiane", 110, 200, 0.05);
+                draw_resource_sprite(i, j, 4, "Phiras", 120, 200, 0.05);
+                draw_resource_sprite(i, j, 5, "Thystame", 140, 200, 0.05);
             }
         }
     }
