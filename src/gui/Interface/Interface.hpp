@@ -46,6 +46,7 @@ namespace Zappy {
             void loadTiles();
             void loadTexts();
             void loadSound();
+            void loadInerfaceTexture();
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;

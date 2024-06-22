@@ -14,28 +14,7 @@ Zappy::Interface::Interface()
     window = std::make_shared<sf::RenderWindow>();
     window->create(sf::VideoMode(1920, 1080), "Zappy");
     bars.push_back(std::make_shared<Bar>(sf::Vector2f(20, 50), sf::Vector2f(200, 40), sf::Vector2f(1700, 125), sf::Color(150, 150, 150), 5, sf::Color::Black));
-    if (interface_texture.loadFromFile("./asset/gui/grass.jpg") == false) {
-        throw InterfaceError("Error: grass.jpg not found", "Interface");
-    }
-    interface_texture.setRepeated(true);
-    _rect.push_back(sf::RectangleShape(sf::Vector2f(230, 1080)));
-    _rect[0].setFillColor(sf::Color(8, 105, 36));
-    _rect[0].setTexture(&interface_texture);
-    _rect[0].setTextureRect(sf::IntRect(0, 0, 230, 1080));
-    _rect.push_back(sf::RectangleShape(sf::Vector2f(1920, 75)));
-    _rect[1].setFillColor(sf::Color(8, 105, 36));
-    _rect[1].setTexture(&interface_texture);
-    _rect[1].setTextureRect(sf::IntRect(0, 0, 1920, 75));
-    _rect.push_back(sf::RectangleShape(sf::Vector2f(230, 1080)));
-    _rect[2].setFillColor(sf::Color(8, 105, 36));
-    _rect[2].setPosition(1920 - 230, 0);
-    _rect[2].setTexture(&interface_texture);
-    _rect[2].setTextureRect(sf::IntRect(0, 0, 230, 1080));
-    _rect.push_back(sf::RectangleShape(sf::Vector2f(1920, 300)));
-    _rect[3].setFillColor(sf::Color(8, 105, 36));
-    _rect[3].setPosition(0, 1080 - 250);
-    _rect[3].setTexture(&interface_texture);
-    _rect[3].setTextureRect(sf::IntRect(0, 0, 1920, 300));
+    loadInerfaceTexture();
     loadResources();
     loadTiles();
     loadTexts();
