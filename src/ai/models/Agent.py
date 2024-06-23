@@ -115,7 +115,7 @@ class Agent():
                         if self.isDataReceivedABroadcast(self.receive_from_server) == True:
                             self.receive_from_server = None
                             continue
-                        # print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}, {self.agentInfo.numberOfTeamPlayersConnected=}")
+                        print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}")
                         tmp += 1
                     except BlockingIOError as e:
                         pass
