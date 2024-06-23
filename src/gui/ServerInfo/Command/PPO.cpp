@@ -49,6 +49,7 @@ void Zappy::PPO::applyChanges(std::vector<std::string> parsedData,
     int orientation = std::stoi(parsedData[4]);
     for (auto &player : players) {
         if (player->getPlayerNumber() == playerNumber) {
+            player->_last_position = player->getPosition();
             player->setPosition(x, y);
             player->setOrientation(orientation);
         }

@@ -63,18 +63,18 @@ int teamnbr, std::shared_ptr<Broadcast> brodcasr, std::vector<std::pair<int, std
     player_anim_rank1[0][1] = sf::IntRect(69, 3, 21, 29);
     player_anim_rank1[0][2] = sf::IntRect(5, 3, 21, 29);
     player_anim_rank1[0][3] = sf::IntRect(69, 3, 21, 29);
-    player_anim_rank1[1][0] = sf::IntRect(0, 103, 31, 24);
-    player_anim_rank1[1][1] = sf::IntRect(63, 103, 32, 24);
-    player_anim_rank1[1][2] = sf::IntRect(0, 103, 31, 24);
-    player_anim_rank1[1][3] = sf::IntRect(63, 103, 32, 24);
+    player_anim_rank1[3][0] = sf::IntRect(0, 103, 31, 24);
+    player_anim_rank1[3][1] = sf::IntRect(63, 103, 32, 24);
+    player_anim_rank1[3][2] = sf::IntRect(0, 103, 31, 24);
+    player_anim_rank1[3][3] = sf::IntRect(63, 103, 32, 24);
     player_anim_rank1[2][0] = sf::IntRect(5, 66, 21, 30);
     player_anim_rank1[2][1] = sf::IntRect(69, 66, 21, 30);
     player_anim_rank1[2][2] = sf::IntRect(5, 66, 21, 30);
     player_anim_rank1[2][3] = sf::IntRect(69, 66, 21, 30);
-    player_anim_rank1[3][0] = sf::IntRect(0, 39, 30, 25);
-    player_anim_rank1[3][1] = sf::IntRect(64, 39, 30, 24);
-    player_anim_rank1[3][2] = sf::IntRect(0, 39, 32, 25);
-    player_anim_rank1[3][3] = sf::IntRect(64, 39, 30, 24);
+    player_anim_rank1[1][0] = sf::IntRect(0, 39, 30, 25);
+    player_anim_rank1[1][1] = sf::IntRect(64, 39, 30, 24);
+    player_anim_rank1[1][2] = sf::IntRect(0, 39, 32, 25);
+    player_anim_rank1[1][3] = sf::IntRect(64, 39, 30, 24);
 
     player_anim_rank2[0][0] = sf::IntRect(5, 3, 21, 29);
     player_anim_rank2[0][1] = sf::IntRect(69, 3, 21, 29);
@@ -237,21 +237,21 @@ Zappy::PlayerPrint::~PlayerPrint()
 {
 }
 
-void Zappy::PlayerPrint::set_scale_of_player(int i)
+void Zappy::PlayerPrint::set_scale_of_player(std::shared_ptr<Player> currentPlayer, int i)
 {
-    if (this->_guiConnect->_players[i]->getLevel() == 1)
+    if (currentPlayer->getLevel() == 1)
         player_sprites[i].setScale(2, 2);
-    else if (this->_guiConnect->_players[i]->getLevel() == 2)
+    else if (currentPlayer->getLevel() == 2)
         player_sprites[i].setScale(2, 2);
-    else if (this->_guiConnect->_players[i]->getLevel() == 4)
+    else if (currentPlayer->getLevel() == 4)
         player_sprites[i].setScale(2, 2);
-    else if (this->_guiConnect->_players[i]->getLevel() == 5)
+    else if (currentPlayer->getLevel() == 5)
         player_sprites[i].setScale(2, 2);
-    else if (this->_guiConnect->_players[i]->getLevel() == 6)
+    else if (currentPlayer->getLevel() == 6)
         player_sprites[i].setScale(2, 2);
-    else if (this->_guiConnect->_players[i]->getLevel() == 7)
+    else if (currentPlayer->getLevel() == 7)
         player_sprites[i].setScale(2, 2);
-    else if (this->_guiConnect->_players[i]->getLevel() == 8)
+    else if (currentPlayer->getLevel() == 8)
         player_sprites[i].setScale(2, 2);
 }
 
@@ -270,25 +270,27 @@ void Zappy::PlayerPrint::updatePlayersTravelled()
     }
 }
 
-void Zappy::PlayerPrint::print_walk_animation(int playerIndex)
+void Zappy::PlayerPrint::print_walk_animation(std::shared_ptr<Player> currentPlayer, int index)
 {
-    playerIndex = playerIndex;
-    std::shared_ptr<Player> player = this->_guiConnect->_players[playerIndex];
-    sf::Sprite& sprite = this->player_sprites[playerIndex];
-    int level = player->getLevel() - 1;
-    float time_spent = this->anim_clock[playerIndex].getElapsedTime().asSeconds();
-    float total_duration = 0.4f;
-
-    if (time_spent < total_duration) {
-        sf::Vector2f newPosition = this->start_pos[playerIndex] + 
-            (this->end_pos[playerIndex] - this->start_pos[playerIndex]) * (time_spent / total_duration);
-        sprite.setPosition(newPosition);
-
-        int frameIndex = static_cast<int>((time_spent / total_duration) * 4) % 4;
-        sprite.setTextureRect(this->player_orientation[level][frameIndex]);
-    } else {
-        sprite.setPosition(this->end_pos[playerIndex]);
-        sprite.setTextureRect(this->player_orientation[level][0]);
+    if (anim_clock[index].getElapsedTime().asSeconds() > (float)0.2 / (float)this->_guiConnect->getTimeUnit()) {
+        if (posToAdd[index] % 5 == 0) {
+            curr_frames[index]++;
+            if (curr_frames[index] == 4) {
+                curr_frames[index] = 0;
+            }
+        }
+        posToAdd[index]++;
+        anim_clock[index].restart();
+    }
+    int o_x = currentPlayer->getPosition()[0] - currentPlayer->_last_position[0];
+    int o_y = currentPlayer->getPosition()[1] - currentPlayer->_last_position[1];
+    float current_pos_x = currentPlayer->_last_position[0] * 102.4 + 100;
+    float current_pos_y = currentPlayer->_last_position[1] * 102.4 + 150;
+    this->player_sprites[index].setPosition(current_pos_x + (o_x * ((102.4) / 25)) * posToAdd[index], current_pos_y + (o_y * ((102.4) / 25)) * posToAdd[index]);
+    this->player_sprites[index].setTextureRect(this->player_anim_rank1[currentPlayer->getOrientation() - 1][curr_frames[index]]);
+    if (posToAdd[index] >= 25) {
+        currentPlayer->setLastPosition(currentPlayer->getPosition()[0], currentPlayer->getPosition()[1]);
+        posToAdd[index] = 0;
     }
 }
 
@@ -304,11 +306,11 @@ void Zappy::PlayerPrint::printPlayerEvolution(bool current_is_incanting, int i)
     }
 }
 
-bool Zappy::PlayerPrint::setPlayerEvolution(int i)
+bool Zappy::PlayerPrint::setPlayerEvolution(std::shared_ptr<Player> currentPlayer, int i)
 {
     if ((size_t)i < player_sprites.size()) {
-        if (this->_guiConnect->_players[i].get()->isPlayerIncanting() == true) {
-            _evolutions[i].second->setPosition(this->_guiConnect->_players[i]->getPosition()[0] * 102.4 + 70, this->_guiConnect->_players[i]->getPosition()[1] * 102.4 + 125);
+        if (currentPlayer->isPlayerIncanting() == true) {
+            _evolutions[i].second->setPosition(currentPlayer->getPosition()[0] * 102.4 + 70, currentPlayer->getPosition()[1] * 102.4 + 125);
             return (true);
         } else {
             return (false);
@@ -320,36 +322,36 @@ bool Zappy::PlayerPrint::setPlayerEvolution(int i)
 void Zappy::PlayerPrint::display()
 {
     bool current_is_incanting = false;
+    std::shared_ptr<Player> current_player;
     for (size_t i = 0; i < this->_guiConnect->_players.size(); i++) {
+        current_player = this->_guiConnect->_players[i];
         if (player_sprites.size() < this->_guiConnect->_players.size()) {
             player_sprites.push_back(sf::Sprite());
             _evolutions.push_back(std::make_pair(0, std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png")));
             _evolutions.back().second->setFrameInfo(82, 67, 16, 2);
+            curr_frames.push_back(0);
+            posToAdd.push_back(0);
+            anim_clock.push_back(sf::Clock());
         }
         if (player_sprites.size() > this->_guiConnect->_players.size()) {
             player_sprites.pop_back();
             _evolutions.pop_back();
+            curr_frames.pop_back();
+            posToAdd.pop_back();
+            anim_clock.pop_back();
         }
-        current_is_incanting = setPlayerEvolution(i);
-        // if (this->_guiConnect->_players[i]->getLastPosition() != this->_guiConnect->_players[i]->getPosition()) {
-        //     print_walk_animation(i);
-        // }
-        player_sprites[i].setTexture(player_textures[this->_guiConnect->_players[i]->getLevel() - 1]);
-        set_scale_of_player(i);
-        player_sprites[i].setPosition(this->_guiConnect->_players[i]->getPosition()[0] * 102.4 + 100, this->_guiConnect->_players[i]->getPosition()[1] * 102.4 + 150);
-        player_sprites[i].setTextureRect(player_orientation[this->_guiConnect->_players[i]->getLevel() - 1][this->_guiConnect->_players[i]->getOrientation() - 1]);
+        current_is_incanting = setPlayerEvolution(current_player, i);
+        player_sprites[i].setTexture(player_textures[current_player->getLevel() - 1]);
+        set_scale_of_player(current_player, i);
+        player_sprites[i].setPosition(current_player->getPosition()[0] * 102.4 + 100, current_player->getPosition()[1] * 102.4 + 150);
+        player_sprites[i].setTextureRect(player_orientation[current_player->getLevel() - 1][current_player->getOrientation() - 1]);
+        if (current_player->getLastPosition() != current_player->getPosition()) {
+            print_walk_animation(current_player, i);
+        }
         this->_window->draw(player_sprites[i]);
-        updatePlayersTravelled();
+        // updatePlayersTravelled();
         _broadcast->check_player_broadcast(i);
         _broadcast->display(i);
-        if (current_is_incanting) {
-            this->_window->draw(_evolutions[i].second->getSprite());
-        }
-        if (_evolutions.size() > 0) {
-            for (auto &it : _evolutions) {
-                it.second->updateClock(it.first, (float)1 / (float)this->_guiConnect->getTimeUnit());
-            }
-        }
         this->printPlayerEvolution(current_is_incanting, i);
     }
 }
