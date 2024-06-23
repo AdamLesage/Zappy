@@ -42,6 +42,9 @@ namespace Zappy {
             std::shared_ptr<Button> close;
             sf::Sprite closeSprite;
             sf::Texture closeTexture;
+            std::vector<sf::Sprite> skinsSprite;
+            std::vector<sf::Texture> skinsTexture;
+            std::vector<sf::IntRect> skinsRect;
         private:
     };
 }
