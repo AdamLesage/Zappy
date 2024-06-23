@@ -392,7 +392,7 @@ class AgentAlgo():
                 self.agentInfo.updateInventory(command_output[1])
                 return False
 
-            if self.countPassedCommands % 10 == 0 and self.status != "Incantation" and not f"Inventory\n" in self.agentInfo.commandsToSend: # Frequency of inventory check, avoid to check inventory if incantation is in progress
+            if self.countPassedCommands % 30 == 0 and self.status != "Incantation" and not f"Inventory\n" in self.agentInfo.commandsToSend: # Frequency of inventory check, avoid to check inventory if incantation is in progress
                 self.agentInfo.commandsToSend.append("Inventory\n")
                 return True
 
@@ -456,7 +456,6 @@ class AgentAlgo():
                 self.clientPlayLevel8()
                 return
             # self.borntick += 1
-            #self.launchIncantation()
             # print("Inventory management done")
             # print("Food mode done")
             if self.agentInfo.movements != []:
@@ -464,9 +463,7 @@ class AgentAlgo():
                 return
             # print("Movements done")
             # print("Check inventory done")
-            #if self.waitingIncantationResponses() == True:
-            #    return
-            #self.incantationManagement()
+            self.incantationManagement()
             if self.status == "Food":
                 if self.agentInfo.commandsToSend.count("Look\n") < 2:
                     self.agentInfo.commandsToSend.append("Look\n")
@@ -499,6 +496,7 @@ class AgentAlgo():
         # print(f"Command to send: {command_to_send}")
         self.client.send(command_to_send.encode())
         self.agentInfo.commandsReturned = [command_to_send, None]
+        self.countPassedCommands += 1
 
 
     def setReturnCommandAnswer(self, serverAnswer: str) -> None:
@@ -608,7 +606,6 @@ class AgentAlgo():
         Agent can accept the incantation but need to broadcast answer
         """
         #if self.status == "Going to incantation":
-        print(f"Data = {data}")
         if data == None or "message" not in data:
             return False
         if self.status == "Food":

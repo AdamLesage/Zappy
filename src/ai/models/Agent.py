@@ -66,6 +66,14 @@ class Agent():
             print(f"Error from splitServerResponseAndBroadcast: {e}")
             return [None, None]
 
+    def isDataReceivedABroadcast(self, data: str) -> bool:
+        """Check if the data received is a broadcast"""
+        listBroadcasts = ["need_incantation_level_", "accept_incantation_level_", "waiting_for_incantation_level_", "on_same_tile", "yes_we_are_on_the_map", "Anybody_on_the_map_?", "message ", "empty"]
+        if data == None:
+            return False
+        if any(broadcast in data for broadcast in listBroadcasts): # If the data received contains a broadcast message
+            return True
+        return False
 
     def retrieveWorldDimensions(self, data: str) -> None:
         """Retrieve the world dimensions"""
@@ -137,13 +145,15 @@ class Agent():
                         data_received = self.client.recv(1024).decode()
 
                         if self.bufferManagement(data_received) == False:
-                            print(f"continue because bufferManagement, data: [{data_received}]")
-                            continue
+                            exit(0)
                         self.splited_response = self.splitServerResponseAndBroadcast(self.receive_from_server)
                         if self.agentAlgo.broadcastManagement(self.splited_response[1]):
                             self.receive_from_server = None
                             if self.splited_response[0] == None:
                                 continue
+                        # if self.isDataReceivedABroadcast(self.splited_response[0]):
+                        #     self.receive_from_server = None
+                        #     continue
                         tmp += 1
                         print("---------------------------------------------------")
                         print(f"tmp: {tmp}, command sended: {self.agentInfo.getCommandsReturned()} receive_from_server: {self.receive_from_server}")
@@ -166,7 +176,6 @@ class Agent():
                                 self.receive_from_server = None
                         self.agentAlgo.setReturnCommandAnswer(self.splited_response[0])
                         # print(f"Commands returned: {self.agentInfo.getCommandsReturned()}")
-                        self.agentAlgo.countPassedCommands += 1
                         self.agentAlgo.ConnectNbrManagement()
                         self.agentAlgo.forkManagement()
                         self.agentAlgo.play(None)
