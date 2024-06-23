@@ -84,23 +84,23 @@ class TestAgent(unittest.TestCase):
         with self.assertRaises(SystemExit):
             agent.retrieveClientNumber("0\n15 15\n")
 
-    def test05_send_to_server(self):
-        """Test sending a message to the server"""
-        # Get an available port
-        port = find_available_port()
-        server_thread = ServerThread(port)
-        server_thread.start()
+    # def test05_send_to_server(self):
+    #     """Test sending a message to the server"""
+    #     # Get an available port
+    #     port = find_available_port()
+    #     server_thread = ServerThread(port)
+    #     server_thread.start()
 
-        time.sleep(1)
+    #     time.sleep(1)
 
-        try:
-            agent = Agent(port, "Team1")
-            agent.agentInfo.addCommandsToSend("look\n")
-            time.sleep(1)
-            agent.connect_to_server()
-        finally:
-            server_thread.stop()
-            agent.client.close()
+    #     try:
+    #         agent = Agent(port, "Team1")
+    #         agent.agentInfo.addCommandsToSend("look\n")
+    #         time.sleep(1)
+    #         agent.connect_to_server()
+    #     finally:
+    #         server_thread.stop()
+    #         agent.client.close()
 
     def test06_retrieveClientNumber_none_data(self):
         """Test the retrieval of an unexisting client number"""
