@@ -78,6 +78,10 @@ namespace Zappy
         void setEvolutions(std::vector<std::pair<int, std::shared_ptr<Evolution>>> evolutions){
             _evolutions = evolutions;
         }
+        void setPlayerTextures(sf::Texture player_texture, int i) {
+            this->player_textures[i] = player_texture;
+        }
+            
 
     protected:
         void printPlayerEvolution(bool, int i);
