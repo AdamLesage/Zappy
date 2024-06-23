@@ -435,7 +435,8 @@ class AgentAlgo():
                 if self.agentInfo.posIs0 == True:
                     self.status = "is waiting player to start incantation"
                     print(f"Player status: {self.status}")
-                    self.agentInfo.commandsToSend.append("Broadcast I'm here\n")
+                    self.agentInfo.commandsToSend.clear()
+                    self.agentInfo.commandsToSend.append("Broadcast I_m_here\n")
                     self.agentInfo.broadcast_orientation = None
                 return
             else:
@@ -614,7 +615,7 @@ class AgentAlgo():
             self.agentInfo.broadcast_orientation = None
             self.agentInfo.posIs0 = False
             return False
-        if data == "I'm here":
+        if data == "I_m_here":
             self.status = "Can start incantation"
             exit(0)
             return False
