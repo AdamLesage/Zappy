@@ -313,7 +313,7 @@ void Zappy::PlayerPrint::display()
         current_player = this->_guiConnect->_players[i];
         if (player_sprites.size() < this->_guiConnect->_players.size()) {
             player_sprites.push_back(sf::Sprite());
-            _evolutions.push_back(std::make_pair(0, std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1, 1), sf::Clock(), "asset/sprite/animation/evolution1.png")));
+            _evolutions.push_back(std::make_pair(0, std::make_shared<Evolution>(std::make_pair(0, 0), std::make_pair(1.2, 1.2), sf::Clock(), "asset/sprite/animation/evolution1.png")));
             _evolutions.back().second->setFrameInfo(82, 67, 16, 2);
             curr_frames.push_back(0);
             posToAdd.push_back(0);
