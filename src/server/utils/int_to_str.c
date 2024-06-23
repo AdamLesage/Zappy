@@ -8,6 +8,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+/**
+ * @brief Category: Utils | Convert an int to a string
+ *
+ * @param str
+ * @param i
+ * @return char*
+ */
 char *revers_str(char *str, int i)
 {
     char *new_str = malloc(sizeof(char) * 10);
@@ -22,6 +29,12 @@ char *revers_str(char *str, int i)
     return (new_str);
 }
 
+/**
+ * @brief Category: Utils | Convert an int to a string
+ *
+ * @param nbr
+ * @return char*
+ */
 char *int_to_str_neg_managment(int nbr_save, char *num_str, int *i)
 {
     if (nbr_save < 0) {
@@ -32,6 +45,12 @@ char *int_to_str_neg_managment(int nbr_save, char *num_str, int *i)
     return (num_str);
 }
 
+/**
+ * @brief Category: Utils | Convert an int to a string
+ *
+ * @param nbr
+ * @return char*
+ */
 char *int_to_str(int nbr)
 {
     int i = 0;

@@ -22,6 +22,12 @@ static void send_pic_info(network_t *network, incantation_info_t *info, int fd)
     add_to_send_buffer(network, "\n", fd);
 }
 
+/**
+ * @brief Category: Event | Pic event => Incantation
+ *
+ * @param core
+ * @param info
+ */
 void pic(core_t *core, incantation_info_t *info)
 {
     for (players_list_t *tmp = core->players.players_list;

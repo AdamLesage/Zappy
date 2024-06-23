@@ -7,6 +7,13 @@
 
 #include "../../../../include/server/server.h"
 
+/**
+ * @brief Get the frequency from the arguments
+ *
+ * @param argv The arguments
+ * @param index The index of the arguments
+ * @return int The frequency
+ */
 int get_frequency(const char **argv, int *index)
 {
     int frequency = 0;

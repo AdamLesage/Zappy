@@ -14,6 +14,12 @@ static void send_edi_info(network_t *network, int egg_id, int fd)
     add_to_send_buffer(network, "\n", fd);
 }
 
+/**
+ * @brief Category: Event | Edi event => Death of an egg
+ *
+ * @param core
+ * @param egg_id
+ */
 void edi(core_t *core, int egg_id)
 {
     for (players_list_t *tmp = core->players.players_list;

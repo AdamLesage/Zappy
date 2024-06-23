@@ -14,6 +14,12 @@ static void send_pfk_info(network_t *network, int id, int fd)
     add_to_send_buffer(network, "\n", fd);
 }
 
+/**
+ * @brief Category: Event | Pfk event => Player fork
+ *
+ * @param core
+ * @param id
+ */
 void pfk(core_t *core, int id)
 {
     for (players_list_t *tmp = core->players.players_list;

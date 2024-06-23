@@ -7,6 +7,13 @@
 
 #include "server.h"
 
+/**
+ * @brief Add the action in the queue of the player
+ *
+ * @param players
+ * @param fd
+ * @param command
+ */
 static void set_player_queue(core_t *core, player_info_t *info,
     char *command)
 {
@@ -24,6 +31,14 @@ static void set_player_queue(core_t *core, player_info_t *info,
     add_action_in_queue(&core->players, info->fd, command);
 }
 
+/**
+ * @brief Choose the type of command
+ *
+ * @param command
+ * @param info
+ * @param core
+ * @param team_name
+ */
 static void choose_type_command(char *command, player_info_t *info,
     core_t *core, char *team_name)
 {

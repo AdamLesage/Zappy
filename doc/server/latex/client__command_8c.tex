@@ -1,0 +1,35 @@
+\hypertarget{client__command_8c}{}\doxysection{src/server/command/\+Player\+\_\+command/client\+\_\+command.c File Reference}
+\label{client__command_8c}\index{src/server/command/Player\_command/client\_command.c@{src/server/command/Player\_command/client\_command.c}}
+{\ttfamily \#include \char`\"{}server.\+h\char`\"{}}\newline
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const command\+\_\+list\+\_\+t \mbox{\hyperlink{client__command_8c_a39da2d719cedd27f41b6afb66d287bb1_a39da2d719cedd27f41b6afb66d287bb1}{commands\+\_\+player\+\_\+list}} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{client__command_8c_a39da2d719cedd27f41b6afb66d287bb1_a39da2d719cedd27f41b6afb66d287bb1}\label{client__command_8c_a39da2d719cedd27f41b6afb66d287bb1_a39da2d719cedd27f41b6afb66d287bb1}} 
+\index{client\_command.c@{client\_command.c}!commands\_player\_list@{commands\_player\_list}}
+\index{commands\_player\_list@{commands\_player\_list}!client\_command.c@{client\_command.c}}
+\doxysubsubsection{\texorpdfstring{commands\_player\_list}{commands\_player\_list}}
+{\footnotesize\ttfamily const command\+\_\+list\+\_\+t commands\+\_\+player\+\_\+list\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}Forward"{}}, \&\mbox{\hyperlink{forward_8c_a5a5987f3ff155715d94e403d67f5a803_a5a5987f3ff155715d94e403d67f5a803}{forward}}, 1, 7\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}Right"{}}, \&\mbox{\hyperlink{right_8c_a66075223453d11e1bf26ec3b9db86420_a66075223453d11e1bf26ec3b9db86420}{right}}, 1, 7\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}Left"{}}, \&\mbox{\hyperlink{left_8c_ac0b24405bc355518968117a652cc7787_ac0b24405bc355518968117a652cc7787}{left}}, 1, 7\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}Look"{}}, \&\mbox{\hyperlink{look_8c_aca57dbcd458af9ffb0b6f8a31b3246d9_aca57dbcd458af9ffb0b6f8a31b3246d9}{look}}, 1, 7\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}Inventory"{}}, \&\mbox{\hyperlink{inventory_8c_ae8027486c6703b03b5b7498a82f124c7_ae8027486c6703b03b5b7498a82f124c7}{inventory}}, 1, 1\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}Broadcast"{}}, \&\mbox{\hyperlink{broadcast_8c_acd92da82c93d2f7f173eb8b62ab06e63_acd92da82c93d2f7f173eb8b62ab06e63}{broadcast}}, 2, 7\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}Connect\_nbr"{}}, \&\mbox{\hyperlink{connect__nbr_8c_a585600620b49c071d92636f1b06e4e3f_a585600620b49c071d92636f1b06e4e3f}{connect\_nbr}}, 1, 0\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}Fork"{}}, \&\mbox{\hyperlink{fork_8c_a431d7f25d4a5c677fc6a286a23abf957_a431d7f25d4a5c677fc6a286a23abf957}{ffork}}, 1, 42\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}Eject"{}}, \&\mbox{\hyperlink{eject_8c_a73fb9440d6682c92e324f87ffb41f5df_a73fb9440d6682c92e324f87ffb41f5df}{eject}}, 1, 7\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}Take"{}}, \&\mbox{\hyperlink{take_8c_a255aa3e9f569b8c53b741d8f7c0ddd39_a255aa3e9f569b8c53b741d8f7c0ddd39}{take}}, 2, 7\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}Set"{}}, \&\mbox{\hyperlink{set_8c_a49fc14ff62cccd30dddf8b4e8d90ed0b_a49fc14ff62cccd30dddf8b4e8d90ed0b}{set}}, 2, 7\},}
+\DoxyCodeLine{    \{NULL, NULL, 0, 0\}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}

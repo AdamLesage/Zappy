@@ -7,6 +7,12 @@
 
 #include "../../include/server/server.h"
 
+/**
+ * @brief Init the select info
+ *
+ * @param network Network struct
+ * @param delay Delay of the select
+ */
 static void init_select_info(network_t *network, float delay)
 {
     network->select_info.max_fd = network->socket_config.sockfd;
@@ -19,6 +25,12 @@ static void init_select_info(network_t *network, float delay)
     network->select_info.fd_socket_control = network->socket_config.sockfd;
 }
 
+/**
+ * @brief Init the socket
+ *
+ * @param port Port of the server
+ * @return struct sockaddr_in
+ */
 static struct sockaddr_in init_socket(int port)
 {
     struct sockaddr_in server_socket;
@@ -29,6 +41,12 @@ static struct sockaddr_in init_socket(int port)
     return (server_socket);
 }
 
+/**
+ * @brief Bind the socket
+ *
+ * @param server_socket
+ * @return int
+ */
 static int bind_socket(struct sockaddr_in *server_socket)
 {
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -49,6 +67,11 @@ static int bind_socket(struct sockaddr_in *server_socket)
     return (sockfd);
 };
 
+/**
+ * @brief Init the server
+ *
+ * @param core
+ */
 void init_server(core_t *core)
 {
     core->network.socket_config.server_socket =

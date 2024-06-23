@@ -9,6 +9,12 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+/**
+ * @brief Category: Utils | Convert a string to an array
+ *
+ * @param on_quote
+ * @param c
+ */
 static void check_quote(bool *on_quote, char c)
 {
     if (c == '"') {
@@ -20,6 +26,13 @@ static void check_quote(bool *on_quote, char c)
     }
 }
 
+/**
+ * @brief Category: Utils | Convert a string to an array
+ *
+ * @param str
+ * @param separator
+ * @return int
+ */
 static int find_nb_separator(char *str, char separator)
 {
     int nb_separator = 0;
@@ -38,6 +51,14 @@ static int find_nb_separator(char *str, char separator)
     return (nb_separator);
 }
 
+/**
+ * @brief Category: Utils | Convert a string to an array
+ *
+ * @param str
+ * @param separator
+ * @param nb_separator
+ * @return int*
+ */
 static int *find_nb_charaters(char *str, char separator, int nb_separator)
 {
     int *nb_charaters = NULL;
@@ -60,6 +81,14 @@ static int *find_nb_charaters(char *str, char separator, int nb_separator)
     return (nb_charaters);
 }
 
+/**
+ * @brief Category: Utils | Convert a string to an array
+ *
+ * @param i
+ * @param str
+ * @param separator
+ * @return int
+ */
 static int passe_separator(int i, char *str, char separator)
 {
     while (str[i] == separator) {
@@ -68,6 +97,14 @@ static int passe_separator(int i, char *str, char separator)
     return (i);
 }
 
+/**
+ * @brief Category: Utils | Convert a string to an array
+ *
+ * @param array
+ * @param str
+ * @param separator
+ * @return char**
+ */
 static char **convert_str_to_array(char **array, char *str, char separator)
 {
     int rows = 0;
@@ -90,6 +127,13 @@ static char **convert_str_to_array(char **array, char *str, char separator)
     return (array);
 }
 
+/**
+ * @brief Category: Utils | Convert a string to an array
+ *
+ * @param str
+ * @param separator
+ * @return char**
+ */
 char **my_str_to_word_array(char *str, char separator)
 {
     char **array = NULL;

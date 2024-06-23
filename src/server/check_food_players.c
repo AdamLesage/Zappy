@@ -7,6 +7,14 @@
 
 #include "server.h"
 
+/**
+ * @brief Check if a player can eat
+ *
+ * @param info
+ * @param core
+ * @return true
+ * @return false
+ */
 static bool eat_food(player_info_t *info, core_t *core)
 {
     if (info->last_feed == 0) {
@@ -27,6 +35,11 @@ static bool eat_food(player_info_t *info, core_t *core)
     return (false);
 }
 
+/**
+ * @brief Check if a player can eat
+ *
+ * @param core
+ */
 void check_food_players(core_t *core)
 {
     bool is_deleted = false;

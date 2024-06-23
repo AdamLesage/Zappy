@@ -60,6 +60,13 @@ void print_usage(char *error)
     exit(84);
 }
 
+/**
+ * @brief Get the arguments of the server
+ *
+ * @param arguments
+ * @param argc
+ * @param argv
+ */
 void get_arguments(arguments_t *arguments, const int argc, const char **argv)
 {
     bool is_valid = false;

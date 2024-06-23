@@ -7,6 +7,13 @@
 
 #include "../../../../include/server/server.h"
 
+/**
+ * @brief Get the number of client by teams
+ *
+ * @param argv The arguments
+ * @param index The index of the arguments
+ * @return int The number of client by teams
+ */
 int get_number_client_by_teams(const char **argv, int *index)
 {
     int nb_client = 0;

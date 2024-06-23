@@ -7,6 +7,12 @@
 
 #include "server.h"
 
+/**
+ * @brief Category: Utils | Convert a string to an object
+ *
+ * @param str The string to convert
+ * @return enum Object The object
+ */
 enum Object string_to_object(char *str)
 {
     if (strcmp(str, "food") == 0)

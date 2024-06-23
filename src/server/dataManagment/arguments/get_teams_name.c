@@ -7,6 +7,13 @@
 
 #include "../../../../include/server/server.h"
 
+/**
+ * @brief Get the teams name from the arguments
+ *
+ * @param arguments The arguments
+ * @param argv The arguments
+ * @param index The index of the arguments
+ */
 void get_teams_name(arguments_t *arguments, const char **argv, int *index)
 {
     arguments->nb_teams = 0;

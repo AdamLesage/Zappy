@@ -7,6 +7,12 @@
 
 #include "../../include/server/server.h"
 
+/**
+ * @brief Manage the select notification
+ *
+ * @param core
+ * @param retval
+ */
 static void manage_select_notif(core_t *core, int retval)
 {
     if (retval > 0) {
@@ -24,6 +30,12 @@ static void manage_select_notif(core_t *core, int retval)
     send_command_responce(&core->network);
 }
 
+/**
+ * @brief Update the select info
+ *
+ * @param select_info
+ * @param frequency
+ */
 static void update_select_info(select_info_t *select_info, int frequency)
 {
     select_info->tv.tv_sec = 0;
@@ -35,6 +47,11 @@ static void update_select_info(select_info_t *select_info, int frequency)
     FD_SET(STDIN_FILENO, &select_info->except_fds);
 }
 
+/**
+ * @brief Main function of the server
+ *
+ * @param core
+ */
 void lunch_server(core_t *core)
 {
     int retval = 0;
