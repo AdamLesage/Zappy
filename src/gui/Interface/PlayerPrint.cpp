@@ -335,8 +335,8 @@ void Zappy::PlayerPrint::display()
             print_walk_animation(current_player, i);
         }
         this->_window->draw(player_sprites[i]);
-        _broadcast->check_player_broadcast(i);
-        _broadcast->display(i);
+        _broadcast->check_player_broadcast(current_player);
+        _broadcast->display(current_player);
         this->printPlayerEvolution(current_is_incanting, i);
     }
 }
