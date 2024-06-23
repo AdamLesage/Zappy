@@ -25,6 +25,7 @@ namespace Zappy {
             Shop(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<PlayerPrint> playerPrint);
             ~Shop();
             void display();
+            void display_skin(int skin);
             void start() { isRunning = true; }
         protected:
             std::shared_ptr<PlayerPrint> _playerPrint;
@@ -45,6 +46,7 @@ namespace Zappy {
             std::vector<sf::Sprite> skinsSprite;
             std::vector<sf::Texture> skinsTexture;
             std::vector<sf::IntRect> skinsRect;
+            std::vector<std::shared_ptr<Button>> buyButtons;
         private:
     };
 }
