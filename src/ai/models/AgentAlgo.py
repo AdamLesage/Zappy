@@ -134,6 +134,9 @@ class AgentAlgo():
         if self.status == "Food":
             self.foodMode() # Search for food
             return
+        if self.status == "Can start incantation":
+            self.setItemsForIncantation()
+            return
         if self.status == "Ask incantation" or self.status == "Waiting player to start incantation":
             self.hasAskedIncantation = True
             #self.agentInfo.commandsToSend.clear()
@@ -338,7 +341,6 @@ class AgentAlgo():
         if self.playerOnSameTileForIncantation >= self.agentInfo.numberToEvolve[f"level{self.agentInfo.getLevel() + 1}"]: # If there is enough agent to evolve
             if self.agentInfo.getLevel() != 1:
                 print(f"Enough players to evolve to level {self.agentInfo.getLevel() + 1}")
-            self.setItemsForIncantation()
             self.status = "Incantation"
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.append("Incantation\n")
@@ -432,11 +434,14 @@ class AgentAlgo():
             if self.agentBroadcast.goToBroadcast(self.agentInfo.broadcast_orientation, self.agentInfo, self.status) == True:
                 if self.agentInfo.posIs0 == True:
                     self.status = "is waiting player to start incantation"
+                    print(f"Player status: {self.status}")
+                    self.agentInfo.commandsToSend.append("Broadcast I'm here\n")
                     self.agentInfo.broadcast_orientation = None
                 return
             else:
                 self.agentInfo.broadcast_orientation = None # Reset the broadcast orientation
-            self.updateClientStatus()
+            if self.status != "Can start incantation":
+                self.updateClientStatus()
             if self.getReturnCommand()[0] == "Look\n" and self.status == "Food":
                 self.foodMode()
                 return
@@ -608,6 +613,10 @@ class AgentAlgo():
             self.agentInfo.broadcast_received = None
             self.agentInfo.broadcast_orientation = None
             self.agentInfo.posIs0 = False
+            return False
+        if data == "I'm here":
+            self.status = "Can start incantation"
+            exit(0)
             return False
         self.broadcastReceived = data
         data = data.replace(",", "") # remove comma after K
