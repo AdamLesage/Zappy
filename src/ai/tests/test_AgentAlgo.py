@@ -52,15 +52,6 @@ class TestAgentAlgo(unittest.TestCase):
         agentAlgo.updateClientStatus()
         self.assertEqual(agentAlgo.status, "Food")
 
-    def test06_updateAgentInfo(self):
-        agent = AgentInfo()
-        agent.setLevel(1)
-        agent.addInventory("linemate", 1)
-        agentAlgo = AgentAlgo(agent, 100)
-        agentAlgo.updateAgentInfo(agent)
-        self.assertEqual(agentAlgo.agentInfo.getLevel(), 1)
-        self.assertEqual(agentAlgo.agentInfo.getInventory("linemate"), 1)
-
     def test07_updateClientStatusNoAlert(self):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)

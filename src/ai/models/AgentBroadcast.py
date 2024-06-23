@@ -61,3 +61,55 @@ class AgentBroadcast():
             agentInfo.movements.append("Forward\n")
         # print(f"Moves after goToBroadcast: {agentInfo.movements} with orientation {orientation} and status {status}")
         return True
+
+
+##### Functions out of the class #####
+
+
+def broadcastManagement(self, data: str) -> bool:
+    """
+    Manage the broadcast
+    Split data with ' ' ---> ["message", "K,", "text"]
+    Agent can accept the incantation but need to broadcast answer
+    """
+    #if self.status == "Going to incantation":
+    if data == None or "message" not in data:
+        return False
+    if self.status == "Food":
+        return False
+    if "empty" in data:
+        self.agentInfo.broadcast_received = "empty"
+        return False
+    if "Incantation_finished" in data:
+        self.status = "Food"
+        self.hasAcceptedIncantation = False
+        self.hasAskedIncantation = False
+        self.isWaitingForResponses = False
+        self.playerOnSameTileForIncantation = 1
+        self.agentInfo.incantationResponses = 0
+        self.agentInfo.broadcast_received = None
+        self.agentInfo.broadcast_orientation = None
+        self.agentInfo.posIs0 = False
+        return False
+    if "I_m_here" in data:
+        self.status = "Can start incantation"
+        return False
+    self.broadcastReceived = data
+    data = data.replace(",", "") # remove comma after K
+    data = data.replace("\n", "") # remove \n at the end of the string
+    try:
+        self.agentInfo.broadcast_received = data.split(' ')[2]
+        if self.agentInfo.broadcast_received != None and self.agentInfo.broadcast_received.startswith(f"need_incantation_level_{self.agentInfo.getLevel()}"):
+            # Only retrieve orientation if the broadcast is waiting for incantation
+            self.agentInfo.broadcast_orientation = data.split(' ')[1]
+            print(f"Broadcast received: {self.agentInfo.broadcast_received} with orientation {self.agentInfo.broadcast_orientation}")
+
+        self.agentInfo.commandsToSend.clear()
+        self.acceptOrRefuseIncantation()
+        self.playerOnSameTile()
+        return True
+
+        # print(f"Command to send {self.agentInfo.commandsToSend[-1]}")
+    except Exception as e:
+        print(f"Error from broadcast management: {e} from data: {data}")
+        return False

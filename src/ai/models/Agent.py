@@ -9,9 +9,6 @@ import socket
 import sys
 sys.path.append("..")
 from data_encryption import encrypt_data, decrypt_data
-from collections import deque
-import select
-import os
 
 from models.AgentInfo import AgentInfo
 from models.AgentAction import AgentAction
@@ -66,12 +63,13 @@ class Agent():
             print(f"Error from splitServerResponseAndBroadcast: {e}")
             return [None, None]
 
-    def isDataReceivedABroadcast(self, data: str) -> bool:
+    def isDataReceivedABroadcastWithoutResponse(self, data: str) -> bool:
         """Check if the data received is a broadcast"""
         listBroadcasts = ["need_incantation_level_", "accept_incantation_level_", "waiting_for_incantation_level_", "on_same_tile", "yes_we_are_on_the_map", "Anybody_on_the_map_?", "message ", "empty"]
-        if data == None:
+        listResponses = ["ok", "ko", "dead", "[", "Current level", "Elevation underway"]
+        if data is None:
             return False
-        if any(broadcast in data for broadcast in listBroadcasts): # If the data received contains a broadcast message
+        if any(broadcast in data for broadcast in listBroadcasts) and not any(response in data for response in listResponses): # If the data received contains a broadcast message and does not contain any response
             return True
         return False
 
@@ -151,12 +149,12 @@ class Agent():
                             self.receive_from_server = None
                             if self.splited_response[0] == None:
                                 continue
-                        # if self.isDataReceivedABroadcast(self.splited_response[0]):
-                        #     self.receive_from_server = None
-                        #     continue
+                        if self.isDataReceivedABroadcastWithoutResponse(self.receive_from_server):
+                            self.receive_from_server = None
+                            continue
                         tmp += 1
                         print("---------------------------------------------------")
-                        print(f"tmp: {tmp}, command sended: {self.agentInfo.getCommandsReturned()} receive_from_server: {self.receive_from_server}")
+                        print(f"tmp: {tmp}, command sended: {self.agentInfo.getCommandsReturned()} receive_from_server: {self.splited_response[0]}")
                     except BlockingIOError as e:
                         pass
 
@@ -172,13 +170,13 @@ class Agent():
                             continue
                         if self.receive_from_server != None:
                             if self.splited_response[0] is not None and "Current level" in self.splited_response[0]:
-                                self.agentAlgo.setStatus("Mining")
+                                self.agentAlgo.status = "Mining"
                                 self.receive_from_server = None
                         self.agentAlgo.setReturnCommandAnswer(self.splited_response[0])
                         # print(f"Commands returned: {self.agentInfo.getCommandsReturned()}")
                         self.agentAlgo.ConnectNbrManagement()
                         self.agentAlgo.forkManagement()
-                        self.agentAlgo.play(None)
+                        self.agentAlgo.play()
                         self.agentAlgo.clearReturnCommand()
                         self.agentAlgo.send_to_server()
                         self.receive_from_server = None
