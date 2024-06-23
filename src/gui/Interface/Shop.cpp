@@ -16,7 +16,7 @@ Zappy::Shop::Shop(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Play
         throw InterfaceError("Error: fonddd.jpg not found", "Interface");
     if (!font.loadFromFile("./asset/gui/Farmhouse.otf"))
         throw InterfaceError("Error: Farmhouse.otf not found", "Interface");
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 16; i++)
         skinsTexture.push_back(sf::Texture());
     if (skinsTexture[0].loadFromFile("./asset/sprite/shop/rank1shop.png") == false)
         throw InterfaceError("Error: rank1 not found", "Shop");
@@ -42,22 +42,28 @@ Zappy::Shop::Shop(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Play
         throw InterfaceError("Error: rank6 not found", "Shop");
     if (skinsTexture[11].loadFromFile("./asset/sprite/shop/rank6shopb.png") == false)
         throw InterfaceError("Error: rank6 not found", "Shop");
+    if (skinsTexture[12].loadFromFile("./asset/sprite/shop/rank7shop.png") == false)
+        throw InterfaceError("Error: rank7 not found", "Shop");
+    if (skinsTexture[13].loadFromFile("./asset/sprite/shop/rank7shopb.png") == false)
+        throw InterfaceError("Error: rank7 not found", "Shop");
+    if (skinsTexture[14].loadFromFile("./asset/sprite/shop/rank8shop.png") == false)
+        throw InterfaceError("Error: rank8 not found", "Shop");
+    if (skinsTexture[15].loadFromFile("./asset/sprite/shop/rank8shopb.png") == false)
+        throw InterfaceError("Error: rank8 not found", "Shop");
     std::size_t j = 0;
     for (std::size_t i = 0; i < skinsTexture.size(); i++) {
         skinsSprite.push_back(sf::Sprite());
         skinsSprite[i].setTexture(skinsTexture[i]);
         skinsSprite[i].setScale(3, 3);
-        if (i == 6 || i == 7)
+        if (i == 6 || i == 7 || i == 12 || i == 13 || i == 14 || i == 15)
             skinsSprite[i].setScale(2, 2);
         if (i % 2 == 0) {
             skinsSprite[i].setTextureRect(_playerPrint->getPlayerOrientation()[i - j][2]);
             skinsSprite[i].setPosition(665, 400);
-            printf("i: %ld\n", i);
         } else {
             skinsSprite[i].setPosition(1305, 400);
             j++;
             skinsSprite[i].setTextureRect(_playerPrint->getPlayerOrientation()[i - j][2]);
-            printf("i: %ld\n", i - j);
         }
     }
     loading.setSize(sf::Vector2f(1920, 1080));
@@ -113,14 +119,19 @@ void Zappy::Shop::display_skin(int skin)
             _window->draw(pplayer_rank_text[i]);
             _window->draw(_playerPrint->getPlayerRank()[i]);
         }
-        buyButtons[0]->checkClick(_window, event);
-        buyButtons[1]->checkClick(_window, event);
         buyButtons[0]->displayButton(_window);
         buyButtons[1]->displayButton(_window);
+        if (buyButtons[0]->checkClick(_window, event) == true) {
+            _playerPrint->setPlayerTextures(skinsTexture[skinreal], skin);
+            Running = false;
+        }
+        if (buyButtons[1]->checkClick(_window, event) == true) {
+            _playerPrint->setPlayerTextures(skinsTexture[skinreal + 1], skin);
+            Running = false;
+        }
         close->displayButton(_window);
         _window->draw(skinsSprite[skinreal]);
         _window->draw(skinsSprite[skinreal + 1]);
-        printf("skin: %d\n", skinreal);
         _window->display();
     }
 }

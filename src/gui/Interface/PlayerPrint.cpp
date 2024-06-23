@@ -231,6 +231,14 @@ int teamnbr, std::shared_ptr<Broadcast> brodcasr, std::vector<std::pair<int, std
     for (int i = 0; i < 8; i++) {
         player_rank[i].setTextureRect(player_orientation[i][3]);
     }
+    player_anim_rank.push_back(player_anim_rank1);
+    player_anim_rank.push_back(player_anim_rank2);
+    player_anim_rank.push_back(player_anim_rank3);
+    player_anim_rank.push_back(player_anim_rank4);
+    player_anim_rank.push_back(player_anim_rank5);
+    player_anim_rank.push_back(player_anim_rank6);
+    player_anim_rank.push_back(player_anim_rank7);
+    player_anim_rank.push_back(player_anim_rank8);
 }
 
 Zappy::PlayerPrint::~PlayerPrint()
@@ -244,15 +252,15 @@ void Zappy::PlayerPrint::set_scale_of_player(std::shared_ptr<Player> currentPlay
     else if (currentPlayer->getLevel() == 2)
         player_sprites[i].setScale(2, 2);
     else if (currentPlayer->getLevel() == 4)
-        player_sprites[i].setScale(2, 2);
+        player_sprites[i].setScale(1, 1);
     else if (currentPlayer->getLevel() == 5)
-        player_sprites[i].setScale(2, 2);
+        player_sprites[i].setScale(1.2, 1.2);
     else if (currentPlayer->getLevel() == 6)
-        player_sprites[i].setScale(2, 2);
+        player_sprites[i].setScale(1.2, 1.2);
     else if (currentPlayer->getLevel() == 7)
-        player_sprites[i].setScale(2, 2);
+        player_sprites[i].setScale(1, 1);
     else if (currentPlayer->getLevel() == 8)
-        player_sprites[i].setScale(2, 2);
+        player_sprites[i].setScale(1, 1);
 }
 
 void Zappy::PlayerPrint::print_walk_animation(std::shared_ptr<Player> currentPlayer, int index)
@@ -272,7 +280,7 @@ void Zappy::PlayerPrint::print_walk_animation(std::shared_ptr<Player> currentPla
     float current_pos_x = currentPlayer->_last_position[0] * 102.4 + 100;
     float current_pos_y = currentPlayer->_last_position[1] * 102.4 + 150;
     this->player_sprites[index].setPosition(current_pos_x + (o_x * ((102.4) / 25)) * posToAdd[index], current_pos_y + (o_y * ((102.4) / 25)) * posToAdd[index]);
-    this->player_sprites[index].setTextureRect(this->player_anim_rank1[currentPlayer->getOrientation() - 1][curr_frames[index]]);
+    this->player_sprites[index].setTextureRect(this->player_anim_rank[currentPlayer->getLevel() - 1][currentPlayer->getOrientation() - 1][curr_frames[index]]);
     if (posToAdd[index] >= 25) {
         currentPlayer->setLastPosition(currentPlayer->getPosition()[0], currentPlayer->getPosition()[1]);
         posToAdd[index] = 0;

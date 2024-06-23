@@ -41,6 +41,14 @@ Zappy::Menu::Menu(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Play
         pplayer_rank_text[i].setFillColor(sf::Color::White);
         pplayer_rank_text[i].setPosition(100, 100 + i * 100);
     }
+    loadingText.setFont(font);
+    loadingText.setString("Zappy");
+    loadingText.setCharacterSize(250);
+    loadingText.setFillColor(sf::Color::Cyan);
+    loadingText.setPosition(_window->getSize().x / 2 - loadingText.getLocalBounds().width / 2, _window->getSize().y / 2 - loadingText.getLocalBounds().height / 2);
+    loadingText.setStyle(sf::Text::Bold);
+    loadingText.setOutlineThickness(5);
+    loadingText.setOutlineColor(sf::Color::Black);
 }
 
 Zappy::Menu::~Menu()
@@ -60,6 +68,7 @@ void Zappy::Menu::display()
         _window->clear();
         _window->draw(loading);
         _window->draw(loadingBar);
+        _window->draw(loadingText);
         _window->display();
     }
     loading.setTexture(&loading_texture[1]);

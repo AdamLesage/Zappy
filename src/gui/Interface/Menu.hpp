@@ -42,6 +42,7 @@ namespace Zappy {
             bool menu;
             sf::Event event;
             sf::Font font;
+            sf::Text loadingText;
         private:
     };
 }
