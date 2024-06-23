@@ -35,12 +35,12 @@ int Zappy::TeamPrint::getLevel(std::string teamName)
     return 0;
 }
 
-void Zappy::TeamPrint::print_info(int i)
+void Zappy::TeamPrint::print_info(int i, sf::Event event)
 {
     _window->draw(Rectangle);
     close = std::make_shared<Button>(sf::Vector2f(20, 20), sf::Vector2f(600, 140), sf::Color::White);
     close->setSprite(closeSprite);
-    if (close->checkClick(_window) == true)
+    if (close->checkClick(_window, event) == true)
         print_team_[i] = false;
     close->displayButton(_window);
     players_by_team[i] = 0;
@@ -84,10 +84,10 @@ void Zappy::TeamPrint::print_team()
     }
 }
 
-void Zappy::TeamPrint::display()
+void Zappy::TeamPrint::display(sf::Event event)
 {
     for (size_t i = 0; i < _buttons.size(); i++) {
-        if (_buttons[i]->checkClick(_window) == true) {
+        if (_buttons[i]->checkClick(_window, event) == true) {
             print_team_[i] = true;
             for (size_t j = 0; j < _buttons.size(); j++) {
                 if (j != i)
@@ -96,7 +96,7 @@ void Zappy::TeamPrint::display()
         }
         _buttons[i]->displayButton(_window);
         if (print_team_[i] == true)
-            print_info(i);
+            print_info(i, event);
             else {
                 players[i] = 0;
                 team_info[i].clear();

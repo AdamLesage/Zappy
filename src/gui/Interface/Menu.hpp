@@ -15,6 +15,7 @@
 #include "PlayerPrint.hpp"
 #include <memory>
 #include "InterfaceError.hpp"
+#include "Shop.hpp"
 
 #ifndef MENU_HPP_
 #define MENU_HPP_
@@ -34,13 +35,14 @@ namespace Zappy {
             sf::RectangleShape loading;
             sf::Clock clock;
             std::shared_ptr<Credit> credit;
+            std::shared_ptr<Shop> shop;
             sf::RectangleShape loadingBar;
             std::vector<std::shared_ptr<Button>> buttons;
             std::vector<sf::Text> pplayer_rank_text;
             bool menu;
             sf::Event event;
             sf::Font font;
-
+            sf::Text loadingText;
         private:
     };
 }

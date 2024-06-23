@@ -46,11 +46,11 @@ void Zappy::BCT::applyChanges(std::vector<std::string> parsedData,
         return;
     int x = std::stoi(parsedData[1]);
     int y = std::stoi(parsedData[2]);
-    tiles[y][x]->_inventory->set("Food", std::stoi(parsedData[3]));
-    tiles[y][x]->_inventory->set("Linemate", std::stoi(parsedData[4]));
-    tiles[y][x]->_inventory->set("Deraumere", std::stoi(parsedData[5]));
-    tiles[y][x]->_inventory->set("Sibur", std::stoi(parsedData[6]));
-    tiles[y][x]->_inventory->set("Mendiane", std::stoi(parsedData[7]));
-    tiles[y][x]->_inventory->set("Phiras", std::stoi(parsedData[8]));
-    tiles[y][x]->_inventory->set("Thystame", std::stoi(parsedData[9]));
+    tiles[x][y]->_inventory->set("Food", std::stoi(parsedData[3]));
+    tiles[x][y]->_inventory->set("Linemate", std::stoi(parsedData[4]));
+    tiles[x][y]->_inventory->set("Deraumere", std::stoi(parsedData[5]));
+    tiles[x][y]->_inventory->set("Sibur", std::stoi(parsedData[6]));
+    tiles[x][y]->_inventory->set("Mendiane", std::stoi(parsedData[7]));
+    tiles[x][y]->_inventory->set("Phiras", std::stoi(parsedData[8]));
+    tiles[x][y]->_inventory->set("Thystame", std::stoi(parsedData[9]));
 }
