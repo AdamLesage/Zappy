@@ -14,17 +14,9 @@ class AgentBroadcast():
     def __init__(self) -> None:
         pass
 
-    def goToBroadcast(self, orientation: str, agentInfo: AgentInfo, status: str) -> bool:
+    def goToBroadcast(self, orientation: str, agentInfo: AgentInfo, status: str) -> None:
         """
-        Directs the player to the broadcast position based on the given orientation and status.
-        
-        Parameters:
-        - orientation (str): The direction towards the broadcast position relative to the player.
-        - agentInfo (AgentInfo): An object containing agent information including movements.
-        - status (str): The current status of the player.
-        
-        Returns:
-        - bool: True if the player starts moving towards the broadcast position, False otherwise.
+        Player will go to the broadcast position and add the movements to the movements list
         """
         if orientation == None or status != "Going to incantation" or len(agentInfo.movements) > 0: # Player is already going to the incantation
             return False
@@ -32,9 +24,8 @@ class AgentBroadcast():
             #print(f"MOVEMENTS: {agentInfo.movements}")
             # agentInfo.commandsToSend.clear()
             return False
-        if not orientation:  # If the orientation is None or empty, then return
+        if orientation == None: # If the orientation is None, then return
             return False
-
         print(f"Going to incantation with orientation {orientation}")
         agentInfo.commandsToSend.clear()
         agentInfo.movements.clear()
