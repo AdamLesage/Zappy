@@ -7,6 +7,13 @@
 
 #include "../../../../include/server/server.h"
 
+/**
+ * @brief Get the port from the arguments
+ *
+ * @param argv The arguments
+ * @param index The index of the arguments
+ * @return int The port
+ */
 int get_port(const char **argv, int *index)
 {
     int port = 0;

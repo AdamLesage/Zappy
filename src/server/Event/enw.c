@@ -20,6 +20,13 @@ void send_enw_info(network_t *network, int player_id, eggs_t *eggs, int fd)
     add_to_send_buffer(network, "\n", fd);
 }
 
+/**
+ * @brief Category: Event | Enw event => An egg is laid
+ *
+ * @param core
+ * @param player_id
+ * @param eggs
+ */
 void enw(core_t *core, int player_id, eggs_t *eggs)
 {
     for (players_list_t *tmp = core->players.players_list;

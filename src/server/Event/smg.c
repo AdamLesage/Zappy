@@ -14,6 +14,12 @@ void send_smg_info(network_t *network, char *message, int fd)
     add_to_send_buffer(network, "\n", fd);
 }
 
+/**
+ * @brief Category: Event | Smg event => Send a message to all the players
+ *
+ * @param core
+ * @param message
+ */
 void smg(core_t *core, char *message)
 {
     for (players_list_t *tmp = core->players.players_list;

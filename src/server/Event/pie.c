@@ -7,6 +7,14 @@
 
 #include "server.h"
 
+/**
+ * @brief Category Event | Send the pie event to the graphic client
+ *
+ * @param core The core of the server
+ * @param x The x position
+ * @param y The y position
+ * @param state The state of the pie
+ */
 void pie(core_t *core, int x, int y, bool state)
 {
     for (players_list_t *tmp = core->players.players_list;

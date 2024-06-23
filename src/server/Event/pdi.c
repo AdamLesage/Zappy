@@ -14,6 +14,12 @@ static void send_pdi_info(network_t *network, int id, int fd)
     add_to_send_buffer(network, "\n", fd);
 }
 
+/**
+ * @brief Category: Event | Pdi event => Death of a player
+ *
+ * @param core
+ * @param id
+ */
 void pdi(core_t *core, int id)
 {
     for (players_list_t *tmp = core->players.players_list;

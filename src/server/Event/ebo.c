@@ -14,6 +14,12 @@ static void send_ebo_info(network_t *network, int egg_id, int fd)
     add_to_send_buffer(network, "\n", fd);
 }
 
+/**
+ * @brief Category: Event | Ebo event => Player connection for an egg
+ *
+ * @param core
+ * @param egg_id
+ */
 void ebo(core_t *core, int egg_id)
 {
     for (players_list_t *tmp = core->players.players_list;

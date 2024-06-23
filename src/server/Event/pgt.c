@@ -18,6 +18,13 @@ static void send_pgt_info(network_t *network, int id, enum Object object,
     add_to_send_buffer(network, "\n", fd);
 }
 
+/**
+ * @brief Category: Event | Pgt event => Take an object
+ *
+ * @param core
+ * @param id
+ * @param object
+ */
 void pgt(core_t *core, int id, enum Object object)
 {
     for (players_list_t *tmp = core->players.players_list;

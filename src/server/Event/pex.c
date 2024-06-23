@@ -15,6 +15,12 @@ static void send_pex_info(network_t *network,
     add_to_send_buffer(network, "\n", fd);
 }
 
+/**
+ * @brief Category: Event | Pex event => Player connection
+ *
+ * @param core
+ * @param player_info
+ */
 void pex(core_t *core, player_info_t *player_info)
 {
     for (players_list_t *tmp = core->players.players_list;

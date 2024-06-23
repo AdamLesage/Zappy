@@ -24,6 +24,12 @@ void send_pnw_info(network_t *network, player_info_t *player_info, int fd)
     add_to_send_buffer(network, "\n", fd);
 }
 
+/**
+ * @brief Category: Event | Pnw event => Player connection
+ *
+ * @param core
+ * @param player_info
+ */
 void pnw(core_t *core, player_info_t *player_info)
 {
     for (players_list_t *tmp = core->players.players_list;

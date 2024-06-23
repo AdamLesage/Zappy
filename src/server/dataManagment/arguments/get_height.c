@@ -7,6 +7,13 @@
 
 #include "../../../../include/server/server.h"
 
+/**
+ * @brief Get the height from the arguments
+ *
+ * @param argv The arguments
+ * @param index The index of the arguments
+ * @return int The height
+ */
 int get_height(const char **argv, int *index)
 {
     int height = 0;

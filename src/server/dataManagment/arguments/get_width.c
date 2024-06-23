@@ -7,6 +7,13 @@
 
 #include "../../../../include/server/server.h"
 
+/**
+ * @brief Get the width from the arguments
+ *
+ * @param argv The arguments
+ * @param index The index of the arguments
+ * @return int The width
+ */
 int get_width(const char **argv, int *index)
 {
     int width = 0;
