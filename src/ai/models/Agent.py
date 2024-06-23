@@ -133,8 +133,8 @@ class Agent():
                         if self.bufferManagement(data_received) == False:
                             print(f"continue because bufferManagement")
                             continue
-                        splited_response = self.splitServerResponseAndBroadcast(self.receive_from_server)
-                        if self.agentAlgo.broadcastManagement(splited_response[1]) == True:
+                        #splited_response = self.splitServerResponseAndBroadcast(self.receive_from_server)
+                        if self.agentAlgo.broadcastManagement(self.receive_from_server) == True:
                             self.receive_from_server = None
                             print(f"continue because broadcastManagement")
                             continue
@@ -143,7 +143,6 @@ class Agent():
                         #    self.receive_from_server = None
                         #    continue
                         print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}")
-                        print(f"tmp {tmp} | {splited_response} after send {self.agentInfo.getCommandsReturned()}")
                         tmp += 1
                     except BlockingIOError as e:
                         pass
@@ -159,10 +158,10 @@ class Agent():
                         if self.receive_from_server == "Elevation underway\n":
                             continue
                         if self.receive_from_server != None:
-                            if "Current level" in splited_response[0]:
+                            if "Current level" in self.receive_from_server:
                                 self.agentAlgo.setStatus("Mining")
                                 self.receive_from_server = None
-                        self.agentAlgo.setReturnCommandAnswer(splited_response[0])
+                        self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
                         # print(f"Commands returned: {self.agentInfo.getCommandsReturned()}")
                         self.agentAlgo.countPassedCommands += 1
                         self.agentAlgo.ConnectNbrManagement()

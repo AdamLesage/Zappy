@@ -629,6 +629,7 @@ class AgentAlgo():
                 self.agentInfo.broadcast_orientation = data.split(' ')[1]
                 print(f"Broadcast received: {self.agentInfo.broadcast_received} with orientation {self.agentInfo.broadcast_orientation}")
 
+            self.agentInfo.commandsToSend.clear()
             self.acceptOrRefuseIncantation()
             self.playerOnSameTile()
             return True
