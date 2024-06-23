@@ -435,7 +435,6 @@ class AgentAlgo():
                 if self.agentInfo.posIs0 == True:
                     self.status = "is waiting player to start incantation"
                     print(f"Player status: {self.status}")
-                    self.agentInfo.commandsToSend.clear()
                     self.agentInfo.commandsToSend.append("Broadcast I_m_here\n")
                     self.agentInfo.broadcast_orientation = None
                 return
@@ -474,6 +473,8 @@ class AgentAlgo():
                 return
             if self.status == "Preparing incantation":
                 self.launchIncantation()
+                if self.agentInfo.getLevel() == 2:
+                    exit(0)
                 return
             # print("Food status done")
             self.clientPlayLevel1()
@@ -615,7 +616,7 @@ class AgentAlgo():
         if "empty" in data:
             self.agentInfo.broadcast_received = "empty"
             return False
-        if data == "Incantation_finished":
+        if "Incantation_finished" in data:
             self.status = "Food"
             self.hasAcceptedIncantation = False
             self.hasAskedIncantation = False
@@ -626,9 +627,8 @@ class AgentAlgo():
             self.agentInfo.broadcast_orientation = None
             self.agentInfo.posIs0 = False
             return False
-        if data == "I_m_here":
+        if "I_m_here" in data:
             self.status = "Can start incantation"
-            exit(0)
             return False
         self.broadcastReceived = data
         data = data.replace(",", "") # remove comma after K
