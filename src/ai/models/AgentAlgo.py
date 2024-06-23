@@ -225,7 +225,7 @@ class AgentAlgo():
         The agent is in food mode, it will search for food
         """
         actions = ["Forward\n", "Right\n", "Forward\n", "Left\n"] # More chance to go forward (x2)
-        if self.agentInfo.getInventory("food") > 15:
+        if self.agentInfo.getInventory("food") > 20:
             if self.hasAcceptedIncantation == False:
                 self.status = "Mining"
             else:
@@ -247,6 +247,8 @@ class AgentAlgo():
         """
         The agent is in mining mode, it will search for resources
         """
+        if self.status == "Going to incantation" or self.status == "Preparing incantation" or self.status == "Incantation":
+            return
         if self.agentInfo.commandsToSend.count("Look\n") < 2:
             self.agentInfo.commandsToSend.append("Look\n")
         actions = ["Forward\n", "Right\n", "Left\n"] # More chance to go forward (x2)
@@ -340,6 +342,8 @@ class AgentAlgo():
             self.status = "Incantation"
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.append("Incantation\n")
+            if self.agentInfo.getLevel() != 1:
+                self.agentInfo.commandsToSend.append("Broadcast Incantation finished\n")
             self.playerOnSameTileForIncantation = 1
 
 
@@ -419,13 +423,16 @@ class AgentAlgo():
         # if self.status == "Waiting player to start incantation":
         #     return
         try:
-            if self.status == "Incantation":
+            if self.status == "Incantation" or self.status == "is waiting player to start incantation":
                 return
             if self.inventoryManagement():
                 return
             #print(f"Status: {self.status} | Level: {self.agentInfo.getLevel()}")
             #self.checkPlayerIncantationWaiting()
             if self.agentBroadcast.goToBroadcast(self.agentInfo.broadcast_orientation, self.agentInfo, self.status) == True:
+                if self.agentInfo.posIs0 == True:
+                    self.status = "is waiting player to start incantation"
+                    self.agentInfo.broadcast_orientation = None
                 return
             else:
                 self.agentInfo.broadcast_orientation = None # Reset the broadcast orientation
@@ -590,6 +597,17 @@ class AgentAlgo():
             return False
         if "empty" in data:
             self.agentInfo.broadcast_received = "empty"
+            return False
+        if data == "Incantation finished":
+            self.status = "Food"
+            self.hasAcceptedIncantation = False
+            self.hasAskedIncantation = False
+            self.isWaitingForResponses = False
+            self.playerOnSameTileForIncantation = 1
+            self.agentInfo.incantationResponses = 0
+            self.agentInfo.broadcast_received = None
+            self.agentInfo.broadcast_orientation = None
+            self.agentInfo.posIs0 = False
             return False
         self.broadcastReceived = data
         data = data.replace(",", "") # remove comma after K

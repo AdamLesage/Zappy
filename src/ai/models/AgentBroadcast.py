@@ -32,6 +32,7 @@ class AgentBroadcast():
         if orientation == "0": # Player is on the broadcast position
             print("Player is on the broadcast position")
             exit(0)
+            agentInfo.posIs0 = True
             return True
         elif orientation == "1": # Broadcast position is on the north of the player
             print(f"Orientation is 1, moving forward")
