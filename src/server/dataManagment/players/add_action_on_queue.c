@@ -20,5 +20,5 @@ void add_action_in_queue(players_t *players, int fd, char *action)
             return;
         }
     }
-    printf("action_not_add\n");
+    printf("action_not_add --> %s\n", action);
 }

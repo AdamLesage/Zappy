@@ -23,14 +23,7 @@ class TestAgentAlert(unittest.TestCase):
         agent.setTimeUnits(50)
         agentAlert.checkAlerts()
         self.assertEqual(agentAlert.alerts, ["food"])
-    
-    def test02_incantation_alert(self):
-        agent = AgentInfo()
-        agentAlert = AgentAlerts(agent, 100)
-        agent.setStatus("Incantation")
-        agentAlert.checkAlerts()
-        self.assertEqual(agentAlert.alerts, ["food"])
-    
+
     def test03_incantation_lvl_1_alert(self):
         agent = AgentInfo()
         agentAlert = AgentAlerts(agent, 100)
@@ -134,14 +127,6 @@ class TestAgentAlert(unittest.TestCase):
         agent = AgentInfo()
         agentAlert = AgentAlerts(agent, 100)
         agent.setLifeUnits(256)
-        agentAlert.setAgentInfo(agent)
-        self.assertEqual(agentAlert.agent, agent)
-    
-    def test_setAgentInfo(self):
-        agent = AgentInfo()
-        agentAlert = AgentAlerts(agent, 100)
-        agent.setLifeUnits(256)
-        agent.setStatus("Incantation")
         agentAlert.setAgentInfo(agent)
         self.assertEqual(agentAlert.agent, agent)
     

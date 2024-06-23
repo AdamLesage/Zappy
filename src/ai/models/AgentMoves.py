@@ -34,7 +34,7 @@ class Moves():
                 presentItems.append(item)
         return presentItems
     
-    def reachItemList(self, itemToReach: str, lookResult: str):
+    def reachItemList(self, itemToReach: str, lookResult: str) -> list[str]:
         """
         This function will manage movements to reach an specific item.
         It will return the list of movements/commands to reach the item.
@@ -43,11 +43,13 @@ class Moves():
         midTiles = [0, 2, 6, 12, 20, 30, 42, 56, 72]
         rightTiles = [
                         3, 7, 8, 13, 14, 15, 21, 22, 23, 24, 31, 32, 33, 34, 35,
-                        43, 44, 45, 46, 47, 48, 57, 58, 59, 60, 61, 62, 63
+                        43, 44, 45, 46, 47, 48, 57, 58, 59, 60, 61, 62, 63, 73, 74,
+                        75, 76, 77, 78, 79, 80
         ]
         leftTiles = [
                         1, 4, 5, 9, 10, 11, 16, 17, 18, 19, 25, 26, 27, 28, 29, 36,
-                        37, 38, 39, 40, 41, 49, 50, 51, 52, 53, 54, 55
+                        37, 38, 39, 40, 41, 49, 50, 51, 52, 53, 54, 55, 64, 65, 66,
+                        67, 68, 69, 70, 71
         ]
         movements = []
         posIndice = 0
@@ -68,7 +70,7 @@ class Moves():
                     movements.append(f"Take {itemToReach}\n")
                     return (movements)
                 movements.append("Forward\n")
-        if itemPosition in leftTiles:
+        elif itemPosition in leftTiles:
             # print(itemPosition)
             while itemPosition > midTiles[pos]:
                 movements.append("Forward\n")
@@ -80,7 +82,7 @@ class Moves():
                 posIndice -= 1
             movements.append(f"Take {itemToReach}\n")
             return (movements)
-        if itemPosition in rightTiles:
+        elif itemPosition in rightTiles:
             while itemPosition > midTiles[pos + 1]:
                 movements.append("Forward\n")
                 pos += 1
@@ -91,7 +93,7 @@ class Moves():
                 posIndice += 1
             movements.append(f"Take {itemToReach}\n")
             return (movements)
-        
+
     def searchItem(self, itemToSearch: str, lookResult: str, needReaching: bool = True):
         """
         This function will search for an item in the look result.
@@ -102,7 +104,7 @@ class Moves():
         if self.checkItem(lookResult, itemToSearch) and needReaching == True:
             return self.reachItemList(itemToSearch, lookResult)
         return False
-    
+
     def findBestItemToTake(self, agentInfo: AgentInfo, playerLevel: int, itemsInPlayerVision: list) -> str:
         """
         Find the best item to take according to the player level

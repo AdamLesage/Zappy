@@ -49,64 +49,51 @@ class TestAgentAlgo(unittest.TestCase):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
         agentAlgo.alerts.alerts.append("food")
-        agentAlgo.updateClientStatus(10)
+        agentAlgo.updateClientStatus()
         self.assertEqual(agentAlgo.status, "Food")
-
-    def test06_updateAgentInfo(self):
-        agent = AgentInfo()
-        agent.setLevel(1)
-        agent.addInventory("linemate", 1)
-        agentAlgo = AgentAlgo(agent, 100)
-        agentAlgo.updateAgentInfo(agent)
-        self.assertEqual(agentAlgo.agentInfo.getLevel(), 1)
-        self.assertEqual(agentAlgo.agentInfo.getInventory("linemate"), 1)
 
     def test07_updateClientStatusNoAlert(self):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
-        agentAlgo.updateClientStatus(10)
+        agentAlgo.updateClientStatus()
         self.assertEqual(agentAlgo.status, "Food")
 
     def test08_updateClientStatusIncantation(self):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
         agentAlgo.alerts.alerts.append("incantation")
-        agentAlgo.updateClientStatus(10)
+        agentAlgo.updateClientStatus()
         self.assertEqual(agentAlgo.status, "Food")
 
     def test09_updateClientStatusContinue(self):
         agent = AgentInfo()
         agentAlgo = AgentAlgo(agent, 100)
         agentAlgo.alerts.alerts.append("Mining")
-        agentAlgo.updateClientStatus(10)
+        agentAlgo.updateClientStatus()
         self.assertEqual(agentAlgo.status, "Food")
     
     def test05_testUpdateInventory(self):
         agent = AgentInfo()
-        agentAlgo = AgentAlgo(agent, 100)
-        agentAlgo.updateInventory("food 1")
+        agent.updateInventory("food 1")
         self.assertEqual(agent.getInventory("food"), 1)
     
     def test06_testUpdateInventory(self):
         agent = AgentInfo()
-        agentAlgo = AgentAlgo(agent, 100)
-        agentAlgo.updateInventory("linemate 2")
+        agent.updateInventory("linemate 2")
         self.assertEqual(agent.getInventory("linemate"), 2)
     
     def test07_testUpdateInventory(self):
         list = ["food 1, linemate 6, deraumere 3, sibur 4"]
         agent = AgentInfo()
-        agentAlgo = AgentAlgo(agent, 100)
         for elem in list:
-            agentAlgo.updateInventory(elem)
+            agent.updateInventory(elem)
         self.assertEqual(agent.getInventory("linemate"), 6)
     
     def test08_testUpdateInventory(self):
         list = ["food 1, linemate 6, deraumere 3, sibur 4, thystame 1"]
         agent = AgentInfo()
-        agentAlgo = AgentAlgo(agent, 100)
         for elem in list:
-            agentAlgo.updateInventory(elem)
+            agent.updateInventory(elem)
         self.assertEqual(agent.getInventory("phiras"), 0)
 
     def test09_findBestItemToTake(self):
@@ -127,7 +114,7 @@ class TestAgentAlgo(unittest.TestCase):
         agentAlgo.alerts.alerts.append("food")
         agentAlgo.agentMentality = "Hungry"
         agentAlgo.agentInfo.inventory["food"] = 50
-        agentAlgo.updateClientStatus(10)
+        agentAlgo.updateClientStatus()
         self.assertEqual(agentAlgo.agentMentality, "Hungry")
 
     def test11_updateClientStatus(self):
@@ -136,7 +123,7 @@ class TestAgentAlgo(unittest.TestCase):
         agentAlgo.alerts.alerts.append("food")
         agentAlgo.agentMentality = "Hungry"
         agentAlgo.agentInfo.inventory["food"] = 0
-        agentAlgo.updateClientStatus(10)
+        agentAlgo.updateClientStatus()
         self.assertEqual(agentAlgo.agentMentality, "Hungry")
 
     def test12_playLevel1_invalid_level(self):

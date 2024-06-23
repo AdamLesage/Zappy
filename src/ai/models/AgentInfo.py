@@ -12,14 +12,12 @@ class AgentInfo():
     def __init__(self):
         """Ctor of the AgentInfo class"""
         self.commandsToSend = deque(maxlen=10) # Defined as a deque with a max length of 8 because we need to execute Look and Inventory commands every 8 rounds
-        #self.commandsReturned = deque(maxlen=8)
         self.commandsReturned = [None, None]
         self.inventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.client_num = 0
         self.world_width = 0
         self.world_height = 0
         self.movements = []
-        self.agentStatus = "Alive" # Alive, Dead, Incantation, Fork
         self.level = 1
         self.teamInventory = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0} # Inventory of the team
         self.playerVision = [] # Vision of player, tiles around him
@@ -27,21 +25,58 @@ class AgentInfo():
         self.timeUnits = 1260 
         self.broadcast_received = None
         self.broadcast_orientation = None
+        self.posIs0 = False
         self.incantationResponses = 1
         self.numberToEvolve = {"level2": 1, "level3": 2, "level4": 2, "level5": 4, "level6": 4, "level7": 6, "level8": 6} # Number of players needed to evolve to the next level
+        self.comaPerLookLevel = {3: 1, 8: 2, 15: 3, 24: 4, 35: 5, 48: 6, 63: 7, 80: 8} # Number of coma per look level, if there is 3 coma, then the player is level 1, if there is 8 coma, then the player is level 2, etc.
+
 
     def noLifeUnits(self) -> bool:
         """Return True if there is no more life units"""
         return (self.lifeUnits <= 0)
 
+    def updateInventory(self, inv: str) -> None:
+        """
+        Update the inventory of the agent
+        """
+        # return if there is not digit in the inv string
+        if any(char.isdigit() for char in inv) == False:
+            return
+        # if inv contains "player" return
+        if "player" in inv or "message" in inv: # If the inventory contains "player" or "message"
+            return
+        try:
+            inv = inv.replace("[ ", "").replace(" ]", "").replace("[", "").replace("]", "").replace(", ", ",")
+            splitedInf = inv.split(',')
+
+            for item in splitedInf:
+                item = item.split(' ')
+                if self.inventory[item[0]] == int(item[1]):
+                    continue
+                self.addInventory(item[0], item[1])
+            self.setTimeUnits(self.getInventory("food") * 126)
+        except Exception as e:
+            print(f"Error from updateInventory: {e}")
+
+    def checkPlayerLevelFromLook(self, lookResult: str) -> None:
+        """
+        Check the player level from the look command
+        """
+        try:
+            if lookResult == None:
+                return
+            numberComa = lookResult.count(",")
+            if numberComa == 0:
+                return
+            if numberComa in self.comaPerLookLevel and self.level != self.comaPerLookLevel[numberComa]:
+                self.setLevel(self.comaPerLookLevel[numberComa])
+        except Exception as e:
+            print(f"Error from checkPlayerLevelFromLook: {e}")
+
     # Getters
     def getTimeUnits(self) -> int:
         """Returns the number of time units"""
         return (self.timeUnits)
-
-    def getAgentStatus(self) -> str:
-        """Get the status of the agent: Alive, Dead, Incantation, Fork"""
-        return (self.agentStatus)
     
     def getCommandsToSend(self) -> list:
         """Get the list of commands to send to the server"""
@@ -82,12 +117,6 @@ class AgentInfo():
         if level > 8 or level < 1:
             raise ValueError("Invalid level")
         self.level = level
-    
-    def setStatus(self, status: str) -> None:
-        """Set the status of the agent: Alive, Dead, Incantation, Fork"""
-        if status not in ["Alive", "Dead", "Incantation", "Fork"]:
-            raise ValueError("Invalid status")
-        self.agentStatus = status
 
     def addCommandsToSend(self, commandName: str) -> None:
         """Add a command to the list of commands to send"""
