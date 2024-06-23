@@ -255,21 +255,6 @@ void Zappy::PlayerPrint::set_scale_of_player(std::shared_ptr<Player> currentPlay
         player_sprites[i].setScale(2, 2);
 }
 
-
-
-void Zappy::PlayerPrint::updatePlayersTravelled()
-{
-    for (size_t i = 0; i < this->_guiConnect->_players.size(); i++) {
-        if (this->_guiConnect->_players[i]->getLastPosition() != this->_guiConnect->_players[i]->getPosition()) {
-            this->_guiConnect->_players[i]->setTravelled(this->_guiConnect->_players[i]->getTravelled() + 1);
-        }
-    }
-    for (size_t i = 0; i < this->_guiConnect->_players.size(); i++) {
-        std::array<int, 2> playerPosition = this->_guiConnect->_players[i]->getPosition();
-        this->_guiConnect->_players[i]->setLastPosition(playerPosition[0], playerPosition[1]);
-    }
-}
-
 void Zappy::PlayerPrint::print_walk_animation(std::shared_ptr<Player> currentPlayer, int index)
 {
     if (anim_clock[index].getElapsedTime().asSeconds() > (float)0.2 / (float)this->_guiConnect->getTimeUnit()) {
@@ -291,6 +276,7 @@ void Zappy::PlayerPrint::print_walk_animation(std::shared_ptr<Player> currentPla
     if (posToAdd[index] >= 25) {
         currentPlayer->setLastPosition(currentPlayer->getPosition()[0], currentPlayer->getPosition()[1]);
         posToAdd[index] = 0;
+        currentPlayer->setTravelled(currentPlayer->getTravelled() + 1);
     }
 }
 
@@ -349,7 +335,6 @@ void Zappy::PlayerPrint::display()
             print_walk_animation(current_player, i);
         }
         this->_window->draw(player_sprites[i]);
-        // updatePlayersTravelled();
         _broadcast->check_player_broadcast(i);
         _broadcast->display(i);
         this->printPlayerEvolution(current_is_incanting, i);

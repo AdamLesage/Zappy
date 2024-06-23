@@ -30,7 +30,6 @@ namespace Zappy
         void display();
         void print_walk_animation(std::shared_ptr<Player> currentPlayer, int index);
         void set_scale_of_player(std::shared_ptr<Player> currentPlayer, int i);
-        void updatePlayersTravelled();
         std::vector<sf::Sprite> getPlayerSprites(){
             return player_sprites;
         }
