@@ -345,7 +345,7 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.append("Incantation\n")
             if self.agentInfo.getLevel() != 1:
-                self.agentInfo.commandsToSend.append("Broadcast Incantation finished\n")
+                self.agentInfo.commandsToSend.append("Broadcast Incantation_finished\n")
             self.playerOnSameTileForIncantation = 1
 
 
@@ -495,7 +495,7 @@ class AgentAlgo():
         if self.agentInfo.commandsToSend == deque([]) or self.client == None: # If there are no commands to send, get out of the function
             return
         command_to_send = self.agentInfo.commandsToSend.popleft()
-        print(f"Command to send: {command_to_send}")
+        # print(f"Command to send: {command_to_send}")
         self.client.send(command_to_send.encode())
         self.agentInfo.commandsReturned = [command_to_send, None]
 
@@ -560,36 +560,44 @@ class AgentAlgo():
         Manage the Connect_nbr command
         Create a fork if there is no available slots
         """
-        if self.agentInfo.commandsReturned[0] != "Connect_nbr\n":
-            # There is no Connect_nbr command to manage or response has not been received
+        try:
+            if self.agentInfo.commandsReturned[0] != "Connect_nbr\n":
+                # There is no Connect_nbr command to manage or response has not been received
+                return
+            if self.agentInfo.commandsReturned[1] == None:
+                # If the response has not been received
+                return
+            number_received = self.agentInfo.commandsReturned[1].replace("\n", "")
+            if number_received.isdigit() == False:
+                # If the response is not a digit
+                return
+            if int(number_received) < 1:
+                # If there is no available slots
+                print(f"Create a child process")
+                self.agentInfo.commandsToSend.append("Fork\n")
+            elif int(number_received) > 1:
+                self.createChild()
+        except Exception as e:
+            print(f"Error from ConnectNbrManagement: {e}")
             return
-        if self.agentInfo.commandsReturned[1] == None:
-            # If the response has not been received
-            return
-        number_received = self.agentInfo.commandsReturned[1].replace("\n", "")
-        if number_received.isdigit() == False:
-            # If the response is not a digit
-            return
-        if int(number_received) < 1:
-            # If there is no available slots
-            print(f"Create a child process")
-            self.agentInfo.commandsToSend.append("Fork\n")
-        elif int(number_received) > 1:
-            self.createChild()
 
     def forkManagement(self) -> None:
         """
         Manage the fork command
         Create a child process
         """
-        if self.agentInfo.commandsReturned[0] != "Fork\n" or self.agentInfo.commandsReturned[1] == None:
-            # There is no Fork command to manage or response has not been received
+        try:
+            if self.agentInfo.commandsReturned[0] != "Fork\n" or self.agentInfo.commandsReturned[1] == None:
+                # There is no Fork command to manage or response has not been received
+                return
+            if self.agentInfo.commandsReturned[1].startswith("ok") == False:
+                # If the response is not "ok"
+                return
+            print(f"Fork response: {self.agentInfo.commandsReturned[1]}")
+            self.createChild()
+        except Exception as e:
+            print(f"Error from forkManagement: {e}")
             return
-        if self.agentInfo.commandsReturned[1].startswith("ok") == False:
-            # If the response is not "ok"
-            return
-        print(f"Fork response: {self.agentInfo.commandsReturned[1]}")
-        self.createChild()
 
 
     def broadcastManagement(self, data: str) -> bool:
@@ -599,12 +607,14 @@ class AgentAlgo():
         Agent can accept the incantation but need to broadcast answer
         """
         #if self.status == "Going to incantation":
-        if data == None or data.startswith("message") == False or self.status == "Food":
+        if data == None or "message" not in data:
+            return False
+        if self.status == "Food":
             return False
         if "empty" in data:
             self.agentInfo.broadcast_received = "empty"
             return False
-        if data == "Incantation finished":
+        if data == "Incantation_finished":
             self.status = "Food"
             self.hasAcceptedIncantation = False
             self.hasAskedIncantation = False

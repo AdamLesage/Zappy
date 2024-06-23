@@ -8,7 +8,7 @@ def main() -> None:
     try:
         error_handling()
     except ValueError as e:
-        print(f"Error: {e}", file=stderr)
+        print(f"Error in main: {e}", file=stderr)
         exit(84)
     port, team_name, ip = retrieve_attributes()
     agent = Agent(port, team_name, ip)
