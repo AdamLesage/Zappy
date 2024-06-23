@@ -560,36 +560,44 @@ class AgentAlgo():
         Manage the Connect_nbr command
         Create a fork if there is no available slots
         """
-        if self.agentInfo.commandsReturned[0] != "Connect_nbr\n":
-            # There is no Connect_nbr command to manage or response has not been received
+        try:
+            if self.agentInfo.commandsReturned[0] != "Connect_nbr\n":
+                # There is no Connect_nbr command to manage or response has not been received
+                return
+            if self.agentInfo.commandsReturned[1] == None:
+                # If the response has not been received
+                return
+            number_received = self.agentInfo.commandsReturned[1].replace("\n", "")
+            if number_received.isdigit() == False:
+                # If the response is not a digit
+                return
+            if int(number_received) < 1:
+                # If there is no available slots
+                print(f"Create a child process")
+                self.agentInfo.commandsToSend.append("Fork\n")
+            elif int(number_received) > 1:
+                self.createChild()
+        except Exception as e:
+            print(f"Error from ConnectNbrManagement: {e}")
             return
-        if self.agentInfo.commandsReturned[1] == None:
-            # If the response has not been received
-            return
-        number_received = self.agentInfo.commandsReturned[1].replace("\n", "")
-        if number_received.isdigit() == False:
-            # If the response is not a digit
-            return
-        if int(number_received) < 1:
-            # If there is no available slots
-            print(f"Create a child process")
-            self.agentInfo.commandsToSend.append("Fork\n")
-        elif int(number_received) > 1:
-            self.createChild()
 
     def forkManagement(self) -> None:
         """
         Manage the fork command
         Create a child process
         """
-        if self.agentInfo.commandsReturned[0] != "Fork\n" or self.agentInfo.commandsReturned[1] == None:
-            # There is no Fork command to manage or response has not been received
+        try:
+            if self.agentInfo.commandsReturned[0] != "Fork\n" or self.agentInfo.commandsReturned[1] == None:
+                # There is no Fork command to manage or response has not been received
+                return
+            if self.agentInfo.commandsReturned[1].startswith("ok") == False:
+                # If the response is not "ok"
+                return
+            print(f"Fork response: {self.agentInfo.commandsReturned[1]}")
+            self.createChild()
+        except Exception as e:
+            print(f"Error from forkManagement: {e}")
             return
-        if self.agentInfo.commandsReturned[1].startswith("ok") == False:
-            # If the response is not "ok"
-            return
-        print(f"Fork response: {self.agentInfo.commandsReturned[1]}")
-        self.createChild()
 
 
     def broadcastManagement(self, data: str) -> bool:

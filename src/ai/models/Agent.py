@@ -28,6 +28,7 @@ class Agent():
         self.receive_from_server = None
         self.ip = ip
         self.firstConnexion = True
+        self.splited_response = None
 
     def splitServerResponseAndBroadcast(self, data: str) -> list[str]:
         """
@@ -138,12 +139,11 @@ class Agent():
                         if self.bufferManagement(data_received) == False:
                             print(f"continue because bufferManagement, data: [{data_received}]")
                             continue
-                        splited_response = self.splitServerResponseAndBroadcast(self.receive_from_server)
-                        print(f"Splited response: {splited_response}")
-                        if self.agentAlgo.broadcastManagement(splited_response[1]):
+                        self.splited_response = self.splitServerResponseAndBroadcast(self.receive_from_server)
+                        if self.agentAlgo.broadcastManagement(self.splited_response[1]):
                             self.receive_from_server = None
-                            continue
-                        print(f"tmp {tmp} | {splited_response} after send {self.agentInfo.getCommandsReturned()}")
+                            if self.splited_response[0] == None:
+                                continue
                         tmp += 1
                     except BlockingIOError as e:
                         pass
@@ -156,13 +156,13 @@ class Agent():
                     if self.firstConnexion == False and tmp >= 2:
                         if self.agentInfo.getCommandsReturned()[0] != None and self.receive_from_server == None: # If the server sends nothing, continue
                             continue
-                        if self.receive_from_server == "Elevation underway\n":
+                        if self.splited_response[0] == "Elevation underway\n":
                             continue
                         if self.receive_from_server != None:
-                            if "Current level" in self.receive_from_server:
+                            if self.splited_response[0] is not None and "Current level" in self.splited_response[0]:
                                 self.agentAlgo.setStatus("Mining")
                                 self.receive_from_server = None
-                        self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
+                        self.agentAlgo.setReturnCommandAnswer(self.splited_response[0])
                         # print(f"Commands returned: {self.agentInfo.getCommandsReturned()}")
                         self.agentAlgo.countPassedCommands += 1
                         self.agentAlgo.ConnectNbrManagement()
@@ -170,8 +170,7 @@ class Agent():
                         self.agentAlgo.play(None)
                         self.agentAlgo.clearReturnCommand()
                         self.agentAlgo.send_to_server()
-                        if self.receive_from_server != None and "\n" in self.receive_from_server: # If the server sends something, clear the buffer
-                            self.receive_from_server = None
+                        self.receive_from_server = None
                 except Exception as e:
                     print(f"Error loop: {e}")
                     exit(1)
