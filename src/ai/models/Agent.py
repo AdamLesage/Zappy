@@ -31,7 +31,7 @@ class Agent():
 
     def isDataReceivedABroadcast(self, data: str) -> bool:
         """Check if the data received is a broadcast"""
-        listBroadcasts = ["need_incantation_level_", "accept_incantation_level_", "waiting_for_incantation_level_", "on_same_tile", "yes_we_are_on_the_map", "Anybody_on_the_map_?", "message "]
+        listBroadcasts = ["need_incantation_level_", "accept_incantation_level_", "waiting_for_incantation_level_", "on_same_tile", "yes_we_are_on_the_map", "Anybody_on_the_map_?", "message ", "empty", "Incantation finished"]
         if data == None:
             return False
         if any(broadcast in data for broadcast in listBroadcasts):
@@ -109,12 +109,14 @@ class Agent():
 
                         if self.bufferManagement(data_received) == False:
                             continue
+                        print("1")
                         if self.agentAlgo.broadcastManagement(self.receive_from_server) == True:
                             self.receive_from_server = None
                             continue
-                        if self.isDataReceivedABroadcast(self.receive_from_server) == True:
-                            self.receive_from_server = None
-                            continue
+                        print("2")
+                        #if self.isDataReceivedABroadcast(self.receive_from_server) == True:
+                        #    self.receive_from_server = None
+                        #    continue
                         print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}")
                         tmp += 1
                     except BlockingIOError as e:

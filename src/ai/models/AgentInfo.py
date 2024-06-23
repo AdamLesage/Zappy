@@ -25,6 +25,7 @@ class AgentInfo():
         self.timeUnits = 1260 
         self.broadcast_received = None
         self.broadcast_orientation = None
+        self.posIs0 = False
         self.incantationResponses = 1
         self.numberToEvolve = {"level2": 1, "level3": 2, "level4": 2, "level5": 4, "level6": 4, "level7": 6, "level8": 6} # Number of players needed to evolve to the next level
         self.comaPerLookLevel = {3: 1, 8: 2, 15: 3, 24: 4, 35: 5, 48: 6, 63: 7, 80: 8} # Number of coma per look level, if there is 3 coma, then the player is level 1, if there is 8 coma, then the player is level 2, etc.
