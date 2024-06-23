@@ -16,9 +16,6 @@ void add_action_in_queue(players_t *players, int fd, char *action)
     }
     for (int i = 0; i != 10; i++) {
         if (info->action_queue[i] == NULL) {
-            if (i != 0) {
-                printf("action_add --> %s\n", action);
-            }
             info->action_queue[i] = strdup(action);
             return;
         }
