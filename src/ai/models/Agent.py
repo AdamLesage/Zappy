@@ -31,35 +31,40 @@ class Agent():
 
     def splitServerResponseAndBroadcast(self, data: str) -> list[str]:
         """
-        Check if the data received is a broadcast
+        Separate the server response from the broadcast message.
         Return a list of two strings:
         - the first string is the response from the server for the last command sent 
         - the second string is the broadcast message
-        Strings can be None if there is no response or no broadcast
-        Exemple:    "message k, empty\nok\n" --> ["ok\n", "message k, empty"]
-                    "ok\nmessage k, empty\n" --> ["ok\n", "message k, empty"]
-                    "ok\n" --> ["ok\n", None]
-                    "message k, empty\n" --> [None, "message k, empty"]
+        Strings can be None if there is no response or no broadcast.
+        
+        Examples:
+        "message k, empty\nok\n" --> ["ok\n", "message k, empty"]
+        "ok\nmessage k, empty\n" --> ["ok\n", "message k, empty"]
+        "ok\n" --> ["ok\n", None]
+        "message k, empty\n" --> [None, "message k, empty"]
         """
-        if data == None:
+        if data is None:
             return [None, None]
         listBroadcasts = ["need_incantation_level_", "accept_incantation_level_", "waiting_for_incantation_level_", "on_same_tile", "yes_we_are_on_the_map", "Anybody_on_the_map_?", "message ", "empty"]
-        splited_data = data.split('\n')
         return_list = [None, None]
-        if "message " in splited_data[0] and any(broadcast in splited_data[0] for broadcast in listBroadcasts):
-            return_list[1] = splited_data[0]
-            if len(splited_data) > 1:
-                return_list[0] = splited_data[1]
+
+        try:
+            splited_data = data.split('\n')
+            splited_data = [line for line in splited_data if line != ""]
+
+            if len(splited_data) == 0:
+                return [None, None]
+
+            for line in splited_data: # For each line in the splited data
+                if any(broadcast in line for broadcast in listBroadcasts): # If the line contains a broadcast message
+                    return_list[1] = line # Add the broadcast message to the return list
+                else:
+                    return_list[0] = line # Add the server response to the return list
             return return_list
-        if "message " in splited_data[1] and any(broadcast in splited_data[1] for broadcast in listBroadcasts):
-            return_list[1] = splited_data[1]
-            return_list[0] = splited_data[0]
-            return return_list
-        if len(splited_data) == 1 and any(broadcast in splited_data[0] for broadcast in listBroadcasts):
-            return_list[1] = splited_data[0]
-            return return_list
-        return_list[0] = data
-        return return_list
+        except Exception as e:
+            print(f"Error from splitServerResponseAndBroadcast: {e}")
+            return [None, None]
+
 
     def retrieveWorldDimensions(self, data: str) -> None:
         """Retrieve the world dimensions"""
@@ -131,18 +136,13 @@ class Agent():
                         data_received = self.client.recv(1024).decode()
 
                         if self.bufferManagement(data_received) == False:
-                            print(f"continue because bufferManagement")
+                            print(f"continue because bufferManagement, data: [{data_received}]")
                             continue
                         splited_response = self.splitServerResponseAndBroadcast(self.receive_from_server)
-                        if self.agentAlgo.broadcastManagement(splited_response[1]) == True:
+                        print(f"Splited response: {splited_response}")
+                        if self.agentAlgo.broadcastManagement(splited_response[1]):
                             self.receive_from_server = None
-                            print(f"continue because broadcastManagement")
                             continue
-                        print("2")
-                        #if self.isDataReceivedABroadcast(self.receive_from_server) == True:
-                        #    self.receive_from_server = None
-                        #    continue
-                        print(f"tmp {tmp} | {self.receive_from_server} after send {self.agentInfo.getCommandsReturned()}")
                         print(f"tmp {tmp} | {splited_response} after send {self.agentInfo.getCommandsReturned()}")
                         tmp += 1
                     except BlockingIOError as e:
@@ -159,15 +159,15 @@ class Agent():
                         if self.receive_from_server == "Elevation underway\n":
                             continue
                         if self.receive_from_server != None:
-                            if "Current level" in splited_response[0]:
+                            if "Current level" in self.receive_from_server:
                                 self.agentAlgo.setStatus("Mining")
                                 self.receive_from_server = None
-                        self.agentAlgo.setReturnCommandAnswer(splited_response[0])
+                        self.agentAlgo.setReturnCommandAnswer(self.receive_from_server)
                         # print(f"Commands returned: {self.agentInfo.getCommandsReturned()}")
                         self.agentAlgo.countPassedCommands += 1
                         self.agentAlgo.ConnectNbrManagement()
                         self.agentAlgo.forkManagement()
-                        self.agentAlgo.play(self.receive_from_server)
+                        self.agentAlgo.play(None)
                         self.agentAlgo.clearReturnCommand()
                         self.agentAlgo.send_to_server()
                         if self.receive_from_server != None and "\n" in self.receive_from_server: # If the server sends something, clear the buffer

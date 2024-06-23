@@ -345,7 +345,7 @@ class AgentAlgo():
             self.agentInfo.commandsToSend.clear()
             self.agentInfo.commandsToSend.append("Incantation\n")
             if self.agentInfo.getLevel() != 1:
-                self.agentInfo.commandsToSend.append("Broadcast Incantation finished\n")
+                self.agentInfo.commandsToSend.append("Broadcast Incantation_finished\n")
             self.playerOnSameTileForIncantation = 1
 
 
@@ -495,7 +495,7 @@ class AgentAlgo():
         if self.agentInfo.commandsToSend == deque([]) or self.client == None: # If there are no commands to send, get out of the function
             return
         command_to_send = self.agentInfo.commandsToSend.popleft()
-        print(f"Command to send: {command_to_send}")
+        # print(f"Command to send: {command_to_send}")
         self.client.send(command_to_send.encode())
         self.agentInfo.commandsReturned = [command_to_send, None]
 
@@ -599,12 +599,14 @@ class AgentAlgo():
         Agent can accept the incantation but need to broadcast answer
         """
         #if self.status == "Going to incantation":
-        if data == None or data.startswith("message") == False or self.status == "Food":
+        if data == None or "message" not in data:
+            return False
+        if self.status == "Food":
             return False
         if "empty" in data:
             self.agentInfo.broadcast_received = "empty"
             return False
-        if data == "Incantation finished":
+        if data == "Incantation_finished":
             self.status = "Food"
             self.hasAcceptedIncantation = False
             self.hasAskedIncantation = False
