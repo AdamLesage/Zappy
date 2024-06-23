@@ -23,17 +23,17 @@ namespace Zappy {
         public:
             Broadcast(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<GuiConnect> guiConnect);
             ~Broadcast();
-            void display(int i);
-            void check_player_broadcast(int i);
+            void display(std::shared_ptr<Player> player);
+            void check_player_broadcast(std::shared_ptr<Player> player);
         protected:
             sf::Font font;
             std::shared_ptr<GuiConnect> _guiConnect;
             std::shared_ptr<sf::RenderWindow> _window;
             std::vector<sf::Text> _broadcasts_text;
-            std::vector<sf::Sprite> _broadcasts_sprites;
+            std::vector<std::pair<int, sf::Sprite>> _broadcasts;
             std::vector<sf::Sprite> _broadcasts_messages;
             std::vector<sf::Texture> _broadcasts_textures;
-            sf::Clock _clock;
+            std::vector<sf::Clock> _clock;
         private:
     };
 }

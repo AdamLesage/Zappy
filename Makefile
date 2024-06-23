@@ -109,6 +109,7 @@ SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/Interface/Interface.cpp									\
 			src/gui/Interface/Credit.cpp									\
 			src/gui/Interface/Menu.cpp										\
+			src/gui/Interface/Shop.cpp										\
 			src/gui/Interface/TeamPrint.cpp									\
 			src/gui/Interface/bar.cpp										\
 			src/gui/Interface/InventoryDisplay.cpp							\
@@ -153,11 +154,8 @@ SRC_GUI	=	src/gui/main.cpp						   						\
 			src/gui/ServerInfo/Command/SBP.cpp								\
 			src/gui/ServerInfo/Command/BCT.cpp								\
 			src/gui/ServerInfo/Command/MCT.cpp								\
-			src/gui/DataManagement/egg_management.cpp						\
-			src/gui/DataManagement/player_management.cpp					\
-			src/gui/DataManagement/tile_management.cpp						\
-			src/gui/DataManagement/server_info_management.cpp				\
 			src/gui/Interface/PlayerPrint.cpp								\
+			src/gui/Interface/LoadInterface.cpp								\
 
 SRC_AI				=	src/ai/main.py										\
 

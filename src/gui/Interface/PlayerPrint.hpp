@@ -28,11 +28,8 @@ namespace Zappy
         std::vector<std::pair<int, std::shared_ptr<Evolution>>> );
         ~PlayerPrint();
         void display();
-        void print_walk_animation(int playerIndex);
-        void print_player_team();
-        void set_scale_of_player(int i);
-        void updatePlayersTravelled();
-        void fill_color_team();
+        void print_walk_animation(std::shared_ptr<Player> currentPlayer, int index);
+        void set_scale_of_player(std::shared_ptr<Player> currentPlayer, int i);
         std::vector<sf::Sprite> getPlayerSprites(){
             return player_sprites;
         }
@@ -83,6 +80,8 @@ namespace Zappy
         }
 
     protected:
+        void printPlayerEvolution(bool, int i);
+        bool setPlayerEvolution(std::shared_ptr<Player> currentPlayer, int i);
         std::vector<sf::Sprite> player_rank;
         std::vector<sf::Text> player_rank_text;
         std::shared_ptr<GuiConnect> _guiConnect;
@@ -104,6 +103,7 @@ namespace Zappy
         std::shared_ptr<Broadcast> _broadcast;
         std::vector<std::pair<int, std::shared_ptr<Evolution>>> _evolutions;
         std::vector<int> curr_frames;
+        std::vector<int> posToAdd;
         std::vector<float> frame_durations;
         std::vector<sf::Clock> anim_clock;
         std::vector<sf::Vector2f> start_pos;

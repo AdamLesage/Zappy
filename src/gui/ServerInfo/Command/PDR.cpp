@@ -56,9 +56,9 @@ void Zappy::PDR::applyChanges(std::vector<std::string> parsedData,
                     ressourceName = "Thystame";
                 else
                     throw CommandError("PDR: ressource not found.", "PDR");
-                int tileressource = tiles[player->_position[1]][player->_position[0]]->_inventory->get(ressourceName);
+                int tileressource = tiles[player->_position[0]][player->_position[1]]->_inventory->get(ressourceName);
                 int playerressource = player->_inventory->get(ressourceName);
-                tiles[player->_position[1]][player->_position[0]]->_inventory->set(ressourceName, tileressource + playerressource);
+                tiles[player->_position[0]][player->_position[1]]->_inventory->set(ressourceName, tileressource + playerressource);
                 player->_inventory->set(ressourceName, 0);
             }
         }

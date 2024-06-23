@@ -30,7 +30,7 @@ namespace Zappy {
             };
             Bar(sf::Vector2f size, sf::Vector2f size_back, sf::Vector2f pos, sf::Color color, int outline, sf::Color outlineColor, int origin = 0);
             ~Bar();
-            int checkClick(std::shared_ptr<sf::RenderWindow> window);
+            int checkClick(std::shared_ptr<sf::RenderWindow> window, sf::Event event);
             bool checkClick2(std::shared_ptr<sf::RenderWindow> window);
             void setPosition(sf::Vector2f pos); // set the position of the Bar
             void setSprite(sf::Sprite sprite); // set the sprite of the Bar
