@@ -34,6 +34,14 @@ Zappy::Shop::Shop(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Play
         throw InterfaceError("Error: rank4 not found", "Shop");
     if (skinsTexture[7].loadFromFile("./asset/sprite/shop/rank4shopb.png") == false)
         throw InterfaceError("Error: rank4 not found", "Shop");
+    if (skinsTexture[8].loadFromFile("./asset/sprite/shop/rank5shop.png") == false)
+        throw InterfaceError("Error: rank5 not found", "Shop");
+    if (skinsTexture[9].loadFromFile("./asset/sprite/shop/rank5shopb.png") == false)
+        throw InterfaceError("Error: rank5 not found", "Shop");
+    if (skinsTexture[10].loadFromFile("./asset/sprite/shop/rank6shop.png") == false)
+        throw InterfaceError("Error: rank6 not found", "Shop");
+    if (skinsTexture[11].loadFromFile("./asset/sprite/shop/rank6shopb.png") == false)
+        throw InterfaceError("Error: rank6 not found", "Shop");
     std::size_t j = 0;
     for (std::size_t i = 0; i < skinsTexture.size(); i++) {
         skinsSprite.push_back(sf::Sprite());
