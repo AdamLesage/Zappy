@@ -607,6 +607,7 @@ class AgentAlgo():
         Agent can accept the incantation but need to broadcast answer
         """
         #if self.status == "Going to incantation":
+        print(f"Data = {data}")
         if data == None or "message" not in data:
             return False
         if self.status == "Food":

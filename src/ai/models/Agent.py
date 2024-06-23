@@ -145,6 +145,8 @@ class Agent():
                             if self.splited_response[0] == None:
                                 continue
                         tmp += 1
+                        print("---------------------------------------------------")
+                        print(f"tmp: {tmp}, command sended: {self.agentInfo.getCommandsReturned()} receive_from_server: {self.receive_from_server}")
                     except BlockingIOError as e:
                         pass
 
@@ -171,6 +173,7 @@ class Agent():
                         self.agentAlgo.clearReturnCommand()
                         self.agentAlgo.send_to_server()
                         self.receive_from_server = None
+                        print("")
                 except Exception as e:
                     print(f"Error loop: {e}")
                     exit(1)
