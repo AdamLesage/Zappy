@@ -24,8 +24,8 @@ namespace Zappy {
             TeamPrint(std::shared_ptr<GuiConnect> guiConnect, std::shared_ptr<sf::RenderWindow> window);
             ~TeamPrint();
             void print_team();
-            void display();
-            void print_info(int i);
+            void display(sf::Event event);
+            void print_info(int i, sf::Event event);
             int getLevel(std::string teamName);
         protected:
             std::shared_ptr<GuiConnect> _guiConnect;

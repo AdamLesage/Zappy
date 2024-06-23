@@ -19,11 +19,7 @@ Zappy::Broadcast::Broadcast(std::shared_ptr<sf::RenderWindow> window, std::share
     _broadcasts_textures.push_back(sf::Texture());
     if (_broadcasts_textures[1].loadFromFile("./asset/sprite/broadcast/message.png") == false)
         throw InterfaceError("Error: broadcast.png not found", "Interface");
-    _broadcasts_sprites.push_back(sf::Sprite());
     _broadcasts_messages.push_back(sf::Sprite());
-    _broadcasts_sprites[0].setTexture(_broadcasts_textures[0]);
-    _broadcasts_sprites[0].setScale(0.1, 0.1);
-    _broadcasts_sprites[0].setTexture(_broadcasts_textures[0]);
     _broadcasts_messages[0].setTexture(_broadcasts_textures[1]);
 }
 
@@ -31,27 +27,31 @@ Zappy::Broadcast::~Broadcast()
 {
 }
 
-void Zappy::Broadcast::display(int i)
+void Zappy::Broadcast::display(std::shared_ptr<Player> player)
 {
-    if (_clock.getElapsedTime().asSeconds() < 2) {
-        if ((std::size_t)i < _broadcasts_sprites.size() && _broadcasts_sprites.size() > 0) {
-            for (size_t j = 0; j < _broadcasts_sprites.size(); j++) {
-                _window->draw(_broadcasts_sprites[j]);
+    for (size_t index = 0; index != _broadcasts.size(); index++) {
+        if (player->getPlayerNumber() == _broadcasts[index].first) {
+            if (_clock[index].getElapsedTime().asSeconds() >= 2) {
+                _broadcasts.erase(_broadcasts.begin() + index);
+                _clock.erase(_clock.begin() + index);
+            } else {
+                _broadcasts[index].second.setPosition(player->getPosition()[0] * 102.4 + 100, (player->getPosition()[1] + 1) * 102.4);
+                _window->draw(_broadcasts[index].second);
             }
+            return;
         }
-    } else if (_clock.getElapsedTime().asSeconds() >= 2) {
-        _broadcasts_sprites.clear();
     }
 }
 
-void Zappy::Broadcast::check_player_broadcast(int i)
+void Zappy::Broadcast::check_player_broadcast(std::shared_ptr<Player> player)
 {
-    if ((std::size_t)i < _guiConnect->_players.size() && _guiConnect->_players[i]->getMessage() != "") {
-        _broadcasts_sprites.push_back(sf::Sprite());
-        _broadcasts_sprites[_broadcasts_sprites.size() - 1].setScale(0.1, 0.1);
-        _broadcasts_sprites[_broadcasts_sprites.size() - 1].setTexture(_broadcasts_textures[0]);
-        _broadcasts_sprites[_broadcasts_sprites.size() - 1].setPosition(_guiConnect->_players[i]->getPosition()[0] * 102.4 + 100, (_guiConnect->_players[i]->getPosition()[1] + 1) * 102.4);
-        _guiConnect->_players[i]->setMessage("");
-        _clock.restart();
+    if (player->getMessage() != "") {
+        _broadcasts.push_back(std::make_pair(0, sf::Sprite()));
+        _broadcasts[_broadcasts.size() - 1].first = player->getPlayerNumber();
+        _broadcasts[_broadcasts.size() - 1].second.setScale(0.1, 0.1);
+        _broadcasts[_broadcasts.size() - 1].second.setTexture(_broadcasts_textures[0]);
+        _broadcasts[_broadcasts.size() - 1].second.setPosition(player->getPosition()[0] * 102.4 + 100, (player->getPosition()[1] + 1) * 102.4);
+        player->setMessage("");
+        _clock.push_back(sf::Clock());
     }
 }

@@ -98,7 +98,7 @@ Zappy::InventoryDisplay::~InventoryDisplay()
 
 void Zappy::InventoryDisplay::check_event(sf::Event *event, std::vector<sf::Sprite> players_sprites, sf::View view)
 {
-    if (closeButton->checkClick(_window)) {
+    if (closeButton->checkClick(_window, *event)) {
         current_player_index = -1;
     }
     if (event->type == sf::Event::MouseButtonPressed) {
@@ -128,18 +128,23 @@ void Zappy::InventoryDisplay::check_event(sf::Event *event, std::vector<sf::Spri
 void Zappy::InventoryDisplay::display(std::vector<sf::Sprite> players_sprites)
 {
     if (current_player_index != -1) {
-        playerInfo[0].setString("Lvl: " + std::to_string(_guiConnect->_players[current_player_index]->getLevel()));
-        playerInfo[1].setString("Team: " + _guiConnect->_players[current_player_index]->getTeamName());
-        playerInfo[2].setString("Food " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_food));
-        playerInfo[3].setString("Linemate " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_linemate));
-        playerInfo[4].setString("Deraumere " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_deraumere));
-        playerInfo[5].setString("Sibur " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_sibur));
-        playerInfo[6].setString("Mendiane " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_mendiane));
-        playerInfo[7].setString("Phiras " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_phiras));
-        playerInfo[8].setString("Thystame " + std::to_string(_guiConnect->_players[current_player_index]->getInventory()->_thystame));
-        playerInfo[9].setString("Player " + std::to_string(_guiConnect->_players[current_player_index]->getPlayerNumber()));
-        playerInfo[10].setString("Orientation " + std::to_string(_guiConnect->_players[current_player_index]->getOrientation()));
-        playerInfo[11].setString("Travelled " + std::to_string(_guiConnect->_players[current_player_index]->getTravelled()));
+        if ((size_t)current_player_index >= _guiConnect->_players.size()) {
+            current_player_index = -1;
+            return;
+        }
+        std::shared_ptr<Player> players = _guiConnect->_players[current_player_index];
+        playerInfo[0].setString("Lvl: " + std::to_string(players->getLevel()));
+        playerInfo[1].setString("Team: " + players->getTeamName());
+        playerInfo[2].setString("Food " + std::to_string(players->getInventory()->_food));
+        playerInfo[3].setString("Linemate " + std::to_string(players->getInventory()->_linemate));
+        playerInfo[4].setString("Deraumere " + std::to_string(players->getInventory()->_deraumere));
+        playerInfo[5].setString("Sibur " + std::to_string(players->getInventory()->_sibur));
+        playerInfo[6].setString("Mendiane " + std::to_string(players->getInventory()->_mendiane));
+        playerInfo[7].setString("Phiras " + std::to_string(players->getInventory()->_phiras));
+        playerInfo[8].setString("Thystame " + std::to_string(players->getInventory()->_thystame));
+        playerInfo[9].setString("Player " + std::to_string(players->getPlayerNumber()));
+        playerInfo[10].setString("Orientation " + std::to_string(players->getOrientation()));
+        playerInfo[11].setString("Travelled " + std::to_string(players->getTravelled()));
         this->SkinPlayer.setTexture(players_sprites[current_player_index].getTexture());
         this->SkinPlayer.setTextureRect(players_sprites[current_player_index].getTextureRect());
         this->_window->draw(this->back);

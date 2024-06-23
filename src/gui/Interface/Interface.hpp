@@ -24,6 +24,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
+#include <mutex>
 
 #ifndef INTERFACE_HPP_
 #define INTERFACE_HPP_
@@ -39,9 +40,15 @@ namespace Zappy {
             void set_mape_size(std::array<int, 2> mape_size) { _mape_size = mape_size; }
             void set_map();
             void check_event();
+            void draw_resource_sprite(int i, int j, int spriteIndex, const std::string &resourceName, float baseX, float baseY, float scaleFactor);
             void print_resssource();
             void print_eggs();
             void playBackgroundMusic(const std::string& filename);
+            void loadResources();
+            void loadTiles();
+            void loadTexts();
+            void loadSound();
+            void loadInerfaceTexture();
         protected:
             std::shared_ptr<sf::RenderWindow> window;
             sf::Event event;

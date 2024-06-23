@@ -59,6 +59,16 @@ void GuiConnect::send(std::string message)
     }
 }
 
+std::shared_ptr<Zappy::Player> GuiConnect::getPlayerByNb(int playerNb)
+{
+    for (size_t i = 0; i < this->_players.size(); i++) {
+        if (this->_players[i]->_playerNumber == playerNb) {
+            return this->_players[i];
+        }
+    }
+    return NULL;
+}
+
 void GuiConnect::setTimeUnit(std::string args)
 {
     _commandFactory->askCommand("sst", {"SST", args});
@@ -67,7 +77,6 @@ void GuiConnect::setTimeUnit(std::string args)
 void GuiConnect::readServer(std::string &buffer)
 {
     char buf[1];
-    std::vector<std::string> pString;
 
     if (FD_ISSET(_socket, &client_management.read_fd)) {
         if (read(_socket, buf, 1) == -1) {

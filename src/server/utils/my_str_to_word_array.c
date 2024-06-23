@@ -7,14 +7,28 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
-int find_nb_separator(char *str, char separator)
+static void check_quote(bool *on_quote, char c)
+{
+    if (c == '"') {
+        if (*on_quote) {
+            *on_quote = false;
+        } else {
+            *on_quote = true;
+        }
+    }
+}
+
+static int find_nb_separator(char *str, char separator)
 {
     int nb_separator = 0;
     int i = 0;
+    bool on_quote = false;
 
     for (i = 0; str[i] != '\0'; i++) {
-        if (str[i] == separator) {
+        check_quote(&on_quote, str[i]);
+        if (str[i] == separator && on_quote == false) {
             nb_separator++;
         }
     }
@@ -24,10 +38,11 @@ int find_nb_separator(char *str, char separator)
     return (nb_separator);
 }
 
-int *find_nb_charaters(char *str, char separator, int nb_separator)
+static int *find_nb_charaters(char *str, char separator, int nb_separator)
 {
     int *nb_charaters = NULL;
     int index = 0;
+    bool on_quote = false;
 
     nb_charaters = malloc(sizeof(int) * (nb_separator + 1));
     if (nb_charaters == NULL) {
@@ -35,7 +50,8 @@ int *find_nb_charaters(char *str, char separator, int nb_separator)
     }
     nb_charaters[index] = 0;
     for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] == separator) {
+        check_quote(&on_quote, str[i]);
+        if (str[i] == separator && on_quote == false) {
             index++;
             nb_charaters[index] = 0;
         }
@@ -44,7 +60,7 @@ int *find_nb_charaters(char *str, char separator, int nb_separator)
     return (nb_charaters);
 }
 
-int passe_separator(int i, char *str, char separator)
+static int passe_separator(int i, char *str, char separator)
 {
     while (str[i] == separator) {
         i++;
@@ -52,13 +68,15 @@ int passe_separator(int i, char *str, char separator)
     return (i);
 }
 
-char **convert_str_to_array(char **array, char *str, char separator)
+static char **convert_str_to_array(char **array, char *str, char separator)
 {
     int rows = 0;
     int cols = 0;
+    bool on_quote = false;
 
     for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] == separator) {
+        check_quote(&on_quote, str[i]);
+        if (str[i] == separator && on_quote == false) {
             i = passe_separator(i, str, separator);
             i--;
             rows++;
