@@ -1,0 +1,65 @@
+\hypertarget{main_8c}{}\doxysection{src/server/main.c File Reference}
+\label{main_8c}\index{src/server/main.c@{src/server/main.c}}
+{\ttfamily \#include \char`\"{}../../include/server/server.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8c_a6aa59f98cad89c73966351ad7afb303c_a6aa59f98cad89c73966351ad7afb303c}{signal\+\_\+handler}} (int sig)
+\begin{DoxyCompactList}\small\item\em Signal handler for SIGINT. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a285ffedfda0f47d9c5c6416fd04021a2_a285ffedfda0f47d9c5c6416fd04021a2}{sigpipe\+\_\+handler}} (int sig)
+\begin{DoxyCompactList}\small\item\em Signal handler for SIGPIPE. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8c_ac762d48b889bd832ec0d42abcbc50624_ac762d48b889bd832ec0d42abcbc50624}{main}} (const int argc, const char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em Main function of the server. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8c_ac762d48b889bd832ec0d42abcbc50624_ac762d48b889bd832ec0d42abcbc50624}\label{main_8c_ac762d48b889bd832ec0d42abcbc50624_ac762d48b889bd832ec0d42abcbc50624}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{const int}]{argc,  }\item[{const char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+Main function of the server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & \\
+\hline
+{\em argv} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\mbox{\Hypertarget{main_8c_a6aa59f98cad89c73966351ad7afb303c_a6aa59f98cad89c73966351ad7afb303c}\label{main_8c_a6aa59f98cad89c73966351ad7afb303c_a6aa59f98cad89c73966351ad7afb303c}} 
+\index{main.c@{main.c}!signal\_handler@{signal\_handler}}
+\index{signal\_handler@{signal\_handler}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{signal\_handler()}{signal\_handler()}}
+{\footnotesize\ttfamily void signal\+\_\+handler (\begin{DoxyParamCaption}\item[{int}]{sig }\end{DoxyParamCaption})}
+
+
+
+Signal handler for SIGINT. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sig} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{main_8c_a285ffedfda0f47d9c5c6416fd04021a2_a285ffedfda0f47d9c5c6416fd04021a2}\label{main_8c_a285ffedfda0f47d9c5c6416fd04021a2_a285ffedfda0f47d9c5c6416fd04021a2}} 
+\index{main.c@{main.c}!sigpipe\_handler@{sigpipe\_handler}}
+\index{sigpipe\_handler@{sigpipe\_handler}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{sigpipe\_handler()}{sigpipe\_handler()}}
+{\footnotesize\ttfamily void sigpipe\+\_\+handler (\begin{DoxyParamCaption}\item[{int}]{sig }\end{DoxyParamCaption})}
+
+
+
+Signal handler for SIGPIPE. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sig} & \\
+\hline
+\end{DoxyParams}

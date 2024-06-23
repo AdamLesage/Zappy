@@ -7,16 +7,31 @@
 
 #include "../../include/server/server.h"
 
+/**
+ * @brief Signal handler for SIGINT
+ *
+ * @param sig
+ */
 void signal_handler(int sig)
 {
     sig = sig;
 }
 
+/**
+ * @brief Signal handler for SIGPIPE
+ *
+ * @param sig
+ */
 void sigpipe_handler(int sig)
 {
     sig = sig;
 }
 
+/**
+ * @brief Print the arguments of the server, when the server is launched
+ *
+ * @param arguments
+ */
 static void print_arguments_server(arguments_t *arguments)
 {
     printf("======================Zappy======================\n");
@@ -38,6 +53,13 @@ static void print_arguments_server(arguments_t *arguments)
     printf("=================================================\n");
 }
 
+/**
+ * @brief Main function of the server
+ *
+ * @param argc
+ * @param argv
+ * @return int
+ */
 int main(const int argc, const char **argv)
 {
     core_t core;

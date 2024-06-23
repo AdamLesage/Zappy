@@ -8,6 +8,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/**
+ * @brief Category: Utils | Free an array
+ *
+ * @param array The array to free
+ */
 void free_array(char **array)
 {
     if (array != NULL) {
@@ -18,6 +23,11 @@ void free_array(char **array)
     }
 }
 
+/**
+ * @brief Category: Utils | Free an array
+ *
+ * @param array The array to free
+ */
 void free_array2(char **array)
 {
     if (array != NULL) {

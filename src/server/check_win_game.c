@@ -7,6 +7,14 @@
 
 #include "server.h"
 
+/**
+ * @brief Check if a team has won
+ *
+ * @param players
+ * @param team_name
+ * @return true
+ * @return false
+ */
 static bool check_win_for_team(players_t *players, char *team_name)
 {
     int nb = 0;
@@ -24,6 +32,11 @@ static bool check_win_for_team(players_t *players, char *team_name)
     return (false);
 }
 
+/**
+ * @brief Check if a team has won
+ *
+ * @param core
+ */
 void check_win_game(core_t *core)
 {
     for (int i = 0; core->arguments.name_teams[i] != NULL; i++) {

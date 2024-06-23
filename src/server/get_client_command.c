@@ -7,6 +7,13 @@
 
 #include "../../include/server/server.h"
 
+/**
+ * @brief Disconnect the client
+ *
+ * @param readbite
+ * @param fd_client
+ * @param core
+ */
 static void disconnect_client(int readbite, int fd_client, core_t *core)
 {
     player_info_t *info = find_player(&core->players, fd_client);
@@ -25,6 +32,13 @@ static void disconnect_client(int readbite, int fd_client, core_t *core)
     delete_client_of_network(&core->network, fd_client);
 }
 
+/**
+ * @brief Read the socket of the client
+ *
+ * @param core
+ * @param fd_client
+ * @return char*
+ */
 static char *read_socket(core_t *core, int fd_client)
 {
     int readbite = 0;
@@ -43,6 +57,13 @@ static char *read_socket(core_t *core, int fd_client)
     return (buf);
 }
 
+/**
+ * @brief Read the client socket
+ *
+ * @param core
+ * @param fd_client
+ * @return bool
+ */
 static bool read_client_socket(core_t *core, int fd_client)
 {
     client_info_t *client_info = find_client(&core->network, fd_client);
@@ -67,6 +88,11 @@ static bool read_client_socket(core_t *core, int fd_client)
     return (false);
 }
 
+/**
+ * @brief Get the client command
+ *
+ * @param core
+ */
 void get_client_command(core_t *core)
 {
     for (int i = 0; i <= core->network.select_info.max_fd; i++) {

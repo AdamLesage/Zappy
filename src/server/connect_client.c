@@ -7,6 +7,11 @@
 
 #include "../../include/server/server.h"
 
+/**
+ * @brief Connect a client to the server
+ *
+ * @param network
+ */
 void connect_client(network_t *network)
 {
     unsigned int len = 0;

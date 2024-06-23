@@ -7,6 +7,12 @@
 
 #include "server.h"
 
+/**
+ * @brief Send the response to the client
+ *
+ * @param buffer The buffer to send
+ * @param fd The file descriptor of the client
+ */
 void send_command_responce(network_t *network)
 {
     for (client_list_t *tmp = network->client_list;

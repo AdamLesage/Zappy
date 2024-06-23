@@ -1,0 +1,41 @@
+\hypertarget{move__player_8c}{}\doxysection{src/server/data\+Managment/players/move\+\_\+player.c File Reference}
+\label{move__player_8c}\index{src/server/dataManagment/players/move\_player.c@{src/server/dataManagment/players/move\_player.c}}
+{\ttfamily \#include \char`\"{}server.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{move__player_8c_a922f80a431dc041f7808b59bbc8c1829_a922f80a431dc041f7808b59bbc8c1829}{check\+\_\+new\+\_\+pos}} (map\+\_\+t $\ast$map, int $\ast$x, int $\ast$y)
+\item 
+void \mbox{\hyperlink{move__player_8c_af49c8ac3bf6edf9c11feee70417443ba_af49c8ac3bf6edf9c11feee70417443ba}{find\+\_\+new\+\_\+pos}} (player\+\_\+info\+\_\+t $\ast$info, map\+\_\+t $\ast$map)
+\item 
+void \mbox{\hyperlink{move__player_8c_a787e3289d3eef6ce71210c7f1ab80fcf_a787e3289d3eef6ce71210c7f1ab80fcf}{move\+\_\+player}} (map\+\_\+t $\ast$map, players\+\_\+t $\ast$player, int fd)
+\item 
+void \mbox{\hyperlink{move__player_8c_a00fe95416de12ef059855b0291e52de3_a00fe95416de12ef059855b0291e52de3}{move\+\_\+player2}} (map\+\_\+t $\ast$map, players\+\_\+t $\ast$player, int fd, enum Orientation orientation)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{move__player_8c_a922f80a431dc041f7808b59bbc8c1829_a922f80a431dc041f7808b59bbc8c1829}\label{move__player_8c_a922f80a431dc041f7808b59bbc8c1829_a922f80a431dc041f7808b59bbc8c1829}} 
+\index{move\_player.c@{move\_player.c}!check\_new\_pos@{check\_new\_pos}}
+\index{check\_new\_pos@{check\_new\_pos}!move\_player.c@{move\_player.c}}
+\doxysubsubsection{\texorpdfstring{check\_new\_pos()}{check\_new\_pos()}}
+{\footnotesize\ttfamily void check\+\_\+new\+\_\+pos (\begin{DoxyParamCaption}\item[{map\+\_\+t $\ast$}]{map,  }\item[{int $\ast$}]{x,  }\item[{int $\ast$}]{y }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{move__player_8c_af49c8ac3bf6edf9c11feee70417443ba_af49c8ac3bf6edf9c11feee70417443ba}\label{move__player_8c_af49c8ac3bf6edf9c11feee70417443ba_af49c8ac3bf6edf9c11feee70417443ba}} 
+\index{move\_player.c@{move\_player.c}!find\_new\_pos@{find\_new\_pos}}
+\index{find\_new\_pos@{find\_new\_pos}!move\_player.c@{move\_player.c}}
+\doxysubsubsection{\texorpdfstring{find\_new\_pos()}{find\_new\_pos()}}
+{\footnotesize\ttfamily void find\+\_\+new\+\_\+pos (\begin{DoxyParamCaption}\item[{player\+\_\+info\+\_\+t $\ast$}]{info,  }\item[{map\+\_\+t $\ast$}]{map }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{move__player_8c_a787e3289d3eef6ce71210c7f1ab80fcf_a787e3289d3eef6ce71210c7f1ab80fcf}\label{move__player_8c_a787e3289d3eef6ce71210c7f1ab80fcf_a787e3289d3eef6ce71210c7f1ab80fcf}} 
+\index{move\_player.c@{move\_player.c}!move\_player@{move\_player}}
+\index{move\_player@{move\_player}!move\_player.c@{move\_player.c}}
+\doxysubsubsection{\texorpdfstring{move\_player()}{move\_player()}}
+{\footnotesize\ttfamily void move\+\_\+player (\begin{DoxyParamCaption}\item[{map\+\_\+t $\ast$}]{map,  }\item[{players\+\_\+t $\ast$}]{player,  }\item[{int}]{fd }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{move__player_8c_a00fe95416de12ef059855b0291e52de3_a00fe95416de12ef059855b0291e52de3}\label{move__player_8c_a00fe95416de12ef059855b0291e52de3_a00fe95416de12ef059855b0291e52de3}} 
+\index{move\_player.c@{move\_player.c}!move\_player2@{move\_player2}}
+\index{move\_player2@{move\_player2}!move\_player.c@{move\_player.c}}
+\doxysubsubsection{\texorpdfstring{move\_player2()}{move\_player2()}}
+{\footnotesize\ttfamily void move\+\_\+player2 (\begin{DoxyParamCaption}\item[{map\+\_\+t $\ast$}]{map,  }\item[{players\+\_\+t $\ast$}]{player,  }\item[{int}]{fd,  }\item[{enum Orientation}]{orientation }\end{DoxyParamCaption})}
+

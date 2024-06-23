@@ -7,6 +7,11 @@
 
 #include "../../include/server/server.h"
 
+/**
+ * @brief Free the player structure
+ *
+ * @param players
+ */
 static void free_player(players_list_t *players)
 {
     if (players == NULL) {
@@ -22,6 +27,11 @@ static void free_player(players_list_t *players)
     free(players);
 }
 
+/**
+ * @brief Free the incantation structure
+ *
+ * @param incantation
+ */
 static void free_incantation(incantation_list_t *incantation)
 {
     if (incantation == NULL) {
@@ -35,6 +45,11 @@ static void free_incantation(incantation_list_t *incantation)
     free(incantation);
 }
 
+/**
+ * @brief Free the map structure
+ *
+ * @param tile
+ */
 static void free_map(tiles_list_t *tile)
 {
     if (tile == NULL) {
@@ -47,6 +62,11 @@ static void free_map(tiles_list_t *tile)
     free(tile);
 }
 
+/**
+ * @brief Free the eggs structure
+ *
+ * @param eggs
+ */
 static void free_eggs(eggs_t *eggs)
 {
     if (eggs == NULL) {
@@ -59,6 +79,11 @@ static void free_eggs(eggs_t *eggs)
     free(eggs);
 }
 
+/**
+ * @brief Free the array
+ *
+ * @param array
+ */
 static void free_network(client_list_t *network)
 {
     if (network == NULL) {
@@ -77,6 +102,11 @@ static void free_network(client_list_t *network)
     free(network);
 }
 
+/**
+ * @brief Close the server
+ *
+ * @param core
+ */
 void close_server(core_t *core)
 {
     printf("server shutdown\n");
