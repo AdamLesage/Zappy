@@ -30,17 +30,18 @@ static inventory_t *get_nb_object(tiles_list_t *tile)
     return (inventory);
 }
 
-static void reffil_object(map_t *map, int nb_object, float density,
+static void reffil_object(core_t *core, int nb_object, float density,
     bool put(map_t *, int, int))
 {
     int x = 0;
     int y = 0;
-    float nb_object_max = map->height * map->width * density;
+    float nb_object_max = core->map.height * core->map.width * density;
 
     for (int i = (int)(nb_object_max - nb_object); i > 0; i--) {
-        x = rand() % map->width;
-        y = rand() % map->height;
-        put(map, x, y);
+        x = rand() % core->map.width;
+        y = rand() % core->map.height;
+        put(&core->map, x, y);
+        bct_event(core, x, y);
     }
 }
 
@@ -48,14 +49,13 @@ void refill_map(core_t *core)
 {
     inventory_t *inventory = get_nb_object(core->map.tiles_list);
 
-    reffil_object(&core->map, inventory->nb_food, 0.5, &put_food);
-    reffil_object(&core->map, inventory->nb_linemate, 0.3, &put_linemate);
-    reffil_object(&core->map, inventory->nb_deraumere, 0.15, &put_deraumere);
-    reffil_object(&core->map, inventory->nb_sibur, 0.1, &put_sibur);
-    reffil_object(&core->map, inventory->nb_mendiane, 0.1, &put_mendiane);
-    reffil_object(&core->map, inventory->nb_phiras, 0.08, &put_phiras);
-    reffil_object(&core->map, inventory->nb_thystame, 0.05, &put_thystame);
+    reffil_object(core, inventory->nb_food, 0.5, &put_food);
+    reffil_object(core, inventory->nb_linemate, 0.3, &put_linemate);
+    reffil_object(core, inventory->nb_deraumere, 0.15, &put_deraumere);
+    reffil_object(core, inventory->nb_sibur, 0.1, &put_sibur);
+    reffil_object(core, inventory->nb_mendiane, 0.1, &put_mendiane);
+    reffil_object(core, inventory->nb_phiras, 0.08, &put_phiras);
+    reffil_object(core, inventory->nb_thystame, 0.05, &put_thystame);
     core->map.last_refille = 20;
-    mct_event(core);
     free(inventory);
 }
