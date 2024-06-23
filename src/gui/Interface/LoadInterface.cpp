@@ -115,6 +115,14 @@ void Zappy::Interface::loadInerfaceTexture()
     _rect.push_back(sf::RectangleShape(sf::Vector2f(1920, 300)));
     _rect[3].setFillColor(sf::Color(8, 105, 36));
     _rect[3].setPosition(0, 1080 - 250);
-    _rect[3].setTexture(&interface_texture);
+    _rect[3].setFillColor(sf::Color(255,215,0));
     _rect[3].setTextureRect(sf::IntRect(0, 0, 1920, 300));
+    _rect.push_back(sf::RectangleShape(sf::Vector2f(800, 300)));
+    _rect[4].setFillColor(sf::Color(160, 82, 45));
+    _rect[4].setPosition(540, 1080 - 250);
+    _rect.push_back(sf::RectangleShape(sf::Vector2f(580, 300)));
+    _rect[5].setPosition(1340, 1080 - 250);
+    _rect[5].setFillColor(sf::Color(8, 105, 36));
+    _rect[5].setTexture(&interface_texture);
+    _rect[5].setTextureRect(sf::IntRect(0, 0, 580, 300));
 }
