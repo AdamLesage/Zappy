@@ -101,6 +101,7 @@ namespace Zappy
         std::vector<std::array<sf::IntRect, 4>> player_anim_rank6;
         std::vector<std::array<sf::IntRect, 4>> player_anim_rank7;
         std::vector<std::array<sf::IntRect, 4>> player_anim_rank8;
+        std::vector<std::vector<std::array<sf::IntRect, 4>>> player_anim_rank;
         std::vector<sf::Texture> player_textures;
         size_t _teamnbr;
         std::vector<sf::Color> color_list_team;
